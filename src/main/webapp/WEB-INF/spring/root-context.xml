@@ -1,55 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 
-<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
-       xmlns="http://www.springframework.org/schema/beans"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd">
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring" xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <!-- Root Context: defines shared resources visible to all other web components -->
+	<!-- Root Context: defines shared resources visible to all other web components -->
 
-    <!-- HikariCP 라이브러리를 이용한, 데이터소스 설정 -->
-    <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
-        <description>이 빈의 설명</description>
-        <property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"/>
-        <property name="jdbcUrl"
-                  value="jdbc:log4jdbc:oracle:thin:@db202110221035_high?TNS_ADMIN=/opt/OracleCloudWallet/ATP"/>
-        <property name="username" value="ADMIN"/>
-        <property name="password" value="Oracle12345!!!"/>
+	<!-- HikariCP 라이브러리를 이용한, 데이터소스 설정 -->
+	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+		<description>이 빈의 설명</description>
+		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy" />
+		<property name="jdbcUrl" value="jdbc:log4jdbc:oracle:thin:@db202110221035_high?TNS_ADMIN=C:/opt/OracleCloudWallet/ATP" />
+		<property name="username" value="ADMIN" />
+		<property name="password" value="Oracle12345!!!" />
 
-        <!-- Connection Pool 에 대한 상세설정 -->
-        <property name="maximumPoolSize" value="10"/>
-        <property name="minimumIdle" value="2"/>
-        <property name="idleTimeout" value="10000"/>
-        <property name="connectionTimeout" value="250"/>
-        <property name="connectionTestQuery" value="SELECT 1 FROM dual"/>
-        <property name="dataSourceJNDI" value="jdbc/HikariCP"/>
-        <property name="poolName" value="*** HikariDataSource ***"/>
-    </bean>
+		<!-- Connection Pool 에 대한 상세설정 -->
+		<property name="maximumPoolSize" value="10" />
+		<property name="minimumIdle" value="2" />
+		<property name="idleTimeout" value="10000" />
+		<property name="connectionTimeout" value="1000" />
+		<property name="connectionTestQuery" value="SELECT 1 FROM dual" />
+		<property name="dataSourceJNDI" value="jdbc/HikariCP" />
+		<property name="poolName" value="*** HikariDataSource ***" />
+	</bean>
 
-    <!-- 데이터소스 bean 클래스 설정 -->
-    <!--
-       HikariConfig config = new HikariConfig();
-       HikariDataSource dataSource = new HikariDataSource(config);
-     -->
-    <bean id="hikariDataSource" class="com.zaxxer.hikari.HikariDataSource">
-        <!-- 생성자를 오버로딩해서 파라메터로 넣어주겠다 -->
-        <constructor-arg ref="hikariConfig"/>
-    </bean>
+	<!-- 데이터소스 bean 클래스 설정 -->
+	<!-- 
+		HikariConfig config = new HikariConfig();
+		HikariDataSource dataSource = new HikaraDataSource(config);
+	 -->
+	<bean id="hikariDataSource" class="com.zaxxer.hikari.HikariDataSource">
+		<!-- 생성자를 오버로딩해서 파라메터로 넣어주겠다 -->
+		<constructor-arg ref="hikariConfig" />
+	</bean>
 
-    <!-- MyBatis 와 Spring 연계라이브러리에서 제공되는 특수한 빈을 등록 -->
-    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <property name="dataSource" ref="hikariDataSource"/>
+	<!-- MyBatis와 Spring 연계라이브러리에서 제공되는 특수한 빈을 등록 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="hikariDataSource" />
 
-        <!-- classpath: LIKE path 환경변수-->
-        <property name="configLocation" value="classpath:mybatis-config.xml"/>
-        <!-- ** all dir // ** all file -->
-        <!-- mybatis-config 에서 이미 mapper, 설정할 수 있어서 필요없긴하다
-        <property name="mapperLocations" value="classpath:mappers/**/SQL*.xml" />-->
-    </bean>
+		<!-- classpath: LIKE path환경변수-->
+		<property name="configLocation" value="classpath:mybatis-config.xml" />
+		<!-- ** all dir // * all file -->
+		<!-- mybatis-config 에서 이미 mapper다 설정할 수 있어서 필요없긴하다
+		<property name="mapperLocations" value="classpath:mappers/**/SQL*.xml" />-->
+	</bean>
 
-    <!--MyBatis-Spring 연계라이브러리에서 제공되는 특수한 태그를 등록-->
-    <!--MyBatis Mapper Interface 를 Scanning 해서 자동으로 빈으로 등록해주는 태그-->
-    <mybatis-spring:scan base-package="com.pm.myapp.mapper"/>
+	<!-- MyBatis와 Spring 연계라이브러리에서 제공되는 특수한 태그를 등록 -->
+	<!-- MyBatis Mapper Interface를 Scanning해서, 자동으로 빈으로 등록해주는 태그가 있다-->
+	<!-- 스캐닝할 패키지를 지정-->
+	<!-- bean으로 MapperScanner를 올려줌 : 항상 지정된 패키지를 주시하고있음 -->
+	<!-- 어노테이션 인터페이스가 아니더라도 그냥 인터페이스라도 다 집어넣어버린다 : 매우 엉성함 -->
+	<mybatis-spring:scan base-package="com.pm.myapp.mapper" />
 
 </beans>
