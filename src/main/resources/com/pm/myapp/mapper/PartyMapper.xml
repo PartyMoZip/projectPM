@@ -12,5 +12,14 @@
     WHERE P.PTNAME =  #{PTNAME}
 
     </select>
+    
+    <update id="modifyLogo">
+    
+    SELECT P.PTCODE, P.PTNAME, P.PSCORE, P.CDATE, P.LOGO, P.COVER, P.PPROF, P.PBPOINT, P.LCODE, H.HBCODE
+    FROM PARTY P JOIN PARTYHB H
+    ON P.PTCODE = H.PTCODE
+    WHERE P.PTNAME =  #{PTNAME}
+
+    </update>
 
 </mapper>
