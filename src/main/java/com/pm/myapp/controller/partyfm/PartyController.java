@@ -30,7 +30,7 @@ public class PartyController {
 	
 	// 파티 상세 보기
 	@GetMapping("/showPartyDetail")
-	public void showPartyDetail(@ModelAttribute("cri") Criteria cri, String ptname, Model model) {
+	public void showPartyDetail(String ptname, Model model) {
 		log.debug("showPartyDetail() invoked.");
 		PartyVO party = this.service.getParty(ptname);
 		log.info("\t + party : {}", party);
@@ -69,6 +69,7 @@ public class PartyController {
 	@PostMapping("/doPartyJoin")
 	public void doPartyJoin() {
 		log.debug("doPartyJoin() invoked.");
+		// 컬럼 생성 : 권한코드 -1로 생성
 
 	} // doPartyJoin
 	
@@ -76,10 +77,11 @@ public class PartyController {
 	@PostMapping("/undoPartyJoin")
 	public void undoPartyJoin() {
 		log.debug("undoPartyJoin() invoked.");
+		// 해당 이메일인지 : 해당 컬럼 삭제
 
 	} // undoPartyJoin
 	
-	// 파티 관리 페이지 (view)
+	// [완] 파티 관리 페이지 (view)
 	@PostMapping("/showLeaderPage")
 	public void showLeaderPage() {
 		log.debug("showLeaderPage() invoked.");
@@ -104,6 +106,7 @@ public class PartyController {
 	@PostMapping("/doBreakParty")
 	public void doBreakParty() {
 		log.debug("doBreakParty() invoked.");
+		// 신고수 -1로 만들기
 
 	} // doBreakParty
 	
@@ -111,6 +114,8 @@ public class PartyController {
 	@PostMapping("/editPartyLeader")
 	public void editPartyLeader() {
 		log.debug("editPartyLeader() invoked.");
+		// 대상 인물 : 권한코드 2 ( 파티장 )
+		// 기존 파티장 : 권한코드 1 ( 파티원 )
 
 	} // editPartyLeader
 	
@@ -118,6 +123,7 @@ public class PartyController {
 	@PostMapping("/doAcceptJoin")
 	public void doAcceptJoin() {
 		log.debug("doAcceptJoin() invoked.");
+		// 권한코드 -1 인지 확인 : 권한코드 1로 변경
 
 	} // doAcceptJoin
 	
@@ -125,20 +131,23 @@ public class PartyController {
 	@PostMapping("/doRejectJoin")
 	public void doRejectJoin() {
 		log.debug("doRejectJoin() invoked.");
-
+		// 해당 이메일인지, 권한코드 -1 인지 : 해당 컬럼 삭제
+		
 	} // doRejectJoin
 	
 	// 파티원 목록 조회
 	@PostMapping("/showMemberList")
 	public void showMemberList() {
 		log.debug("showMemberList() invoked.");
-
+		// 해당 파티코드인지, 권한코드 1이상 인지 : 이메일과 닉네임 JOIN 으로 부르기
+		
 	} // showMemberList
 	
 	// 파티원 추방
 	@PostMapping("/doKickMember")
 	public void doKickMember() {
 		log.debug("doKickMember() invoked.");
+		// 해당 이메일인지 : 해당 컬럼 삭제
 
 	} // doKickMember
 	
