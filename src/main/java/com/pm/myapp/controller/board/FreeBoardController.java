@@ -1,7 +1,9 @@
 package com.pm.myapp.controller.board;
 
+import com.pm.myapp.domain.FreeBoardVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +13,8 @@ import com.pm.myapp.service.board.FreeBoardService;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
+
+import java.util.List;
 
 @Log4j2
 @NoArgsConstructor
@@ -24,8 +28,13 @@ public class FreeBoardController {
 
 	// 자유 게시판 목록
 	@GetMapping("/getFreeBoardList")
-	public void getFreeBoardList() {
+	public void getFreeBoardList(Model model) {
 		log.debug("getFreeBoardList() invoked.");
+		List<FreeBoardVO> list = this.service.getList();
+
+		log.info("\t + list size : {}", list.size());
+		model.addAttribute("list", list);
+
 		
 	} // getFreeBoardList
 	
