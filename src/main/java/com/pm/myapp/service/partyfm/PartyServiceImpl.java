@@ -50,6 +50,17 @@ public class PartyServiceImpl implements PartyService,InitializingBean, Disposab
 		
 		return party;
 		
+	}
+
+	@Override
+	public boolean editLogo(String Logo) {
+		log.debug("editLogo({}) invoked.",Logo);
+		
+		int affectedLine = this.mapper.modifyLogo(Logo);
+		
+		log.info("\t + affectedLine : {}",affectedLine);
+		
+		return (affectedLine==1);
 	} // getParty
 
 }

@@ -6,4 +6,6 @@ public interface PartyService {
 
 	public abstract PartyVO getParty(String ptname);
 	
+	public abstract boolean editLogo(String Logo); 
+	
 } //end interface

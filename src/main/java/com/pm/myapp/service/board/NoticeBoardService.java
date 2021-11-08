@@ -1,5 +1,5 @@
 package com.pm.myapp.service.board;
 
-public class NoticeBoardService {
+public interface NoticeBoardService {
 
 } //end interface

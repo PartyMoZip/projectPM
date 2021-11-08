@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.pm.myapp.domain.Criteria;
 import com.pm.myapp.domain.PartyVO;
@@ -40,15 +41,27 @@ public class PartyController {
 	
 	// 파티 메인 보기
 	@PostMapping("/showPartyMain")
-	public void showPartyMain() {
+	public void showPartyMain(String ptname, Model model) {
 		log.debug("showPartyMain() invoked.");
+		PartyVO party = this.service.getParty(ptname);
+		log.info("\t + party : {}", party);
+		
+		model.addAttribute("party",party);
 
 	} // showPartyMain
 	
 	// 파티 로고 등록/변경
 	@PostMapping("/editPartyLogo")
-	public void editPartyLogo() {
+	public String editPartyLogo(String Logo, RedirectAttributes rttrs) {
 		log.debug("editPartyLogo() invoked.");
+		
+		boolean result = this.service.editLogo(Logo);
+		log.info("\t + result : {}",result);
+		
+		// 나중에 비동기로 실패,확인 메세지 처리 할 예정
+		rttrs.addAttribute("result", result);
+		
+		return "redirect:/party/showLeaderPage";
 
 	} // editPartyLogo
 	
