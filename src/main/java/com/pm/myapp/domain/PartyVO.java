@@ -7,14 +7,15 @@ import lombok.Value;
 @Value
 public class PartyVO {
 	
-	private Integer ptcode;
-	private String ptname;
-	private Integer pscore;
-	private Date cdate;
-	private String logo;
-	private String cover;
-	private String pprof;
-	private Integer pbpoint;
-	private Integer lcode;
+	private Integer partyCode;
+	private String partyName;
+	private Integer partyScore;
+	private Date createDate;
+	private String logoPic;
+	private String coverPic;
+	private String partyProfile;
+	private Integer partyBanned;
+	private String localName;
+	private String hobbyName;
 
 } // end class

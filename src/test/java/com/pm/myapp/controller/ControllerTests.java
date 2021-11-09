@@ -80,7 +80,7 @@ public class ControllerTests {
 		// Step.6 : Step.5 에서 얻어낸 MvcResult로 부터, Model and View 이름
 		ModelAndView modelAndView = mvcResult.getModelAndView();
 		
-		// Step.7 : ModelAndViiew 객체로부터 우리가 알고자하는 model이나 view이름을 끄집어 낼 수 있다
+		// Step.7 : ModelAndView 객체로부터 우리가 알고자하는 model이나 view이름을 끄집어 낼 수 있다
 		Map<String,Object> model = modelAndView.getModel();
 		log.info("\t+ model : {}",model);
 		
