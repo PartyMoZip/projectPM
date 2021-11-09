@@ -1,0 +1,85 @@
+@import "global.css";
+
+/*검색창*/
+.search-wrapper {
+    margin-top: 40px;
+    max-width: 500px;
+    position: relative;
+}
+
+.search-btn {
+    color: var(--secondary-text-color);
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 20px;
+    background-color: inherit;
+    border: unset;
+    outline: none;
+}
+
+.search-wrapper form {
+    width: 100%;
+}
+
+.search-wrapper input {
+    border-radius: 10rem;
+    border: 1px solid var(--primary-color);
+    padding: 14px 20px;
+}
+
+/* 나의 파티 */
+.header {
+    display: flex;
+    align-items: baseline;
+    margin-bottom: 20px;
+}
+
+.header h4 {
+    display: inline-block;
+    font-weight: bold;
+}
+
+.header .icon {
+    margin-left: 5px;
+}
+
+.header i {
+    font-size: 1.5rem;
+}
+
+/*더 둘러보기 스와이퍼*/
+.swiper {
+    width: 100%;
+}
+
+.swiper-wrapper {
+    max-height: 300px;
+}
+
+.swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+    max-height: 300px;
+    /* Center slide text vertically */
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+
+.swiper-slide img {
+    display: block;
+    width: 100%;
+    /*height: 100%;*/
+    object-fit: cover;
+}

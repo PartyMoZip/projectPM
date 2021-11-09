@@ -22,9 +22,10 @@ public class SearchController {
 
     // 검색 페이지(view)
     @GetMapping("")
-    public void showPartyList() {
+    public String showPartyList() {
         log.debug("showPartyList() invoked.");
 
+        return "/search/searchPage";
     } // showPartyList
 
     // 카테고리 선택

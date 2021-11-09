@@ -1,0 +1,26 @@
+:root {
+    --primary-color-dark: #388E3C;
+    --primary-color: #4CAF50;
+    --primary-color-light: #C8E6C9;
+    --primary-color-text: #FFFFFF;
+    --accent-color: #FFC107;
+    --primary-text-color: #212121;
+    --secondary-text-color: #757575;
+    --divider-color: #BDBDBD;
+}
+
+@font-face {
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 400;
+    src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.woff2) format('woff2'), url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.woff) format('woff'), url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.otf) format('opentype');
+}
+
+
+body {
+    font-family: 'Noto Sans KR', 'Segoe UI', sans-serif;
+}
+
+.nav-link:hover {
+    color: var(--primary-color);
+}
