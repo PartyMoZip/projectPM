@@ -90,14 +90,14 @@ public class PartyServiceImpl implements PartyService,InitializingBean, Disposab
 	} // editLogo
 
 	@Override
-	public PartyVO editInfo(PartyDTO dto, Integer partyCode) {
-		log.debug("editInfo({}, {}) invoked.",dto,partyCode);
+	public boolean editInfo(PartyDTO dto) {
+		log.debug("editInfo({}, {}) invoked.",dto);
 		
-		PartyVO vo = this.mapper.modifyInfo(dto,partyCode);
+		int affectedLine = this.mapper.modifyInfo(dto);
 		
-		log.info("\t + vo : {}",vo);
+		log.info("\t + affectedLine : {}",affectedLine);
 		
-		return vo;
+		return (affectedLine==1);
 	} // editInfo
 
 	@Override

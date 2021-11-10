@@ -10,7 +10,8 @@
     <h1>/WEB-INF/views/party/showLeaderPage.jsp</h1>
     <hr>
     <h3>${__PARTY__}</h3>
-    <form action="/party/editparty" method="post">
+    <form action="/party/editParty" method="post">
+        <input type="hidden" name="partyCode" value="${__PARTY__.partyCode}">
         <input type="text" name="partyName" value="${__PARTY__.partyName}">
         <input type="text" name="partyProfile" value="${__PARTY__.partyProfile}">
         <input type="text" name="localCode" value="${__PARTY__.localName}">
@@ -24,8 +25,8 @@
       </form>
       <hr>
       <form action="/party/editPartyLeader" method="post">
-        <input type="hidden" name="leaderEmail" value="test2@test.com">
-        <input type="hidden" name="memberEmail" value="test3@test.com">
+        <input type="hidden" name="leaderEmail" value="test1@test.com">
+        <input type="hidden" name="memberEmail" value="test24@test.com">
         <input type="hidden" name="partyCode" value="${__PARTY__.partyCode}">
         <input type="submit" value="파티장 위임">
       </form>

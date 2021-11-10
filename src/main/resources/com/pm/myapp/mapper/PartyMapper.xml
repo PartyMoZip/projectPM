@@ -20,22 +20,22 @@
     <insert id="makeJoin">
 
     INSERT INTO PARTYUSER(EMAIL, PARTYCODE, AUTHCODE)
-    VALUES(#{EMAIL}, #{PARTYCODE}, -1)
+    VALUES(#{email}, #{partyCode}, -1)
 
     </insert>
 
     <delete id="deleteJoin">
 
     DELETE FROM PARTYUSER
-    WHERE EMAIL=#{EMAIL}
-    AND PARTYCODE=#{PARTYCODE}
+    WHERE EMAIL=#{email}
+    AND PARTYCODE=#{partyCode}
 
     </delete>
     
     <update id="modifyLogo">
     
     UPDATE PARTY
-    SET LOGOPIC = #{LOGOPIC}
+    SET LOGOPIC = #{logoPIC}
     WHERE PARTYCODE = #{PARTYCODE}
 
     </update>
@@ -43,11 +43,11 @@
     <update id="modifyInfo">
     
     UPDATE PARTY
-    SET PARTYNAME = #{PARTYNAME},
-    PARTYPROFILE = #{PARTYPROFILE},
-    LOCALCODE = #{LOCALCODE},
-    HOBBYCODE = #{HOBBYCODE}
-    WHERE PARTYCODE = #{PARTYCODE}
+    SET PARTYNAME = #{partyName},
+    PARTYPROFILE = #{partyProfile},
+    LOCALCODE = #{localCode},
+    HOBBYCODE = #{hobbyCode}
+    WHERE PARTYCODE = #{partyCode}
 
     </update>
     
@@ -55,16 +55,16 @@
     
     UPDATE PARTY
     SET PARTYBANNED = -1
-    WHERE PARTYCODE = #{PARTYCODE}
+    WHERE PARTYCODE = #{partyCode}
 
     </update>
     
     <update id="delegatePL">
     
     UPDATE PARTYUSER
-    SET AUTHCODE = #{AUTHCODE}
-    WHERE EMAIL = #{EMAIL}
-    AND PARTYCODE = #{PARTYCODE}
+    SET AUTHCODE = #{authCode}
+    WHERE EMAIL = #{email}
+    AND PARTYCODE = #{partyCode}
 
     </update>
     
@@ -72,8 +72,8 @@
     
     UPDATE PARTYUSER
     SET AUTHCODE = 1
-    WHERE EMAIL = #{EMAIL}
-    AND PARTYCODE = #{PARTYCODE}
+    WHERE EMAIL = #{email}
+    AND PARTYCODE = #{partyCode}
 
     </update>
     
@@ -82,7 +82,7 @@
     <![CDATA[ 
     SELECT U.NICKNAME, U.USERPIC
     FROM (SELECT * FROM PARTYUSER
-    WHERE PARTYCODE = #{PARTYCODE}
+    WHERE PARTYCODE = #{partyCode}
     ORDER BY AUTHCODE DESC) T
     JOIN USERINFO U
     ON T.EMAIL = U.EMAIL

@@ -16,7 +16,7 @@ public interface PartyMapper {
 	
 	public abstract Integer modifyLogo(String logoPic, Integer partyCode);
 	
-	public abstract PartyVO modifyInfo(PartyDTO dto, Integer partyCode);
+	public abstract Integer modifyInfo(PartyDTO dto);
 	
 	public abstract Integer makeDesPartyReq(Integer partyCode);
 	

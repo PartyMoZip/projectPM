@@ -8,5 +8,7 @@
 </head>
 <body>
     <h1>/WEB-INF/views/party/showMemberList.jsp</h1>
+    <hr>
+    <h3>${__USER__}</h3>
 </body>
 </html>

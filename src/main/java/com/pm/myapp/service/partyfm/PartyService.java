@@ -16,7 +16,7 @@ public interface PartyService {
 	
 	public abstract boolean editLogo(String logoPic, Integer partyCode);
 	
-	public abstract PartyVO editInfo(PartyDTO dto, Integer partyCode);
+	public abstract boolean editInfo(PartyDTO dto);
 	
 	public abstract boolean breakParty(Integer partyCode);
 	

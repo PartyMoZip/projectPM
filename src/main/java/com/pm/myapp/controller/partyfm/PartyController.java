@@ -33,7 +33,7 @@ public class PartyController {
 	@Setter(onMethod_= {@Autowired})
 	private PartyService service;
 	
-	// 파티 상세 보기
+	// 파티 상세 보기 [작동]
 	@GetMapping("/showPartyDetail")
 	public void showPartyDetail(Integer partyCode, Model model) {
 		log.debug("showPartyDetail({}) invoked.",partyCode);
@@ -44,7 +44,7 @@ public class PartyController {
 		
 	} // showPartyDetail
 	
-	// 파티 가입 신청
+	// 파티 가입 신청 [작동]
 	@PostMapping("/doPartyJoin")
 	public String doPartyJoin(String email, Integer partyCode, RedirectAttributes rttrs) {
 		log.debug("doPartyJoin({}, {}) invoked.",email,partyCode);
@@ -58,7 +58,7 @@ public class PartyController {
 		
 	} // doPartyJoin
 	
-	// 파티 가입 취소
+	// 파티 가입 취소 [작동]
 	@PostMapping("/undoPartyJoin")
 	public String undoPartyJoin(String email, Integer partyCode, RedirectAttributes rttrs) {
 		log.debug("undoPartyJoin({}, {}) invoked.",email,partyCode);
@@ -72,7 +72,7 @@ public class PartyController {
 
 	} // undoPartyJoin
 	
-	// 파티 메인 보기
+	// 파티 메인 보기 [작동]
 	@GetMapping("/showPartyMain")
 	public void showPartyMain(Integer partyCode, Model model) {
 		log.debug("showPartyMain({}) invoked.",partyCode);
@@ -83,7 +83,7 @@ public class PartyController {
 
 	} // showPartyMain
 	
-	// 파티 관리 페이지
+	// 파티 관리 페이지 [작동]
 	@GetMapping("/showLeaderPage")
 	public void showLeaderPage(Integer partyCode, Model model) {
 		log.debug("showLeaderPage({}) invoked.",partyCode);
@@ -94,7 +94,7 @@ public class PartyController {
 		
 	} // showLeaderPage
 	
-	// 파티 로고 등록/변경
+	// 파티 로고 등록/변경 
 	@PostMapping("/editPartyLogo")
 	public String editPartyLogo(String logoPic, Integer partyCode, RedirectAttributes rttrs) {
 		log.debug("editPartyLogo({}, {}) invoked.",logoPic, partyCode);
@@ -118,13 +118,15 @@ public class PartyController {
 
 	} // editPartyImage
 	
-	// 파티 정보 변경
+	// 파티 정보 변경 [완]
 	@PostMapping("/editParty")
-	public String editParty(PartyDTO dto, Integer partyCode, RedirectAttributes rttrs) {
-		log.debug("editParty({}, {}) invoked.",dto,partyCode);
+	public String editParty(PartyDTO dto, RedirectAttributes rttrs) {
+		log.debug("editParty({}, {}) invoked.",dto);
 		
-		PartyVO party = this.service.editInfo(dto, partyCode);
-		log.info("\t + party : {}", party);
+		boolean result = this.service.editInfo(dto);
+		log.info("\t + result : {}", result);
+		
+		int partyCode = dto.getPartyCode();
 
 		rttrs.addAttribute("partyCode",partyCode);
 		
@@ -132,7 +134,7 @@ public class PartyController {
 		
 	} // editParty
 	
-	// 파티 해체
+	// 파티 해체 [완]
 	@PostMapping("/doBreakParty")
 	public String doBreakParty(Integer partyCode, RedirectAttributes rttrs) {
 		log.debug("doBreakParty({}) invoked.",partyCode);
@@ -146,8 +148,8 @@ public class PartyController {
 		return "redirect:/party/showLeaderPage";
 
 	} // doBreakParty
-	
-	// 파티장 권한 위임
+		
+	// 파티장 권한 위임 [완] - 트랜잭션 작동안함
 	@PostMapping("/editPartyLeader")
 	@Transactional
 	public String editPartyLeader(
@@ -166,7 +168,7 @@ public class PartyController {
 		
 	} // editPartyLeader
 	
-	// 파티 가입 승인
+	// 파티 가입 승인 [완]
 	@PostMapping("/doAcceptJoin")
 	public void doAcceptJoin(String email, Integer partyCode) {
 		log.debug("doAcceptJoin({}, {}) invoked.",email,partyCode);
@@ -177,7 +179,7 @@ public class PartyController {
 
 	} // doAcceptJoin
 	
-	// 파티 가입 거절
+	// 파티 가입 거절 [완]
 	@PostMapping("/doRejectJoin")
 	public void doRejectJoin(String email, Integer partyCode) {
 		log.debug("doRejectJoin({}, {}) invoked.",email,partyCode);
@@ -188,7 +190,7 @@ public class PartyController {
 		
 	} // doRejectJoin
 	
-	// 파티원 목록 조회
+	// 파티원 목록 조회 [완]
 	@PostMapping("/showMemberList")
 	public void showMemberList(Integer partyCode, Model model) {
 		log.debug("showMemberList() invoked.");
@@ -200,7 +202,7 @@ public class PartyController {
 		
 	} // showMemberList
 	
-	// 파티원 추방
+	// 파티원 추방 [완]
 	@PostMapping("/doKickMember")
 	public String doKickMember(String email, Integer partyCode, RedirectAttributes rttrs) {
 		log.debug("doKickMember() invoked.");
