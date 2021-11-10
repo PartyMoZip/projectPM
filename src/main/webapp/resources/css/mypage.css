@@ -1,6 +1,5 @@
 @import "global.css";
 
-
 /* 나의 파티 */
 .header {
     display: flex;
@@ -13,16 +12,20 @@
     font-weight: bold;
 }
 
+.party-container {
+    background-color: red !important;
+}
+
 .btn-wrapper {
 
 }
 
 .mypage-btn {
-    box-shadow: 0 2px 3px rgb(0 10 18 / 10%), 0 0 0 1px rgb(0 10 18 / 10%);
+    box-shadow: rgb(0 0 0 / 4%) 0px 4px 16px 0px;
 }
 
 .mypage-btn:hover {
-    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 40%);
+    box-shadow: rgb(0 0 0 / 8%) 0px 12px 20px 0px;
 }
 
 .btn-primary {
@@ -34,7 +37,6 @@
 .btn-primary:hover {
     border-color: var(--primary-color);
     background-color: var(--primary-color);
-
 }
 
 .btn-outline-secondary:hover {
@@ -43,38 +45,10 @@
     color: var(--primary-color-text);
 }
 
-/*더 둘러보기 스와이퍼*/
-.swiper {
-    width: 100%;
-}
+/* 프로필 설정 */
 
-.swiper-wrapper {
-    max-height: 300px;
-}
-
-.swiper-slide {
-    text-align: center;
-    font-size: 18px;
-    background: #fff;
-    max-height: 300px;
-    /* Center slide text vertically */
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    -webkit-justify-content: center;
-    justify-content: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    -webkit-align-items: center;
-    align-items: center;
-}
-
-.swiper-slide img {
-    display: block;
-    width: 100%;
-    /*height: 100%;*/
-    object-fit: cover;
+.img-profile {
+    width: 100px;
+    height: 100px;
+    background-color: red;
 }

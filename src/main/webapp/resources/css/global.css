@@ -19,6 +19,7 @@
 
 body {
     font-family: 'Noto Sans KR', 'Segoe UI', sans-serif;
+    background-color: red;
 }
 
 .nav-link:hover {

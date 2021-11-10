@@ -25,15 +25,31 @@
             <h4>나의 파티</h4>
         </div>
 
-        <div class="container">
+        <div id="testxxxx" class="party-container container-lg d-flex justify-content-between align-items-center">
+            <h5>
+                팀 맹구
+            </h5>
+            <div class="d-grid gap-2 d-md-flex justify-content-end">
+                <div class="btn-wrapper">
+                    <button type="button" class="btn mypage-btn btn-primary px-4 me-md-2">파티입장</button>
+                </div>
+                <div class="btn-wrapper">
+                    <button type="button" class="btn mypage-btn btn-outline-secondary px-4">파티탈퇴</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <div class="btn-wrapper">
-                    <button type="button" class="btn mypage-btn btn-primary btn-lg px-4 me-md-2">파티입장</button>
-                </div>
-                <div class="btn-wrapper">
-                    <button type="button" class="btn mypage-btn btn-outline-secondary btn-lg px-4">파티탈퇴</button>
-                </div>
+
+    <%--프로필 설정--%>
+    <div class="container mt-5 px-5">
+        <div class="header">
+            <h4>프로필 설정</h4>
+        </div>
+
+        <div class="container-lg d-flex justify-content-center">
+            <div>
+                <div class="img-profile"></div>
             </div>
         </div>
     </div>
@@ -43,7 +59,8 @@
 <jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/include/footer.jsp"/>
 
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+<script src=" https:
+                //cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>

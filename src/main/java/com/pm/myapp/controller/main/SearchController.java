@@ -1,13 +1,19 @@
 package com.pm.myapp.controller.main;
 
+import com.pm.myapp.domain.Criteria;
+import com.pm.myapp.domain.PageDTO;
+import com.pm.myapp.domain.PartyVO;
 import com.pm.myapp.service.main.SearchService;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 
 @Log4j2
@@ -21,11 +27,21 @@ public class SearchController {
     private SearchService service;
 
     // 검색 페이지(view)
-    @GetMapping("")
-    public String showPartyList() {
+    @GetMapping("/searchList")
+    public void showPartyList(Criteria cri, String searchWord, Model model) {
         log.debug("showPartyList() invoked.");
 
-        return "/search/searchPage";
+        searchWord = "%" + searchWord + "%";
+
+        List<PartyVO> list = this.service.getPartyListBySearch(cri, searchWord, searchWord, searchWord);
+        log.info("\t+ list size: {}", list.size());
+
+        model.addAttribute("list", list);
+
+        Integer totalAmount = this.service.getTotalCount();
+        PageDTO pageDTO = new PageDTO(cri, totalAmount);
+
+        model.addAttribute("pageMaker", pageDTO);
     } // showPartyList
 
     // 카테고리 선택

@@ -6,20 +6,91 @@
     
     <select id="getInfo" resultType="com.pm.myapp.domain.PartyVO">
     
-    SELECT P.PTCODE, P.PTNAME, P.PSCORE, P.CDATE, P.LOGO, P.COVER, P.PPROF, P.PBPOINT, P.LCODE, H.HBCODE
-    FROM PARTY P JOIN PARTYHB H
-    ON P.PTCODE = H.PTCODE
-    WHERE P.PTNAME =  #{PTNAME}
+    SELECT P.PARTYCODE, P.PARTYNAME, P.PARTYSCORE, P.CREATEDATE, P.LOGOPIC,
+    	   P.COVERPIC, P.PARTYPROFILE, P.PARTYBANNED, L.LOCALNAME, H.HOBBYNAME
+    FROM PARTY P
+    JOIN HOBBY H
+    ON P.HOBBYCODE = H.HOBBYCODE
+    JOIN LOCALINFO L
+    ON P.LOCALCODE = L.LOCALCODE
+    WHERE P.PARTYCODE =  #{PARTYCODE}
 
     </select>
+
+    <insert id="makeJoin">
+
+    INSERT INTO PARTYUSER(EMAIL, PARTYCODE, AUTHCODE)
+    VALUES(#{EMAIL}, #{PARTYCODE}, -1)
+
+    </insert>
+
+    <delete id="deleteJoin">
+
+    DELETE FROM PARTYUSER
+    WHERE EMAIL=#{EMAIL}
+    AND PARTYCODE=#{PARTYCODE}
+
+    </delete>
     
     <update id="modifyLogo">
     
-    SELECT P.PTCODE, P.PTNAME, P.PSCORE, P.CDATE, P.LOGO, P.COVER, P.PPROF, P.PBPOINT, P.LCODE, H.HBCODE
-    FROM PARTY P JOIN PARTYHB H
-    ON P.PTCODE = H.PTCODE
-    WHERE P.PTNAME =  #{PTNAME}
+    UPDATE PARTY
+    SET LOGOPIC = #{LOGOPIC}
+    WHERE PARTYCODE = #{PARTYCODE}
 
     </update>
+    
+    <update id="modifyInfo">
+    
+    UPDATE PARTY
+    SET PARTYNAME = #{PARTYNAME},
+    PARTYPROFILE = #{PARTYPROFILE},
+    LOCALCODE = #{LOCALCODE},
+    HOBBYCODE = #{HOBBYCODE}
+    WHERE PARTYCODE = #{PARTYCODE}
+
+    </update>
+    
+    <update id="makeDesPartyReq">
+    
+    UPDATE PARTY
+    SET PARTYBANNED = -1
+    WHERE PARTYCODE = #{PARTYCODE}
+
+    </update>
+    
+    <update id="delegatePL">
+    
+    UPDATE PARTYUSER
+    SET AUTHCODE = #{AUTHCODE}
+    WHERE EMAIL = #{EMAIL}
+    AND PARTYCODE = #{PARTYCODE}
+
+    </update>
+    
+    <update id="upgradeJoin">
+    
+    UPDATE PARTYUSER
+    SET AUTHCODE = 1
+    WHERE EMAIL = #{EMAIL}
+    AND PARTYCODE = #{PARTYCODE}
+
+    </update>
+    
+    <select id="getMember" resultType="com.pm.myapp.domain.PartyUserVO">
+    
+    <![CDATA[ 
+    SELECT U.NICKNAME, U.USERPIC
+    FROM (SELECT * FROM PARTYUSER
+    WHERE PARTYCODE = #{PARTYCODE}
+    ORDER BY AUTHCODE DESC) T
+    JOIN USERINFO U
+    ON T.EMAIL = U.EMAIL
+    WHERE T.AUTHCODE > 0
+    ]]>
+    
+    </select>
+    
+    
 
 </mapper>

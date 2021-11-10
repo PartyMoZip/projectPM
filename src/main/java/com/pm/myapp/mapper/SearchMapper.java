@@ -1,4 +1,4 @@
-package com.pm.myapp.service.main;
+package com.pm.myapp.mapper;
 
 import com.pm.myapp.domain.Criteria;
 import com.pm.myapp.domain.PartyVO;
@@ -6,12 +6,13 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-public interface SearchService {
+// 검색 매퍼
+public interface SearchMapper {
 
-    // 페이징 파티 목록 조회
+    // 파티 전체 조회
     public abstract List<PartyVO> getPartyList(Criteria cri);
 
-    // 페이징 검색어 포함된 파티 목록 조회
+    // 검색된 파티만 조회
     public abstract List<PartyVO> getPartyListBySearch(
             @Param("cri") Criteria cri,
             @Param("searchWord1") String searchWord1,
@@ -29,4 +30,4 @@ public interface SearchService {
             @Param("searchWord3") String searchWord3
     );
 
-} //end interface
+} // end interface
