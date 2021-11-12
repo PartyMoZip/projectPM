@@ -22,9 +22,9 @@
         <![CDATA[
         SELECT *
         FROM party p
-        WHERE partyname LIKE #{searchWord.word1}
-           OR p.hobbycode = (SELECT hobbycode FROM hobby WHERE hobbyname LIKE #{searchWord.word2})
-           OR p.localcode = (SELECT localcode FROM localinfo WHERE localname LIKE #{searchWord.word3})
+        WHERE partyname LIKE #{searchWord.word}
+           OR p.hobbycode = (SELECT hobbycode FROM hobby WHERE hobbyname LIKE #{searchWord.word})
+           OR p.localcode = (SELECT localcode FROM localinfo WHERE localname LIKE #{searchWord.word})
         ORDER BY partycode DESC
         OFFSET (#{cri.currPage} - 1) * #{cri.amount} ROWS FETCH NEXT #{cri.amount} ROWS ONLY
         ]]>
@@ -33,24 +33,30 @@
 
     <select
             id="getPartyListBySelected"
-            parameterType="map"
             resultType="com.pm.myapp.domain.PartyVO">
-
-        <!-- 시안: 더 가독성이 좋을 순 없을까 -->
 
         SELECT *
         FROM party p
-        <WHERE>
+        <where>
             <choose>
                 <when test="searchWord.word1 != null">
-                    partyname like #{searchWord.word1};
+                    partyname like #{searchWord.word}
                 </when>
                 <otherwise>
                     partyname like '%'
                 </otherwise>
             </choose>
-        </WHERE>
 
+            <if test="searchWord.hobby != null">
+                AND p.hobbycode = (SELECT hobbycode FROM hobby WHERE hobbyname = #{searchWord.hobby})
+            </if>
+
+            <if test="searchWord.local != null">
+                AND p.localcode = (SELECT localcode FROM localinfo WHERE localname = #{searchWord.local})
+            </if>
+        </where>
+        ORDER BY partycode DESC
+        OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS FETCH NEXT #{cri.amount} ROWS ONLY
 
     </select>
 
@@ -71,9 +77,9 @@
         <![CDATA[
         SELECT COUNT(partycode)
         FROM party p
-        WHERE partyname LIKE #{searchWord1}
-           OR p.hobbycode = (SELECT hobbycode FROM hobby WHERE hobbyname LIKE #{searchWord2})
-           OR p.localcode = (SELECT localcode FROM localinfo WHERE localname LIKE #{searchWord3})
+        WHERE partyname LIKE #{word}
+           OR p.hobbycode = (SELECT hobbycode FROM hobby WHERE hobbyname LIKE #{word})
+           OR p.localcode = (SELECT localcode FROM localinfo WHERE localname LIKE #{word})
         ]]>
     </select>
 </mapper>

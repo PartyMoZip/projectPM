@@ -17,7 +17,9 @@ public interface SearchService {
             SearchWordDTO searchWord
     );
 
+    // 페이징 카테고리 선택된 조건으로 조회
     public abstract List<PartyVO> getPartyListBySelected(
+            Criteria cri,
             SearchWordDTO searchWord
     );
 

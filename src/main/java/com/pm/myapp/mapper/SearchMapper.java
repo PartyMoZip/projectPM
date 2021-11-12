@@ -21,6 +21,7 @@ public interface SearchMapper {
 
     // 카테고리 선택된 조건으로 조회
     public abstract List<PartyVO> getPartyListBySelected(
+            @Param("cri") Criteria cri,
             @Param("searchWord") SearchWordDTO searchWord
     );
 

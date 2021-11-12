@@ -58,9 +58,9 @@ public class SearchMapperTests {
         cri.setAmount(5);
 
         SearchWordDTO searchWord = new SearchWordDTO();
-        searchWord.setWord1("%축구%");
-        searchWord.setWord2("%축구%");
-        searchWord.setWord3("%축구%");
+        searchWord.setWord("%축구%");
+        // searchWord.setWord2("%축구%");
+        // searchWord.setWord3("%축구%");
 
         List<PartyVO> list = this.mapper.getPartyListBySearch(cri, searchWord);
         list.forEach(log::info);
@@ -71,14 +71,18 @@ public class SearchMapperTests {
     public void testGetPartyListBySelected() {
         log.info("testGetPartyListBySelected() invoked.");
 
+        Criteria cri = new Criteria();
+        cri.setCurrPage(1);
+        cri.setAmount(9);
+
         SearchWordDTO searchWord = new SearchWordDTO();
-        searchWord.setWord1("%축구%");
+        searchWord.setWord("%스%");
         // searchWord.setWord2("%축구%");
         // searchWord.setWord3("%축구%");
-        // searchWord.setHobby("%야구%");
-        // searchWord.setLocal(null);
+        searchWord.setHobby("축구");
+        // searchWord.setLocal("강남");
 
-        List<PartyVO> list = this.mapper.getPartyListBySelected(searchWord);
+        List<PartyVO> list = this.mapper.getPartyListBySelected(cri, searchWord);
         list.forEach(log::info);
     } // testGetPartyListBySelected
 

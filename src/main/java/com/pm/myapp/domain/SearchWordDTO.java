@@ -6,9 +6,7 @@ import lombok.Data;
 @Data
 public class SearchWordDTO {
 
-    String word1;
-    String word2;
-    String word3;
+    String word;
     String hobby;
     String local;
 
