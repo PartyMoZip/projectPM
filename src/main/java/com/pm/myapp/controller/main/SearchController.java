@@ -1,7 +1,9 @@
 package com.pm.myapp.controller.main;
 
 import com.pm.myapp.domain.Criteria;
+import com.pm.myapp.domain.PageDTO;
 import com.pm.myapp.domain.PartyVO;
+import com.pm.myapp.domain.SearchWordDTO;
 import com.pm.myapp.service.main.SearchService;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -40,19 +42,21 @@ public class SearchController {
 
         log.info("검색어 : {}", searchWord);
 
-        // url 로 직접 조회했을 때를 대비
+        // url 로 직접 접근했을 때를 대비
         if (searchWord != null) {
 
             model.addAttribute("searchWord", searchWord);
 
-            // LIKE 절을 위한 검색어 가공 처리
-            searchWord = "%" + searchWord + "%";
+            SearchWordDTO dto = new SearchWordDTO();
 
-            // List<PartyVO> list = this.service.getPartyListBySearch(cri, searchWord, searchWord, searchWord);
-            // log.info("\t+ list size: {}", list.size());
-            //
-            // model.addAttribute("list", list);
-            // totalAmount = this.service.getTotalCountBySearch(searchWord, searchWord, searchWord);
+            // LIKE 절을 위한 검색어 가공 처리
+            dto.setWord("%" + searchWord + "%");
+
+            List<PartyVO> list = this.service.getPartyListBySearch(cri, dto);
+            log.info("\t+ list size: {}", list.size());
+
+            model.addAttribute("list", list);
+            totalAmount = this.service.getTotalCountBySearch(dto);
         } else {
 
             List<PartyVO> list = this.service.getPartyList(cri);
@@ -62,16 +66,35 @@ public class SearchController {
             totalAmount = this.service.getTotalCount();
         }
 
+        PageDTO pageDTO = new PageDTO(cri, totalAmount);
 
-        // PageDTO pageDTO = new PageDTO(cri, totalAmount);
-
-        // model.addAttribute("pageMaker", pageDTO);
+        model.addAttribute("pageMaker", pageDTO);
     } // showPartyList
 
     // 카테고리 선택
-    @GetMapping("/selectCategory")
-    public void selectCategory() {
+    @GetMapping("/select")
+    public void selectCategory(Criteria cri, String title, String hobby, String local, Model model) {
         log.debug("selectCategory() invoked.");
+
+        // Criteria 초기화
+        if (cri.getAmount() == 0 || cri.getPagesPerPage() == 0) {
+            cri.setAmount(9);
+            cri.setPagesPerPage(9);
+        } // if
+
+        SearchWordDTO searchWordDTO = new SearchWordDTO();
+        searchWordDTO.setWord(title);
+        searchWordDTO.setHobby(hobby);
+        searchWordDTO.setLocal(local);
+
+        List<PartyVO> list = this.service.getPartyListBySelected(cri, searchWordDTO);
+        log.info("searchWordDTO: {}, {}, {}", searchWordDTO.getWord(), searchWordDTO.getHobby(), searchWordDTO.getHobby());
+
+        int totalAmount = this.service.getTotalCountBySearch(searchWordDTO);
+
+        PageDTO pageDTO = new PageDTO(cri, totalAmount);
+
+        model.addAttribute("pageMaker", pageDTO);
 
     } // selectCategory
 
