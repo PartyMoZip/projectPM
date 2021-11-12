@@ -93,13 +93,15 @@ public class LoginController {
 			session.setAttribute("user_info" , findUser);
 	}
         return "redirect:/";
-	}
+	} //doLogin
 
 	// 로그아웃
 	@GetMapping("/doLogout")
-	public void doLogout() {
+	public String doLogout(HttpSession session) {
 		log.debug("doLogout() invoked.");
 
+		session.invalidate();
+		return "redirect:/";
 	} // doLogout
 
 
@@ -150,7 +152,7 @@ public class LoginController {
 			e.printStackTrace();
 		}
 		return result;
-	}
+	} //getAccessToken
 
 	//사용자 정보 얻기 (사용자 정보를 얻기 위해 처음 발급받았던 accessToken을 사용함!)
 	public KakaoUserDTO getUserInfo(String accessToken) {
@@ -190,9 +192,6 @@ public class LoginController {
 			e.printStackTrace();
 		}
 		return userInfo;
-	}
+	} //getUserInfo
 
-
-
-	
 } // end class

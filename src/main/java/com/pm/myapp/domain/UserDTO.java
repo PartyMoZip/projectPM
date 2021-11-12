@@ -2,9 +2,7 @@ package com.pm.myapp.domain;
 
 import lombok.*;
 
-@Getter
-@Setter
-@ToString
+@Data
 public class UserDTO {
 
     private String email;
