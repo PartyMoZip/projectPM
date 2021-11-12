@@ -106,6 +106,8 @@ public class PartyServiceImpl implements PartyService,InitializingBean, Disposab
 		
 		int affectedLine = this.mapper.makeDesPartyReq(partyCode);
 		
+		log.info("\t + affectedLine : {}",affectedLine);
+		
 		return (affectedLine==1);
 		
 	} // breakParty
@@ -116,6 +118,8 @@ public class PartyServiceImpl implements PartyService,InitializingBean, Disposab
 		
 		int affectedLine = this.mapper.delegatePL(authCode, email, partyCode);
 		
+		log.info("\t + affectedLine : {}",affectedLine);
+		
 		return (affectedLine==1);
 	} // editPL
 
@@ -125,6 +129,8 @@ public class PartyServiceImpl implements PartyService,InitializingBean, Disposab
 		
 		int affectedLine = this.mapper.upgradeJoin(email, partyCode);
 		
+		log.info("\t + affectedLine : {}",affectedLine);
+		
 		return (affectedLine==1);
 	} // acceptJoin
 
@@ -133,6 +139,8 @@ public class PartyServiceImpl implements PartyService,InitializingBean, Disposab
 		log.debug("rejectJoin({}, {}) invoked.",email, partyCode);
 		
 		int affectedLine = this.mapper.deleteJoin(email, partyCode);
+		
+		log.info("\t + affectedLine : {}",affectedLine);
 		
 		return (affectedLine==1);
 		
@@ -144,6 +152,8 @@ public class PartyServiceImpl implements PartyService,InitializingBean, Disposab
 		
 		List<PartyUserVO> user = this.mapper.getMember(partyCode);
 		
+		log.info("\t + user : {}",user);
+		
 		return user;
 	} // showMember
 
@@ -152,6 +162,8 @@ public class PartyServiceImpl implements PartyService,InitializingBean, Disposab
 		log.debug("kickMember({}, {}) invoked.",email, partyCode);
 		
 		int affectedLine = this.mapper.deleteJoin(email, partyCode);
+		
+		log.info("\t + affectedLine : {}",affectedLine);
 		
 		return (affectedLine==1);
 	} // kickMember

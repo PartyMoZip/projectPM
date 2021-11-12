@@ -44,8 +44,7 @@
 	
 	<!-- 트랜잭션을 이용하기 위한 설정 -->
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="hikariDataSource" />
-			
+		<property name="dataSource" ref="hikariDataSource" />			
 	</bean>
 
 	<tx:annotation-driven/>
