@@ -2,6 +2,7 @@ package com.pm.myapp.mapper;
 
 import com.pm.myapp.domain.Criteria;
 import com.pm.myapp.domain.PartyVO;
+import com.pm.myapp.domain.SearchWordDTO;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
@@ -56,11 +57,30 @@ public class SearchMapperTests {
         cri.setCurrPage(1);
         cri.setAmount(5);
 
-        String searchWord = "%축구%";
+        SearchWordDTO searchWord = new SearchWordDTO();
+        searchWord.setWord1("%축구%");
+        searchWord.setWord2("%축구%");
+        searchWord.setWord3("%축구%");
 
-        List<PartyVO> list = this.mapper.getPartyListBySearch(cri, searchWord, searchWord, searchWord);
+        List<PartyVO> list = this.mapper.getPartyListBySearch(cri, searchWord);
         list.forEach(log::info);
     } // testGetPartyListBySearch
+
+    // 카테고리 선택된 조건으로 조회
+    @Test
+    public void testGetPartyListBySelected() {
+        log.info("testGetPartyListBySelected() invoked.");
+
+        SearchWordDTO searchWord = new SearchWordDTO();
+        searchWord.setWord1("%축구%");
+        // searchWord.setWord2("%축구%");
+        // searchWord.setWord3("%축구%");
+        // searchWord.setHobby("%야구%");
+        // searchWord.setLocal(null);
+
+        List<PartyVO> list = this.mapper.getPartyListBySelected(searchWord);
+        list.forEach(log::info);
+    } // testGetPartyListBySelected
 
     // 총 파티 목록 개수
     @Test
@@ -76,10 +96,10 @@ public class SearchMapperTests {
     public void testGetTotalCountBySearch() {
         log.info("testGetTotalCountBySearch() invoked.");
 
-        String searchWord = "%축구%";
-
-        Integer totalCount = this.mapper.getTotalCountBySearch(searchWord, searchWord, searchWord);
-        log.info("\t+ totalCount: {}", totalCount);
+        // String searchWord = "%축구%";
+        //
+        // Integer totalCount = this.mapper.getTotalCountBySearch(searchWord, searchWord, searchWord);
+        // log.info("\t+ totalCount: {}", totalCount);
     } // testGetTotalCountBySearch
 
     @After

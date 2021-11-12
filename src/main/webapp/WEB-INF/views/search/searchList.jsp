@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
 <head>
     <title>파티모집 - 검색</title>
@@ -22,7 +24,16 @@
 <div class="container mt-5">
     <main>
         <div class="inner-container container-md">
-            <h3 class="inner-menu">전체</h3>
+            <h3 class="inner-menu">
+                <c:choose>
+                    <c:when test="${searchWord != null}">
+                        ${searchWord}
+                    </c:when>
+                    <c:otherwise>
+                        전체
+                    </c:otherwise>
+                </c:choose>
+            </h3>
             <%--카테고리 선택 드랍다운 메뉴--%>
             <div class="dropdown-group">
                 <div class="btn-group">

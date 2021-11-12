@@ -12,6 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.*;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -75,10 +76,17 @@ public class SearchControllerTests {
         MockMvcBuilder builder = MockMvcBuilders.webAppContextSetup(ctx);
         MockMvc mockMvc = builder.build();
 
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/search/searchList");
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/search/searchList");
         log.info("requestBuilder: {}", requestBuilder);
 
-        // requestBuilder.param("cri", cri);
+        // Criteria cri = new Criteria();
+        // cri.setCurrPage(9);
+        // cri.setAmount(9);
+
+        requestBuilder.param("cri", "9", "9");
+        requestBuilder.param("searchWord1", "%축구%");
+        requestBuilder.param("searchWord2", "%축구%");
+        requestBuilder.param("searchWord3", "%축구%");
 
         Map<String, Object> model =
                 mockMvc

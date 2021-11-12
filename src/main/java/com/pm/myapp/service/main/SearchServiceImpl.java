@@ -2,10 +2,10 @@ package com.pm.myapp.service.main;
 
 import com.pm.myapp.domain.Criteria;
 import com.pm.myapp.domain.PartyVO;
+import com.pm.myapp.domain.SearchWordDTO;
 import com.pm.myapp.mapper.SearchMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,15 +27,18 @@ public class SearchServiceImpl implements SearchService {
 
     @Override
     public List<PartyVO> getPartyListBySearch(
-            @Param("cri") Criteria cri,
-            @Param("searchWord1") String searchWord1,
-            @Param("searchWord2") String searchWord2,
-            @Param("searchWord3") String searchWord3
+            Criteria cri,
+            SearchWordDTO searchWord
     ) {
         log.debug("getPartyList() invoked.");
 
-        return this.mapper.getPartyListBySearch(cri, searchWord1, searchWord2, searchWord3);
+        return this.mapper.getPartyListBySearch(cri, searchWord);
     } // getPartyListBySearch
+
+    @Override
+    public List<PartyVO> getPartyListBySelected(SearchWordDTO searchWord) {
+        return null;
+    }
 
     @Override
     public Integer getTotalCount() {
@@ -45,9 +48,9 @@ public class SearchServiceImpl implements SearchService {
     } // getTotalCount
 
     @Override
-    public Integer getTotalCountBySearch(String searchWord1, String searchWord2, String searchWord3) {
+    public Integer getTotalCountBySearch(SearchWordDTO searchWord) {
         log.debug("getTotalCount() invoked.");
 
-        return this.mapper.getTotalCountBySearch(searchWord1, searchWord2, searchWord3);
+        return this.mapper.getTotalCountBySearch(searchWord);
     } // getTotalCountBySearch
 }

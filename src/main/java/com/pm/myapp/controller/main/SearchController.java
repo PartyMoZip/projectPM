@@ -1,7 +1,6 @@
 package com.pm.myapp.controller.main;
 
 import com.pm.myapp.domain.Criteria;
-import com.pm.myapp.domain.PageDTO;
 import com.pm.myapp.domain.PartyVO;
 import com.pm.myapp.service.main.SearchService;
 import lombok.NoArgsConstructor;
@@ -31,17 +30,42 @@ public class SearchController {
     public void showPartyList(Criteria cri, String searchWord, Model model) {
         log.debug("showPartyList() invoked.");
 
-        searchWord = "%" + searchWord + "%";
+        int totalAmount;
 
-        List<PartyVO> list = this.service.getPartyListBySearch(cri, searchWord, searchWord, searchWord);
-        log.info("\t+ list size: {}", list.size());
+        // Criteria 초기화
+        if (cri.getAmount() == 0 || cri.getPagesPerPage() == 0) {
+            cri.setAmount(9);
+            cri.setPagesPerPage(9);
+        } // if
 
-        model.addAttribute("list", list);
+        log.info("검색어 : {}", searchWord);
 
-        Integer totalAmount = this.service.getTotalCount();
-        PageDTO pageDTO = new PageDTO(cri, totalAmount);
+        // url 로 직접 조회했을 때를 대비
+        if (searchWord != null) {
 
-        model.addAttribute("pageMaker", pageDTO);
+            model.addAttribute("searchWord", searchWord);
+
+            // LIKE 절을 위한 검색어 가공 처리
+            searchWord = "%" + searchWord + "%";
+
+            // List<PartyVO> list = this.service.getPartyListBySearch(cri, searchWord, searchWord, searchWord);
+            // log.info("\t+ list size: {}", list.size());
+            //
+            // model.addAttribute("list", list);
+            // totalAmount = this.service.getTotalCountBySearch(searchWord, searchWord, searchWord);
+        } else {
+
+            List<PartyVO> list = this.service.getPartyList(cri);
+            log.info("\t+ list size: {}", list.size());
+
+            model.addAttribute("list", list);
+            totalAmount = this.service.getTotalCount();
+        }
+
+
+        // PageDTO pageDTO = new PageDTO(cri, totalAmount);
+
+        // model.addAttribute("pageMaker", pageDTO);
     } // showPartyList
 
     // 카테고리 선택

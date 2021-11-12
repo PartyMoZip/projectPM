@@ -66,12 +66,12 @@ public class SearchServiceTests {
 
         String searchWord = "%축구%";
 
-        List<PartyVO> list = this.service.getPartyListBySearch(cri, searchWord, searchWord, searchWord);
-        log.info("list: {}", list);
-
-        assert list != null;
-
-        list.forEach(log::info);
+        // List<PartyVO> list = this.service.getPartyListBySearch(cri, searchWord, searchWord, searchWord);
+        // log.info("list: {}", list);
+        //
+        // assert list != null;
+        //
+        // list.forEach(log::info);
     } // testGetPartyListBySearch
 
     // 총 파티 목록 개수
@@ -91,8 +91,8 @@ public class SearchServiceTests {
 
         String searchWord = "%축구%";
 
-        Integer totalCount = this.service.getTotalCountBySearch(searchWord, searchWord, searchWord);
-        log.info("\t+ totalCount: {}", totalCount);
+        // Integer totalCount = this.service.getTotalCountBySearch(searchWord, searchWord, searchWord);
+        // log.info("\t+ totalCount: {}", totalCount);
 
     } // testGetTotalCountBySearch
 
