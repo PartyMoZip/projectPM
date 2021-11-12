@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.context.annotation.Profile;
 
 @Getter
 @Setter
@@ -17,7 +16,7 @@ import org.springframework.context.annotation.Profile;
 //kakaouserdto의 연결되어 있음
 public class KakaoAccount {
 
-    private KakaoProfile profile;
+    private Profile profile;
     private String email;
 
 } //end class
