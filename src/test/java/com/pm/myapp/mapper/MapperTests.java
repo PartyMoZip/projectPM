@@ -9,6 +9,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.pm.myapp.domain.MyPartyVO;
+import com.pm.myapp.domain.PartyDTO;
 
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -54,6 +55,22 @@ public class MapperTests {
 		log.info("\t+party : {}",party);
 		
 	} // testGetList
+	
+	@Test
+	public void testMakeParty() { // 통과 완료
+		log.debug("testMakeParty() invoked.");
+		
+		PartyDTO dto = new PartyDTO();
+		dto.setPartyName("여행가자");
+		dto.setPartyCode(23);
+		dto.setPartyProfile("여행갈래?");
+		dto.setLocalCode(1);
+		dto.setHobbyCode(8);
+		
+		int affectedLines = this.mapper.makeParty(dto);
+		log.info("\t+ affectedLines : {}",affectedLines);
+
+	} // testMakeParty
 	
 	@Test
 	public void testXXX() {

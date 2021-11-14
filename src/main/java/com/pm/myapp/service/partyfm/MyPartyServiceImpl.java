@@ -3,6 +3,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pm.myapp.domain.MyPartyVO;
+import com.pm.myapp.domain.PartyDTO;
 import com.pm.myapp.mapper.MyPartyMapper;
 
 import lombok.NoArgsConstructor;
@@ -36,5 +37,14 @@ public class MyPartyServiceImpl implements MyPartyService{
 		MyPartyVO party = this.mapper.getList(email);
 		return null;
 	} // getPartyList
+
+	@Override
+	public boolean createParty(PartyDTO dto) {
+		log.debug("createParty({}) invoked.",dto);
+		
+		int affectedLines = this.mapper.makeParty(dto);
+		
+		return (affectedLines == 1);
+	} // createParty
 
 } // end class

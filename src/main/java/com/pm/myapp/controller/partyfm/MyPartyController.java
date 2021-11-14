@@ -58,12 +58,15 @@ public class MyPartyController {
 	public void doCreateParty(PartyDTO dto) {
 		log.debug("doCreateParty() invoked.");
 		
+		boolean result = this.service.createParty(dto);
+		log.info("\t+ result : {}", result);	
+		
 	} // doCreateParty
 	
 	// 파티 추천 리스트 조회
 	@GetMapping("/getRecommendParty")
-	public void getRecommendParty(Integer localCode, Integer PartyCode) {
-		log.debug("getRecommendParty() invoked.");
+	public void getRecommendParty(Integer localCode, Integer partyCode) {
+		log.debug("getRecommendParty({}, {}) invoked.",localCode, partyCode);
 		
 	} // getRecommendParty	
 	

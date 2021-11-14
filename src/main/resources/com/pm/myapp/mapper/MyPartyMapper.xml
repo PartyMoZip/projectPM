@@ -19,6 +19,13 @@
 		WHERE U.EMAIL = #{email}
 
 	</select>
+
+	<insert id="makeParty">
+
+		INSERT INTO PARTY(PARTYCODE, PARTYNAME, PARTYSCORE, CREATEDATE, LOGOPIC, COVERPIC, PARTYPROFILE, PARTYBANNED, HOBBYCODE, LOCALCODE)
+		VALUES(#{partyCode}, #{partyName}, 0, sysdate, null, null, #{partyProfile}, 0, #{hobbyCode}, #{localCode})
+
+	</insert>
 	
 
 </mapper>
