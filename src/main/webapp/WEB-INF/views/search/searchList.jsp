@@ -20,15 +20,19 @@
 
 <%--HEADER--%>
 <jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp"/>
-
+<h3>pageMaker: ${pageMaker}</h3>
+<h3>searchWord: ${searchWord}</h3>
+<h3>hobby: ${hobby}</h3>
+<h3>local: ${local}</h3>
 <div class="container mt-5">
     <main>
         <div class="inner-container container-md">
-            <form action="/search/select" method="get" class="select-form d-flex justify-content-between container-md">
+            <form action="/search/searchList" method="get"
+                  class="select-form d-flex justify-content-between container-md">
                 <h3 class="inner-menu">
                     <c:choose>
-                        <c:when test="${searchWord != null}">
-                            <input type="hidden" class="title" name="word" value="${searchWord}">${searchWord}
+                        <c:when test="${searchWord != null && !searchWord.equals('all') && !searchWord.equals('')}">
+                            ${searchWord}
                         </c:when>
                         <c:otherwise>
                             전체
@@ -36,7 +40,10 @@
                     </c:choose>
                 </h3>
                 <%--카테고리 선택 드랍다운 메뉴--%>
-                <div class="dropdown-group">
+                <div class="dropdown-group d-flex">
+                    <%--<input class="inner-search form-control" type="search" name="word" class="form-control"--%>
+                    <%--       placeholder="검색하기"--%>
+                    <%--       aria-label="Search">--%>
                     <div class="btn-group">
                         <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
                                 aria-expanded="false">
@@ -301,6 +308,38 @@
                     </div>
                 </div>--%>
             </div>
+        </div>
+
+        <div id="pagination">
+            <form id="paginationForm">
+                <input type="hidden" name="currPage">
+                <input type="hidden" name="amount">
+                <input type="hidden" name="pagesPerPage">
+                <input type="hidden" name="word" value="${searchWord}">
+                <input type="hidden" name="hobby" value="${hobby}">
+                <input type="hidden" name="local" value="${local}">
+                <ul>
+                    <c:if test="${pageMaker.prev}">
+                        <li class="prev">
+                            <a class="prev" href="${pageMaker.startPage-1}">◀</a>
+                        </li>
+                    </c:if>
+
+                    <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="pageNum">
+                        <li>
+                            <a href="/search/searchList?currPage=${pageNum}">
+                                    ${pageNum}
+                            </a>
+                        </li>
+                    </c:forEach>
+
+                    <c:if test="${pageMaker.next}">
+                        <li class="next">
+                            <a class="next" href="${pageMaker.endPage+1}">▶</a>
+                        </li>
+                    </c:if>
+                </ul>
+            </form>
         </div>
     </main>
 </div>

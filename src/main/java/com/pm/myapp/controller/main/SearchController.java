@@ -14,7 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 
@@ -73,14 +72,14 @@ public class SearchController {
     // } // showPartyList
 
     // 카테고리 선택
-    @GetMapping({"/searchList", "/select"})
-    public String selectCategory(HttpServletRequest request, Criteria cri, SearchWordDTO searchWordDTO, Model model) {
+    @GetMapping("/searchList")
+    public String selectCategory(Criteria cri, SearchWordDTO searchWordDTO, Model model) {
         log.info("selectCategory() invoked.");
 
         // Criteria 초기화
         if (cri.getAmount() == 0 || cri.getPagesPerPage() == 0) {
-            cri.setAmount(9);
-            cri.setPagesPerPage(9);
+            cri.setAmount(3);
+            cri.setPagesPerPage(3);
         } // if
 
         List<PartyVO> list;
@@ -88,6 +87,16 @@ public class SearchController {
 
         log.info("searchWordDTO : {}", searchWordDTO);
 
+        // 검색어만 입력했을 경우
+        if (searchWordDTO.getHobby() == null && searchWordDTO.getLocal() == null) {
+            list = this.service.getPartyListBySearch(cri, searchWordDTO);
+            totalAmount = this.service.getTotalCountBySearch(searchWordDTO);
+        } else {
+            list = this.service.getPartyListBySelected(cri, searchWordDTO);
+            totalAmount = this.service.getTotalCountBySelected(searchWordDTO);
+        }
+
+        /*
         // URI 분기
         if (request.getRequestURI().contains("/searchList")) {
             log.debug("searchList() invoked.");
@@ -100,8 +109,10 @@ public class SearchController {
             list = this.service.getPartyListBySelected(cri, searchWordDTO);
 
             totalAmount = this.service.getTotalCountBySelected(searchWordDTO);
-        } // if
+        } // if */
 
+        log.info("list : {}", list);
+        log.info("totalAmount: {}", totalAmount);
 
         PageDTO pageDTO = new PageDTO(cri, totalAmount);
 

@@ -7,6 +7,10 @@
     border-bottom: 1px solid var(--divider-color);
 }
 
+.inner-search {
+    max-width: 150px;
+}
+
 .dropdown-search {
     box-sizing: border-box;
     background-position: 14px 12px;

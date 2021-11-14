@@ -62,13 +62,13 @@ public class SearchServiceTests {
         log.info("testGetPartyListBySearch() invoked.");
 
         Criteria cri = new Criteria();
-        cri.setCurrPage(1);
+        cri.setCurrPage(3);
         cri.setAmount(2);
 
         SearchWordDTO searchWord = new SearchWordDTO();
         searchWord.setWord("%축구%");
-        searchWord.setHobby("축구");
-        searchWord.setLocal("축구");
+        searchWord.setHobby("%축구%");
+        searchWord.setLocal("%축구%");
 
         List<PartyVO> list = this.service.getPartyListBySearch(cri, searchWord);
         log.info("list: {}", list);
@@ -84,12 +84,12 @@ public class SearchServiceTests {
         log.info("testGetPartyListBySelected() invoked.");
 
         Criteria cri = new Criteria();
-        cri.setCurrPage(1);
-        cri.setAmount(9);
+        cri.setCurrPage(2);
+        cri.setAmount(2);
 
         SearchWordDTO searchWord = new SearchWordDTO();
 
-        searchWord.setWord(null);
+        searchWord.setWord(" ");
         searchWord.setHobby("축구");
 
         List<PartyVO> list = this.service.getPartyListBySelected(cri, searchWord);

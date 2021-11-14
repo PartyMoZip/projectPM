@@ -9,6 +9,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Log4j2
 @AllArgsConstructor
@@ -47,13 +48,8 @@ public class SearchServiceImpl implements SearchService {
     public List<PartyVO> getPartyListBySelected(Criteria cri, SearchWordDTO searchWord) {
         log.debug("getPartyListBySelected() invoked.");
 
-        log.info("searchWord.getWord: {}", searchWord.getWord());
-        if (searchWord.getWord().equals("")) {
-            searchWord.setWord("전체");
-        }
-
-        if (searchWord.getHobby() != null) {
-            searchWord.setWord(searchWord.getHobby());
+        if (searchWord.getWord().equals("all") || Objects.equals(searchWord.getWord(), " ")) {
+            searchWord.setWord(null);
         }
 
         List<PartyVO> list = this.mapper.getPartyListBySelected(cri, searchWord);
@@ -88,7 +84,17 @@ public class SearchServiceImpl implements SearchService {
 
         Integer result = this.mapper.getTotalCountBySelected(searchWord);
 
-        searchWord.setWord(searchWord.getWord().replace("%", ""));
+        log.info("result: {}", result);
+        // if (searchWord.getWord().equals("")) {
+        //     searchWord.setWord("전체");
+        // }
+        // else {
+        //     searchWord.setWord(searchWord.getWord().replace("%", ""));
+        // }
+
+        if (searchWord.getHobby() != null) {
+            searchWord.setWord(searchWord.getHobby());
+        }
 
         return result;
     } // getTotalCountBySelected
