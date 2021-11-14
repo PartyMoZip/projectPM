@@ -1,6 +1,7 @@
 package com.pm.myapp.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import com.pm.myapp.domain.PartyDTO;
 import com.pm.myapp.domain.PartyUserVO;
@@ -14,7 +15,9 @@ public interface PartyMapper {
 	
 	public abstract Integer deleteJoin(String email, Integer partyCode);
 	
-	public abstract Integer modifyLogo(String logoPic, Integer partyCode);
+	public abstract Integer modifyLogo(Map<String, Object> imageInfo);
+	
+	public abstract Integer modifyMainImage(Map<String, Object> imageInfo);
 	
 	public abstract Integer modifyInfo(PartyDTO dto);
 	

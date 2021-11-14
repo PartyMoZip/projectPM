@@ -7,9 +7,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import com.pm.myapp.domain.MyPartyVO;
-
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
@@ -19,10 +16,10 @@ import lombok.extern.log4j.Log4j2;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
-public class MapperTests {
+public class MyPartyMapperTests {
 
 	@Setter(onMethod_= {@Autowired})
-	private MyPartyMapper mapper;
+	private xxxMapper mapper;
 
 	@Before
 	public void setup() {
@@ -33,27 +30,6 @@ public class MapperTests {
 		log.info("\t + type : {}", this.mapper.getClass().getName());
 	} // setup
 	
-	@Test
-	public void testQuitParty() { // 통과 완료
-		log.debug("testQuitParty() invoked.");
-		
-		String email = "test4@test.com";
-		Integer partyCode = 5;
-		
-		int affectedLines = this.mapper.quitParty(email, partyCode);
-		log.info("\t+ affectedLines : {}",affectedLines);
-		
-	} // testQuitParty
-	
-	@Test
-	public void testGetList() { // 통과 완료
-		log.debug("testGetList() invoked.");
-		
-		String email = "test4@test.com";
-		MyPartyVO party = this.mapper.getList(email);
-		log.info("\t+party : {}",party);
-		
-	} // testGetList
 	
 	@Test
 	public void testXXX() {

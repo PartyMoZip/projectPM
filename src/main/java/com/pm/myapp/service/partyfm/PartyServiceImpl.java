@@ -1,6 +1,7 @@
 package com.pm.myapp.service.partyfm;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
@@ -41,11 +42,9 @@ public class PartyServiceImpl implements PartyService,InitializingBean, Disposab
 		log.info("\t + mapper : " + this.mapper);
 		
 	} // afterPropertiesSet
-
 	
 	//===========================================================================
-
-
+	
 	@Override
 	public PartyVO getParty(Integer partyCode) {
 		log.debug("getParty({}) invoked.",partyCode);
@@ -56,7 +55,7 @@ public class PartyServiceImpl implements PartyService,InitializingBean, Disposab
 		return party;
 		
 	} // getParty
-
+	
 	@Override
 	public boolean doJoin(String email, Integer partyCode) {
 		log.debug("doJoin({}, {}) invoked.",email, partyCode);
@@ -66,7 +65,7 @@ public class PartyServiceImpl implements PartyService,InitializingBean, Disposab
 		return (affectedLine==1);
 	
 	} // doJoin
-
+	
 	@Override
 	public boolean undoJoin(String email, Integer partyCode) {
 		log.debug("undoJoin({}, {}) invoked.",email, partyCode);
@@ -78,17 +77,28 @@ public class PartyServiceImpl implements PartyService,InitializingBean, Disposab
 	} // undoJoin
 	
 	@Override
-	public boolean editLogo(String logoPic, Integer partyCode) {
-		log.debug("editLogo({}, {}) invoked.",logoPic, partyCode);
+	public boolean editLogo(Map<String, Object> imageInfo) {
+		log.debug("editLogo({}) invoked.",imageInfo);
 		
-		int affectedLine = this.mapper.modifyLogo(logoPic, partyCode);
+		int affectedLine = this.mapper.modifyLogo(imageInfo);
 		
 		log.info("\t + affectedLine : {}",affectedLine);
 		
 		return (affectedLine==1);
 		
 	} // editLogo
+	
 
+	@Override
+	public boolean editPartyMainImage(Map<String, Object> imageInfo) {
+		log.debug("editPartyMainImage({}) invoked.",imageInfo);
+
+		int affectedLine = this.mapper.modifyMainImage(imageInfo);
+		
+		return (affectedLine==1);
+	} // editPartyMainImage
+
+	
 	@Override
 	public boolean editInfo(PartyDTO dto) {
 		log.debug("editInfo({}, {}) invoked.",dto);
@@ -132,6 +142,7 @@ public class PartyServiceImpl implements PartyService,InitializingBean, Disposab
 		log.info("\t + affectedLine : {}",affectedLine);
 		
 		return (affectedLine==1);
+		
 	} // acceptJoin
 
 	@Override
@@ -155,6 +166,7 @@ public class PartyServiceImpl implements PartyService,InitializingBean, Disposab
 		log.info("\t + user : {}",user);
 		
 		return user;
+		
 	} // showMember
 
 	@Override
@@ -166,9 +178,8 @@ public class PartyServiceImpl implements PartyService,InitializingBean, Disposab
 		log.info("\t + affectedLine : {}",affectedLine);
 		
 		return (affectedLine==1);
+		
 	} // kickMember
-
-
 	
 
-}
+} // end class

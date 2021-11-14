@@ -32,21 +32,20 @@
       </form>
       <hr>
       <form action="/party/editpl" method="post" enctype="multipart/form-data">
-        <input type="hidden" name="partyCode" valus=10>
-        <input type="file" multiple="multiple" name="files"/>
+        <input type="hidden" name="partyCode" value=10>
+        <input type="file" multiple="multiple" name="image"/>
         <button type="submit">전송</button>
       </form>
       <h1>${logoresult}</h1>
+      <img src="/logoImages/${__PARTY__.logoPic}" alt="" />
       <hr>
       <form action="/party/editpi" method="post" enctype="multipart/form-data">
-        <input type="hidden" name="partyCode" valus=10>
-        <input type="file" multiple="multiple" name="files"/>
+        <input type="hidden" name="partyCode" value=10>
+        <input type="file" multiple="multiple" name="image"/>
         <button type="submit">전송</button>
       </form>
       <h1>${mainresult}</h1>
-      <img src="/logoImages/${logoFileLocation}">
- 
-      <img src="/mainImages/${mainImageFileLocation}">
+      <img src="/mainImages/${__PARTY__.coverPic}" alt="" />
 
 </body>
 </html>

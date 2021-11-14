@@ -1,6 +1,7 @@
 package com.pm.myapp.service.partyfm;
 
 import java.util.List;
+import java.util.Map;
 
 import com.pm.myapp.domain.PartyDTO;
 import com.pm.myapp.domain.PartyUserVO;
@@ -14,7 +15,9 @@ public interface PartyService {
 	
 	public abstract boolean undoJoin(String email, Integer partyCode);
 	
-	public abstract boolean editLogo(String logoPic, Integer partyCode);
+	public abstract boolean editLogo(Map<String, Object> imageInfo);
+	
+	public abstract boolean editPartyMainImage(Map<String, Object> imageInfo);
 	
 	public abstract boolean editInfo(PartyDTO dto);
 	

@@ -11,13 +11,13 @@
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<mvc:annotation-driven />
-
+	
+	<!-- 파티로고 이미지 불러오기 -->
+	<mvc:resources mapping="/logoImages/**" location="file:///C:/ProjectPM/ImageUpload/PartyLogo/"/>
+	<!-- 파티메인 이미지 불러오기 -->
+    <mvc:resources mapping="/mainImages/**" location="file:///C:/ProjectPM/ImageUpload/PartyMainImage/"/>
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<mvc:resources mapping="/resources/**" location="/resources/" />
-	<!-- 파티로고 이미지 불러오기 -->
-	<mvc:resources mapping="/images/**" location="file:///C:/ProjectPM/ImageUpload/PartyLogo/"/>
-	<!-- 파티메인 이미지 불러오기 -->
-    <mvc:resources mapping="/images/**" location="file:///C:/ProjectPM/ImageUpload/PartyImage/">
     
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -43,6 +43,8 @@
 		<!-- <beans:property name="maxInMemorySize" value="1048576"/>	-->  			 <!-- 1MB -->
 		
 	</beans:bean>
+	
+
 	
 		<!-- Spring MVC interceptor 등록-->
 <!-- <mvc:interceptors>

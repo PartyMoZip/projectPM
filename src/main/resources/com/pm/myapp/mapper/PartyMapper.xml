@@ -32,11 +32,19 @@
 
     </delete>
     
-    <update id="modifyLogo">
+    <update id="modifyLogo" parameterType="hashMap">
     
     UPDATE PARTY
-    SET LOGOPIC = #{logoPIC}
-    WHERE PARTYCODE = #{PARTYCODE}
+    SET LOGOPIC = #{fileLocation}
+    WHERE PARTYCODE = #{partyCode}
+
+    </update>
+    
+    <update id="modifyMainImage" parameterType="hashMap">
+    
+    UPDATE PARTY
+    SET COVERPIC = #{fileLocation}
+    WHERE PARTYCODE = #{partyCode}
 
     </update>
     
