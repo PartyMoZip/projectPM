@@ -23,8 +23,8 @@
         SELECT *
         FROM party p
         WHERE partyname LIKE #{searchWord.word}
-           OR p.hobbycode = (SELECT hobbycode FROM hobby WHERE hobbyname LIKE #{searchWord.word})
-           OR p.localcode = (SELECT localcode FROM localinfo WHERE localname LIKE #{searchWord.word})
+           OR p.hobbycode = (SELECT hobbycode FROM hobby WHERE hobbyname LIKE #{searchWord.hobby})
+           OR p.localcode = (SELECT localcode FROM localinfo WHERE localname = #{searchWord.local})
         ORDER BY partycode DESC
         OFFSET (#{cri.currPage} - 1) * #{cri.amount} ROWS FETCH NEXT #{cri.amount} ROWS ONLY
         ]]>
@@ -37,15 +37,15 @@
 
         SELECT *
         FROM party p
-        <where>
-            <choose>
-                <when test="searchWord.word1 != null">
-                    partyname like #{searchWord.word}
-                </when>
-                <otherwise>
-                    partyname like '%'
-                </otherwise>
-            </choose>
+        <where>partyname like '%'
+            <!--           <choose>
+                           <when test="searchWord.word != null">
+                               partyname like #{searchWord.word}
+                           </when>
+                           <otherwise>
+                               partyname like '%'
+                           </otherwise>
+                       </choose>-->
 
             <if test="searchWord.hobby != null">
                 AND p.hobbycode = (SELECT hobbycode FROM hobby WHERE hobbyname = #{searchWord.hobby})
@@ -78,8 +78,35 @@
         SELECT COUNT(partycode)
         FROM party p
         WHERE partyname LIKE #{word}
-           OR p.hobbycode = (SELECT hobbycode FROM hobby WHERE hobbyname LIKE #{word})
-           OR p.localcode = (SELECT localcode FROM localinfo WHERE localname LIKE #{word})
+           OR p.hobbycode = (SELECT hobbycode FROM hobby WHERE hobbyname = #{hobby})
+           OR p.localcode = (SELECT localcode FROM localinfo WHERE localname = #{local})
         ]]>
+    </select>
+
+    <select
+            id="getTotalCountBySelected"
+            resultType="Integer">
+
+        SELECT COUNT(partycode)
+        FROM party p
+        <where>
+            <choose>
+                <when test="word != null">
+                    partyname like #{word}
+                </when>
+                <otherwise>
+                    partyname like '%'
+                </otherwise>
+            </choose>
+
+            <if test="hobby != null">
+                AND p.hobbycode = (SELECT hobbycode FROM hobby WHERE hobbyname = #{hobby})
+            </if>
+
+            <if test="local != null">
+                AND p.localcode = (SELECT localcode FROM localinfo WHERE localname = #{local})
+            </if>
+        </where>
+
     </select>
 </mapper>

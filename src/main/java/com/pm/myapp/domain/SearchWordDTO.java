@@ -6,8 +6,8 @@ import lombok.Data;
 @Data
 public class SearchWordDTO {
 
-    String word;
-    String hobby;
-    String local;
+    private String word;
+    private String hobby;
+    private String local;
 
 } // end class

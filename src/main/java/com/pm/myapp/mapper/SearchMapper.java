@@ -33,4 +33,9 @@ public interface SearchMapper {
             SearchWordDTO searchWord
     );
 
+    // 카테고리 포함된 총 파티 목록 개수
+    public abstract Integer getTotalCountBySelected(
+            SearchWordDTO searchWord
+    );
+
 } // end interface

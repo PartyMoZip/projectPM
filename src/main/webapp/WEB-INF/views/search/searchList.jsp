@@ -24,51 +24,99 @@
 <div class="container mt-5">
     <main>
         <div class="inner-container container-md">
-            <h3 class="inner-menu">
-                <c:choose>
-                    <c:when test="${searchWord != null}">
-                        ${searchWord}
-                    </c:when>
-                    <c:otherwise>
-                        전체
-                    </c:otherwise>
-                </c:choose>
-            </h3>
-            <%--카테고리 선택 드랍다운 메뉴--%>
-            <div class="dropdown-group">
-                <div class="btn-group">
-                    <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                        취미
-                    </button>
-                    <div class="dropdown-menu">
-                        <input type="text" class="dropdown-search" placeholder="취미 검색..">
-                        <a class="dropdown-item" href="#">게임</a>
-                        <a class="dropdown-item" href="#">축구</a>
-                        <a class="dropdown-item" href="#">등산</a>
-                        <a class="dropdown-item" href="#">스터디</a>
+            <form action="/search/select" method="get" class="select-form d-flex justify-content-between container-md">
+                <h3 class="inner-menu">
+                    <c:choose>
+                        <c:when test="${searchWord != null}">
+                            <input type="hidden" class="title" name="word" value="${searchWord}">${searchWord}
+                        </c:when>
+                        <c:otherwise>
+                            전체
+                        </c:otherwise>
+                    </c:choose>
+                </h3>
+                <%--카테고리 선택 드랍다운 메뉴--%>
+                <div class="dropdown-group">
+                    <div class="btn-group">
+                        <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                            <c:choose>
+                                <c:when test="${hobby != null}">
+                                    ${hobby}
+                                </c:when>
+                                <c:otherwise>
+                                    취미
+                                </c:otherwise>
+                            </c:choose>
+                        </button>
+                        <ul class="dropdown-menu menu-hobby">
+                            <li>
+                                <input type="text" name="hobby" class="dropdown-search select-hobby"
+                                       value="${hobby}"
+                                       placeholder="취미 검색..">
+                            </li>
+                            <li class="dropdown-item">전체</li>
+                            <li class="dropdown-item">컴퓨터게임</li>
+                            <li class="dropdown-item">축구</li>
+                            <li class="dropdown-item">등산</li>
+                            <li class="dropdown-item">요리</li>
+                        </ul>
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                            <c:choose>
+                                <c:when test="${local != null}">
+                                    ${local}
+                                </c:when>
+                                <c:otherwise>
+                                    지역
+                                </c:otherwise>
+                            </c:choose>
+                        </button>
+                        <ul class="dropdown-menu menu-local">
+                            <li>
+                                <input class="select-local" name="local" type="hidden" value="${local}" disabled>
+                            </li>
+                            <li class="dropdown-item">전체</li>
+                            <li class="dropdown-item">강동</li>
+                            <li class="dropdown-item">강서</li>
+                            <li class="dropdown-item">강남</li>
+                            <li class="dropdown-item">강북</li>
+                        </ul>
                     </div>
                 </div>
-                <div class="btn-group">
-                    <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                        지역
-                    </button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">전체</a>
-                        <a class="dropdown-item" href="#">강동</a>
-                        <a class="dropdown-item" href="#">강서</a>
-                        <a class="dropdown-item" href="#">강남</a>
-                        <a class="dropdown-item" href="#">강북</a>
-                    </div>
-                </div>
-            </div>
+            </form>
         </div>
 
 
         <div class="album py-5">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                <div class="col">
+                <c:forEach items="${list}" var="party">
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
+                                 xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
+                                 preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
+                                <rect width="100%" height="100%" fill="#55595c"></rect>
+                                <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
+                            </svg>
+
+                            <div class="card-body">
+                                <p class="card-text"><c:out value="${party.partyName}"/></p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                                    </div>
+                                    <small class="text-muted"><c:out value="${party.hobbyName}"/></small>
+                                    <small class="text-muted"><c:out value="${party.localName}"/></small>
+                                    <small class="text-muted"><c:out value="${party.partyScore}"/></small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </c:forEach>
+                <%--<div class="col">
                     <div class="card shadow-sm">
                         <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
                              xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
@@ -251,30 +299,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col">
-                    <div class="card shadow-sm">
-                        <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
-                             xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
-                             preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
-                            <rect width="100%" height="100%" fill="#55595c"></rect>
-                            <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
-                        </svg>
-
-                        <div class="card-body">
-                            <p class="card-text">파티 이름</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-
-                                </div>
-                                <small class="text-muted">#축구</small>
-                                <small class="text-muted">#강남</small>
-                                <small class="text-muted">활동점수 18</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                </div>--%>
             </div>
         </div>
     </main>
@@ -288,5 +313,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
+<script src="${pageContext.request.contextPath}/resources/js/search.js"></script>
 </body>
 </html>

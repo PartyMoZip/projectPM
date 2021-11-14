@@ -59,6 +59,9 @@ public class SearchMapperTests {
 
         SearchWordDTO searchWord = new SearchWordDTO();
         searchWord.setWord("%축구%");
+        searchWord.setHobby("축구");
+        searchWord.setLocal("축구");
+
         // searchWord.setWord2("%축구%");
         // searchWord.setWord3("%축구%");
 
@@ -76,7 +79,7 @@ public class SearchMapperTests {
         cri.setAmount(9);
 
         SearchWordDTO searchWord = new SearchWordDTO();
-        searchWord.setWord("%스%");
+        searchWord.setWord("축구");
         // searchWord.setWord2("%축구%");
         // searchWord.setWord3("%축구%");
         searchWord.setHobby("축구");
@@ -100,11 +103,24 @@ public class SearchMapperTests {
     public void testGetTotalCountBySearch() {
         log.info("testGetTotalCountBySearch() invoked.");
 
-        // String searchWord = "%축구%";
-        //
-        // Integer totalCount = this.mapper.getTotalCountBySearch(searchWord, searchWord, searchWord);
-        // log.info("\t+ totalCount: {}", totalCount);
+        SearchWordDTO searchWord = new SearchWordDTO();
+        searchWord.setWord("%축구%");
+
+        Integer totalCount = this.mapper.getTotalCountBySearch(searchWord);
+        log.info("\t+ totalCount: {}", totalCount);
     } // testGetTotalCountBySearch
+
+    // 카테고리 조건의 총 파티 목록 개수
+    @Test
+    public void testGetTotalCountBySelected() {
+        log.info("testGetTotalCountBySelected() invoked.");
+
+        SearchWordDTO searchWord = new SearchWordDTO();
+        searchWord.setWord("%축구%");
+
+        Integer totalCount = this.mapper.getTotalCountBySelected(searchWord);
+        log.info("\t+ totalCount: {}", totalCount);
+    } // testGetTotalCountBySelected
 
     @After
     public void tearDown() {

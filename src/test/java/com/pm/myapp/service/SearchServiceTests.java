@@ -67,6 +67,8 @@ public class SearchServiceTests {
 
         SearchWordDTO searchWord = new SearchWordDTO();
         searchWord.setWord("%축구%");
+        searchWord.setHobby("축구");
+        searchWord.setLocal("축구");
 
         List<PartyVO> list = this.service.getPartyListBySearch(cri, searchWord);
         log.info("list: {}", list);
@@ -76,6 +78,7 @@ public class SearchServiceTests {
         list.forEach(log::info);
     } // testGetPartyListBySearch
 
+    // 카테고리 조건의 파티 목록 조회
     @Test
     public void testGetPartyListBySelected() {
         log.info("testGetPartyListBySelected() invoked.");
@@ -85,9 +88,16 @@ public class SearchServiceTests {
         cri.setAmount(9);
 
         SearchWordDTO searchWord = new SearchWordDTO();
-        searchWord.setWord("%축구%");
-        searchWord.setLocal("강남");
 
+        searchWord.setWord(null);
+        searchWord.setHobby("축구");
+
+        List<PartyVO> list = this.service.getPartyListBySelected(cri, searchWord);
+        log.info("list: {}", list);
+
+        assert list != null;
+
+        list.forEach(log::info);
 
     } // testGetPartyListBySelected
 
@@ -113,6 +123,20 @@ public class SearchServiceTests {
         log.info("\t+ totalCount: {}", totalCount);
 
     } // testGetTotalCountBySearch
+
+
+    // 카테고리 조건의 총 파티 목록 개수
+    @Test
+    public void testGetTotalCountBySelected() {
+        log.info("testGetTotalCountBySelected() invoked.");
+
+        SearchWordDTO searchWord = new SearchWordDTO();
+        searchWord.setLocal("강남");
+
+        Integer totalCount = this.service.getTotalCountBySelected(searchWord);
+        log.info("\t+ totalCount: {}", totalCount);
+
+    } // testGetTotalCountBySelected
 
     @After
     public void tearDown() {

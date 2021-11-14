@@ -31,4 +31,9 @@ public interface SearchService {
             SearchWordDTO searchWord
     );
 
+    // 카테고리 선택된 조건 총 파티 목록 개수
+    public abstract Integer getTotalCountBySelected(
+            SearchWordDTO searchWord
+    );
+
 } //end interface
