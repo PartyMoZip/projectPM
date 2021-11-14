@@ -22,20 +22,27 @@ public class AdminController {
 	
 	@Setter(onMethod_= {@Autowired})
 	private AdminService service;
-	
-	// 블랙 회원 리스트 조회
-	@GetMapping("/getBlackMember")
-	public void getBlackMember() {
-		log.debug("getBlackMember() invoked.");
+
+	// 파티관리 페이지 조회회
+	@GetMapping("/adminParty")
+	public void getAdminParty(){
+		log.debug("getAdminParty() invoked.");
+
+	} // adminParty
+
+	// 블랙회원리스트 조회
+	@GetMapping("/adminBlackMember")
+	public void adminBlackMember() {
+		log.debug("adminBlackMember() invoked.");
 		
-	} // getBlackMember
+	} // adminBlackMember
 	
-	// 블랙 파티 리스트 조회
-	@GetMapping("/getBlackParty")
-	public void getBlackParty() {
-		log.debug("getBlackParty() invoked.");
+	// 블랙파티리스트 조회
+	@GetMapping("/adminBlackParty")
+	public void adminBlackParty() {
+		log.debug("adminBlackParty() invoked.");
 		
-	} // getBlackParty
+	} // adminBlackParty
 	
 	// 회원 추방
 	@PostMapping("/doKickUser")
@@ -51,12 +58,12 @@ public class AdminController {
 		
 	} // doBreakParty
 	
-	// 파티 해체 승인
-	@PostMapping("/acceptPartyBreak")
-	public void acceptPartyBreak() {
-		log.debug("acceptPartyBreak() invoked.");
+	// 파티해체 승인
+	@PostMapping("/adminPartyBreak")
+	public void adminPartyBreak() {
+		log.debug("adminPartyBreak() invoked.");
 		
-	} // acceptPartyBreak
+	} // adminPartyBreak
 	
 	// 파티 전체 리스트 조회
 	@GetMapping("/getPartyList")

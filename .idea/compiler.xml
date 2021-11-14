@@ -7,6 +7,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="final" />
         <module name="myapp" />
         <module name="FinalProject" />
         <module name="projectPM" />
@@ -16,6 +17,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="FinalProject" options="-verbose -Xlint:all" />
+      <module name="final" options="-verbose -Xlint:all" />
       <module name="myapp" options="-verbose -Xlint:all" />
       <module name="projectPM" options="-verbose -Xlint:all" />
     </option>

@@ -24,6 +24,7 @@
                 <li><a href="#" class="nav-link px-2 link-dark">자유</a></li>
                 <li><a href="#" class="nav-link px-2 link-dark">공지</a></li>
                 <li><a href="#" class="nav-link px-2 link-dark">문의</a></li>
+                <li><a href="/admin/adminParty" class="nav-link px-2 link-dark">관리자</a></li>
             </ul>
 
             <form action="/search/searchList" method="get" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
