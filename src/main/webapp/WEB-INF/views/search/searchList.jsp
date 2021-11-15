@@ -15,11 +15,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/search.css?after">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/page.css?after">
 </head>
 <body>
 
 <%--HEADER--%>
 <jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp"/>
+<span class="d-none">${pageMaker.cri.currPage}</span>
 <%--<h3>pageMaker: ${pageMaker}</h3>--%>
 <%--<h3>searchWord: ${searchWord}</h3>--%>
 <%--<h3>hobby: ${hobby}</h3>--%>
@@ -325,24 +327,27 @@
                 <input type="hidden" name="word" value="${searchWord}">
                 <input type="hidden" name="hobby" value="${hobby}">
                 <input type="hidden" name="local" value="${local}">
-                <ul>
+                <ul class="pagination justify-content-center">
                     <c:if test="${pageMaker.prev}">
-                        <li class="prev">
-                            <a class="prev" href="${pageMaker.startPage-1}">◀</a>
+                        <li class="prev page-item">
+                            <a class="prev page-link"
+                               href="/search/searchList?currPage=${pageMaker.startPage-1}&word=${searchWord}&hobby=${hobby}&local=${local}">◀</a>
                         </li>
                     </c:if>
 
                     <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="pageNum">
-                        <li>
-                            <a href="/search/searchList?currPage=${pageNum}">
+                        <li class="page-item">
+                            <a id="page-curr" class="page-link"
+                               href="/search/searchList?currPage=${pageNum}&word=${searchWord}&hobby=${hobby}&local=${local}">
                                     ${pageNum}
                             </a>
                         </li>
                     </c:forEach>
 
                     <c:if test="${pageMaker.next}">
-                        <li class="next">
-                            <a class="next" href="${pageMaker.endPage+1}">▶</a>
+                        <li class="next page-item">
+                            <a class="next page-link"
+                               href="/search/searchList?currPage=${pageMaker.endPage+1}&word=${searchWord}&hobby=${hobby}&local=${local}">▶</a>
                         </li>
                     </c:if>
                 </ul>
@@ -360,5 +365,6 @@
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
 <script src="${pageContext.request.contextPath}/resources/js/search.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/pagination.js"></script>
 </body>
 </html>

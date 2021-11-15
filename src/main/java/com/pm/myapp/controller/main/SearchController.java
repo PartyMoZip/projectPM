@@ -78,8 +78,8 @@ public class SearchController {
 
         // Criteria 초기화
         if (cri.getAmount() == 0 || cri.getPagesPerPage() == 0) {
-            cri.setAmount(3);
-            cri.setPagesPerPage(3);
+            cri.setAmount(9);
+            cri.setPagesPerPage(9);
         } // if
 
         List<PartyVO> list;
@@ -89,7 +89,7 @@ public class SearchController {
 
 
         // 검색어만 입력했을 경우
-        if (searchWordDTO.getHobby() == null && searchWordDTO.getLocal() == null) {
+        if ((searchWordDTO.getHobby() == null || searchWordDTO.getHobby().equals("")) && (searchWordDTO.getLocal() == null || searchWordDTO.getLocal().equals(""))) {
             list = this.service.getPartyListBySearch(cri, searchWordDTO);
             totalAmount = this.service.getTotalCountBySearch(searchWordDTO);
         } else {

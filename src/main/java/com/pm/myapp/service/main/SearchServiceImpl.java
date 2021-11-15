@@ -32,7 +32,10 @@ public class SearchServiceImpl implements SearchService {
     ) {
         log.debug("getPartyListBySearch() invoked.");
 
-        if (searchWord.getWord() != null && searchWord.getHobby() == null && searchWord.getLocal() == null) {
+        if (searchWord.getWord() != null
+                && (searchWord.getHobby() == null || searchWord.getHobby().equals(""))
+                && (searchWord.getLocal() == null || searchWord.getLocal().equals(""))
+        ) {
             searchWord.setHobby(searchWord.getWord());
             searchWord.setLocal(searchWord.getWord());
         }

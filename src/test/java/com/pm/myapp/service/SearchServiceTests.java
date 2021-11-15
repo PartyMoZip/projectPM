@@ -134,7 +134,7 @@ public class SearchServiceTests {
 
         SearchWordDTO searchWord = new SearchWordDTO();
 
-        searchWord.setWord("축구");
+        searchWord.setWord("");
         searchWord.setHobby("");
         searchWord.setLocal("");
 
