@@ -66,9 +66,9 @@ public class SearchServiceTests {
         cri.setAmount(2);
 
         SearchWordDTO searchWord = new SearchWordDTO();
-        searchWord.setWord("%축구%");
-        searchWord.setHobby("%축구%");
-        searchWord.setLocal("%축구%");
+        // searchWord.setWord("축구");
+        searchWord.setHobby("축구");
+        // searchWord.setLocal("강동");
 
         List<PartyVO> list = this.service.getPartyListBySearch(cri, searchWord);
         log.info("list: {}", list);
@@ -84,13 +84,14 @@ public class SearchServiceTests {
         log.info("testGetPartyListBySelected() invoked.");
 
         Criteria cri = new Criteria();
-        cri.setCurrPage(2);
+        cri.setCurrPage(1);
         cri.setAmount(2);
 
         SearchWordDTO searchWord = new SearchWordDTO();
 
-        searchWord.setWord(" ");
-        searchWord.setHobby("축구");
+        searchWord.setWord("축구");
+        searchWord.setHobby(null);
+        searchWord.setLocal("강남");
 
         List<PartyVO> list = this.service.getPartyListBySelected(cri, searchWord);
         log.info("list: {}", list);
@@ -130,8 +131,12 @@ public class SearchServiceTests {
     public void testGetTotalCountBySelected() {
         log.info("testGetTotalCountBySelected() invoked.");
 
+
         SearchWordDTO searchWord = new SearchWordDTO();
-        searchWord.setLocal("강남");
+
+        searchWord.setWord("축구");
+        searchWord.setHobby("");
+        searchWord.setLocal("");
 
         Integer totalCount = this.service.getTotalCountBySelected(searchWord);
         log.info("\t+ totalCount: {}", totalCount);

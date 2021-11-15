@@ -83,7 +83,7 @@ public class SearchMapperTests {
         // searchWord.setWord2("%축구%");
         // searchWord.setWord3("%축구%");
         searchWord.setHobby("축구");
-        // searchWord.setLocal("강남");
+        searchWord.setLocal("all");
 
         List<PartyVO> list = this.mapper.getPartyListBySelected(cri, searchWord);
         list.forEach(log::info);

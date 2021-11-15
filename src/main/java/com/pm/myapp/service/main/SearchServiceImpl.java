@@ -9,7 +9,6 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 
 @Log4j2
 @AllArgsConstructor
@@ -33,11 +32,11 @@ public class SearchServiceImpl implements SearchService {
     ) {
         log.debug("getPartyListBySearch() invoked.");
 
-        String word = "%" + searchWord.getWord() + "%";
+        if (searchWord.getWord() != null && searchWord.getHobby() == null && searchWord.getLocal() == null) {
+            searchWord.setHobby(searchWord.getWord());
+            searchWord.setLocal(searchWord.getWord());
+        }
 
-        searchWord.setHobby(word);
-        searchWord.setLocal(word);
-        searchWord.setWord(word);
 
         List<PartyVO> list = this.mapper.getPartyListBySearch(cri, searchWord);
 
@@ -48,9 +47,6 @@ public class SearchServiceImpl implements SearchService {
     public List<PartyVO> getPartyListBySelected(Criteria cri, SearchWordDTO searchWord) {
         log.debug("getPartyListBySelected() invoked.");
 
-        if (searchWord.getWord().equals("all") || Objects.equals(searchWord.getWord(), " ")) {
-            searchWord.setWord(null);
-        }
 
         List<PartyVO> list = this.mapper.getPartyListBySelected(cri, searchWord);
 
@@ -81,20 +77,10 @@ public class SearchServiceImpl implements SearchService {
     @Override
     public Integer getTotalCountBySelected(SearchWordDTO searchWord) {
         log.debug("getTotalCountBySelected() invoked.");
-
+        log.info("searchWord: {}", searchWord);
         Integer result = this.mapper.getTotalCountBySelected(searchWord);
 
         log.info("result: {}", result);
-        // if (searchWord.getWord().equals("")) {
-        //     searchWord.setWord("전체");
-        // }
-        // else {
-        //     searchWord.setWord(searchWord.getWord().replace("%", ""));
-        // }
-
-        if (searchWord.getHobby() != null) {
-            searchWord.setWord(searchWord.getHobby());
-        }
 
         return result;
     } // getTotalCountBySelected

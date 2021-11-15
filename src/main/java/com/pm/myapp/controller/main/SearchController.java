@@ -74,7 +74,7 @@ public class SearchController {
     // 카테고리 선택
     @GetMapping("/searchList")
     public String selectCategory(Criteria cri, SearchWordDTO searchWordDTO, Model model) {
-        log.info("selectCategory() invoked.");
+        log.info("searchList() invoked.");
 
         // Criteria 초기화
         if (cri.getAmount() == 0 || cri.getPagesPerPage() == 0) {
@@ -86,6 +86,7 @@ public class SearchController {
         int totalAmount;
 
         log.info("searchWordDTO : {}", searchWordDTO);
+
 
         // 검색어만 입력했을 경우
         if (searchWordDTO.getHobby() == null && searchWordDTO.getLocal() == null) {

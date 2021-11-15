@@ -20,10 +20,10 @@
 
 <%--HEADER--%>
 <jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp"/>
-<h3>pageMaker: ${pageMaker}</h3>
-<h3>searchWord: ${searchWord}</h3>
-<h3>hobby: ${hobby}</h3>
-<h3>local: ${local}</h3>
+<%--<h3>pageMaker: ${pageMaker}</h3>--%>
+<%--<h3>searchWord: ${searchWord}</h3>--%>
+<%--<h3>hobby: ${hobby}</h3>--%>
+<%--<h3>local: ${local}</h3>--%>
 <div class="container mt-5">
     <main>
         <div class="inner-container container-md">
@@ -40,15 +40,23 @@
                     </c:choose>
                 </h3>
                 <%--카테고리 선택 드랍다운 메뉴--%>
-                <div class="dropdown-group d-flex">
-                    <%--<input class="inner-search form-control" type="search" name="word" class="form-control"--%>
-                    <%--       placeholder="검색하기"--%>
-                    <%--       aria-label="Search">--%>
+                <div class="dropdown-group d-flex align-items-center">
+                    <h4 class="mb-0 m-lg-2">
+                        <c:choose>
+                            <c:when test="${searchWord != null && !searchWord.equals('all') && !searchWord.equals('')}">
+                                #${searchWord}
+                            </c:when>
+                            <c:otherwise>
+
+                            </c:otherwise>
+                        </c:choose>
+                    </h4>
+                    <input type="hidden" class="wordInput" name="word" value="${searchWord}">
                     <div class="btn-group">
                         <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
                                 aria-expanded="false">
                             <c:choose>
-                                <c:when test="${hobby != null}">
+                                <c:when test="${hobby != null && !hobby.equals('')}">
                                     ${hobby}
                                 </c:when>
                                 <c:otherwise>
@@ -59,7 +67,6 @@
                         <ul class="dropdown-menu menu-hobby">
                             <li>
                                 <input type="text" name="hobby" class="dropdown-search select-hobby"
-                                       value="${hobby}"
                                        placeholder="취미 검색..">
                             </li>
                             <li class="dropdown-item">전체</li>
@@ -73,7 +80,7 @@
                         <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
                                 aria-expanded="false">
                             <c:choose>
-                                <c:when test="${local != null}">
+                                <c:when test="${local != null && !local.equals('')}">
                                     ${local}
                                 </c:when>
                                 <c:otherwise>
@@ -83,7 +90,7 @@
                         </button>
                         <ul class="dropdown-menu menu-local">
                             <li>
-                                <input class="select-local" name="local" type="hidden" value="${local}" disabled>
+                                <input class="select-local" name="local" type="hidden">
                             </li>
                             <li class="dropdown-item">전체</li>
                             <li class="dropdown-item">강동</li>

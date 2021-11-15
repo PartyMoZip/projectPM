@@ -4,10 +4,9 @@ const hobbyMenu = document.querySelector(".menu-hobby");
 const localMenu = document.querySelector(".menu-local");
 const hobbySearchBar = document.querySelector(".select-hobby");
 const localSelectInput = document.querySelector(".select-local");
+const searchInput = document.querySelector(".input-search");
 const selectForm = document.querySelector(".select-form");
 const paginationForm = document.querySelector("#paginationForm");
-
-let queryString = "";
 
 // 취미 메뉴 검색 창 클릭 이벤트 막기
 const handlePrevent = (e) => {
@@ -17,7 +16,7 @@ const handlePrevent = (e) => {
 // 취미, 지역 카테고리 선택
 const handleClickCategory = (e) => {
     e.preventDefault();
-
+    console.log("HI");
     if (e.target.parentNode === hobbyMenu) {
         if (e.target.innerText !== "전체") {
             hobbySearchBar.setAttribute('value', e.target.innerText);
@@ -34,18 +33,8 @@ const handleClickCategory = (e) => {
         }
     }
 
-    if (!hobbySearchBar.getAttribute('value')) {
-        hobbySearchBar.setAttribute('disabled', 'disabled');
-    }
-
-    if (localSelectInput.getAttribute('value')) {
-        localSelectInput.removeAttribute('disabled');
-    }
-
     selectForm.submit();
-
 }
-
 
 hobbySearchBar.addEventListener('click', handlePrevent);
 hobbyMenu.addEventListener("click", handleClickCategory);
