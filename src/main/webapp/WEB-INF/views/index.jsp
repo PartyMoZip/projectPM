@@ -20,7 +20,6 @@
 <jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp"/>
 
 <main>
-
     <%--메인 이미지 캐러셀--%>
     <div id="myCarousel" class="carousel slide" data-bs-ride="carousel" style="height: 512px">
         <div class="carousel-indicators">
@@ -98,7 +97,7 @@
                 </button>
             </form>
         </div>
-            <button onclick="loginWithKakao();">카카오 로그인</button>
+
         <%--내 파티 목록--%>
         <%--파티 리스트--%>
         <div class="album py-5">
@@ -217,20 +216,6 @@
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/swiper.js"></script>
 
-<%--지울부분--%>
-<script>
-
-    /*카카오*/
-    function loginWithKakao() {
-        $.ajax({
-            url: '/login',
-            type: 'get',
-        }).done(function (res) {
-            console.log(res);
-            location.href = res;
-        });
-    }
-</script>
 
 </body>
 </html>

@@ -6,7 +6,8 @@
     <select id="selectUser" parameterType="HashMap" resultType="com.pm.myapp.domain.UserDTO">
         SELECT
             EMAIL as email ,
-            NICKNAME as userPass
+            NICKNAME as nickname,
+            USERPIC as userPic
         from USERINFO
 
         WHERE EMAIL=#{email}

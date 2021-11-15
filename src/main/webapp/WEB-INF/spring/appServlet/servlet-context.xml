@@ -3,6 +3,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
@@ -23,7 +24,8 @@
 	
 	<context:component-scan base-package="com.pm.myapp.controller" />
 	<context:component-scan base-package="com.pm.myapp.exception" />
-	<context:component-scan base-package="com.pm.myapp.service" />		
+	<context:component-scan base-package="com.pm.myapp.service" />
+	<context:component-scan base-package="com.pm.myapp.interceptor" />
 
 
 	<!-- 파일 업로드를 위한 설정을 추가-->
@@ -38,5 +40,24 @@
 		<beans:property name="maxUploadSizePerFile" value="2097152"/>            <!-- 2MB -->
 		<beans:property name="maxInMemorySize" value="1048576"/>				 <!-- 1MB -->
 	</beans:bean>
-	
+
+
+	<beans:bean id = "LoginInterceptor" class="com.pm.myapp.interceptor.LoginInterceptor"/>
+	<beans:bean id = "AuthInterceptor" class="com.pm.myapp.interceptor.AuthInterceptor"/>
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/login/doLogin" />
+			<beans:ref bean="LoginInterceptor"/>
+		</mvc:interceptor>
+
+		<mvc:interceptor>
+			<mvc:mapping path="/login/doLogin2" />
+			<!--<mvc:mapping path="/1번게시판/**" />-->
+			<!--<mvc:mapping path="/2번게시판/**" />-->
+			<beans:ref bean="AuthInterceptor"/>
+		</mvc:interceptor>
+
+	</mvc:interceptors>
+
+
 </beans:beans>
