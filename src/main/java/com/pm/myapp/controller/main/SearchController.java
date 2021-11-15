@@ -1,7 +1,9 @@
 package com.pm.myapp.controller.main;
 
 import com.pm.myapp.domain.Criteria;
+import com.pm.myapp.domain.PageDTO;
 import com.pm.myapp.domain.PartyVO;
+import com.pm.myapp.domain.SearchWordDTO;
 import com.pm.myapp.service.main.SearchService;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,12 +27,54 @@ public class SearchController {
     @Setter(onMethod_ = {@Autowired})
     private SearchService service;
 
-    // 검색 페이지(view)
-    @GetMapping("/searchList")
-    public void showPartyList(Criteria cri, String searchWord, Model model) {
-        log.debug("showPartyList() invoked.");
+    // // 검색 페이지(view)
+    // @GetMapping("/searchList")
+    // public void showPartyList(Criteria cri, String searchWord, Model model) {
+    //     log.debug("showPartyList() invoked.");
+    //
+    //     int totalAmount;
+    //
+    //     // Criteria 초기화
+    //     if (cri.getAmount() == 0 || cri.getPagesPerPage() == 0) {
+    //         cri.setAmount(9);
+    //         cri.setPagesPerPage(9);
+    //     } // if
+    //
+    //     log.info("검색어 : {}", searchWord);
+    //
+    //     // url 로 직접 접근했을 때를 대비
+    //     if (searchWord != null) {
+    //
+    //         model.addAttribute("searchWord", searchWord);
+    //
+    //         SearchWordDTO dto = new SearchWordDTO();
+    //
+    //         // LIKE 절을 위한 검색어 가공 처리
+    //         dto.setWord("%" + searchWord + "%");
+    //
+    //         List<PartyVO> list = this.service.getPartyListBySearch(cri, dto);
+    //         log.info("\t+ list size: {}", list.size());
+    //
+    //         model.addAttribute("list", list);
+    //         totalAmount = this.service.getTotalCountBySearch(dto);
+    //     } else {
+    //
+    //         List<PartyVO> list = this.service.getPartyList(cri);
+    //         log.info("\t+ list size: {}", list.size());
+    //
+    //         model.addAttribute("list", list);
+    //         totalAmount = this.service.getTotalCount();
+    //     }
+    //
+    //     PageDTO pageDTO = new PageDTO(cri, totalAmount);
+    //
+    //     model.addAttribute("pageMaker", pageDTO);
+    // } // showPartyList
 
-        int totalAmount;
+    // 카테고리 선택
+    @GetMapping("/searchList")
+    public String selectCategory(Criteria cri, SearchWordDTO searchWordDTO, Model model) {
+        log.info("searchList() invoked.");
 
         // Criteria 초기화
         if (cri.getAmount() == 0 || cri.getPagesPerPage() == 0) {
@@ -38,40 +82,48 @@ public class SearchController {
             cri.setPagesPerPage(9);
         } // if
 
-        log.info("검색어 : {}", searchWord);
+        List<PartyVO> list;
+        int totalAmount;
 
-        // url 로 직접 조회했을 때를 대비
-        if (searchWord != null) {
+        log.info("searchWordDTO : {}", searchWordDTO);
 
-            model.addAttribute("searchWord", searchWord);
 
-            // LIKE 절을 위한 검색어 가공 처리
-            searchWord = "%" + searchWord + "%";
-
-            // List<PartyVO> list = this.service.getPartyListBySearch(cri, searchWord, searchWord, searchWord);
-            // log.info("\t+ list size: {}", list.size());
-            //
-            // model.addAttribute("list", list);
-            // totalAmount = this.service.getTotalCountBySearch(searchWord, searchWord, searchWord);
+        // 검색어만 입력했을 경우
+        if ((searchWordDTO.getHobby() == null || searchWordDTO.getHobby().equals("")) && (searchWordDTO.getLocal() == null || searchWordDTO.getLocal().equals(""))) {
+            list = this.service.getPartyListBySearch(cri, searchWordDTO);
+            totalAmount = this.service.getTotalCountBySearch(searchWordDTO);
         } else {
-
-            List<PartyVO> list = this.service.getPartyList(cri);
-            log.info("\t+ list size: {}", list.size());
-
-            model.addAttribute("list", list);
-            totalAmount = this.service.getTotalCount();
+            list = this.service.getPartyListBySelected(cri, searchWordDTO);
+            totalAmount = this.service.getTotalCountBySelected(searchWordDTO);
         }
 
+        /*
+        // URI 분기
+        if (request.getRequestURI().contains("/searchList")) {
+            log.debug("searchList() invoked.");
+            list = this.service.getPartyListBySearch(cri, searchWordDTO);
 
-        // PageDTO pageDTO = new PageDTO(cri, totalAmount);
+            totalAmount = this.service.getTotalCountBySearch(searchWordDTO);
 
-        // model.addAttribute("pageMaker", pageDTO);
-    } // showPartyList
+        } else {
+            log.debug("selectCategory() invoked.");
+            list = this.service.getPartyListBySelected(cri, searchWordDTO);
 
-    // 카테고리 선택
-    @GetMapping("/selectCategory")
-    public void selectCategory() {
-        log.debug("selectCategory() invoked.");
+            totalAmount = this.service.getTotalCountBySelected(searchWordDTO);
+        } // if */
+
+        log.info("list : {}", list);
+        log.info("totalAmount: {}", totalAmount);
+
+        PageDTO pageDTO = new PageDTO(cri, totalAmount);
+
+        model.addAttribute("searchWord", searchWordDTO.getWord());
+        model.addAttribute("hobby", searchWordDTO.getHobby());
+        model.addAttribute("local", searchWordDTO.getLocal());
+        model.addAttribute("list", list);
+        model.addAttribute("pageMaker", pageDTO);
+
+        return "/search/searchList";
 
     } // selectCategory
 

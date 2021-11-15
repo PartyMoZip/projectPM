@@ -21,6 +21,7 @@ public interface SearchMapper {
 
     // 카테고리 선택된 조건으로 조회
     public abstract List<PartyVO> getPartyListBySelected(
+            @Param("cri") Criteria cri,
             @Param("searchWord") SearchWordDTO searchWord
     );
 
@@ -29,6 +30,11 @@ public interface SearchMapper {
 
     // 검색어 포함된 총 파티 목록 개수
     public abstract Integer getTotalCountBySearch(
+            SearchWordDTO searchWord
+    );
+
+    // 카테고리 포함된 총 파티 목록 개수
+    public abstract Integer getTotalCountBySelected(
             SearchWordDTO searchWord
     );
 

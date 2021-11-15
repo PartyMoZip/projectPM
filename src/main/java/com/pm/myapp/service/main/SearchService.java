@@ -17,7 +17,9 @@ public interface SearchService {
             SearchWordDTO searchWord
     );
 
+    // 페이징 카테고리 선택된 조건으로 조회
     public abstract List<PartyVO> getPartyListBySelected(
+            Criteria cri,
             SearchWordDTO searchWord
     );
 
@@ -26,6 +28,11 @@ public interface SearchService {
 
     // 검색어 포함된 총 파티 목록 개수
     public abstract Integer getTotalCountBySearch(
+            SearchWordDTO searchWord
+    );
+
+    // 카테고리 선택된 조건 총 파티 목록 개수
+    public abstract Integer getTotalCountBySelected(
             SearchWordDTO searchWord
     );
 

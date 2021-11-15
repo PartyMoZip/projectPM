@@ -19,38 +19,82 @@
     <!--페이징 처리된 검색한 파티 목록 조회-->
     <select id="getPartyListBySearch" parameterType="map" resultType="com.pm.myapp.domain.PartyVO">
 
-        <![CDATA[
-        SELECT *
+        SELECT p.partycode,
+        p.partyname,
+        p.partyscore,
+        p.createdate,
+        p.logopic,
+        p.coverpic,
+        p.partyprofile,
+        p.partybanned,
+        l.localname,
+        h.hobbyname
         FROM party p
-        WHERE partyname LIKE #{searchWord.word1}
-           OR p.hobbycode = (SELECT hobbycode FROM hobby WHERE hobbyname LIKE #{searchWord.word2})
-           OR p.localcode = (SELECT localcode FROM localinfo WHERE localname LIKE #{searchWord.word3})
-        ORDER BY partycode DESC
-        OFFSET (#{cri.currPage} - 1) * #{cri.amount} ROWS FETCH NEXT #{cri.amount} ROWS ONLY
-        ]]>
-
-    </select>
-
-    <select
-            id="getPartyListBySelected"
-            parameterType="map"
-            resultType="com.pm.myapp.domain.PartyVO">
-
-        <!-- 시안: 더 가독성이 좋을 순 없을까 -->
-
-        SELECT *
-        FROM party p
-        <WHERE>
+        JOIN hobby h
+        ON p.hobbycode = h.hobbycode
+        JOIN localinfo l
+        ON p.localcode = l.localcode
+        <where>
             <choose>
-                <when test="searchWord.word1 != null">
-                    partyname like #{searchWord.word1};
+                <when test="searchWord.word != null">
+                    partyname LIKE '%'||#{searchWord.word}||'%'
                 </when>
                 <otherwise>
                     partyname like '%'
                 </otherwise>
             </choose>
-        </WHERE>
+            <if test='searchWord.hobby != null and !searchWord.hobby.equals("")'>
+                or p.hobbycode = (SELECT hobbycode FROM hobby WHERE hobbyname LIKE '%'||#{searchWord.hobby}||'%')
+            </if>
 
+            <if test='searchWord.local != null and !searchWord.local.equals("")'>
+                or p.localcode = (SELECT localcode FROM localinfo WHERE localname LIKE '%'||#{searchWord.local}||'%')
+            </if>
+            ORDER BY partycode DESC
+            OFFSET (#{cri.currPage} - 1) * #{cri.amount} ROWS FETCH NEXT #{cri.amount} ROWS ONLY
+        </where>
+
+    </select>
+
+    <select
+            id="getPartyListBySelected"
+            resultType="com.pm.myapp.domain.PartyVO">
+
+        SELECT p.partycode,
+        p.partyname,
+        p.partyscore,
+        p.createdate,
+        p.logopic,
+        p.coverpic,
+        p.partyprofile,
+        p.partybanned,
+        l.localname,
+        h.hobbyname
+        FROM party p
+        JOIN hobby h
+        ON p.hobbycode = h.hobbycode
+        JOIN localinfo l
+        ON p.localcode = l.localcode
+        <where>
+            <choose>
+                <when test='searchWord.word != null'>
+                    partyname like '%'||#{searchWord.word}||'%'
+                </when>
+                <otherwise>
+                    partyname like '%'
+                </otherwise>
+            </choose>
+
+            <if test='searchWord.hobby != null and !searchWord.hobby.equals("")'>
+                AND p.hobbycode = (SELECT hobbycode FROM hobby WHERE hobbyname LIKE '%'||#{searchWord.hobby}||'%')
+            </if>
+
+            <if test='searchWord.local != null and !searchWord.local.equals("")'>
+                AND p.localcode = (SELECT localcode FROM localinfo WHERE localname LIKE '%'||#{searchWord.local}||'%')
+            </if>
+        </where>
+        ORDER BY partycode DESC
+        OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS FETCH NEXT #{cri.amount} ROWS ONLY
 
     </select>
 
@@ -71,9 +115,36 @@
         <![CDATA[
         SELECT COUNT(partycode)
         FROM party p
-        WHERE partyname LIKE #{searchWord1}
-           OR p.hobbycode = (SELECT hobbycode FROM hobby WHERE hobbyname LIKE #{searchWord2})
-           OR p.localcode = (SELECT localcode FROM localinfo WHERE localname LIKE #{searchWord3})
+        WHERE partyname LIKE '%' || #{word} || '%'
+           OR p.hobbycode = (SELECT hobbycode FROM hobby WHERE hobbyname LIKE '%' || #{hobby} || '%')
+           OR p.localcode = (SELECT localcode FROM localinfo WHERE localname LIKE '%' || #{local} || '%')
         ]]>
+    </select>
+
+    <select
+            id="getTotalCountBySelected"
+            resultType="Integer">
+
+        SELECT COUNT(partycode)
+        FROM party p
+        <where>
+            <choose>
+                <when test='word != null and !word.equals("")'>
+                    partyname like #{word}
+                </when>
+                <otherwise>
+                    partyname like '%'
+                </otherwise>
+            </choose>
+
+            <if test='hobby != null and !hobby.equals("")'>
+                AND p.hobbycode = (SELECT hobbycode FROM hobby WHERE hobbyname LIKE '%'||#{hobby}||'%')
+            </if>
+
+            <if test='local != null and !local.equals("")'>
+                AND p.localcode = (SELECT localcode FROM localinfo WHERE localname LIKE '%'||#{local}||'%')
+            </if>
+        </where>
+
     </select>
 </mapper>

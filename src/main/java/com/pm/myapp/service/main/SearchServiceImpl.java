@@ -30,15 +30,31 @@ public class SearchServiceImpl implements SearchService {
             Criteria cri,
             SearchWordDTO searchWord
     ) {
-        log.debug("getPartyList() invoked.");
+        log.debug("getPartyListBySearch() invoked.");
 
-        return this.mapper.getPartyListBySearch(cri, searchWord);
+        if (searchWord.getWord() != null
+                && (searchWord.getHobby() == null || searchWord.getHobby().equals(""))
+                && (searchWord.getLocal() == null || searchWord.getLocal().equals(""))
+        ) {
+            searchWord.setHobby(searchWord.getWord());
+            searchWord.setLocal(searchWord.getWord());
+        }
+
+
+        List<PartyVO> list = this.mapper.getPartyListBySearch(cri, searchWord);
+
+        return list;
     } // getPartyListBySearch
 
     @Override
-    public List<PartyVO> getPartyListBySelected(SearchWordDTO searchWord) {
-        return null;
-    }
+    public List<PartyVO> getPartyListBySelected(Criteria cri, SearchWordDTO searchWord) {
+        log.debug("getPartyListBySelected() invoked.");
+
+
+        List<PartyVO> list = this.mapper.getPartyListBySelected(cri, searchWord);
+
+        return list;
+    } // getPartyListBySelected
 
     @Override
     public Integer getTotalCount() {
@@ -49,8 +65,26 @@ public class SearchServiceImpl implements SearchService {
 
     @Override
     public Integer getTotalCountBySearch(SearchWordDTO searchWord) {
-        log.debug("getTotalCount() invoked.");
+        log.debug("getTotalCountBySearch() invoked.");
 
-        return this.mapper.getTotalCountBySearch(searchWord);
+        Integer result = this.mapper.getTotalCountBySearch(searchWord);
+
+        // searchWord 원상복구
+        searchWord.setWord(searchWord.getWord().replace("%", ""));
+        searchWord.setHobby(null);
+        searchWord.setLocal(null);
+
+        return result;
     } // getTotalCountBySearch
+
+    @Override
+    public Integer getTotalCountBySelected(SearchWordDTO searchWord) {
+        log.debug("getTotalCountBySelected() invoked.");
+        log.info("searchWord: {}", searchWord);
+        Integer result = this.mapper.getTotalCountBySelected(searchWord);
+
+        log.info("result: {}", result);
+
+        return result;
+    } // getTotalCountBySelected
 }
