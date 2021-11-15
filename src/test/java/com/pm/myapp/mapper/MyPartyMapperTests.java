@@ -1,4 +1,7 @@
+
 package com.pm.myapp.mapper;
+
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -7,6 +10,11 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import com.pm.myapp.domain.MyPartyVO;
+import com.pm.myapp.domain.PartyDTO;
+import com.pm.myapp.domain.PartyVO;
+
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
@@ -19,7 +27,7 @@ import lombok.extern.log4j.Log4j2;
 public class MyPartyMapperTests {
 
 	@Setter(onMethod_= {@Autowired})
-	private xxxMapper mapper;
+	private MyPartyMapper mapper;
 
 	@Before
 	public void setup() {
@@ -30,12 +38,53 @@ public class MyPartyMapperTests {
 		log.info("\t + type : {}", this.mapper.getClass().getName());
 	} // setup
 	
+	@Test
+	public void testQuitParty() { // 통과 완료
+		log.debug("testQuitParty() invoked.");
+		
+		String email = "test4@test.com";
+		Integer partyCode = 5;
+		
+		int affectedLines = this.mapper.quitParty(email, partyCode);
+		log.info("\t+ affectedLines : {}",affectedLines);
+		
+	} // testQuitParty
 	
 	@Test
-	public void testXXX() {
-		log.debug("testGetlist() invoked.");
+	public void testGetList() { // 통과 완료
+		log.debug("testGetList() invoked.");
+		
+		String email = "test1@test.com";
+		MyPartyVO party = this.mapper.getList(email);
+		log.info("\t+party : {}",party);
+		
+	} // testGetList
+	
+	@Test
+	public void testMakeParty() { // 통과 완료
+		log.debug("testMakeParty() invoked.");
+		
+		PartyDTO dto = new PartyDTO();
+		dto.setPartyName("여행가자");
+		dto.setPartyCode(23);
+		dto.setPartyProfile("여행갈래?");
+		dto.setLocalCode(1);
+		dto.setHobbyCode(8);
+		
+		int affectedLines = this.mapper.makeParty(dto);
+		log.info("\t+ affectedLines : {}",affectedLines);
 
-	} // testXXX
+	} // testMakeParty
+	
+	@Test
+	public void testGetRecParties() { // 통과완료
+		log.debug("testGetRecParties() invoked.");
+		
+		Integer[] hobbyCode = {1,2,3};
+		List<MyPartyVO> list = this.mapper.getRecParties(hobbyCode);
+		log.info("\t+ list : {}",list);
+
+	} // testGetRecParties
 	
 	@After
 	public void tearDown() {

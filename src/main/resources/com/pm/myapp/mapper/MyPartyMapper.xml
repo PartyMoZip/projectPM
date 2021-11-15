@@ -27,5 +27,19 @@
 
 	</insert>
 	
+	<select id="getRecParties" resultType="com.pm.myapp.domain.MyPartyVO">
+
+		SELECT P.PARTYCODE, P.PARTYNAME, P.PARTYSCORE, P.CREATEDATE, P.LOGOPIC
+		FROM PARTY P
+		JOIN HOBBY H ON P.HOBBYCODE = H.HOBBYCODE
+		WHERE P.HOBBYCODE IN
+		<foreach collection="hobbyCode" item="hobby" index="index" separator="," open="(" close=")">
+			#{hobby}
+		</foreach>
+		ORDER BY P.PARTYCODE DESC
+
+	</select>
+	
+	
 
 </mapper>
