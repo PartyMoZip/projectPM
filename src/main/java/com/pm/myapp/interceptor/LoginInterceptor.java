@@ -58,7 +58,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         HttpSession session=req.getSession();
 
         ModelMap modelMap=modelAndView.getModelMap();
-        UserVO user= (UserVO) modelMap.get(LoginController.authKey);
+        UserDTO user= (UserDTO) modelMap.get(LoginController.authKey);
         log.info("\t+ user: {}", user);
 
         if(user != null) {  // 로그인에 성공했다면....
