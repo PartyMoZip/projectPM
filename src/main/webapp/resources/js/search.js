@@ -16,7 +16,7 @@ const handlePrevent = (e) => {
 // 취미, 지역 카테고리 선택
 const handleClickCategory = (e) => {
     e.preventDefault();
-    console.log("HI");
+
     if (e.target.parentNode === hobbyMenu) {
         if (e.target.innerText !== "전체") {
             hobbySearchBar.setAttribute('value', e.target.innerText);

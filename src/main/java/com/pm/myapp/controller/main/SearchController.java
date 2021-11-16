@@ -89,13 +89,32 @@ public class SearchController {
 
 
         // 검색어만 입력했을 경우
-        if ((searchWordDTO.getHobby() == null || searchWordDTO.getHobby().equals("")) && (searchWordDTO.getLocal() == null || searchWordDTO.getLocal().equals(""))) {
+        if ((searchWordDTO.getHobby() == null || searchWordDTO.getHobby().equals(""))
+                && (searchWordDTO.getLocal() == null || searchWordDTO.getLocal().equals(""))
+        ) {
             list = this.service.getPartyListBySearch(cri, searchWordDTO);
             totalAmount = this.service.getTotalCountBySearch(searchWordDTO);
+
         } else {
+
+
+            if (searchWordDTO.getHobby().contains(",")) {
+
+                int idx = searchWordDTO.getHobby().indexOf(",");
+                searchWordDTO.setHobby(searchWordDTO.getHobby().substring(idx + 1));
+            } // if
+
+            if (searchWordDTO.getLocal().contains(",")) {
+
+                int idx = searchWordDTO.getLocal().indexOf(",");
+                searchWordDTO.setLocal(searchWordDTO.getLocal().substring(idx + 1));
+            } // if
+
+            log.info("수정된 DTO: {}", searchWordDTO);
+
             list = this.service.getPartyListBySelected(cri, searchWordDTO);
             totalAmount = this.service.getTotalCountBySelected(searchWordDTO);
-        }
+        } // if-else
 
         /*
         // URI 분기
