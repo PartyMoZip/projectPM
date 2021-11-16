@@ -9,6 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/home.css?after">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/loginmodal.css?after">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
           integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
@@ -20,7 +21,6 @@
 <jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp"/>
 
 <main>
-
     <%--메인 이미지 캐러셀--%>
     <div id="myCarousel" class="carousel slide" data-bs-ride="carousel" style="height: 512px">
         <div class="carousel-indicators">
@@ -98,7 +98,7 @@
                 </button>
             </form>
         </div>
-        <button onclick="loginWithKakao();">카카오 로그인</button>
+
         <%--내 파티 목록--%>
         <%--파티 리스트--%>
         <div class="album py-5">
@@ -217,20 +217,6 @@
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/swiper.js"></script>
 
-<%--지울부분--%>
-<script>
-
-    /*카카오*/
-    function loginWithKakao() {
-        $.ajax({
-            url: '/login',
-            type: 'get',
-        }).done(function (res) {
-            console.log(res);
-            location.href = res;
-        });
-    }
-</script>
 
 </body>
 </html>
