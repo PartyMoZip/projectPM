@@ -24,3 +24,25 @@ body {
 .nav-link:hover {
     color: var(--primary-color);
 }
+
+/* 모달 로그인 창*/
+.modal {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-25%);
+}
+
+.modal-body {
+    display: block;
+    text-align: center;
+}
+
+.modal-header {
+    display: block;
+    padding: 20px 0 !important;
+    text-align: center;
+}
+
+.modal-body > div {
+    margin: 20px auto;
+}
