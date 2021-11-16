@@ -8,4 +8,8 @@
     text-align: center;
 }
 
+.modal-body > div {
+    margin: 20px auto;
+}
+
 

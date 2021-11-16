@@ -2,7 +2,6 @@ package com.pm.myapp.interceptor;
 
 import com.pm.myapp.controller.join.LoginController;
 import com.pm.myapp.domain.UserDTO;
-import com.pm.myapp.domain.UserVO;
 import com.pm.myapp.service.join.LoginService;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

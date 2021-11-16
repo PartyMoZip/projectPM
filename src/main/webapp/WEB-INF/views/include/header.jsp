@@ -64,7 +64,7 @@
     <div class="modal fade" id="myModal" role="dialog">
         <!-- 사용자 지정 부분① : id명 -->
 
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
@@ -73,10 +73,13 @@
                 </div>
 
                 <div class="modal-body">
-                    <a href="/login/loginPage" data-content="Sing up">
-                        <img src="/resources/images/kakao_login_image.png" /></a>
-                    <br><br>
-
+                    <div class="kakaoLogin">
+                        <a href="/login/loginPage" data-content="Sing up">
+                            <img src="/resources/images/kakao_login_image.png" /></a>
+                    </div>
+                    <div class="naverLogin">
+                        hi
+                    </div>
                 </div>
 
                 <div class="modal-footer">
