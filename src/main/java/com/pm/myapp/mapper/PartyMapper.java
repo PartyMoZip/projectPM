@@ -3,6 +3,9 @@ package com.pm.myapp.mapper;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
+import com.pm.myapp.domain.Criteria;
 import com.pm.myapp.domain.PartyDTO;
 import com.pm.myapp.domain.PartyUserVO;
 import com.pm.myapp.domain.PartyVO;
@@ -27,7 +30,9 @@ public interface PartyMapper {
 	
 	public abstract Integer upgradeJoin(String email, Integer partyCode);
 	
-	public abstract List<PartyUserVO> getMember(Integer partyCode);
+	public abstract List<PartyUserVO> getMember(Integer partyCode, @Param("cri") Criteria cri);
+	
+	public abstract Integer getPartyMN(Integer partyCode);
 	
 	
 } // end interface

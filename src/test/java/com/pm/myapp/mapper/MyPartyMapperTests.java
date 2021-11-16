@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.pm.myapp.domain.Criteria;
 import com.pm.myapp.domain.MyPartyVO;
 import com.pm.myapp.domain.PartyDTO;
 import com.pm.myapp.domain.PartyVO;
@@ -54,8 +55,10 @@ public class MyPartyMapperTests {
 	public void testGetList() { // 통과 완료
 		log.debug("testGetList() invoked.");
 		
+		Criteria cri = new Criteria();
+		
 		String email = "test1@test.com";
-		MyPartyVO party = this.mapper.getList(email);
+		MyPartyVO party = this.mapper.getList(email,cri);
 		log.info("\t+party : {}",party);
 		
 	} // testGetList
@@ -80,8 +83,13 @@ public class MyPartyMapperTests {
 	public void testGetRecParties() { // 통과완료
 		log.debug("testGetRecParties() invoked.");
 		
+		Criteria cri = new Criteria();
+		cri.setCurrPage(1);
+		cri.setAmount(10);
+		cri.setPagesPerPage(10);
+		
 		Integer[] hobbyCode = {1,2,3};
-		List<MyPartyVO> list = this.mapper.getRecParties(hobbyCode);
+		List<MyPartyVO> list = this.mapper.getRecParties(hobbyCode,cri);
 		log.info("\t+ list : {}",list);
 
 	} // testGetRecParties

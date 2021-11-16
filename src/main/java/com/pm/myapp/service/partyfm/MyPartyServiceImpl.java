@@ -5,6 +5,7 @@ import org.apache.catalina.tribes.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pm.myapp.domain.Criteria;
 import com.pm.myapp.domain.MyPartyVO;
 import com.pm.myapp.domain.PartyDTO;
 import com.pm.myapp.domain.PartyVO;
@@ -35,11 +36,13 @@ public class MyPartyServiceImpl implements MyPartyService{
 	} // doQuit
 
 	@Override
-	public MyPartyVO getPartyList(String email) {
-		log.debug("getPartyList({}) invoked.",email);
+	public MyPartyVO getPartyList(String email, Criteria cri) {
+		log.debug("getPartyList({},{}) invoked.",email,cri);
 		
-		MyPartyVO party = this.mapper.getList(email);
-		return null;
+		MyPartyVO party = this.mapper.getList(email,cri);
+		log.info("\t+ party : {}", party);
+		
+		return party;
 	} // getPartyList
 
 	@Override
@@ -52,10 +55,10 @@ public class MyPartyServiceImpl implements MyPartyService{
 	} // createParty
 
 	@Override
-	public List<MyPartyVO> getRcParties(Integer[] hobbyCode) {
-		log.debug("getRcParties({}) invoked.", Arrays.toString(hobbyCode));
+	public List<MyPartyVO> getRcParties(Integer[] hobbyCode, Criteria cri) {
+		log.debug("getRcParties({}, {}) invoked.", Arrays.toString(hobbyCode),cri);
 		
-		List<MyPartyVO> list = this.mapper.getRecParties(hobbyCode);
+		List<MyPartyVO> list = this.mapper.getRecParties(hobbyCode,cri);
 		
 		return list;
 	} // getRcParties

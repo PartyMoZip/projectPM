@@ -95,6 +95,22 @@
     JOIN USERINFO U
     ON T.EMAIL = U.EMAIL
     WHERE T.AUTHCODE > 0
+    OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
+	FETCH NEXT #{cri.amount} ROWS ONLY
+    ]]>
+    
+    </select>
+    
+    <select id="getPartyMN" resultType="int">
+    
+    <![CDATA[ 
+    SELECT COUNT(U.NICKNAME)
+    FROM (SELECT * FROM PARTYUSER
+    WHERE PARTYCODE = #{partyCode}
+    ORDER BY AUTHCODE DESC) T
+    JOIN USERINFO U
+    ON T.EMAIL = U.EMAIL
+    WHERE T.AUTHCODE > 0
     ]]>
     
     </select>

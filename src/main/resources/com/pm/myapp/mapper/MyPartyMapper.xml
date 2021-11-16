@@ -12,11 +12,15 @@
 
 	<select id="getList" resultType="com.pm.myapp.domain.MyPartyVO">
 
+		<![CDATA[ 
 		SELECT P.PARTYCODE, P.PARTYNAME, P.PARTYSCORE, P.CREATEDATE, P.LOGOPIC 
 		FROM PARTY P
 		JOIN PARTYUSER U
 		ON P.PARTYCODE = U.PARTYCODE
 		WHERE U.EMAIL = #{email}
+		OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
+		FETCH NEXT #{cri.amount} ROWS ONLY
+    	]]>
 
 	</select>
 
@@ -29,6 +33,7 @@
 	
 	<select id="getRecParties" resultType="com.pm.myapp.domain.MyPartyVO">
 
+
 		SELECT P.PARTYCODE, P.PARTYNAME, P.PARTYSCORE, P.CREATEDATE, P.LOGOPIC
 		FROM PARTY P
 		JOIN HOBBY H ON P.HOBBYCODE = H.HOBBYCODE
@@ -36,7 +41,11 @@
 		<foreach collection="hobbyCode" item="hobby" index="index" separator="," open="(" close=")">
 			#{hobby}
 		</foreach>
+		<![CDATA[ 
 		ORDER BY P.PARTYCODE DESC
+		OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
+		FETCH NEXT #{cri.amount} ROWS ONLY
+    	]]>
 
 	</select>
 	

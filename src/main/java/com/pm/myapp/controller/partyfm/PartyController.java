@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.pm.myapp.domain.Criteria;
+import com.pm.myapp.domain.PageDTO;
 import com.pm.myapp.domain.PartyDTO;
 import com.pm.myapp.domain.PartyUserVO;
 import com.pm.myapp.domain.PartyVO;
@@ -257,7 +258,7 @@ public class PartyController {
 
 	} // doBreakParty
 		
-	// 파티장 권한 위임 [작동] - 트랜잭션 작동안함
+	// 파티장 권한 위임 [작동]
 	@PostMapping("/editleader")
 	@Transactional
 	public String editPartyLeader(
@@ -274,7 +275,7 @@ public class PartyController {
 		
 		return "redirect:/party/showmain";
 		
-	} // editPartyLeader
+	} // editPartyLeaderu    
 	
 	// 파티 가입 승인 [작동]
 	@PostMapping("/do-accept-join")
@@ -300,13 +301,18 @@ public class PartyController {
 	
 	// 파티원 목록 조회 [작동] -- 스위치 스크롤
 	@PostMapping("/memberlist")
-	public void showMemberList(Integer partyCode, Model model) {
+	public void showMemberList(@ModelAttribute("cri") Criteria cri,Integer partyCode, Model model) {
 		log.debug("showMemberList() invoked.");
 		// 해당 파티코드인지, 권한코드 1이상 인지 : 이메일 JOIN 으로 부르기
 		
-		List<PartyUserVO> user = this.service.showMember(partyCode);
+		List<PartyUserVO> user = this.service.showMember(partyCode, cri);
 		
 		model.addAttribute("__USER__", user);
+		
+	    Integer totalAmount = this.service.getTotalMember(partyCode);
+	    PageDTO pageDTO = new PageDTO(cri, totalAmount);
+			
+	    model.addAttribute("pageMaker", pageDTO);
 		
 	} // showMemberList
 	

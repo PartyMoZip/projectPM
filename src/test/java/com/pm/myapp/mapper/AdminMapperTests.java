@@ -11,8 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.pm.myapp.domain.AllPartyVO;
 import com.pm.myapp.domain.BlackMemberVO;
 import com.pm.myapp.domain.BlackPartyVO;
+import com.pm.myapp.domain.Criteria;
 
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -42,7 +44,8 @@ public class AdminMapperTests {
 	public void testGetBlackMember() { // 통과
 		log.debug("testGetBlackMember() invoked.");
 		
-		List<BlackMemberVO> blackMember = this.mapper.getBlackMember();
+		Criteria cri = new Criteria();
+		List<BlackMemberVO> blackMember = this.mapper.getBlackMember(cri);
 		log.info("\t+ blackMember : {}", blackMember);
 
 	} // testGetBlackMember
@@ -51,10 +54,21 @@ public class AdminMapperTests {
 	public void testGetBlackParty() { // 통과
 		log.debug("testGetBlackParty() invoked.");
 		
-		List<BlackPartyVO> blackParty = this.mapper.getBlackParty();
+		Criteria cri = new Criteria();
+		List<BlackPartyVO> blackParty = this.mapper.getBlackParty(cri);
 		log.info("\t+ blackParty : {}", blackParty);
 
 	} // testGetBlackParty
+	
+	@Test
+	public void testGetAllList() { // 통과
+		log.debug("testGetAllList() invoked.");
+		
+		Criteria cri = new Criteria();
+		List<AllPartyVO> allParty = this.mapper.getAllList(cri);
+		log.info("\t+ allParty : {}", allParty);
+
+	} // testGetAllList
 	
 	@After
 	public void tearDown() {

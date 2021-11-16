@@ -8,6 +8,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pm.myapp.domain.Criteria;
 import com.pm.myapp.domain.PartyDTO;
 import com.pm.myapp.domain.PartyUserVO;
 import com.pm.myapp.domain.PartyVO;
@@ -158,10 +159,10 @@ public class PartyServiceImpl implements PartyService,InitializingBean, Disposab
 	} // rejectJoin
 
 	@Override
-	public List<PartyUserVO> showMember(Integer partyCode) {
-		log.debug("showMember({}) invoked.", partyCode);
+	public List<PartyUserVO> showMember(Integer partyCode, Criteria cri) {
+		log.debug("showMember({},{}) invoked.", partyCode,cri);
 		
-		List<PartyUserVO> user = this.mapper.getMember(partyCode);
+		List<PartyUserVO> user = this.mapper.getMember(partyCode,cri);
 		
 		log.info("\t + user : {}",user);
 		
@@ -169,6 +170,16 @@ public class PartyServiceImpl implements PartyService,InitializingBean, Disposab
 		
 	} // showMember
 
+	@Override
+	public Integer getTotalMember(Integer partyCode) {
+		log.debug("getTotalMember({}) invoked.", partyCode);
+		
+		int resultNum = this.mapper.getPartyMN(partyCode);
+		log.info("\t+ resultNum : {}",resultNum);
+		
+		return resultNum;
+	} // getTotalMember
+	
 	@Override
 	public boolean kickMember(String email, Integer partyCode) {
 		log.debug("kickMember({}, {}) invoked.",email, partyCode);
@@ -180,6 +191,7 @@ public class PartyServiceImpl implements PartyService,InitializingBean, Disposab
 		return (affectedLine==1);
 		
 	} // kickMember
+
 	
 
 } // end class

@@ -12,8 +12,18 @@
 		FROM USERINFO
 		WHERE USERBANNED > 5
 		ORDER BY rownum desc
+		OFFSET (#{currPage}-1) * #{amount} ROWS
+		FETCH NEXT #{amount} ROWS ONLY
 		]]>
 		
+	</select>
+	
+	<select id="getAllBM" resultType="int">
+	
+		SELECT COUNT(EMAIL)  
+		FROM USERINFO
+		WHERE USERBANNED > 5
+	
 	</select>
 	
 	<select id="getBlackParty" resultType="com.pm.myapp.domain.BlackPartyVO">
@@ -27,8 +37,85 @@
 		ON U.EMAIL = I.EMAIL
 		WHERE P.PARTYBANNED > 5 AND U.AUTHCODE = 2
 		ORDER BY rownum desc
+		OFFSET (#{currPage}-1) * #{amount} ROWS
+		FETCH NEXT #{amount} ROWS ONLY
 		]]>
 		
+	</select>
+	
+	<select id="getAllBP" resultType="int">
+	
+		<![CDATA[ 
+		SELECT COUNT(P.PARTYNAME)  
+		FROM PARTY P
+		JOIN PARTYUSER U
+		ON P.PARTYCODE = U.PARTYCODE
+		JOIN USERINFO I
+		ON U.EMAIL = I.EMAIL
+		WHERE P.PARTYBANNED > 5 AND U.AUTHCODE = 2
+		]]>
+	
+	</select>
+
+	<delete id="deletePartyUser">
+
+		DELETE FROM PARTYUSER
+		WHERE EMAIL = #{email}
+
+	</delete>
+
+	<update id="deleteUserInfo">
+
+		UPDATE USERINFO
+		SET USERBANNED = -1
+		WHERE EMAIL = #{email}
+
+	</update>
+	
+	<delete id="cutPartyUser">
+
+		DELETE FROM PARTYUSER
+		WHERE PARTYCODE = #{partyCode}
+
+	</delete>
+
+	<update id="deleteParty">
+
+		UPDATE PARTY
+		SET PARTYBANNED = -1
+		WHERE PARTYCODE = #{partyCode}
+
+	</update>
+	
+	<select id="getAllList" resultType="com.pm.myapp.domain.AllPartyVO">
+	
+	    <![CDATA[ 
+		SELECT ROWNUM, P.PARTYCODE, P.PARTYNAME, P.PARTYSCORE, I.NICKNAME, P.PARTYBANNED, P.CREATEDATE, (SELECT count(*) from partyuser where partycode=p.partycode) AS PARTYMEMBER 
+		FROM PARTY P
+		JOIN PARTYUSER U
+		ON P.PARTYCODE = U.PARTYCODE
+		JOIN USERINFO I
+		ON U.EMAIL = I.EMAIL
+		WHERE P.PARTYBANNED > -1 AND U.AUTHCODE = 2
+		ORDER BY rownum desc
+		OFFSET (#{currPage}-1) * #{amount} ROWS
+		FETCH NEXT #{amount} ROWS ONLY
+		]]>
+		
+	</select>
+	
+	<select id="getAllPL" resultType="int">
+	
+	    <![CDATA[ 
+		SELECT COUNT(P.PARTYCODE) 
+		FROM PARTY P
+		JOIN PARTYUSER U
+		ON P.PARTYCODE = U.PARTYCODE
+		JOIN USERINFO I
+		ON U.EMAIL = I.EMAIL
+		WHERE P.PARTYBANNED > -1 AND U.AUTHCODE = 2
+		]]>
+	
 	</select>
 	
 

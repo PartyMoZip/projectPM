@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.pm.myapp.domain.Criteria;
 import com.pm.myapp.domain.MyPartyVO;
 import com.pm.myapp.domain.PartyDTO;
 import com.pm.myapp.domain.PartyVO;
@@ -42,10 +44,10 @@ public class MyPartyController {
 	
 	// 내 파티목록 조회
 	@GetMapping("/getMyPartyList")
-	public void getMyPartyList(String email, Model model) {
+	public void getMyPartyList(@ModelAttribute("cri") Criteria cri,String email, Model model) {
 		log.debug("getMyPartyList() invoked.");
 		
-		MyPartyVO party = this.service.getPartyList(email);
+		MyPartyVO party = this.service.getPartyList(email,cri);
 		log.info("\t+ party : {}", party);	
 		
 	} // getMyPartyList
@@ -69,10 +71,10 @@ public class MyPartyController {
 	
 	// 파티 추천 리스트 조회
 	@GetMapping("/getRecommendParty")
-	public void getRecommendParty(Integer[] hobbyCode, Model model) {
-		log.debug("getRecommendParty({}) invoked.", Arrays.toString(hobbyCode));
+	public void getRecommendParty(@ModelAttribute("cri") Criteria cri,Integer[] hobbyCode, Model model) {
+		log.debug("getRecommendParty({}, {}) invoked.", cri,Arrays.toString(hobbyCode));
 		
-		List<MyPartyVO> list = this.service.getRcParties(hobbyCode);
+		List<MyPartyVO> list = this.service.getRcParties(hobbyCode,cri);
 		model.addAttribute("__LIST__", list);
 		
 	} // getRecommendParty	

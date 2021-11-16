@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.pm.myapp.domain.Criteria;
 import com.pm.myapp.domain.PartyDTO;
 import com.pm.myapp.domain.PartyUserVO;
 import com.pm.myapp.domain.PartyVO;
@@ -130,8 +131,10 @@ public class PartyMapperTests {
 	public void testGetMember() { // 성공
 		log.debug("testGetMember() invoked.");
 		
+		Criteria cri = new Criteria();
+		
 		int partyCode = 14;
-		List<PartyUserVO> list = this.mapper.getMember(partyCode);
+		List<PartyUserVO> list = this.mapper.getMember(partyCode, cri);
 		log.info("\t+ list : {}",list);
 
 	} // testGetMember
