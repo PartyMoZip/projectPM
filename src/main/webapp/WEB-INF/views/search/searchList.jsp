@@ -68,7 +68,7 @@
                         </button>
                         <ul class="dropdown-menu menu-hobby">
                             <li>
-                                <input type="text" name="hobby" class="dropdown-search select-hobby"
+                                <input type="text" name="hobby" class="dropdown-search select-hobby" value="${hobby}"
                                        placeholder="취미 검색..">
                             </li>
                             <li class="dropdown-item">전체</li>
@@ -92,7 +92,7 @@
                         </button>
                         <ul class="dropdown-menu menu-local">
                             <li>
-                                <input class="select-local" name="local" type="hidden">
+                                <input class="select-local" name="local" type="hidden" value="${local}">
                             </li>
                             <li class="dropdown-item">전체</li>
                             <li class="dropdown-item">강동</li>

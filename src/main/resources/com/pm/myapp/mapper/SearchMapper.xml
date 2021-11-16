@@ -44,11 +44,11 @@
                 </otherwise>
             </choose>
             <if test='searchWord.hobby != null and !searchWord.hobby.equals("")'>
-                or p.hobbycode = (SELECT hobbycode FROM hobby WHERE hobbyname LIKE '%'||#{searchWord.hobby}||'%')
+                or h.hobbyname LIKE '%'||#{searchWord.hobby}||'%'
             </if>
 
             <if test='searchWord.local != null and !searchWord.local.equals("")'>
-                or p.localcode = (SELECT localcode FROM localinfo WHERE localname LIKE '%'||#{searchWord.local}||'%')
+                or l.localname LIKE '%'||#{searchWord.local}||'%'
             </if>
             ORDER BY partycode DESC
             OFFSET (#{cri.currPage} - 1) * #{cri.amount} ROWS FETCH NEXT #{cri.amount} ROWS ONLY
@@ -77,7 +77,7 @@
         ON p.localcode = l.localcode
         <where>
             <choose>
-                <when test='searchWord.word != null'>
+                <when test='searchWord.word != null and !searchWord.word.equals("")'>
                     partyname like '%'||#{searchWord.word}||'%'
                 </when>
                 <otherwise>
@@ -112,13 +112,17 @@
     <!--검색어 포함된 총 파티 목록 개수-->
     <select id="getTotalCountBySearch" parameterType="map" resultType="Integer">
 
-        <![CDATA[
-        SELECT COUNT(partycode)
+
+        SELECT COUNT(p.partycode)
         FROM party p
+                 JOIN hobby h
+                      ON p.hobbycode = h.hobbycode
+                 JOIN localinfo l
+                      ON p.localcode = l.localcode
         WHERE partyname LIKE '%' || #{word} || '%'
-           OR p.hobbycode = (SELECT hobbycode FROM hobby WHERE hobbyname LIKE '%' || #{hobby} || '%')
-           OR p.localcode = (SELECT localcode FROM localinfo WHERE localname LIKE '%' || #{local} || '%')
-        ]]>
+           OR h.hobbyname LIKE '%' || #{hobby} || '%'
+           OR l.localname LIKE '%' || #{local} || '%'
+
     </select>
 
     <select
@@ -138,11 +142,11 @@
             </choose>
 
             <if test='hobby != null and !hobby.equals("")'>
-                AND p.hobbycode = (SELECT hobbycode FROM hobby WHERE hobbyname LIKE '%'||#{hobby}||'%')
+                AND p.hobbycode = (SELECT hobbycode FROM hobby WHERE hobbyname LIKE '%' || #{hobby} || '%')
             </if>
 
             <if test='local != null and !local.equals("")'>
-                AND p.localcode = (SELECT localcode FROM localinfo WHERE localname LIKE '%'||#{local}||'%')
+                AND p.localcode = (SELECT localcode FROM localinfo WHERE localname LIKE '%' || #{local} || '%')
             </if>
         </where>
 

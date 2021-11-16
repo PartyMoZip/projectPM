@@ -50,7 +50,6 @@ public class SearchServiceImpl implements SearchService {
     public List<PartyVO> getPartyListBySelected(Criteria cri, SearchWordDTO searchWord) {
         log.debug("getPartyListBySelected() invoked.");
 
-
         List<PartyVO> list = this.mapper.getPartyListBySelected(cri, searchWord);
 
         return list;

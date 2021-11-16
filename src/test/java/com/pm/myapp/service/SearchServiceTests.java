@@ -66,8 +66,8 @@ public class SearchServiceTests {
         cri.setAmount(2);
 
         SearchWordDTO searchWord = new SearchWordDTO();
-        // searchWord.setWord("축구");
-        searchWord.setHobby("축구");
+        searchWord.setWord("구");
+        // searchWord.setHobby("");
         // searchWord.setLocal("강동");
 
         List<PartyVO> list = this.service.getPartyListBySearch(cri, searchWord);
@@ -89,9 +89,9 @@ public class SearchServiceTests {
 
         SearchWordDTO searchWord = new SearchWordDTO();
 
-        searchWord.setWord("축구");
-        searchWord.setHobby(null);
-        searchWord.setLocal("강남");
+        searchWord.setWord("");
+        searchWord.setHobby("구");
+        searchWord.setLocal("");
 
         List<PartyVO> list = this.service.getPartyListBySelected(cri, searchWord);
         log.info("list: {}", list);
