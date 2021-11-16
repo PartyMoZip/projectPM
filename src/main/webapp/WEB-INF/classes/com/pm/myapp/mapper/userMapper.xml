@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pm.myapp.mapper.UserMapper">
+
+    <select id="selectUser" parameterType="HashMap" resultType="com.pm.myapp.domain.UserDTO">
+        SELECT
+            EMAIL as email ,
+            NICKNAME as userPass
+        from USERINFO
+
+        WHERE EMAIL=#{email}
+    </select>
+
+    <insert id="insertUser" parameterType="com.pm.myapp.domain.UserDTO">
+        INSERT INTO USERINFO(
+            EMAIL,
+            NICKNAME,
+            USERPIC,
+            USERBANNED
+        ) values (
+                     #{email},
+                     #{nickname},
+                     #{userPic},
+                     #{userBanned}
+                 )
+    </insert>
+
+
+</mapper>

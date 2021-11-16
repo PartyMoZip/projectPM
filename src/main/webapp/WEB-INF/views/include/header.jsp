@@ -30,8 +30,8 @@
                 <li><a href="#" class="nav-link px-2 link-dark">문의</a></li>
             </ul>
 
-            <form action="/search" method="get" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-                <input type="search" name="searchWord" class="form-control" placeholder="Search..." aria-label="Search">
+            <form action="/search/searchList" method="get" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+                <input type="search" name="word" class="form-control" aria-label="Search" value="${searchWord}">
             </form>
 
 

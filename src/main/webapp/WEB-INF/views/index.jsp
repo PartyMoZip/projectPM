@@ -88,8 +88,8 @@
 
         <%--검색창--%>
         <div class="container-sm search-wrapper">
-            <form action="/search" method="get" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-                <input type="search" name="searchWord" class="form-control" placeholder="찾고 있는 파티를 입력해보세요."
+            <form action="/search/searchList" method="get" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+                <input type="text" name="word" class="form-control" placeholder="찾고 있는 파티를 입력해보세요."
                        aria-label="Search">
                 <button class="search-btn">
                 <span>
