@@ -97,7 +97,6 @@ public class SearchController {
 
         } else {
 
-
             if (searchWordDTO.getHobby().contains(",")) {
 
                 int idx = searchWordDTO.getHobby().indexOf(",");

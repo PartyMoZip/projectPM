@@ -78,10 +78,20 @@
         <%--파티 리스트--%>
         <div class="album py-5">
             <div class="header">
-                <h4>나의 파티</h4>
-                <span class="icon">
-                    <i class="fas fa-angle-right"></i>
-                </span>
+                <c:choose>
+                    <c:when test="${list} != null">
+                        <h4>나의 파티</h4>
+
+                        <span class="icon">
+                            <i class="fas fa-angle-right"></i>
+                        </span>
+                    </c:when>
+                    <c:otherwise>
+                        <h4>이 파티는 어떠세요?</h4>
+                    </c:otherwise>
+                </c:choose>
+
+
             </div>
 
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">

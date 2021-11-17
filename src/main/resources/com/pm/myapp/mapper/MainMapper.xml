@@ -3,22 +3,32 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pm.myapp.mapper.MainMapper">
 
-    <select id="getMyPartyList" resultType="com.pm.myapp.domain.MyPartyVO">
+    <select id="getMyPartyList" resultType="com.pm.myapp.domain.PartyVO">
 
-        SELECT p.partyname,
-               p.partyscore,
-               p.createdate,
-               p.logopic,
-               p.coverpic,
-               p.partyprofile,
-               l.localname,
-               h.hobbyname
+        <![CDATA[
+        SELECT p.partycode,
+        p.partyname,
+        p.partyscore,
+        p.createdate,
+        p.logopic,
+        p.coverpic,
+        p.partyprofile,
+        p.partybanned,
+        l.localname,
+        h.hobbyname
         FROM party p
-                 JOIN localinfo l ON p.localcode = l.localcode
-                 JOIN hobby h ON p.hobbycode = h.hobbycode
-                 JOIN partyuser pu ON p.partycode = pu.partycode
-                 JOIN userinfo u ON u.email = pu.email
-        WHERE u.email = #{email}
+        JOIN localinfo l ON p.localcode = l.localcode
+        JOIN hobby h ON p.hobbycode = h.hobbycode
+        JOIN partyuser pu ON p.partycode = pu.partycode
+        JOIN userinfo u ON u.email = pu.email
+        WHERE
+            rownum < 4
+        ]]>
+            <if test='email != null and !email.equals("")'>
+                AND u.email = #{email}
+            </if>
+        ORDER BY p.partyscore DESC
+
 
     </select>
 

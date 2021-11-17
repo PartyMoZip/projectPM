@@ -1,6 +1,6 @@
 package com.pm.myapp.service.main;
 
-import com.pm.myapp.domain.MyPartyVO;
+import com.pm.myapp.domain.PartyVO;
 import com.pm.myapp.mapper.MainMapper;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,7 +20,7 @@ public class MainPageServiceImpl implements MainPageService {
     private MainMapper mapper;
 
     @Override
-    public List<MyPartyVO> getMyPartyList(String email) {
+    public List<PartyVO> getMyPartyList(String email) {
         log.debug("Service getMyPartyList() invoked.");
 
         return this.mapper.getMyPartyList(email);

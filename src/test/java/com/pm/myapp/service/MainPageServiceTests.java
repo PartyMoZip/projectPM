@@ -1,7 +1,7 @@
 package com.pm.myapp.service;
 
 
-import com.pm.myapp.domain.MyPartyVO;
+import com.pm.myapp.domain.PartyVO;
 import com.pm.myapp.service.main.MainPageService;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -41,7 +41,7 @@ public class MainPageServiceTests {
 
         String email = "test5@test.com";
 
-        List<MyPartyVO> list = this.service.getMyPartyList(email);
+        List<PartyVO> list = this.service.getMyPartyList(email);
         log.info("list: {}", list);
 
         assert list != null;

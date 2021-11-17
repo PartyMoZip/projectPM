@@ -1,6 +1,6 @@
 package com.pm.myapp.mapper;
 
-import com.pm.myapp.domain.MyPartyVO;
+import com.pm.myapp.domain.PartyVO;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
@@ -37,7 +37,7 @@ public class MainMapperTests {
 
         String email = "test5@test.com";
 
-        List<MyPartyVO> list = this.mapper.getMyPartyList(email);
+        List<PartyVO> list = this.mapper.getMyPartyList(email);
         list.forEach(log::info);
     } // end testGetMyPartyList
 
