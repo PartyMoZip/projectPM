@@ -36,6 +36,7 @@ public class MainMapperTests {
         log.debug("testGetMyPartyList() invoked.");
 
         String email = "test5@test.com";
+        // String email = "";
 
         List<PartyVO> list = this.mapper.getMyPartyList(email);
         list.forEach(log::info);

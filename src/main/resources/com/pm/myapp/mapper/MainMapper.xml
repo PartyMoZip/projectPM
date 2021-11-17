@@ -5,7 +5,8 @@
 
     <select id="getMyPartyList" resultType="com.pm.myapp.domain.PartyVO">
 
-        <![CDATA[
+
+        select * From (
         SELECT p.partycode,
         p.partyname,
         p.partyscore,
@@ -19,16 +20,18 @@
         FROM party p
         JOIN localinfo l ON p.localcode = l.localcode
         JOIN hobby h ON p.hobbycode = h.hobbycode
-        JOIN partyuser pu ON p.partycode = pu.partycode
-        JOIN userinfo u ON u.email = pu.email
+
+        <if test='email != null and !email.equals("")'>
+            JOIN partyuser pu ON p.partycode = pu.partycode
+            JOIN userinfo u ON u.email = pu.email
+            where u.email = #{email}
+        </if>
+        ORDER BY p.partyscore DESC)
+
+        <![CDATA[
         WHERE
             rownum < 4
         ]]>
-            <if test='email != null and !email.equals("")'>
-                AND u.email = #{email}
-            </if>
-        ORDER BY p.partyscore DESC
-
 
     </select>
 
