@@ -23,6 +23,18 @@
     	]]>
 
 	</select>
+	
+	<select id="getTMPL" resultType="int">
+	
+		<![CDATA[ 
+		SELECT COUNT(P.PARTYCODE) 
+		FROM PARTY P
+		JOIN PARTYUSER U
+		ON P.PARTYCODE = U.PARTYCODE
+		WHERE U.EMAIL = #{email}
+    	]]>
+			
+	</select>
 
 	<insert id="makeParty">
 
@@ -47,6 +59,18 @@
 		FETCH NEXT #{cri.amount} ROWS ONLY
     	]]>
 
+	</select>
+	
+	<select id="getTRCP" resultType="int">
+	
+		SELECT COUNT(P.PARTYCODE)
+		FROM PARTY P
+		JOIN HOBBY H ON P.HOBBYCODE = H.HOBBYCODE
+		WHERE P.HOBBYCODE IN
+		<foreach collection="hobbyCode" item="hobby" index="index" separator="," open="(" close=")">
+			#{hobby}
+		</foreach>		
+	
 	</select>
 	
 	

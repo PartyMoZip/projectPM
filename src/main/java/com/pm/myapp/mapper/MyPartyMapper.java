@@ -15,8 +15,12 @@ public interface MyPartyMapper {
 	
 	public abstract MyPartyListVO getList(String email, @Param("cri") Criteria cri);
 	
+	public abstract Integer getTMPL(String email);
+	
 	public abstract Integer makeParty(PartyDTO dto);
 	
 	public abstract List<MyPartyListVO> getRecParties(Integer[] hobbyCode, @Param("cri") Criteria cri);
+	
+	public abstract Integer getTRCP(Integer[] hobbyCode);
 	
 } // end interface

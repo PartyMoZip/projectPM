@@ -64,6 +64,16 @@ public class MyPartyMapperTests {
 	} // testGetList
 	
 	@Test
+	public void testGetTMPL() { // 통과완료
+		log.debug("testGetTMPL() invoked.");
+		
+		String email = "test1@test.com";
+		int totalNum = this.mapper.getTMPL(email);
+		log.info("\t+ totalNum : {}",totalNum);
+
+	} // testGetTMPL
+	
+	@Test
 	public void testMakeParty() { // 통과 완료
 		log.debug("testMakeParty() invoked.");
 		
@@ -93,6 +103,16 @@ public class MyPartyMapperTests {
 		log.info("\t+ list : {}",list);
 
 	} // testGetRecParties
+	
+	@Test
+	public void testGetTRCP() { // 통과완료
+		log.debug("testGetTRCP() invoked.");
+		
+		Integer[] hobbyCode = {1,2,3};
+		int totalNum = this.mapper.getTRCP(hobbyCode);
+		log.info("\t+ totalNum : {}",totalNum);
+
+	} // testGetTRCP
 	
 	@After
 	public void tearDown() {
