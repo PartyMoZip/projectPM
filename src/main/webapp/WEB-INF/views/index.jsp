@@ -14,6 +14,7 @@
           integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/home.css?after">
+    <%--<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/button.scss?after">--%>
 </head>
 
 <body>
@@ -74,6 +75,8 @@
             </form>
         </div>
 
+
+
         <%--내 파티 목록--%>
         <%--파티 리스트--%>
         <div class="album py-5">
@@ -90,12 +93,34 @@
                         <h4>이 파티는 어떠세요?</h4>
                     </c:otherwise>
                 </c:choose>
-
-
             </div>
 
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                <div class="col">
+                <c:forEach items="${list}" var="party">
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
+                                 xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
+                                 preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
+                                <rect width="100%" height="100%" fill="#55595c"></rect>
+                                <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
+                            </svg>
+
+                            <div class="card-body">
+                                <p class="card-text"><c:out value="${party.partyName}"/></p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                                    </div>
+                                    <small class="text-muted"><c:out value="${party.hobbyName}"/></small>
+                                    <small class="text-muted"><c:out value="${party.localName}"/></small>
+                                    <small class="text-muted"><c:out value="${party.partyScore}"/></small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </c:forEach>
+                <%--<div class="col">
                     <div class="card shadow-sm">
                         <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
                              xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
@@ -163,7 +188,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>--%>
             </div>
         </div>
 

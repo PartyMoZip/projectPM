@@ -1,6 +1,7 @@
 package com.pm.myapp.controller;
 
 import com.pm.myapp.controller.join.LoginController;
+import com.pm.myapp.domain.MyPartyVO;
 import com.pm.myapp.domain.PartyVO;
 import com.pm.myapp.domain.UserDTO;
 import com.pm.myapp.service.main.MainPageService;
@@ -37,10 +38,11 @@ public class HomeController {
             UserDTO dto = (UserDTO) session.getAttribute(LoginController.authKey);
 
             List<PartyVO> list = this.service.getMyPartyList(dto.getEmail());
-
+            log.info("Home Controller test list: {}", list);
             model.addAttribute("list", list);
         } else {
-            // List<MyPartyVO>
+            List<PartyVO> list = this.service.getMyPartyList("");
+            log.info("Home Controller test list: {}", list);
         }
 
         return "index";
