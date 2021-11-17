@@ -12,7 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.pm.myapp.domain.Criteria;
-import com.pm.myapp.domain.MyPartyVO;
+import com.pm.myapp.domain.MyPartyListVO;
 import com.pm.myapp.domain.PartyDTO;
 import com.pm.myapp.domain.PartyVO;
 
@@ -58,7 +58,7 @@ public class MyPartyMapperTests {
 		Criteria cri = new Criteria();
 		
 		String email = "test1@test.com";
-		MyPartyVO party = this.mapper.getList(email,cri);
+		MyPartyListVO party = this.mapper.getList(email,cri);
 		log.info("\t+party : {}",party);
 		
 	} // testGetList
@@ -89,7 +89,7 @@ public class MyPartyMapperTests {
 		cri.setPagesPerPage(10);
 		
 		Integer[] hobbyCode = {1,2,3};
-		List<MyPartyVO> list = this.mapper.getRecParties(hobbyCode,cri);
+		List<MyPartyListVO> list = this.mapper.getRecParties(hobbyCode,cri);
 		log.info("\t+ list : {}",list);
 
 	} // testGetRecParties

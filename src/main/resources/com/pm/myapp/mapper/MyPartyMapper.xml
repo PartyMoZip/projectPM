@@ -10,7 +10,7 @@
 		WHERE EMAIL = #{email} and PARTYCODE = #{partyCode}
 	</delete>
 
-	<select id="getList" resultType="com.pm.myapp.domain.MyPartyVO">
+	<select id="getList" resultType="com.pm.myapp.domain.MyPartyListVO">
 
 		<![CDATA[ 
 		SELECT P.PARTYCODE, P.PARTYNAME, P.PARTYSCORE, P.CREATEDATE, P.LOGOPIC 
@@ -31,7 +31,7 @@
 
 	</insert>
 	
-	<select id="getRecParties" resultType="com.pm.myapp.domain.MyPartyVO">
+	<select id="getRecParties" resultType="com.pm.myapp.domain.MyPartyListVO">
 
 
 		SELECT P.PARTYCODE, P.PARTYNAME, P.PARTYSCORE, P.CREATEDATE, P.LOGOPIC

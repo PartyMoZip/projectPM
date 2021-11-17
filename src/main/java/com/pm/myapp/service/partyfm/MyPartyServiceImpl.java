@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pm.myapp.domain.Criteria;
-import com.pm.myapp.domain.MyPartyVO;
+import com.pm.myapp.domain.MyPartyListVO;
 import com.pm.myapp.domain.PartyDTO;
 import com.pm.myapp.domain.PartyVO;
 import com.pm.myapp.mapper.MyPartyMapper;
@@ -36,10 +36,10 @@ public class MyPartyServiceImpl implements MyPartyService{
 	} // doQuit
 
 	@Override
-	public MyPartyVO getPartyList(String email, Criteria cri) {
+	public MyPartyListVO getPartyList(String email, Criteria cri) {
 		log.debug("getPartyList({},{}) invoked.",email,cri);
 		
-		MyPartyVO party = this.mapper.getList(email,cri);
+		MyPartyListVO party = this.mapper.getList(email,cri);
 		log.info("\t+ party : {}", party);
 		
 		return party;
@@ -55,10 +55,10 @@ public class MyPartyServiceImpl implements MyPartyService{
 	} // createParty
 
 	@Override
-	public List<MyPartyVO> getRcParties(Integer[] hobbyCode, Criteria cri) {
+	public List<MyPartyListVO> getRcParties(Integer[] hobbyCode, Criteria cri) {
 		log.debug("getRcParties({}, {}) invoked.", Arrays.toString(hobbyCode),cri);
 		
-		List<MyPartyVO> list = this.mapper.getRecParties(hobbyCode,cri);
+		List<MyPartyListVO> list = this.mapper.getRecParties(hobbyCode,cri);
 		
 		return list;
 	} // getRcParties

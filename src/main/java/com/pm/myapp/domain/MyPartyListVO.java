@@ -6,7 +6,7 @@ import lombok.Data;
 
 
 @Data
-public class MyPartyVO {
+public class MyPartyListVO {
 
 	private Integer partyCode;
 	private String partyName;

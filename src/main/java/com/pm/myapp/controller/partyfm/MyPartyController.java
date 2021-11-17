@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.pm.myapp.domain.Criteria;
-import com.pm.myapp.domain.MyPartyVO;
+import com.pm.myapp.domain.MyPartyListVO;
 import com.pm.myapp.domain.PartyDTO;
 import com.pm.myapp.domain.PartyVO;
 import com.pm.myapp.service.partyfm.MyPartyService;
@@ -47,7 +47,7 @@ public class MyPartyController {
 	public void getMyPartyList(@ModelAttribute("cri") Criteria cri,String email, Model model) {
 		log.debug("getMyPartyList() invoked.");
 		
-		MyPartyVO party = this.service.getPartyList(email,cri);
+		MyPartyListVO party = this.service.getPartyList(email,cri);
 		log.info("\t+ party : {}", party);	
 		
 	} // getMyPartyList
@@ -74,7 +74,7 @@ public class MyPartyController {
 	public void getRecommendParty(@ModelAttribute("cri") Criteria cri,Integer[] hobbyCode, Model model) {
 		log.debug("getRecommendParty({}, {}) invoked.", cri,Arrays.toString(hobbyCode));
 		
-		List<MyPartyVO> list = this.service.getRcParties(hobbyCode,cri);
+		List<MyPartyListVO> list = this.service.getRcParties(hobbyCode,cri);
 		model.addAttribute("__LIST__", list);
 		
 	} // getRecommendParty	
