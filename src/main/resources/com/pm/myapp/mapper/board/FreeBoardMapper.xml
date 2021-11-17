@@ -5,6 +5,7 @@
 <mapper namespace="com.pm.myapp.mapper.board.FreeBoardMapper">
 
     <select id="getListWithPaging" resultType="com.pm.myapp.domain.board.FreeBoardListVO">
+        
         <![CDATA[
 			SELECT
 			    F.frefer, F.fsubject, F.fdate, U.nickname, F.readnum
@@ -97,7 +98,6 @@
         SELECT COUNT(frerefer)
         FROM FREEBOARDRE
         WHERE frerefer > 0
-
         ]]>
     </select>
 
