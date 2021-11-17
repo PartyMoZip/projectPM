@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.pm.myapp.domain.Criteria;
 import com.pm.myapp.domain.MyPartyListVO;
+import com.pm.myapp.domain.PageDTO;
 import com.pm.myapp.domain.PartyDTO;
 import com.pm.myapp.domain.PartyVO;
 import com.pm.myapp.service.partyfm.MyPartyService;
@@ -48,7 +49,12 @@ public class MyPartyController {
 		log.debug("getMyPartyList() invoked.");
 		
 		MyPartyListVO party = this.service.getPartyList(email,cri);
-		log.info("\t+ party : {}", party);	
+		log.info("\t+ party : {}", party);
+		
+	    Integer totalAmount = this.service.getTotalMPL(email);
+	    PageDTO pageDTO = new PageDTO(cri, totalAmount);
+			
+	    model.addAttribute("pageMaker", pageDTO);
 		
 	} // getMyPartyList
 	
@@ -76,6 +82,11 @@ public class MyPartyController {
 		
 		List<MyPartyListVO> list = this.service.getRcParties(hobbyCode,cri);
 		model.addAttribute("__LIST__", list);
+		
+	    Integer totalAmount = this.service.getTotalRCP(hobbyCode);
+	    PageDTO pageDTO = new PageDTO(cri, totalAmount);
+			
+	    model.addAttribute("pageMaker", pageDTO);
 		
 	} // getRecommendParty	
 	

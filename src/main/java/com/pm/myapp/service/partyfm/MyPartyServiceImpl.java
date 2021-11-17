@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.pm.myapp.domain.Criteria;
 import com.pm.myapp.domain.MyPartyListVO;
 import com.pm.myapp.domain.PartyDTO;
-import com.pm.myapp.domain.PartyVO;
 import com.pm.myapp.mapper.MyPartyMapper;
 
 import lombok.NoArgsConstructor;
@@ -62,5 +61,25 @@ public class MyPartyServiceImpl implements MyPartyService{
 		
 		return list;
 	} // getRcParties
+
+	@Override
+	public Integer getTotalMPL(String email) {
+		log.debug("getTotalMPL({}) invoked.",email);
+		
+		int totalNum = this.mapper.getTMPL(email);
+		log.info("\t+ totalNum : {}", totalNum);
+		
+		return totalNum;
+	} // getTotalMPL
+
+	@Override
+	public Integer getTotalRCP(Integer[] hobbyCode) {
+		log.debug("getTotalRCP({}) invoked.", Arrays.toString(hobbyCode));
+		
+		int totalNum = this.mapper.getTRCP(hobbyCode);
+		log.info("\t+ totalNum : {}", totalNum);
+		
+		return totalNum;
+	} // getTotalRCP
 
 } // end class
