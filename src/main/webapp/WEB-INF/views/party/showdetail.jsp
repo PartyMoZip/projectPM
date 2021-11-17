@@ -12,14 +12,14 @@ pageEncoding="UTF-8"%>
     <hr>
     <h3>${__PARTY__}</h3>
     <form action="/party/doPartyJoin" method="post">
-      <input type="hidden" name="email" value="test1@test.com">
-      <input type="hidden" name="partyCode" value="22222">
+      <input type="hidden" name="email" value="test2@test.com">
+      <input type="hidden" name="partyCode" value="10">
       <input type="submit" value="파티가입신청">
     </form>
     <hr>
     <form action="/party/undoPartyJoin" method="post">
-      <input type="hidden" name="email" value="test1@test.com">
-      <input type="hidden" name="partyCode" value="22222">
+      <input type="hidden" name="email" value="test2@test.com">
+      <input type="hidden" name="partyCode" value="10">
       <input type="submit" value="파티가입취소">
     </form>
     <hr>

@@ -11,5 +11,6 @@
     <hr>
     <h3>${__PARTY__}</h3>
     <a href="/party/showLeaderPage?partyCode=${__PARTY__.partyCode}">파티 관리페이지</a>
+    <a href="/party/showMemberList?partyCode=${__PARTY__.partyCode}">파티 멤버페이지</a>
 </body>
 </html>

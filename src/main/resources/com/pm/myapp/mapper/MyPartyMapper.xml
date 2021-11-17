@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pm.myapp.mapper.MyPartyMapper">
+
+	<delete id="quitParty">
+		DELETE
+		FROM PARTYUSER
+		WHERE EMAIL = #{email} and PARTYCODE = #{partyCode}
+	</delete>
+
+	<select id="getList" resultType="com.pm.myapp.domain.MyPartyListVO">
+
+		<![CDATA[ 
+		SELECT P.PARTYCODE, P.PARTYNAME, P.PARTYSCORE, P.CREATEDATE, P.LOGOPIC 
+		FROM PARTY P
+		JOIN PARTYUSER U
+		ON P.PARTYCODE = U.PARTYCODE
+		WHERE U.EMAIL = #{email}
+		OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
+		FETCH NEXT #{cri.amount} ROWS ONLY
+    	]]>
+
+	</select>
+
+	<insert id="makeParty">
+
+		INSERT INTO PARTY(PARTYCODE, PARTYNAME, PARTYSCORE, CREATEDATE, LOGOPIC, COVERPIC, PARTYPROFILE, PARTYBANNED, HOBBYCODE, LOCALCODE)
+		VALUES(#{partyCode}, #{partyName}, 0, sysdate, null, null, #{partyProfile}, 0, #{hobbyCode}, #{localCode})
+
+	</insert>
+	
+	<select id="getRecParties" resultType="com.pm.myapp.domain.MyPartyListVO">
+
+
+		SELECT P.PARTYCODE, P.PARTYNAME, P.PARTYSCORE, P.CREATEDATE, P.LOGOPIC
+		FROM PARTY P
+		JOIN HOBBY H ON P.HOBBYCODE = H.HOBBYCODE
+		WHERE P.HOBBYCODE IN
+		<foreach collection="hobbyCode" item="hobby" index="index" separator="," open="(" close=")">
+			#{hobby}
+		</foreach>
+		<![CDATA[ 
+		ORDER BY P.PARTYCODE DESC
+		OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
+		FETCH NEXT #{cri.amount} ROWS ONLY
+    	]]>
+
+	</select>
+	
+	
+
+</mapper>
