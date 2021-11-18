@@ -1,8 +1,7 @@
-
 package com.pm.myapp.mapper;
 
-import java.util.List;
 
+import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,15 +9,14 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import com.pm.myapp.domain.Criteria;
 import com.pm.myapp.domain.MyPartyListVO;
 import com.pm.myapp.domain.PartyDTO;
 import com.pm.myapp.domain.PartyVO;
-
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
+
 
 @Log4j2
 @NoArgsConstructor
@@ -38,6 +36,17 @@ public class MyPartyMapperTests {
 		log.info("\t + mapper : {}", this.mapper);
 		log.info("\t + type : {}", this.mapper.getClass().getName());
 	} // setup
+
+  @Test
+  public void testGetMyPartyList() {
+      log.debug("testGetMyPartyList() invoked.");
+
+      String email = "test5@test.com";
+      // String email = "";
+
+      List<PartyVO> list = this.mapper.getMyPartyList(email);
+      list.forEach(log::info);
+  } // end testGetMyPartyList
 	
 	@Test
 	public void testQuitParty() { // 통과 완료

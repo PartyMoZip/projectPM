@@ -1,7 +1,8 @@
 package com.pm.myapp.service.main;
 
-import com.pm.myapp.domain.MyPartyVO;
-import com.pm.myapp.mapper.MainMapper;
+import com.pm.myapp.domain.PartyVO;
+import com.pm.myapp.mapper.MyPartyMapper;
+import com.pm.myapp.mapper.MyPartyMapper;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
@@ -17,10 +18,10 @@ import java.util.List;
 public class MainPageServiceImpl implements MainPageService {
 
     @Setter(onMethod_ = @Autowired)
-    private MainMapper mapper;
+    private MyPartyMapper mapper;
 
     @Override
-    public List<MyPartyVO> getMyPartyList(String email) {
+    public List<PartyVO> getMyPartyList(String email) {
         log.debug("Service getMyPartyList() invoked.");
 
         return this.mapper.getMyPartyList(email);

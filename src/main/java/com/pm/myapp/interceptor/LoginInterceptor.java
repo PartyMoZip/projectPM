@@ -22,7 +22,7 @@ import javax.servlet.http.HttpSession;
 @Component
 public class LoginInterceptor implements HandlerInterceptor {
 
-    @Setter(onMethod_= {@Autowired})
+    @Setter(onMethod_ = {@Autowired})
     private LoginService loginService;
 
     @Override
@@ -32,7 +32,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         log.debug("=======================================");
 
         // Session Scope에 바인딩되어있는(않을 수도 있음), 인증정보를 삭제
-        HttpSession session=req.getSession();
+        HttpSession session = req.getSession();
         session.removeAttribute(LoginController.authKey);
 
         log.info("\t+ 이전에 바인딩 되어있을 수 있는 인증정보를 삭제");
@@ -54,13 +54,13 @@ public class LoginInterceptor implements HandlerInterceptor {
 
         // 현재 요청을 보낸, 웹브라우저에 대응되는 세션객체가 없으면, 새로 세션객체를 생성하고
         //                                  있으면, 이미 존재하는 세션객체를 반환
-        HttpSession session=req.getSession();
+        HttpSession session = req.getSession();
 
-        ModelMap modelMap=modelAndView.getModelMap();
-        UserDTO user= (UserDTO) modelMap.get(LoginController.authKey);
+        ModelMap modelMap = modelAndView.getModelMap();
+        UserDTO user = (UserDTO) modelMap.get(LoginController.authKey);
         log.info("\t+ user: {}", user);
 
-        if(user != null) {  // 로그인에 성공했다면....
+        if (user != null) {  // 로그인에 성공했다면....
             log.info("로그인 성공");
             //---------------------------------------//
             // 1. Session Scope 인증정보를 올려 놓자!!
@@ -70,20 +70,21 @@ public class LoginInterceptor implements HandlerInterceptor {
             //---------------------------------------//
             // 2. 인증을 성공 후에는, 사용자를 original Request URI with Req. parameters 이동
             //---------------------------------------//
-            String originRequestURI=
+            String originRequestURI =
                     (String) session.getAttribute(AuthInterceptor.requestURIKey);
 
-            String originQueryString=
+            String originQueryString =
                     (String) session.getAttribute(AuthInterceptor.queryStringKey);
 
-            if(originRequestURI!=null) { // 원래의 요청URI가 있다면...
+            if (originRequestURI != null) { // 원래의 요청URI가 있다면...
 
-                String originRequest=originRequestURI;
+                String originRequest = originRequestURI;
 
-                if(originQueryString!=null) {  // 전송파라미터도 있다면...
-                    originRequest+='?'+originQueryString;
+                if (originQueryString != null) {  // 전송파라미터도 있다면...
+                    originRequest += '?' + originQueryString;
                 } else {  // 전송파라미터가 없다면....
-                    ;;
+                    ;
+                    ;
                 } // if-else
 
                 log.info("\t+ originRequest: {}", originRequest);

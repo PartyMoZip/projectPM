@@ -5,7 +5,9 @@ import com.pm.myapp.domain.PartyVO;
 import com.pm.myapp.domain.SearchWordDTO;
 import com.pm.myapp.mapper.SearchMapper;
 import lombok.AllArgsConstructor;
+import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +18,7 @@ import java.util.List;
 @Service
 public class SearchServiceImpl implements SearchService {
 
+    @Setter(onMethod_ = @Autowired)
     private SearchMapper mapper;
 
     @Override
