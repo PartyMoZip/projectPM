@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.pm.myapp.aws.AwsUpload;
 import com.pm.myapp.domain.Criteria;
 import com.pm.myapp.domain.PageDTO;
 import com.pm.myapp.domain.PartyDTO;
@@ -42,6 +43,9 @@ public class PartyController {
 	
 	@Setter(onMethod_= {@Autowired})
 	private PartyService service;
+	
+	@Setter(onMethod_= {@Autowired})
+	private AwsUpload awsUpload;
 	
 	// 파티 상세 보기 [작동]
 	@GetMapping("/showdetail")
@@ -117,38 +121,17 @@ public class PartyController {
 		String month = (cal.get(cal.MONTH)+1) + "";
 		String date = cal.get(cal.DATE) + "";
 		
-
-		basePath = "C:/ProjectPM/ImageUpload/PartyLogo/"; // servlet-context.xml 에 mapping 필수
-		String newfolder = partyCode + year + month + date; // 파티코드와 날짜 합쳐서 새로운 폴더 준비
-		String newBasePath = basePath + newfolder; // 파일이 저장되는 최종 경로
-		log.debug("\t+ newBasePath : {}",newBasePath);
+		// 파티코드와 날짜 합쳐서 새로운 폴더 준비
+		String imagePath = "image/logo/" + partyCode + "/" + year + "/" + month + "/" + date;
+		log.debug("\t+ imagePath : {}",imagePath);
 		
-		// 최종경로의 폴더 존재 여부를 결정하는 작업
-		File folder = new File(newBasePath);
-		
-		if(!folder.exists()) {
-			// 폴더가 없다면 생성하고 진행
-			folder.mkdir();
-			log.info("폴더 생성 완료! 경로 : {}",newBasePath);
-			
-		}else {
-			// 폴더가 있다면 진행
-			log.info("이미 존재하는 경로이므로 이미지 업로드를 진행합니다.");
-			
-		} // if-else
-		
-		// 실제 파일 업로드
-		// 랜덤값을 더해서 중복되지 않는 파일명을 만들고
-		// 그 파일명을 DB 에 저장할 것
-		UUID uuid = UUID.randomUUID(); // 랜덤값으로 중복되지않는 파일명을 만들 것 (10의 38승의 확률)
+		// 랜덤값 형성 및 aws에 파일 업로드
+        UUID uuid = UUID.randomUUID(); // 랜덤값
+        String imageUrl = awsUpload.fileUpload(image, imagePath, uuid);
+		log.info("\t+ imageUrl : {}",imageUrl);
+        
 		String originalName = image.getOriginalFilename(); // 파일의 원래 이름
-		String newName =  uuid + image.getOriginalFilename(); // 랜덤값 + 파일의 원래이름 으로 새파일 저장
-		log.info("\t+ originalName : {}",originalName);
-		
-		// 위에서 만든 경로와 파일명을 지정해서 전송해줌
-		File targetPath = new File(newBasePath + "/" + newName);
-		image.transferTo(targetPath);
-		// 실제 이미지 업로드 작업 끝
+		String newName = uuid + "_" +image.getOriginalFilename();
 		
 		// DB에 이미지 정보 저장하기
 		// HashMap을 이용하여 DTO 처럼 사용할 예정
@@ -157,8 +140,7 @@ public class PartyController {
 		Map<String, Object> imageInfo = new HashMap<String, Object>();
 		imageInfo.put("oldFilename", originalName); // 기존 파일 이름
 		imageInfo.put("newFilename", newName); // 새로운 파일 이름
-		imageInfo.put("fileLocation", newfolder + "/" + newName);
-		// mvc mapping 을 제외한 주소와 파일 이름
+		imageInfo.put("fileLocation", imageUrl); // 파일 이름 주소
 		imageInfo.put("partyCode", partyCode);
 		
 		boolean result = this.service.editLogo(imageInfo);
@@ -182,39 +164,26 @@ public class PartyController {
 		String month = (cal.get(cal.MONTH)+1) + "";
 		String date = cal.get(cal.DATE) + "";
 		
-		// 파티코드와 날짜 합치기
-		basePath = "C:/ProjectPM/ImageUpload/PartyMainImage/";
-		String newfolder = partyCode + year + month + date;
-		String newBasePath = basePath + newfolder;
-		log.debug("\t+ newBasePath : {}",newBasePath);
+		// 파티코드와 날짜 합쳐서 새로운 폴더 준비
+		String imagePath = "image/cover/" + partyCode + "/" + year + "/" + month + "/" + date;
+		log.debug("\t+ imagePath : {}",imagePath);
 		
-		File folder = new File(newBasePath);
+		// 랜덤값 형성 및 aws에 파일 업로드
+        UUID uuid = UUID.randomUUID(); // 랜덤값
+        String imageUrl = awsUpload.fileUpload(image, imagePath, uuid);
+		log.info("\t+ imageUrl : {}",imageUrl);
+        
+		String originalName = image.getOriginalFilename(); // 파일의 원래 이름
+		String newName = uuid + "_" +image.getOriginalFilename();
 		
-		if(!folder.exists()) {
-			
-			folder.mkdir();
-			log.info("폴더 생성 완료! 경로 : {}",newBasePath);
-			
-		}else {
-			
-			log.info("이미 존재하는 경로이므로 이미지 업로드를 진행합니다.");
-			
-		} // if-else
-		
-		// 실제 파일 업로드
-		UUID uuid = UUID.randomUUID(); // 랜덤값으로 이미지의 무결성 형성 (10의 38승의 확률)
-		String originalName = image.getOriginalFilename();
-		String newName =  uuid + image.getOriginalFilename();
-		log.info("\t+ 암호화된 이미지 파일 이름 : {}",newName);
-		
-		File targetPath = new File(newBasePath + "/" + newName);
-		image.transferTo(targetPath);
-		
-		// DB에 이미지 정보 저장
+		// DB에 이미지 정보 저장하기
+		// HashMap을 이용하여 DTO 처럼 사용할 예정
+		// Mapper.xml 에 갔을 때 key를 입력하면 value 값이 들어감
+		// value의 타입이 object인건 value의 타입이 모두 같은것이 아니기 때문
 		Map<String, Object> imageInfo = new HashMap<String, Object>();
-		imageInfo.put("oldFilename", originalName);
-		imageInfo.put("newFilename", newName);
-		imageInfo.put("fileLocation", newfolder + "/" + newName);
+		imageInfo.put("oldFilename", originalName); // 기존 파일 이름
+		imageInfo.put("newFilename", newName); // 새로운 파일 이름
+		imageInfo.put("fileLocation", imageUrl); // 파일 이름 주소
 		imageInfo.put("partyCode", partyCode);
 		
 		boolean result = this.service.editPartyMainImage(imageInfo);

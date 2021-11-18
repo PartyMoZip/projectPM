@@ -29,6 +29,7 @@
 	<context:component-scan base-package="com.pm.myapp.exception" />
 	<context:component-scan base-package="com.pm.myapp.service" />
 	<context:component-scan base-package="com.pm.myapp.interceptor" />
+	<context:component-scan base-package="com.pm.myapp.aws" />
 
 
 	<!-- 파일 업로드를 위한 설정을 추가-->

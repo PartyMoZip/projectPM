@@ -37,7 +37,7 @@
         <button type="submit">전송</button>
       </form>
       <h1>${logoresult}</h1>
-      <img src="/logoImages/${__PARTY__.logoPic}" alt="" />
+      <img src="${__PARTY__.logoPic}" alt="" />
       <hr>
       <form action="/party/editpi" method="post" enctype="multipart/form-data">
         <input type="hidden" name="partyCode" value=10>
@@ -45,7 +45,7 @@
         <button type="submit">전송</button>
       </form>
       <h1>${mainresult}</h1>
-      <img src="/mainImages/${__PARTY__.coverPic}" alt="" />
+      <img src="${__PARTY__.coverPic}" alt="" />
 
 </body>
 </html>
