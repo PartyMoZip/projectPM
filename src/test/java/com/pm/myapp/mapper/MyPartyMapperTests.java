@@ -1,5 +1,6 @@
 package com.pm.myapp.mapper;
 
+import com.pm.myapp.domain.Criteria;
 import com.pm.myapp.domain.PartyVO;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,10 +19,10 @@ import java.util.List;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
-public class MainMapperTests {
+public class MyPartyMapperTests {
 
     @Setter(onMethod_ = @Autowired)
-    private MainMapper mapper;
+    private MyPartyMapper mapper;
 
     @Before
     public void setup() {
@@ -42,4 +43,18 @@ public class MainMapperTests {
         list.forEach(log::info);
     } // end testGetMyPartyList
 
+    @Test
+    public void testProfileGetMyPartyList() {
+        log.debug("testProfileGetMyPartyList() invoked.");
+
+        Criteria cri = new Criteria();
+        cri.setAmount(5);
+        cri.setPagesPerPage(5);
+
+        String email = "test5@test.com";
+        // String email = "";
+
+        List<PartyVO> list = this.mapper.getMyProfilePartyList(cri,email);
+        list.forEach(log::info);
+    } // end testProfileGetMyPartyList
 } // end class
