@@ -1,0 +1,14 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>showMemberList.jsp</title>
+</head>
+<body>
+    <h1>/WEB-INF/views/party/showMemberList.jsp</h1>
+    <hr>
+    <h3>${__USER__}</h3>
+</body>
+</html>

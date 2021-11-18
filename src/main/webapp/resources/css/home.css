@@ -1,5 +1,15 @@
 @import "global.css";
 
+/*캐러셀*/
+.carousel-indicators .active {
+    width: 30px !important;
+    height: 3px !important;
+}
+
+.carousel-item img {
+    object-fit: cover;
+}
+
 /*검색창*/
 .search-wrapper {
     margin-top: 40px;

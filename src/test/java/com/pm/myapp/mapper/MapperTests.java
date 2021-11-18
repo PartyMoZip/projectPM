@@ -1,3 +1,4 @@
+/*
 package com.pm.myapp.mapper;
 
 import org.junit.After;
@@ -43,3 +44,9 @@ public class MapperTests {
 	} // tearDown
 	
 } // end class
+*/
+
+
+
+
+

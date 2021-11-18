@@ -12,6 +12,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.FlashMap;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.net.URI;
@@ -37,7 +42,11 @@ import java.util.Map;
 @RequestMapping("/login")
 @Controller
 public class LoginController {
-	
+
+	//세션 key값
+	public static final String authKey = "__AUTH__";
+
+
 	@Setter(onMethod_= {@Autowired})
 	private LoginService loginService;
 
@@ -45,55 +54,68 @@ public class LoginController {
 	private static final String kakaoApiKey = "61c59cfc356c37a46e4cd427c03246f7";
 	private static final String redirectURI = "http://localhost:8090/login/doLogin";
 	private static final String scope = "profile_nickname , profile_image ,account_email";
-	
-	// 로그인 (view)
-	@GetMapping("")
+	private static final String loginUrl = kakoAuthUrl + "/oauth/authorize?client_id=" + kakaoApiKey + "&redirect_uri=" + redirectURI + "&response_type=code" +"&scope="+scope;
+
+
+	// 로그인 (view) (버튼 클릭시 바로이동..  인터셉터용 ..)
+	@GetMapping("/loginPage")
+	public String showLoginPage() {
+		return "redirect:"+loginUrl;
+	} //showLoginPage
+
+	// 로그인 (view) (버튼 클릭시 ajax 방식으로)
+/*	@GetMapping("")
 	@ResponseBody
 	public String showLogin() {
 		String reqUrl = kakoAuthUrl + "/oauth/authorize?client_id=" + kakaoApiKey + "&redirect_uri=" + redirectURI + "&response_type=code" +"&scope="+scope;
-
 		return reqUrl;
-	} // showLogin
-	
+	} // showLogin*/
+
+
 	// 로그인
 	@GetMapping("/doLogin")
-	public String doLogin(@RequestParam("code") String code, @RequestParam(required = false, name = "error") String error, HttpSession session) throws Exception {
+	public String  doLogin(@RequestParam(required = false ,name = "code") String code, @RequestParam(required = false, name = "error") String error, Model model) throws Exception {
 		log.debug("doLogin() invoked.");
 
-		if (error != null) {
+		if (error != null || code == null) {
 			System.out.println(error);
-			return "redirect:/";
-		} // doLogin
-
-		KakaoTokenDTO tokenDto = getAccessToken(code); //카카오 서비스에 접근 할 수 있는 토큰을 받아야함
-		System.out.println("access_token~ = " + tokenDto.getAccess_token());
-		KakaoUserDTO userInfo = getUserInfo(tokenDto.getAccess_token());
-		System.out.println("userInfo~ = " + userInfo);
-
-		HashMap<String, String> map = new HashMap<String, String>();
-		map.put("email", userInfo.getKakao_account().getEmail()); //카카오로부터 넘어온 이메일
-		map.put("nickname", "");
-		System.out.println("요청 전");
-		UserDTO findUser = loginService.selectUser(map);
-		System.out.println("회원있냐?"+findUser);
-		if (findUser == null) {
-
-		UserDTO userDto = new UserDTO();
-		userDto.setEmail(userInfo.getKakao_account().getEmail());
-		userDto.setNickname(userInfo.getKakao_account().getProfile().getNickname());
-		userDto.setUserPic(userInfo.getProperties().getProfile_image());
-		userDto.setUserBanned(0);
-		System.out.println("넘어왓나??" + userDto);
-
-
-		int result = loginService.insertUser(userDto);
-		System.out.println("result = ~~ "+result);
-			session.setAttribute("user_info" , userDto);
 		} else {
-			session.setAttribute("user_info" , findUser);
-	}
-        return "redirect:/";
+			KakaoTokenDTO tokenDto = getAccessToken(code); //카카오 서비스에 접근 할 수 있는 토큰을 받아야함
+			System.out.println("access_token~ = " + tokenDto.getAccess_token());
+			KakaoUserDTO userInfo = getUserInfo(tokenDto.getAccess_token());
+			System.out.println("userInfo~ = " + userInfo);
+
+			HashMap<String, String> map = new HashMap<String, String>();
+			map.put("email", userInfo.getKakao_account().getEmail()); //카카오로부터 넘어온 이메일
+			map.put("nickname", "");
+			System.out.println("요청 전");
+			UserDTO findUser = loginService.selectUser(map);
+			System.out.println("회원있냐?"+findUser);
+			if (findUser == null) {
+
+				UserDTO userDto = new UserDTO();
+				userDto.setEmail(userInfo.getKakao_account().getEmail());
+				userDto.setNickname(userInfo.getKakao_account().getProfile().getNickname());
+				userDto.setUserPic(userInfo.getProperties().getProfile_image());
+				userDto.setUserBanned(0);
+				System.out.println("넘어왓나??" + userDto);
+
+
+				int result = loginService.insertUser(userDto);
+				System.out.println("result = ~~ "+result);
+				model.addAttribute(LoginController.authKey , userDto);
+			} else {
+				model.addAttribute(LoginController.authKey , findUser);
+			}
+		}
+		return "join/loginPost";
 	} //doLogin
+
+	/*나중에 지울기!*/
+	@GetMapping("doLogin2")
+	public String doLogin2() {
+		return "/join/loginPost";
+	}
 
 	// 로그아웃
 	@GetMapping("/doLogout")

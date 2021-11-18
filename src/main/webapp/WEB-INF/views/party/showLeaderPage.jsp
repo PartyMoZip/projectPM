@@ -11,6 +11,7 @@
     <hr>
     <h3>${__PARTY__}</h3>
     <form action="/party/editparty" method="post">
+        <input type="hidden" name="partyCode" value="${__PARTY__.partyCode}">
         <input type="text" name="partyName" value="${__PARTY__.partyName}">
         <input type="text" name="partyProfile" value="${__PARTY__.partyProfile}">
         <input type="text" name="localCode" value="${__PARTY__.localName}">
@@ -18,17 +19,34 @@
         <input type="submit" value="파티정보수정">
       </form>
       <hr>
-      <form action="/party/doBreakParty" method="post">
+      <form action="/party/dobreak" method="post">
         <input type="hidden" name="partyCode" value="${__PARTY__.partyCode}">
         <input type="submit" value="파티해체신청">
       </form>
       <hr>
-      <form action="/party/editPartyLeader" method="post">
-        <input type="hidden" name="leaderEmail" value="test2@test.com">
-        <input type="hidden" name="memberEmail" value="test3@test.com">
+      <form action="/party/editleader" method="post">
+        <input type="hidden" name="leaderEmail" value="test1@test.com">
+        <input type="hidden" name="memberEmail" value="test24@test.com">
         <input type="hidden" name="partyCode" value="${__PARTY__.partyCode}">
         <input type="submit" value="파티장 위임">
       </form>
+      <hr>
+      <form action="/party/editpl" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="partyCode" valus=10>
+        <input type="file" multiple="multiple" name="files"/>
+        <button type="submit">전송</button>
+      </form>
+      <h1>${logoresult}</h1>
+      <hr>
+      <form action="/party/editpi" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="partyCode" valus=10>
+        <input type="file" multiple="multiple" name="files"/>
+        <button type="submit">전송</button>
+      </form>
+      <h1>${mainresult}</h1>
+      <img src="/logoImages/${logoFileLocation}">
+ 
+      <img src="/mainImages/${mainImageFileLocation}">
 
 </body>
 </html>

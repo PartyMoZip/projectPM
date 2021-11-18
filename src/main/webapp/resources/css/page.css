@@ -1,0 +1,13 @@
+.page-link {
+    color: var(--primary-text-color);
+}
+
+.page-link:hover {
+    color: var(--primary-color);
+}
+
+.active #page-curr {
+    color: var(--primary-color-text);
+    background-color: var(--primary-color);
+    border-color: var(--primary-color-dark);
+}

@@ -2,6 +2,7 @@ package com.pm.myapp.service;
 
 import com.pm.myapp.domain.Criteria;
 import com.pm.myapp.domain.PartyVO;
+import com.pm.myapp.domain.SearchWordDTO;
 import com.pm.myapp.service.main.SearchService;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -61,18 +62,45 @@ public class SearchServiceTests {
         log.info("testGetPartyListBySearch() invoked.");
 
         Criteria cri = new Criteria();
+        cri.setCurrPage(3);
+        cri.setAmount(2);
+
+        SearchWordDTO searchWord = new SearchWordDTO();
+        searchWord.setWord("구");
+        // searchWord.setHobby("");
+        // searchWord.setLocal("강동");
+
+        List<PartyVO> list = this.service.getPartyListBySearch(cri, searchWord);
+        log.info("list: {}", list);
+
+        assert list != null;
+
+        list.forEach(log::info);
+    } // testGetPartyListBySearch
+
+    // 카테고리 조건의 파티 목록 조회
+    @Test
+    public void testGetPartyListBySelected() {
+        log.info("testGetPartyListBySelected() invoked.");
+
+        Criteria cri = new Criteria();
         cri.setCurrPage(1);
         cri.setAmount(2);
 
-        String searchWord = "%축구%";
+        SearchWordDTO searchWord = new SearchWordDTO();
 
-        // List<PartyVO> list = this.service.getPartyListBySearch(cri, searchWord, searchWord, searchWord);
-        // log.info("list: {}", list);
-        //
-        // assert list != null;
-        //
-        // list.forEach(log::info);
-    } // testGetPartyListBySearch
+        searchWord.setWord("");
+        searchWord.setHobby("구");
+        searchWord.setLocal("");
+
+        List<PartyVO> list = this.service.getPartyListBySelected(cri, searchWord);
+        log.info("list: {}", list);
+
+        assert list != null;
+
+        list.forEach(log::info);
+
+    } // testGetPartyListBySelected
 
     // 총 파티 목록 개수
     @Test
@@ -89,12 +117,31 @@ public class SearchServiceTests {
     public void testGetTotalCountBySearch() {
         log.info("testGetTotalCountBySearch() invoked.");
 
-        String searchWord = "%축구%";
+        SearchWordDTO searchWord = new SearchWordDTO();
+        searchWord.setWord("%축구%");
 
-        // Integer totalCount = this.service.getTotalCountBySearch(searchWord, searchWord, searchWord);
-        // log.info("\t+ totalCount: {}", totalCount);
+        Integer totalCount = this.service.getTotalCountBySearch(searchWord);
+        log.info("\t+ totalCount: {}", totalCount);
 
     } // testGetTotalCountBySearch
+
+
+    // 카테고리 조건의 총 파티 목록 개수
+    @Test
+    public void testGetTotalCountBySelected() {
+        log.info("testGetTotalCountBySelected() invoked.");
+
+
+        SearchWordDTO searchWord = new SearchWordDTO();
+
+        searchWord.setWord("");
+        searchWord.setHobby("");
+        searchWord.setLocal("");
+
+        Integer totalCount = this.service.getTotalCountBySelected(searchWord);
+        log.info("\t+ totalCount: {}", totalCount);
+
+    } // testGetTotalCountBySelected
 
     @After
     public void tearDown() {

@@ -94,7 +94,7 @@ public class PageDTO {
 		// (공식) 시작 offset = (현재페이지번호 - 1) x 한페이지당행의수
 		//----------------------------------------------------------//
 		this.offset = ( currPage - 1 ) * amount;
-		
+
 	} // constructor
 	
 
