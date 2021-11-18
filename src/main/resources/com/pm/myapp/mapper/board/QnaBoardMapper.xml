@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pm.myapp.mapper.board.QnaBoardMapper">
+
+    <select id="getListWithPaging" resultType="com.pm.myapp.domain.board.QnaBoardListVO">
+        <![CDATA[
+            SELECT
+                Q.qrefer, Q.qsubject, Q.qdate, u.nickname, Q.readnum
+            FROM QNABOARD Q
+            JOIN USERINFO U ON Q.email = U.email
+            ORDER BY qrefer desc
+            OFFSET (#{currPage}-1) * #{amount} ROWS
+            FETCH NEXT #{amount} ROWS ONLY
+        ]]>
+
+    </select>
+
+    <select id="readQnaBoard" resultType="com.pm.myapp.domain.board.QnaBoardVO">
+        SELECT
+            Q.qrefer, Q.qsubject, Q.qcontent, Q.qdate, U.nickname, Q.readnum
+        FROM QNABOARD Q
+        JOIN USERINFO U ON Q.email = U.email
+        WHERE Q.qrefer = #{qrefer}
+
+    </select>
+
+    <insert id="writeQnaBoard">
+
+        INSERT INTO QNABOARD(QREFER, QSUBJECT, QCONTENT, QDATE, NICKNAME, EMAIL, READNUM)
+        VALUES(SEQ_QNABOARD.nextval, #{qsubject}, #{qcontent}, sysdate, #{nickname}, #{email}, 0)
+
+    </insert>
+
+    <select id="getTotalCount" resultType="Integer">
+        <![CDATA[
+        SELECT COUNT(qrefer)
+        FROM QNABOARD
+        WHERE qrefer > 0
+
+        ]]>
+
+    </select>
+
+    <update id="editQnaBoard">
+        UPDATE QNABOARD
+        SET
+            QSUBJECT = #{qsubject},
+            QCONTENT = #{qcontent}
+        WHERE QREFER = #{qrefer}
+    </update>
+
+    <select id="searchQnaBoard" resultType="com.pm.myapp.domain.board.QnaBoardSearchVO">
+       <![CDATA[
+            SELECT Q.QREFER, Q.QSUBJECT, Q.QDATE, U.EMAIL, U.NICKNAME
+            FROM QNABOARD Q
+            JOIN USERINFO U ON Q.EMAIL = U.EMAIL
+            WHERE Q.QSUBJECT LIKE #{keyword} ORDER BY QREFER DESC
+            OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
+            FETCH NEXT #{cri.amount} ROWS ONLY
+        ]]>
+    </select>
+
+    <delete id="deleteQnaBoard">
+        DELETE
+        FROM QNABOARD
+        WHERE QREFER=#{qrefer}
+
+    </delete>
+
+    <select id="getCommentListPaging" resultType = "com.pm.myapp.domain.board.QnaBoardReplyVO">
+        <![CDATA[
+            SELECT qrerefer, qrecontent, qredate, qrefer, email
+            FROM QNABOARDRE
+            WHERE QREFER = #{qrefer}
+            ORDER BY qrerefer desc
+            OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
+                FETCH NEXT #{cri.amount} ROWS ONLY
+        ]]>
+    </select>
+
+    <insert id="writeComment">
+
+        INSERT INTO QNABOARDRE(qrerefer, qrecontent, qredate, qrefer, email)
+        VALUES(SEQ_FREEBOARDRE.nextval, #{qrecontent}, sysdate, #{qrefer}, #{email})
+
+
+    </insert>
+
+    <select id="getTotalComment" resultType="int">
+        <![CDATA[
+            SELECT COUNT(qrerefer)
+            FROM QNABOARDRE
+            WHERE qrerefer > 0
+
+        ]]>
+    </select>
+
+    <update id="editComment">
+        UPDATE QNABOARDRE
+        SET
+            QRECONTENT = #{qrecontent}
+        WHERE QREREFER = #{qrerefer}
+    </update>
+
+
+    <delete id="deleteComment">
+        DELETE
+        FROM QNABOARDRE
+        WHERE QREREFER=#{qrerefer}
+
+    </delete>
+
+
+
+
+</mapper>

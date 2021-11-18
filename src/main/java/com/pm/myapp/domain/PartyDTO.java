@@ -11,5 +11,6 @@ public class PartyDTO {
 	private String partyProfile;
 	private Integer localCode;
 	private Integer hobbyCode;
+	private Integer partyCode;
 
 }

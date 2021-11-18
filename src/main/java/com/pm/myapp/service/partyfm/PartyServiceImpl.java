@@ -1,12 +1,14 @@
 package com.pm.myapp.service.partyfm;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pm.myapp.domain.Criteria;
 import com.pm.myapp.domain.PartyDTO;
 import com.pm.myapp.domain.PartyUserVO;
 import com.pm.myapp.domain.PartyVO;
@@ -41,11 +43,9 @@ public class PartyServiceImpl implements PartyService,InitializingBean, Disposab
 		log.info("\t + mapper : " + this.mapper);
 		
 	} // afterPropertiesSet
-
 	
 	//===========================================================================
-
-
+	
 	@Override
 	public PartyVO getParty(Integer partyCode) {
 		log.debug("getParty({}) invoked.",partyCode);
@@ -56,7 +56,7 @@ public class PartyServiceImpl implements PartyService,InitializingBean, Disposab
 		return party;
 		
 	} // getParty
-
+	
 	@Override
 	public boolean doJoin(String email, Integer partyCode) {
 		log.debug("doJoin({}, {}) invoked.",email, partyCode);
@@ -66,7 +66,7 @@ public class PartyServiceImpl implements PartyService,InitializingBean, Disposab
 		return (affectedLine==1);
 	
 	} // doJoin
-
+	
 	@Override
 	public boolean undoJoin(String email, Integer partyCode) {
 		log.debug("undoJoin({}, {}) invoked.",email, partyCode);
@@ -78,26 +78,37 @@ public class PartyServiceImpl implements PartyService,InitializingBean, Disposab
 	} // undoJoin
 	
 	@Override
-	public boolean editLogo(String logoPic, Integer partyCode) {
-		log.debug("editLogo({}, {}) invoked.",logoPic, partyCode);
+	public boolean editLogo(Map<String, Object> imageInfo) {
+		log.debug("editLogo({}) invoked.",imageInfo);
 		
-		int affectedLine = this.mapper.modifyLogo(logoPic, partyCode);
+		int affectedLine = this.mapper.modifyLogo(imageInfo);
 		
 		log.info("\t + affectedLine : {}",affectedLine);
 		
 		return (affectedLine==1);
 		
 	} // editLogo
+	
 
 	@Override
-	public PartyVO editInfo(PartyDTO dto, Integer partyCode) {
-		log.debug("editInfo({}, {}) invoked.",dto,partyCode);
+	public boolean editPartyMainImage(Map<String, Object> imageInfo) {
+		log.debug("editPartyMainImage({}) invoked.",imageInfo);
+
+		int affectedLine = this.mapper.modifyMainImage(imageInfo);
 		
-		PartyVO vo = this.mapper.modifyInfo(dto,partyCode);
+		return (affectedLine==1);
+	} // editPartyMainImage
+
+	
+	@Override
+	public boolean editInfo(PartyDTO dto) {
+		log.debug("editInfo({}, {}) invoked.",dto);
 		
-		log.info("\t + vo : {}",vo);
+		int affectedLine = this.mapper.modifyInfo(dto);
 		
-		return vo;
+		log.info("\t + affectedLine : {}",affectedLine);
+		
+		return (affectedLine==1);
 	} // editInfo
 
 	@Override
@@ -105,6 +116,8 @@ public class PartyServiceImpl implements PartyService,InitializingBean, Disposab
 		log.debug("breakParty({}) invoked.",partyCode);
 		
 		int affectedLine = this.mapper.makeDesPartyReq(partyCode);
+		
+		log.info("\t + affectedLine : {}",affectedLine);
 		
 		return (affectedLine==1);
 		
@@ -116,6 +129,8 @@ public class PartyServiceImpl implements PartyService,InitializingBean, Disposab
 		
 		int affectedLine = this.mapper.delegatePL(authCode, email, partyCode);
 		
+		log.info("\t + affectedLine : {}",affectedLine);
+		
 		return (affectedLine==1);
 	} // editPL
 
@@ -125,7 +140,10 @@ public class PartyServiceImpl implements PartyService,InitializingBean, Disposab
 		
 		int affectedLine = this.mapper.upgradeJoin(email, partyCode);
 		
+		log.info("\t + affectedLine : {}",affectedLine);
+		
 		return (affectedLine==1);
+		
 	} // acceptJoin
 
 	@Override
@@ -134,29 +152,46 @@ public class PartyServiceImpl implements PartyService,InitializingBean, Disposab
 		
 		int affectedLine = this.mapper.deleteJoin(email, partyCode);
 		
+		log.info("\t + affectedLine : {}",affectedLine);
+		
 		return (affectedLine==1);
 		
 	} // rejectJoin
 
 	@Override
-	public List<PartyUserVO> showMember(Integer partyCode) {
-		log.debug("showMember({}) invoked.", partyCode);
+	public List<PartyUserVO> showMember(Integer partyCode, Criteria cri) {
+		log.debug("showMember({},{}) invoked.", partyCode,cri);
 		
-		List<PartyUserVO> user = this.mapper.getMember(partyCode);
+		List<PartyUserVO> user = this.mapper.getMember(partyCode,cri);
+		
+		log.info("\t + user : {}",user);
 		
 		return user;
+		
 	} // showMember
 
+	@Override
+	public Integer getTotalMember(Integer partyCode) {
+		log.debug("getTotalMember({}) invoked.", partyCode);
+		
+		int resultNum = this.mapper.getPartyMN(partyCode);
+		log.info("\t+ resultNum : {}",resultNum);
+		
+		return resultNum;
+	} // getTotalMember
+	
 	@Override
 	public boolean kickMember(String email, Integer partyCode) {
 		log.debug("kickMember({}, {}) invoked.",email, partyCode);
 		
 		int affectedLine = this.mapper.deleteJoin(email, partyCode);
 		
+		log.info("\t + affectedLine : {}",affectedLine);
+		
 		return (affectedLine==1);
+		
 	} // kickMember
-
 
 	
 
-}
+} // end class

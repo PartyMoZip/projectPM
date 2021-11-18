@@ -20,34 +20,42 @@
     <insert id="makeJoin">
 
     INSERT INTO PARTYUSER(EMAIL, PARTYCODE, AUTHCODE)
-    VALUES(#{EMAIL}, #{PARTYCODE}, -1)
+    VALUES(#{email}, #{partyCode}, -1)
 
     </insert>
 
     <delete id="deleteJoin">
 
     DELETE FROM PARTYUSER
-    WHERE EMAIL=#{EMAIL}
-    AND PARTYCODE=#{PARTYCODE}
+    WHERE EMAIL=#{email}
+    AND PARTYCODE=#{partyCode}
 
     </delete>
     
-    <update id="modifyLogo">
+    <update id="modifyLogo" parameterType="hashMap">
     
     UPDATE PARTY
-    SET LOGOPIC = #{LOGOPIC}
-    WHERE PARTYCODE = #{PARTYCODE}
+    SET LOGOPIC = #{fileLocation}
+    WHERE PARTYCODE = #{partyCode}
+
+    </update>
+    
+    <update id="modifyMainImage" parameterType="hashMap">
+    
+    UPDATE PARTY
+    SET COVERPIC = #{fileLocation}
+    WHERE PARTYCODE = #{partyCode}
 
     </update>
     
     <update id="modifyInfo">
     
     UPDATE PARTY
-    SET PARTYNAME = #{PARTYNAME},
-    PARTYPROFILE = #{PARTYPROFILE},
-    LOCALCODE = #{LOCALCODE},
-    HOBBYCODE = #{HOBBYCODE}
-    WHERE PARTYCODE = #{PARTYCODE}
+    SET PARTYNAME = #{partyName},
+    PARTYPROFILE = #{partyProfile},
+    LOCALCODE = #{localCode},
+    HOBBYCODE = #{hobbyCode}
+    WHERE PARTYCODE = #{partyCode}
 
     </update>
     
@@ -55,16 +63,16 @@
     
     UPDATE PARTY
     SET PARTYBANNED = -1
-    WHERE PARTYCODE = #{PARTYCODE}
+    WHERE PARTYCODE = #{partyCode}
 
     </update>
     
     <update id="delegatePL">
     
     UPDATE PARTYUSER
-    SET AUTHCODE = #{AUTHCODE}
-    WHERE EMAIL = #{EMAIL}
-    AND PARTYCODE = #{PARTYCODE}
+    SET AUTHCODE = #{authCode}
+    WHERE EMAIL = #{email}
+    AND PARTYCODE = #{partyCode}
 
     </update>
     
@@ -72,8 +80,8 @@
     
     UPDATE PARTYUSER
     SET AUTHCODE = 1
-    WHERE EMAIL = #{EMAIL}
-    AND PARTYCODE = #{PARTYCODE}
+    WHERE EMAIL = #{email}
+    AND PARTYCODE = #{partyCode}
 
     </update>
     
@@ -82,7 +90,23 @@
     <![CDATA[ 
     SELECT U.NICKNAME, U.USERPIC
     FROM (SELECT * FROM PARTYUSER
-    WHERE PARTYCODE = #{PARTYCODE}
+    WHERE PARTYCODE = #{partyCode}
+    ORDER BY AUTHCODE DESC) T
+    JOIN USERINFO U
+    ON T.EMAIL = U.EMAIL
+    WHERE T.AUTHCODE > 0
+    OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
+	FETCH NEXT #{cri.amount} ROWS ONLY
+    ]]>
+    
+    </select>
+    
+    <select id="getPartyMN" resultType="int">
+    
+    <![CDATA[ 
+    SELECT COUNT(U.NICKNAME)
+    FROM (SELECT * FROM PARTYUSER
+    WHERE PARTYCODE = #{partyCode}
     ORDER BY AUTHCODE DESC) T
     JOIN USERINFO U
     ON T.EMAIL = U.EMAIL

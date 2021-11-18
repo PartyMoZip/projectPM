@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pm.myapp.mapper.MyPartyMapper">
+>
 
-    <select id="getMyPartyList" resultType="com.pm.myapp.domain.PartyVO">
+	<delete id="quitParty">
+		DELETE
+		FROM PARTYUSER
+		WHERE EMAIL = #{email} and PARTYCODE = #{partyCode}
+	</delete>
+  
+  <select id="getMyPartyList" resultType="com.pm.myapp.domain.PartyVO">
 
         select * From (
         SELECT p.partycode,
@@ -34,39 +42,66 @@
 
     </select>
 
-    <select id="getMyProfilePartyList" resultType="com.pm.myapp.domain.PartyVO">
+	<select id="getList" resultType="com.pm.myapp.domain.MyPartyListVO">
 
-        select * From (
-        SELECT p.partycode,
-        p.partyname,
-        p.partyscore,
-        p.createdate,
-        p.logopic,
-        p.coverpic,
-        p.partyprofile,
-        p.partybanned,
-        l.localname,
-        h.hobbyname
-        FROM party p
-        JOIN localinfo l ON p.localcode = l.localcode
-        JOIN hobby h ON p.hobbycode = h.hobbycode
+		
+		SELECT P.PARTYCODE, P.PARTYNAME, P.PARTYSCORE, P.CREATEDATE, P.LOGOPIC 
+		FROM PARTY P
+		JOIN PARTYUSER U
+		ON P.PARTYCODE = U.PARTYCODE
+		WHERE U.EMAIL = #{email}
+		OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
+		FETCH NEXT #{cri.amount} ROWS ONLY
 
-        <if test='email != null and !email.equals("")'>
-            JOIN partyuser pu ON p.partycode = pu.partycode
-            JOIN userinfo u ON u.email = pu.email
-            where u.email = #{email})
-        </if>
-        <![CDATA[
-        WHERE
-            rownum < 4
-        ]]>
-        ORDER BY partyscore DESC
-        OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS FETCH NEXT #{cri.amount} ROWS ONLY
+	</select>
+	
+	<select id="getTMPL" resultType="int">
+	
+		<![CDATA[ 
+		SELECT COUNT(P.PARTYCODE) 
+		FROM PARTY P
+		JOIN PARTYUSER U
+		ON P.PARTYCODE = U.PARTYCODE
+		WHERE U.EMAIL = #{email}
+    	]]>
+			
+	</select>
+
+	<insert id="makeParty">
+
+		INSERT INTO PARTY(PARTYCODE, PARTYNAME, PARTYSCORE, CREATEDATE, LOGOPIC, COVERPIC, PARTYPROFILE, PARTYBANNED, HOBBYCODE, LOCALCODE)
+		VALUES(#{partyCode}, #{partyName}, 0, sysdate, null, null, #{partyProfile}, 0, #{hobbyCode}, #{localCode})
+
+	</insert>
+	
+	<select id="getRecParties" resultType="com.pm.myapp.domain.MyPartyListVO">
 
 
+		SELECT P.PARTYCODE, P.PARTYNAME, P.PARTYSCORE, P.CREATEDATE, P.LOGOPIC
+		FROM PARTY P
+		JOIN HOBBY H ON P.HOBBYCODE = H.HOBBYCODE
+		WHERE P.HOBBYCODE IN
+		<foreach collection="hobbyCode" item="hobby" index="index" separator="," open="(" close=")">
+			#{hobby}
+		</foreach>
+		<![CDATA[ 
+		ORDER BY P.PARTYCODE DESC
+		OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
+		FETCH NEXT #{cri.amount} ROWS ONLY
+    	]]>
 
-
-    </select>
-
+	</select>
+	
+	<select id="getTRCP" resultType="int">
+	
+		SELECT COUNT(P.PARTYCODE)
+		FROM PARTY P
+		JOIN HOBBY H ON P.HOBBYCODE = H.HOBBYCODE
+		WHERE P.HOBBYCODE IN
+		<foreach collection="hobbyCode" item="hobby" index="index" separator="," open="(" close=")">
+			#{hobby}
+		</foreach>		
+	
+	</select>
 
 </mapper>

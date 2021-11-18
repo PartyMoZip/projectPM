@@ -1,18 +1,18 @@
 package com.pm.myapp.controller.board;
 
-import com.pm.myapp.domain.FreeBoardVO;
+import com.pm.myapp.domain.*;
+import com.pm.myapp.domain.board.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import com.pm.myapp.service.board.FreeBoardService;
 
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -26,72 +26,148 @@ public class FreeBoardController {
 	@Setter(onMethod_= {@Autowired})
 	private FreeBoardService service;
 
-	// 자유 게시판 목록
+	// 자유 게시판 목록 - 페이징 처리
 	@GetMapping("/getFreeBoardList")
-	public void getFreeBoardList(Model model) {
-		log.debug("getFreeBoardList() invoked.");
-		List<FreeBoardVO> list = this.service.getList();
+	public String getFreeBoardList(
+			@ModelAttribute("cri") Criteria criteria, Model model) {
+		log.debug("getFreeBoardList({}) invoked.", criteria);
+		List<FreeBoardListVO> list = this.service.getListPerPage(criteria);
 
 		log.info("\t + list size : {}", list.size());
 		model.addAttribute("list", list);
 
+		// 페이징 처리
+		Integer totalAmount = this.service.getTotal();
+		PageDTO pageDTO = new PageDTO(criteria, totalAmount);
+		model.addAttribute("pageMaker", pageDTO);
+
+		return "/free/list";
 		
 	} // getFreeBoardList
-	
-	// 자유 게시판  검색
-	@GetMapping("/searchFreeBoard")
-	public void searchFreeBoard() {
-		log.debug("searchFreeBoard() invoked.");
-		
-	} // searchFreeBoard
-	
-	// 자유 게시판  작성
-	@PostMapping("/writeFreeBoard")
-	public void writeFreeBoard() {
-		log.debug("writeFreeBoard() invoked.");
 
+	// 자유 게시판 상세보기
+	@GetMapping("/showFreeDetail")
+	public void showFreeDetail(@ModelAttribute("cri") Criteria cri, Integer frefer, Model model) {
+		log.debug("showFreeDetail({}, {}) invoked.", cri, frefer);
+
+		FreeBoardVO boardDetail = this.service.getBoardDetail(frefer);
+		log.info("\t + board : {}", boardDetail);
+		List<FreeBoardReplyVO> reply = this.service.getReply(frefer, cri);
+		model.addAttribute("reply", reply);
+		model.addAttribute("board", boardDetail);
+
+	} // showFreeDetail
+
+	// 자유 게시판 작성
+	@PostMapping("/writeFreeBoard")
+	public String writeFreeBoard(FreeBoardDTO writeFB, RedirectAttributes rttrs) {
+		log.debug("writeFreeBoard({}) invoked.", writeFB);
+
+		boolean result = this.service.writeBoard(writeFB);
+		rttrs.addAttribute("result", result);
+
+		return "redirect:/party/register";
 	} // writeFreeBoard
-	
-	// 자유 게시판  수정
+
+	// 자유 게시판 수정 view
+	@GetMapping("/editFreeBoardView")
+	public void editFreeBoardView(@ModelAttribute("cri") Criteria cri, Integer frefer, Model model){
+		log.debug("editFreeBoardView({}, {}) invoked",cri,frefer);
+
+		FreeBoardVO boardDetail = this.service.getBoardDetail(frefer);
+		log.info("\t + board : {}", boardDetail);
+
+		model.addAttribute("__BoardDetail__",boardDetail);
+
+	} // editFreeBoardView
+
+	// 자유 게시판 수정
 	@PostMapping("/editFreeBoard")
-	public void editFreeBoard() {
-		log.debug("editFreeBoard() invoked.");
+	public String editFreeBoard(FreeBoardDTO freeBoard, RedirectAttributes rttrs) {
+		log.debug("editFreeBoard({}) invoked.", freeBoard);
+
+		boolean result = this.service.editBoard(freeBoard);
+		rttrs.addAttribute("resultmod", result);
+
+		return "redirect:/free/modify";
 
 	} // editFreeBoard
-	
-	// 자유 게시판  삭제
+
+	// 자유 게시판 삭제
 	@PostMapping("/deleteFreeBoard")
-	public void deleteFreeBoard() {
-		log.debug("deleteFreeBoard() invoked.");
+	public String deleteFreeBoard(@RequestParam("frefer") Integer frefer, RedirectAttributes rttrs) {
+		log.debug("deleteFreeBoard({}) invoked.", frefer);
+		boolean result = this.service.deleteBoard(frefer);
+		rttrs.addAttribute("resultdel", result);
+
+		return "redirect:/free/list";
 
 	} // deleteFreeBoard
+
+	// 자유 게시판 검색
+	@GetMapping("/searchFreeBoard")
+	public String searchFreeBoard(@ModelAttribute("cri") Criteria cri, String searchOption, String keyword, Model model) {
+		log.debug("searchFreeBoard() invoked.");
+
+		List<FreeBoardSearchVO> searchList = this.service.search(searchOption, keyword, cri);
+		model.addAttribute("__list__", searchList);
+
+		// 페이징 처리
+		Integer totalAmount = this.service.getTotal();
+		PageDTO pageDTO = new PageDTO(cri, totalAmount);
+		model.addAttribute("pageMaker", pageDTO);
+
+		return "/free/list";
+	} // searchFreeBoard
 	
 	// 자유 게시판  - 댓글 목록
 	@GetMapping("/getComment")
-	public void getComment() {
+	public void getComment(Model model, Integer frefer, Criteria cri) {
 		log.debug("getComment() invoked.");
-		
+		List<FreeBoardReplyVO> list = this.service.getReply(frefer, cri);
+
+		log.info("\t + list size : {}", list.size());
+		model.addAttribute("list", list);
+
 	} // commentList
 	
 	// 자유 게시판  - 댓글 작성
 	@PostMapping("/writeComment")
-	public void writeComment() {
-		log.debug("writeComment() invoked.");
+	public String writeComment(FreeBoardReplyDTO freeReply, RedirectAttributes rttrs) {
+		log.debug("writeComment({}) invoked.", freeReply);
+
+		boolean result = this.service.writeReply(freeReply);
+		rttrs.addAttribute("resultWriteComment", result);
+
+		return "redirect:/party/showDetail";
 
 	} // writeComment
 	
 	// 자유 게시판  - 댓글 수정
 	@PostMapping("/editComment")
-	public void editComment() {
-		log.debug("editComment() invoked.");
+	public String editComment(FreeBoardReplyDTO freeReply, RedirectAttributes rttrs) {
+		log.debug("editComment({}) invoked.", freeReply);
+
+		boolean result = this.service.editReply(freeReply);
+		rttrs.addAttribute("resultEditComment", result);
+
+		//게시글 상세페이지로 돌아가야되는데 이름 뭔데
+		return "redirect:/party/showDetail";
 
 	} // editComment
 	
 	// 자유 게시판  - 댓글 삭제
 	@PostMapping("/deleteComment")
-	public void deleteComment() {
-		log.debug("deleteComment() invoked.");
+	public String deleteComment(@RequestParam("frerefer") Integer frerefer, RedirectAttributes rttrs) {
+		log.debug("deleteComment({}) invoked.", frerefer);
+
+		boolean result = this.service.deleteReply(frerefer);
+		rttrs.addAttribute("resultDeleteComment", result);
+
+		return "redirect:/party/showDetail";
 
 	} // deleteComment
+
+
 	
 } // end class
