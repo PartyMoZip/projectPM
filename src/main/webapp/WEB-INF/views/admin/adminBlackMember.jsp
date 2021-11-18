@@ -23,7 +23,7 @@
 
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin.css" />
 
-  <title>블랙회원리스트 관리</title>
+  <title>파티모집</title>
 </head>
 
 <body>

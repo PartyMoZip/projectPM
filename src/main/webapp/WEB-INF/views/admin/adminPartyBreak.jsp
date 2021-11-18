@@ -23,7 +23,7 @@
 
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin.css"/>
 
-  <title>파티해체승인 요청</title>
+  <title>파티모집</title>
 </head>
 
 <body>

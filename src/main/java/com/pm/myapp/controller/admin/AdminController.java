@@ -23,7 +23,7 @@ public class AdminController {
 	@Setter(onMethod_= {@Autowired})
 	private AdminService service;
 
-	// 파티관리 페이지 조회회
+	// 파티관리 페이지 조회
 	@GetMapping("/adminParty")
 	public void getAdminParty(){
 		log.debug("getAdminParty() invoked.");
