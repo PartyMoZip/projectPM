@@ -22,7 +22,6 @@
 <%--HEADER--%>
 <jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp"/>
 
-
 <main>
     <!-- Carousel -->
     <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
@@ -82,7 +81,7 @@
         <div class="album py-5">
             <div class="header">
                 <c:choose>
-                    <c:when test="${list} != null">
+                    <c:when test="${list != null && sessionScope.__AUTH__.email != null}">
                         <h4>나의 파티</h4>
 
                         <span class="icon">

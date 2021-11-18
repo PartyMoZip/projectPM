@@ -32,18 +32,20 @@ public class HomeController {
         log.debug("home() invoked.");
 
         HttpSession session = req.getSession();
-        log.info("\t+ session : {}", session);
-        if (session.getAttribute(LoginController.authKey) != null) {
+        log.info("\t+ session : {}", session.getAttribute(LoginController.authKey));
+
+        if (session.getAttribute(LoginController.authKey) != null && session != null) {
 
             UserDTO dto = (UserDTO) session.getAttribute(LoginController.authKey);
 
             List<PartyVO> list = this.service.getMyPartyList(dto.getEmail());
-            log.info("Home Controller test list: {}", list);
+
             model.addAttribute("list", list);
         } else {
             List<PartyVO> list = this.service.getMyPartyList("");
-            log.info("Home Controller test list: {}", list);
-        }
+
+            model.addAttribute("list", list);
+        } // if-else
 
         return "index";
     }
