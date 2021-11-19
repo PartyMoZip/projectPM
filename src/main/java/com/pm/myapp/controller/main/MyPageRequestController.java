@@ -21,7 +21,7 @@ public class MyPageRequestController {
     private ProfileService service;
 
     // 프로필 수정
-    @PutMapping("/editProfile")
+    @PutMapping("/edit-profile")
     public void editProfile() {
         log.debug("editProfile() invoked.");
 
@@ -42,10 +42,10 @@ public class MyPageRequestController {
     } // editPassword
 
     // 회원 탈퇴
-    @PostMapping("/deleteAccount")
-    public void deleteAccount() {
-        log.debug("deleteAccount() invoked.");
+    @PostMapping("/withdrawal")
+    public void withdrawal() {
+        log.debug("withdrawal() invoked.");
 
-    } // deleteAccount
+    } // withdrawal
 
 } // end class
