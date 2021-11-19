@@ -5,6 +5,7 @@ import com.pm.myapp.domain.MyPartyVO;
 import com.pm.myapp.domain.PartyVO;
 import com.pm.myapp.domain.UserDTO;
 import com.pm.myapp.service.main.MainPageService;
+import com.pm.myapp.service.partyfm.MyPartyService;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
@@ -25,7 +26,7 @@ import java.util.Locale;
 public class HomeController {
 
     @Setter(onMethod_ = {@Autowired})
-    private MainPageService service;
+    private MyPartyService service;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String home(Locale locale, Model model, HttpServletRequest req) {

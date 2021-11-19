@@ -2,6 +2,7 @@ package com.pm.myapp.service.partyfm;
 import java.util.Arrays;
 import java.util.List;
 
+import com.pm.myapp.domain.PartyVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +34,16 @@ public class MyPartyServiceImpl implements MyPartyService{
 		return (affectedLines == 1);
 		
 	} // doQuit
+
+	@Override
+	public List<PartyVO> getMyPartyList(String email) {
+		log.debug("getMyPartyList({}) invoked.",email);
+
+		List<PartyVO> list= this.mapper.getMyPartyList(email);
+		log.info("\t+ list : {}", list);
+
+		return list;
+	} // getMyPartyList
 
 	@Override
 	public MyPartyListVO getPartyList(String email, Criteria cri) {

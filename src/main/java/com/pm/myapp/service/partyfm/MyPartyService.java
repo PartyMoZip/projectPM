@@ -10,6 +10,8 @@ import com.pm.myapp.domain.PartyVO;
 public interface MyPartyService {
 	
 	public abstract boolean doQuit(String email, Integer partyCode);
+
+	public abstract List<PartyVO> getMyPartyList(String email);
 	
 	public abstract MyPartyListVO getPartyList(String email,Criteria cri);
 	

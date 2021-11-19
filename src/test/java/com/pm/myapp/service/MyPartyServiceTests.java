@@ -1,8 +1,10 @@
 package com.pm.myapp.service;
 
 
+import com.pm.myapp.domain.Criteria;
 import com.pm.myapp.domain.PartyVO;
 import com.pm.myapp.service.main.MainPageService;
+import com.pm.myapp.service.partyfm.MyPartyService;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
@@ -14,6 +16,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
+import java.util.Objects;
 
 @Log4j2
 @NoArgsConstructor
@@ -23,10 +26,13 @@ import java.util.List;
         "file:src/main/webapp/WEB-INF/spring/root-context.xml",
         "file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml"
 })
-public class MainPageServiceTests {
+public class MyPartyServiceTests {
 
     @Setter(onMethod_ = {@Autowired})
     private MainPageService service;
+
+    @Setter(onMethod_ = @Autowired)
+    private MyPartyService myPartyService;
 
     @Before
     public void setup() {
@@ -36,17 +42,20 @@ public class MainPageServiceTests {
     } // setup
 
     @Test
-    public void testGetMyPartyList() {
-        log.debug("testGetMyPartyList() invoked.");
+    public void testGetMyPartyList(){
+        log.debug("test() invoked.");
 
-        String email = "test5@test.com";
+        Criteria cri = new Criteria();
+        cri.setCurrPage(1);
+        cri.setAmount(3);
 
-        List<PartyVO> list = this.service.getMyPartyList(email);
-        log.info("list: {}", list);
+        // String email = "test5@test.com";
+        String email = "";
 
-        assert list != null;
+        List<PartyVO> list = this.myPartyService.getMyPartyList(email);
 
+        Objects.requireNonNull(list);
         list.forEach(log::info);
-    } // testGetMyPartyList
+    }
 
 } // end class

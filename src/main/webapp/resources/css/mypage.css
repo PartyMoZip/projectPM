@@ -46,9 +46,34 @@
 }
 
 /* 프로필 설정 */
+.profile-box {
+    border: 1px solid #efefef;
+    padding: 2rem;
+}
 
-.img-profile {
-    width: 100px;
-    height: 100px;
-    background-color: red;
+.img-profile img {
+    width: 220px;
+    height: auto;
+}
+
+.label-nickname {
+    font-weight: bold;
+}
+
+.input-nickname {
+    max-width: 220px;
+}
+
+.input-nickname:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.25rem rgba(76 175 80/ 25%);
+}
+
+.accordion-button:focus {
+    border: none;
+}
+
+.accordion-button:not(.collapsed) {
+    color: var(--primary-text-color);
+    background-color: white;
 }

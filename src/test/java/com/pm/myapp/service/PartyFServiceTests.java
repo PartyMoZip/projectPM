@@ -1,8 +1,10 @@
 package com.pm.myapp.service;
 
 import com.pm.myapp.domain.Criteria;
+import com.pm.myapp.domain.PartyVO;
 import com.pm.myapp.domain.board.*;
 import com.pm.myapp.service.board.PartyFreeService;
+import com.pm.myapp.service.partyfm.MyPartyService;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
@@ -84,20 +86,6 @@ public class PartyFServiceTests {
 
         Objects.requireNonNull(partyFree);
         log.info("\t + partyFree : {}", partyFree);
-    }
-
-    @Test
-    public void testGetListPerPage() {
-        log.debug("test() invoked.");
-
-        Criteria cri = new Criteria();
-        cri.setCurrPage(1);
-        cri.setAmount(10);
-
-        List<PartyFreeListVO> partyFree = this.service.getListPerPage(cri);
-
-        Objects.requireNonNull(partyFree);
-        partyFree.forEach(log::info);
     }
 
     @Test

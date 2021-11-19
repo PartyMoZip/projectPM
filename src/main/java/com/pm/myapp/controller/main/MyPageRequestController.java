@@ -6,31 +6,21 @@ import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 
 @Log4j2
 @NoArgsConstructor
 
-@RequestMapping("/users")
-@Controller
-public class MyPageController {
+@RequestMapping("/users/{id}")
+@RestController
+public class MyPageRequestController {
 
     @Setter(onMethod_ = {@Autowired})
     private MyPageService service;
 
-    // 마이페이지 (view)
-    @GetMapping("/{id}")
-    public String showMyPage() {
-        log.debug("showMyPage() invoked.");
-
-        return "/mypage";
-    } // showMyPage
-
     // 프로필 수정
-    @PostMapping("/editProfile")
+    @PutMapping("/editProfile")
     public void editProfile() {
         log.debug("editProfile() invoked.");
 
