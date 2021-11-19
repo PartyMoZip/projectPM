@@ -10,37 +10,6 @@
 		FROM PARTYUSER
 		WHERE EMAIL = #{email} and PARTYCODE = #{partyCode}
 	</delete>
-  
-  <select id="getMyPartyList" resultType="com.pm.myapp.domain.PartyVO">
-
-        select * From (
-        SELECT p.partycode,
-        p.partyname,
-        p.partyscore,
-        p.createdate,
-        p.logopic,
-        p.coverpic,
-        p.partyprofile,
-        p.partybanned,
-        l.localname,
-        h.hobbyname
-        FROM party p
-        JOIN localinfo l ON p.localcode = l.localcode
-        JOIN hobby h ON p.hobbycode = h.hobbycode
-
-        <if test='email != null and !email.equals("")'>
-            JOIN partyuser pu ON p.partycode = pu.partycode
-            JOIN userinfo u ON u.email = pu.email
-            where u.email = #{email}
-        </if>
-        ORDER BY p.partyscore DESC)
-
-        <![CDATA[
-        WHERE
-            rownum < 4
-        ]]>
-
-    </select>
 
 	<select id="getList" resultType="com.pm.myapp.domain.MyPartyListVO">
 

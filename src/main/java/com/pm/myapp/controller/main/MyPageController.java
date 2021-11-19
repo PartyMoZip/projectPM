@@ -1,6 +1,7 @@
 package com.pm.myapp.controller.main;
 
-import com.pm.myapp.service.main.MyPageService;
+
+import com.pm.myapp.service.main.ProfileService;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MyPageController {
 
     @Setter(onMethod_ = {@Autowired})
-    private MyPageService service;
+    private ProfileService service;
 
     // 마이페이지 (view)
     @GetMapping("/{id}")
