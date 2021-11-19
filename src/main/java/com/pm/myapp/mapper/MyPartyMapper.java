@@ -30,5 +30,4 @@ public interface MyPartyMapper {
 
     public abstract Integer getTRCP(Integer[] hobbyCode);
 
-
 } // end interface
