@@ -56,68 +56,76 @@
             <h4>프로필 설정</h4>
         </div>
 
-        <form action="/users/${id}/editprofile" method="post">
+        <form action="/users/${sessionScope.__AUTH__.hashCode()}/edit-profile" class="form-data"
+              enctype="multipart/form-data">
+            <input type="hidden" class="input-email" name="email" value="${sessionScope.__AUTH__.email}"/>
+            <input type="hidden" name="id" class="input-id" value="${sessionScope.__AUTH__.hashCode()}">
             <div class="container-lg d-flex justify-content-center">
                 <div class="d-flex flex-column justify-content-center align-items-center">
                     <div class="img-profile justify-content-center align-items-center">
                         <img src="${sessionScope.__AUTH__.userPic}" alt="프로필 사진">
                     </div>
+                    <div class="mt-2">
+                        <button type="button" class="btn btn-outline-primary select-btn">
+                            이미지 업로드
+                        </button>
+                        <input type="file" class="form-control input-file visually-hidden" name="fileLocation">
+                    </div>
                     <div class="d-flex flex-column justify-content-center align-items-center w-100 col-3 mt-3">
                         <span class="align-self-baseline label-nickname">닉네임</span>
-
                         <input type="text" class="form-control input-nickname mt-2" name="nickname"
                                value="${sessionScope.__AUTH__.nickname}">
                     </div>
 
-                    <button type="button" class="btn btn-primary mt-4">저장하기</button>
+                    <button type="submit" class="btn btn-primary mt-4 save-btn">저장하기</button>
                 </div>
             </div>
         </form>
+    </div>
 
-        <%--회원 탈퇴--%>
-        <div class="accordion accordion-flush container profile-box mt-5 shadown-sm" id="accordionFlushExample">
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="flush-headingOne">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                        <div class="header d-flex justify-content-between">
-                            <h4>회원 탈퇴</h4>
-                        </div>
-                    </button>
-                </h2>
-                <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
-                     data-bs-parent="#accordionFlushExample">
-                    <div class="accordion-body d-flex justify-content-center align-items-center">
-                        <div class="">
-                            <div class="h5 d-block">탈퇴 안내 사항</div>
-                            <p>
-                                파티모집에 만족하지 못하셨나요? 당신이 필요한 파티가 아직 있어요!
-                            </p>
-                            <br>
-                            <p>그래도 탈퇴하시겠다면 다음 유의사항을 꼭 읽어주세요.</p>
-                            <p>1. 작성한 컨텐츠는 완전히 삭제되지 않으며, 삭제를 원하시면 탈퇴 전에 직접 삭제를 해주셔야 합니다.<br>
-                                2. 탈퇴 후 동일한 카카오 계정으로 가입이 불가능합니다.<br>
-                                3. 탈퇴하시겠다면 아래 입력창에 "네, 탈퇴하겠습니다."를 입력해주세요. <br><br>
-                                <span class="h5">그동안 이용해주셔서 감사합니다.😂</span>
-                            </p>
+    <%--회원 탈퇴--%>
+    <div class="accordion accordion-flush container profile-box mt-5 shadown-sm" id="accordionFlushExample">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingOne">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                    <div class="header d-flex justify-content-between">
+                        <h4>회원 탈퇴</h4>
+                    </div>
+                </button>
+            </h2>
+            <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+                 data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body d-flex justify-content-center align-items-center">
+                    <div class="">
+                        <div class="h5 d-block">탈퇴 안내 사항</div>
+                        <p>
+                            파티모집에 만족하지 못하셨나요? 당신이 필요한 파티가 아직 있어요!
+                        </p>
+                        <br>
+                        <p>그래도 탈퇴하시겠다면 다음 유의사항을 꼭 읽어주세요.</p>
+                        <p>1. 작성한 컨텐츠는 완전히 삭제되지 않으며, 삭제를 원하시면 탈퇴 전에 직접 삭제를 해주셔야 합니다.<br>
+                            2. 탈퇴 후 동일한 카카오 계정으로 가입이 불가능합니다.<br>
+                            3. 탈퇴하시겠다면 아래 입력창에 "네, 탈퇴하겠습니다."를 입력해주세요. <br><br>
+                            <span class="h5">그동안 이용해주셔서 감사합니다.😂</span>
+                        </p>
 
-                            <input type="text" class="w-100 form-control" placeholder="진짜 탈퇴하실거에요?">
+                        <input type="text" class="w-100 form-control" placeholder="진짜 탈퇴하실거에요?">
 
-                            <div class="d-flex justify-content-center mt-3">
-                                <button type="button" class="btn btn-danger align-self-center">탈퇴하기</button>
-                            </div>
+                        <div class="d-flex justify-content-center mt-3">
+                            <button type="button" class="btn btn-danger align-self-center">탈퇴하기</button>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree"
-                 data-bs-parent="#accordionFlushExample">
-                <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the
-                    <code>.accordion-flush</code> class. This is the third item's accordion body. Nothing more exciting
-                    happening here in terms of content, but just filling up the space to make it look, at least at first
-                    glance, a bit more representative of how this would look in a real-world application.
-                </div>
+        <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree"
+             data-bs-parent="#accordionFlushExample">
+            <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the
+                <code>.accordion-flush</code> class. This is the third item's accordion body. Nothing more exciting
+                happening here in terms of content, but just filling up the space to make it look, at least at first
+                glance, a bit more representative of how this would look in a real-world application.
             </div>
         </div>
     </div>
@@ -133,6 +141,7 @@
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/modal.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/swiper.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/mypage.js"></script>
 
 
 </body>

@@ -13,7 +13,7 @@ public interface ProfileMapper {
     public abstract List<PartyVO> getMyPartyList(String email);
 
     // 프로필 이미지 수정
-    public abstract Integer modifyProfileImage(Map<String, Object> profile);
+    public abstract Integer modifyProfile(Map<String, Object> profile);
 
     // 회원 탈퇴
     public abstract Integer deleteUser(String email);

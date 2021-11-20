@@ -33,10 +33,11 @@ public class ProfileServiceImpl implements ProfileService {
     } // getMyPartyList
 
     @Override
-    public Integer editProfileImage(Map<String, Object> profile) {
+    public boolean editProfile(Map<String, Object> profile) {
         log.debug("Service editProfileImage({}) invoked.", profile);
 
-        int result = this.mapper.modifyProfileImage(profile);
+        int affectedLine = this.mapper.modifyProfile(profile);
+        boolean result = (affectedLine == 1);
 
         log.info("result: {}", result);
 
@@ -44,10 +45,12 @@ public class ProfileServiceImpl implements ProfileService {
     } // editProfileImage
 
     @Override
-    public Integer withdrawal(String email) {
+    public boolean withdrawal(String email) {
         log.debug("Service withdrawal({}) invoked.", email);
 
-        int result = this.mapper.deleteUser(email);
+        int affectedLine = this.mapper.deleteUser(email);
+
+        boolean result = (affectedLine == 1);
 
         log.info("result: {}", result);
 

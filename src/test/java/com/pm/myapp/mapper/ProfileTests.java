@@ -54,9 +54,10 @@ public class ProfileTests {
 
         Map<String, Object> profile = new HashMap<>();
         profile.put("email", "test5@test.com");
-        profile.put("fileLocation", "프로필이미지");
+        profile.put("nickname", "테스트");
+        profile.put("fileLocation", "");
 
-        int result = this.mapper.modifyProfileImage(profile);
+        int result = this.mapper.modifyProfile(profile);
 
         log.info("result: {}", result);
 

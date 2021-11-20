@@ -51,17 +51,18 @@ public class ProfileServiceTests {
     } // testGetMyPartyList
 
     @Test
-    public void testEditProfileImage(){
-        log.debug("testEditProfileImage() invoked.");
+    public void testEditProfile(){
+        log.debug("testEditProfile() invoked.");
 
         Map<String, Object> profile = new HashMap<>();
         profile.put("email", "test5@test.com");
+        profile.put("nickname", "이시안");
         profile.put("fileLocation", "서비스 프로필 이미지 수정");
 
-        int result = this.service.editProfileImage(profile);
+        boolean result = this.service.editProfile(profile);
 
         log.info("result: {}", result);
-    } // testEditProfileImage
+    } // testEditProfile
 
     @Test
     public void testWithdrawal(){
@@ -69,7 +70,7 @@ public class ProfileServiceTests {
 
         String email = "gragas@sultong1.com";
 
-        int result = this.service.withdrawal(email);
+        boolean result = this.service.withdrawal(email);
 
         log.info("result: {}", result);
     } // testWithdrawal

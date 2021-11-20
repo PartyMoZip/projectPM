@@ -13,9 +13,9 @@ public interface ProfileService {
     public abstract List<PartyVO> getMyPartyList(String email);
 
     // 프로필 이미지 수정
-    public abstract Integer editProfileImage(Map<String, Object> profile);
+    public abstract boolean editProfile(Map<String, Object> profile);
 
     // 회원 탈퇴
-    public abstract Integer withdrawal(String email);
+    public abstract boolean withdrawal(String email);
 
 } //end interface

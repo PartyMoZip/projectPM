@@ -37,18 +37,21 @@
     </select>
 
     <update
-            id="modifyProfileImage"
+            id="modifyProfile"
             parameterType="hashMap"
     >
 
         UPDATE userinfo
-        SET userpic = #{fileLocation}
+        SET nickname = #{nickname}
+        <if test="!fileLocation.equals('')">
+            , userpic = #{fileLocation}
+        </if>
         WHERE email = #{email}
 
     </update>
 
     <delete
-        id="deleteUser"
+            id="deleteUser"
     >
 
         UPDATE userinfo
