@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pm.myapp.mapper.board.PartyPhotoMapper">
+
+    <!-- SELECT/INSERT/UPDATE/DELETE 각각의 SQL문장을 저장하는 태그가 이미 준비되어 있다.(DTD에) -->
+    <select id="getList" resultType = "com.pm.myapp.domain.board.PartyPhotoDTO">
+    
+        SELECT P.PREFER, P.PDATE, P.PARTYCODE, P.PSUBJECT, U.NICKNAME, P.READNUM
+        FROM PARTYPHOTOBOARD P
+        JOIN USERINFO U
+        ON P.EMAIL = U.EMAIL
+        WHERE P.PARTYCODE = #{partyCode}
+        OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
+		FETCH NEXT #{cri.amount} ROWS ONLY
+    
+    </select>
+    
+    <select id="getTotalList" resultType = "Integer">
+    
+        SELECT COUNT(PREFER)
+        FROM PARTYPHOTOBOARD
+        WHERE PARTYCODE = #{partyCode}
+    
+    </select>
+    
+    <select id="getDetail" resultType = "com.pm.myapp.domain.board.PartyPhotoDTO">
+    
+        SELECT P.PREFER, P.PDATE, P.PARTYCODE, P.CONTENT, P.PSUBJECT, U.NICKNAME, P.READNUM
+        FROM PARTYPHOTOBOARD P
+        JOIN USERINFO U
+        ON P.EMAIL = U.EMAIL
+        WHERE P.PARTYCODE = #{partyCode} AND P.PREFER = #{prefer}
+        
+    </select>
+
+
+    <insert id="insert">
+
+    </insert>
+
+
+    <update id="update">
+
+    </update>
+
+
+    <delete id="delete">
+
+    </delete>
+
+
+</mapper>
