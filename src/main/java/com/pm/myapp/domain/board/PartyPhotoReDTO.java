@@ -8,9 +8,11 @@ import java.util.Date;
 public class PartyPhotoReDTO {
 
     private Integer prerefer;
-    private String nickname;
     private String precontent;
     private Date predate;
     private Integer prefer;
+    private Integer partyCode;
+    private String nickname;
+    private String email;
 
-}
+} // end class

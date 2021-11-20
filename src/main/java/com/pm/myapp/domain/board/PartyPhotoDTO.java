@@ -7,13 +7,13 @@ import java.util.Date;
 @Data
 public class PartyPhotoDTO {
 
-    private Integer prefer;
-    private String nuckname;
-    private Date pdate;
-    private String pcontent;
-    private String ppic1;
-    private String ppic2;
-    private String ppic3;
-    private Integer partycode;
+	private Integer prefer;
+	private Date pdate;
+	private String pcontent;
+	private Integer partycode;
+	private String psubject;
+	private String email;
+	private String nickname;
+	private Integer readnum;
 
-}
+} // end class
