@@ -17,6 +17,42 @@
     </select>
 
     <!--페이징 처리된 검색한 파티 목록 조회-->
+    <select id="getKeyword" parameterType="map" resultType="com.pm.myapp.domain.PartyVO">
+
+        SELECT
+        p.partyname,
+        l.localname,
+        h.hobbyname
+        FROM party p
+        JOIN hobby h
+        ON p.hobbycode = h.hobbycode
+        JOIN localinfo l
+        ON p.localcode = l.localcode
+        WHERE
+        <choose>
+            <when test="word != null">
+                partyname LIKE '%'||#{word}||'%'
+            </when>
+            <otherwise>
+                partyname like '%'
+            </otherwise>
+        </choose>
+        <if test='hobby != null and !hobby.equals("")'>
+            or h.hobbyname LIKE '%'||#{hobby}||'%'
+        </if>
+
+        <if test='local != null and !local.equals("")'>
+            or l.localname LIKE '%'||#{local}||'%'
+        </if>
+        <![CDATA[
+        rownum< 4
+        ]]>
+        ORDER BY partycode DESC
+
+
+    </select>
+
+    <!--페이징 처리된 검색한 파티 목록 조회-->
     <select id="getPartyListBySearch" parameterType="map" resultType="com.pm.myapp.domain.PartyVO">
 
         SELECT p.partycode,
@@ -85,7 +121,7 @@
                     partyname like '%'
                 </otherwise>
             </choose>
-          
+
             <if test='searchWord.hobby != null and !searchWord.hobby.equals("")'>
                 AND p.hobbycode = (SELECT hobbycode FROM hobby WHERE hobbyname LIKE '%'||#{searchWord.hobby}||'%')
             </if>

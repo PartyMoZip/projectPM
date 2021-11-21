@@ -39,7 +39,7 @@ const handleSubmit = (e) => {
                 profileImg.setAttribute("src", data.fileLocation);
             }
             inputNickname.value = data.nickname;
-
+            Swal.fire('수정 성공', 'success');
         })
 
         .catch((err) => {

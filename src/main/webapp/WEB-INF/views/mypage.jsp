@@ -138,13 +138,12 @@
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.10/dist/sweetalert2.all.min.js"></script>
 
 <script src="${pageContext.request.contextPath}/resources/js/modal.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/swiper.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/mypage.js"></script>
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-
 </script>
 
 

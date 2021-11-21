@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -27,49 +28,9 @@ public class SearchController {
     @Setter(onMethod_ = {@Autowired})
     private SearchService service;
 
-    // // 검색 페이지(view)
-    // @GetMapping("/searchList")
-    // public void showPartyList(Criteria cri, String searchWord, Model model) {
-    //     log.debug("showPartyList() invoked.");
-    //
-    //     int totalAmount;
-    //
-    //     // Criteria 초기화
-    //     if (cri.getAmount() == 0 || cri.getPagesPerPage() == 0) {
-    //         cri.setAmount(9);
-    //         cri.setPagesPerPage(9);
-    //     } // if
-    //
-    //     log.info("검색어 : {}", searchWord);
-    //
-    //     // url 로 직접 접근했을 때를 대비
-    //     if (searchWord != null) {
-    //
-    //         model.addAttribute("searchWord", searchWord);
-    //
-    //         SearchWordDTO dto = new SearchWordDTO();
-    //
-    //         // LIKE 절을 위한 검색어 가공 처리
-    //         dto.setWord("%" + searchWord + "%");
-    //
-    //         List<PartyVO> list = this.service.getPartyListBySearch(cri, dto);
-    //         log.info("\t+ list size: {}", list.size());
-    //
-    //         model.addAttribute("list", list);
-    //         totalAmount = this.service.getTotalCountBySearch(dto);
-    //     } else {
-    //
-    //         List<PartyVO> list = this.service.getPartyList(cri);
-    //         log.info("\t+ list size: {}", list.size());
-    //
-    //         model.addAttribute("list", list);
-    //         totalAmount = this.service.getTotalCount();
-    //     }
-    //
-    //     PageDTO pageDTO = new PageDTO(cri, totalAmount);
-    //
-    //     model.addAttribute("pageMaker", pageDTO);
-    // } // showPartyList
+    // 검색어 자동완성
+    @GetMapping("/get-json")
+    @ResponseBody
 
     // 카테고리 선택
     @GetMapping("/searchList")

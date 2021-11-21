@@ -56,6 +56,17 @@ public class SearchServiceTests {
         list.forEach(log::info);
     } // testGetPartyList
 
+    // 검색어 자동완성 기능 테스트
+    @Test
+    public void testGetKeyword(){
+        log.info("testGetKeyword() invoked.");
+
+        SearchWordDTO searchWord = new SearchWordDTO();
+        searchWord.setWord("축");
+
+
+    } // testGetKeyword
+
     // 페이징 검색어 포함된 파티 목록 조회
     @Test
     public void testGetPartyListBySearch() {
