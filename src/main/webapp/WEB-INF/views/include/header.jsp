@@ -10,7 +10,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <header class="shadow p-4 border-bottom">
-    <h3>userpic: ${sessionScope.__AUTH__.userPic}</h3>
     <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">

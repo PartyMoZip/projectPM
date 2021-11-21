@@ -61,7 +61,7 @@ inputFile.onchange = () => {
         profileImg.src = reader.result;
     }
 }
-console.log(inputFile);
+
 // inputFile.addEventListener("change", handleChange);
 saveBtn.addEventListener("click", handleSubmit);
 selectBtn.addEventListener("click", handleClick);

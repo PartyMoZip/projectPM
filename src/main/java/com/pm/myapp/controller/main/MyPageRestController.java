@@ -2,6 +2,8 @@ package com.pm.myapp.controller.main;
 
 
 import com.pm.myapp.aws.AwsUpload;
+import com.pm.myapp.controller.join.LoginController;
+import com.pm.myapp.domain.UserDTO;
 import com.pm.myapp.service.main.ProfileService;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,7 +28,7 @@ import java.util.UUID;
 
 @RequestMapping("/users/{id}")
 @RestController
-public class MyPageRequestController {
+public class MyPageRestController {
 
     @Setter(onMethod_ = @Autowired)
     private ProfileService service;
@@ -35,6 +39,7 @@ public class MyPageRequestController {
     // 프로필 수정
     @PostMapping("/edit-profile")
     public Map<String, String> editProfile(
+            HttpServletRequest request, // 세션 업데이트를 위함
             @RequestParam("email") String email,
             @RequestParam(value = "nickname", required = false) String nickname,
             @RequestParam(value = "fileLocation", required = false) MultipartFile fileLocation
@@ -49,6 +54,8 @@ public class MyPageRequestController {
         String imagePath = "image/" + email;
         String imageUrl = "";
 
+        HttpSession session = request.getSession();
+        UserDTO user = (UserDTO) session.getAttribute(LoginController.authKey);
 
         Map<String, Object> profile = new HashMap<>();
 
@@ -69,8 +76,10 @@ public class MyPageRequestController {
         Map<String, String> data = new HashMap<>();
         if (!imageUrl.equals("")) {
             data.put("fileLocation", imageUrl);
+            user.setUserPic(imageUrl); // 세션 스코프 프로필 이미지 경로 재설정
         }
         data.put("nickname", nickname);
+        user.setNickname(nickname);
 
         return data;
 
