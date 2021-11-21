@@ -1,3 +1,5 @@
+// import Swal from "sweetalert2";
+
 const inputEmail = document.querySelector(".input-email");
 const inputId = document.querySelector(".input-id");
 const inputNickname = document.querySelector(".input-nickname");
@@ -37,6 +39,7 @@ const handleSubmit = (e) => {
                 profileImg.setAttribute("src", data.fileLocation);
             }
             inputNickname.value = data.nickname;
+
         })
 
         .catch((err) => {
@@ -46,7 +49,6 @@ const handleSubmit = (e) => {
 
 const handleClick = (e) => {
     e.preventDefault();
-
     inputFile.click();
 }
 

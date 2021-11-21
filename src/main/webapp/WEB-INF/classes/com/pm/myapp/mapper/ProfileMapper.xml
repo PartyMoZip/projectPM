@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pm.myapp.mapper.ProfileMapper">
+
+
+    <select id="getMyPartyList" resultType="com.pm.myapp.domain.PartyVO">
+
+        select * From (
+        SELECT p.partycode,
+        p.partyname,
+        p.partyscore,
+        p.createdate,
+        p.logopic,
+        p.coverpic,
+        p.partyprofile,
+        p.partybanned,
+        l.localname,
+        h.hobbyname
+        FROM party p
+        JOIN localinfo l ON p.localcode = l.localcode
+        JOIN hobby h ON p.hobbycode = h.hobbycode
+
+        <if test='email != null and !email.equals("")'>
+            JOIN partyuser pu ON p.partycode = pu.partycode
+            JOIN userinfo u ON u.email = pu.email
+            where u.email = #{email}
+        </if>
+        ORDER BY p.partyscore DESC)
+
+        <![CDATA[
+        WHERE
+            rownum < 4
+        ]]>
+
+    </select>
+
+    <update
+            id="modifyProfile"
+            parameterType="hashMap"
+    >
+
+        UPDATE userinfo
+        SET nickname = #{nickname}
+        <if test="!fileLocation.equals('')">
+            , userpic = #{fileLocation}
+        </if>
+        WHERE email = #{email}
+
+    </update>
+
+    <delete
+            id="deleteUser"
+    >
+
+        UPDATE userinfo
+        SET USERBANNED = -1
+        WHERE EMAIL = #{email}
+
+    </delete>
+
+</mapper>
