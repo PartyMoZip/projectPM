@@ -1,5 +1,6 @@
 package com.pm.myapp.service.board;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,10 +25,11 @@ public class PartyPhotoServiceImpl implements PartyPhotoService {
 	private PartyPhotoMapper mapper;
 	
 	@Override
-	public List<PartyPhotoDTO> getPartyPhotoList(Integer partyCode, Criteria cri) {
-		log.debug("getPartyPhotoList({}, {}) invoked.",partyCode, cri);
+	public List<PartyPhotoDTO> getPartyPhotoList(
+			Integer partyCode, String searchWord, Integer option, Criteria cri) {
+		log.debug("getPartyPhotoList({}, {}, {}, {}) invoked.",partyCode, searchWord, option, cri);
 		
-		List<PartyPhotoDTO> list = this.mapper.getList(partyCode,cri);
+		List<PartyPhotoDTO> list = this.mapper.getList(partyCode, searchWord, option, cri);
 		log.info("\t+ list : {}",list);
 		
 		return list;
@@ -35,10 +37,11 @@ public class PartyPhotoServiceImpl implements PartyPhotoService {
 	} // getPartyPhotoList
 
 	@Override
-	public Integer getTotalPartyPhotoList(Integer partyCode) {
-		log.debug("getTotalPartyPhotoList({}) invoked.",partyCode);
+	public Integer getTotalPartyPhotoList(
+			Integer partyCode, String searchWord, Integer option) {
+		log.debug("getTotalPartyPhotoList({}, {}, {}) invoked.",partyCode, searchWord, option);
 		
-		Integer result = this.mapper.getTotalList(partyCode);
+		Integer result = this.mapper.getTotalList(partyCode, searchWord, option);
 		log.info("\t+ result : {}",result);
 		
 		return result;
@@ -81,9 +84,34 @@ public class PartyPhotoServiceImpl implements PartyPhotoService {
 		log.debug("getTotalPhotoReplyList({}, {}) invoked.",prefer,partyCode);
 		
 		Integer totalNum = this.mapper.getTotalReply(prefer, partyCode);
+		log.info("\t+ totalNum : {}",totalNum);
 		
-		return null;
-	}
+		return totalNum;
+	} // getTotalPhotoReplyList
+
+	@Override
+	public Integer writePartyPhoto(PartyPhotoDTO dto) {
+		log.debug("writePartyPhoto({}) invoked.",dto);
+		
+		// 파티별 게시판 최대 MaxRefer 찾기
+		Integer refer = this.mapper.maxRefer(dto);
+		Integer newRefer = refer + 1;
+		dto.setPrefer(newRefer);
+		
+		// 게시글 등록
+		Integer affectedLine = this.mapper.writePhotoBoard(dto);
+
+		return newRefer;
+	} // writePartyPhoto
+
+	@Override
+	public boolean registerImages(Map<String, Object> imageInfo) {
+		log.debug("registerImages({}) invoked.",imageInfo);
+		
+		Integer affectedLine = this.mapper.registerImage(imageInfo);
+
+		return (affectedLine==1);
+	} // registerImages
 
 	
 	

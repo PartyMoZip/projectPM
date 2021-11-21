@@ -4,6 +4,7 @@ import com.pm.myapp.domain.*;
 import com.pm.myapp.domain.board.*;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -12,9 +13,17 @@ public interface PartyPhotoMapper {
     // 1. 게시판 목록 조회 //
 	
 	// 게시판 글 가져오기
-    public abstract List<PartyPhotoDTO> getList(@Param("partyCode") Integer partyCode, @Param("cri") Criteria cri);
+    public abstract List<PartyPhotoDTO> getList(
+    		@Param("partyCode") Integer partyCode,
+    		@Param("searchWord") String searchWord,
+    		@Param("option") Integer option,
+    		@Param("cri") Criteria cri);
     // 글 총 개수 구하기
-    public abstract Integer getTotalList(Integer partyCode);
+    public abstract Integer getTotalList(
+    		@Param("partyCode") Integer partyCode,
+    		@Param("searchWord") String searchWord,
+    		@Param("option") Integer option
+    		);
 
     // 2. 게시글 상세 조회 //
     
@@ -28,13 +37,14 @@ public interface PartyPhotoMapper {
     public abstract Integer getTotalReply(@Param("prefer") Integer prefer, @Param("partyCode") Integer partyCode);
 
     
-    // 2. 새로운 게시물 등록
-    public abstract Integer insert (PartyPhotoVO partyPhoto);
-
-    // 2. 자동 생성된 게시글 번호 얻기
-    public abstract Integer insertSelectKey(PartyPhotoDTO partyPhoto);
-
-
+    // 3. 새로운 게시물 등록 //
+    
+    // 게시글 등록 전 파티 별 게시판 최대 글 번호 알아내기
+    public abstract Integer maxRefer(@Param("dto") PartyPhotoDTO dto);
+    // 게시글 등록 하기
+    public abstract Integer writePhotoBoard(@Param("dto") PartyPhotoDTO dto);
+    // 사진 등록 하기
+    public abstract Integer registerImage(Map<String, Object> imageInfo);
 
     //4. 게시물 수정
     public abstract int update(PartyPhotoDTO partyPhoto);

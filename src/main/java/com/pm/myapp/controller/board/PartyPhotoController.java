@@ -1,5 +1,6 @@
 package com.pm.myapp.controller.board;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,21 +42,31 @@ public class PartyPhotoController {
 	@Setter(onMethod_= {@Autowired})
 	private AwsUpload awsUpload;
 	
-	// 포토 갤러리 목록
+	// 포토 갤러리 목록 - 검색 포함
 	@GetMapping("/list")
 	public void getPhotoBoardList(
-			Integer partyCode,
+			@ModelAttribute("partyCode") Integer partyCode,
+			@ModelAttribute("searchWord") String searchWord,
+			@ModelAttribute("option") Integer option,
 			@ModelAttribute("cri") Criteria cri,
 			Model model) {
-		log.debug("getPhotoBoardList({}, {}) invoked.",partyCode, cri);
+		log.debug("getPhotoBoardList({}, {}, {}, {}) invoked.",partyCode, searchWord,option, cri);
+		
+		// 포토 갤러리는 페이지당 글이 9개
+		cri.setAmount(9);
+		
+		// 처음으로 조회할 시에는 option 값이 함께 들어올 수 없음. 따라서 기본으로 1로 들어가는 것이 필요
+		if(option == null || option == 0) {
+			option = 1;
+		} // if
 		
 		// 글 목록 불러오기
-		List<PartyPhotoDTO> list = this.service.getPartyPhotoList(partyCode, cri);
+		List<PartyPhotoDTO> list = this.service.getPartyPhotoList(partyCode, searchWord, option, cri);
 		log.info("\t+ list : {}",list);
 		model.addAttribute("__LIST__",list);
 		
 		// 총 게시물 수 구하기
-		Integer totalAmount = this.service.getTotalPartyPhotoList(partyCode);
+		Integer totalAmount = this.service.getTotalPartyPhotoList(partyCode, searchWord, option);
 		log.info("\t+ : {}",totalAmount);
 		
 		// 글 페이지네이션 처리
@@ -100,33 +111,6 @@ public class PartyPhotoController {
 		
 	} // getPhotoBoardDetail
 	
-	// 포토 갤러리 검색
-	@GetMapping("/search")
-	public String searchPhotoBoard(
-			Integer partyCode,
-			String searchWord,
-			Integer option,
-			@ModelAttribute("cri") Criteria cri,
-			Model model) {
-		log.debug("searchPhotoBoard({}, {}, {}) invoked.",partyCode, searchWord,option);
-		
-		// 검색된 글 목록 불러오기
-		List<PartyPhotoDTO> list = this.service.getPartyPhotoSearchList(partyCode, searchWord, option);
-		log.info("\t+ list : {}",list);
-		model.addAttribute("__LIST__",list);
-		
-		// 총 게시물 수 구하기
-		Integer totalAmount = this.service.getTotalPartyPhotoSearchList(partyCode, searchWord, option);
-		log.info("\t+ : {}",totalAmount);
-		
-		// 글 페이지네이션 처리
-		PageDTO pageDTO = new PageDTO(cri, totalAmount);
-		model.addAttribute("pageMaker", pageDTO);
-		
-		return "redirect:/partyphoto/list";
-		
-	} // searchPhotoBoard
-	
 	// 포토 갤러리 작성 - view
 	@GetMapping("/writeview")
 	public void writePhotoBoardView() {
@@ -141,19 +125,19 @@ public class PartyPhotoController {
 			PartyPhotoDTO dto,
 			MultipartFile[] images,
 			RedirectAttributes rtts
-			) {
+			) throws IOException {
 		log.debug("writePhotoBoard({}) invoked.",dto);
 		
 		// 글 내용 업로드
-		boolean result = this.service.writePartyPhoto(dto);
-		log.info("\t result : {}",result);
+		Integer newRefer = this.service.writePartyPhoto(dto);
+		log.info("\t+ newRefer : {}",newRefer);
 		
 		int partyCode = dto.getPartycode();
 		
 		if(images != null) {
 		// 사진 업로드
 		// 파티코드와 날짜 합쳐서 새로운 폴더 준비
-		String imagePath = "image/photogallery/" + partyCode + "/";
+		String imagePath = "image/photogallery/" + partyCode + "/" + newRefer + "/";
 		log.debug("\t+ imagePath : {}",imagePath);
 		
 			for(MultipartFile image : images) {
@@ -175,12 +159,14 @@ public class PartyPhotoController {
 				imageInfo.put("newFilename", newName); // 새로운 파일 이름
 				imageInfo.put("fileLocation", imageUrl); // 파일 이름 주소
 				imageInfo.put("partyCode", partyCode);
+				imageInfo.put("prefer", newRefer);
 					
 				boolean result = this.service.registerImages(imageInfo);
 				log.info("\t + result : {}",result);
 			
-			}
-		}
+			} // for
+			
+		} // if
 		
 		rtts.addAttribute("partyCode", partyCode);
 		
@@ -220,15 +206,15 @@ public class PartyPhotoController {
 		log.debug("editPhotoBoard() invoked.");
 
 		// 글 내용 업로드
-		boolean result = this.service.modifyPartyPhoto(dto);
-		log.info("\t result : {}",result);
+		boolean resultNum = this.service.modifyPartyPhoto(dto);
+		log.info("\t+ resultNum : {}",resultNum);
 		
 		int partyCode = dto.getPartycode();
 		
 		if(images != null) {
 		// 사진 업로드
 		// 파티코드와 날짜 합쳐서 새로운 폴더 준비
-		String imagePath = "image/photogallery/" + partyCode + "/";
+		String imagePath = "image/photogallery/" + partyCode + "/" + dto.getPrefer() + "/";
 		log.debug("\t+ imagePath : {}",imagePath);
 		
 			for(MultipartFile image : images) {

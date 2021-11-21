@@ -12,6 +12,24 @@
         JOIN USERINFO U
         ON P.EMAIL = U.EMAIL
         WHERE P.PARTYCODE = #{partyCode}
+        <choose>
+        	<when test="searchWord==null">
+        	</when>
+        	<when test="option==1">
+        		AND P.PCONTENT like '%'||#{searchWord}||'%'
+        		AND P.PSUBJECT like '%'||#{searchWord}||'%'
+        		AND U.NICKNAME like '%'||#{searchWord}||'%'
+        	</when>
+        	<when test="option==2">
+        	    AND U.NICKNAME like '%'||#{searchWord}||'%'
+        	</when>
+           	<when test="option==3">
+           	    AND P.PSUBJECT like '%'||#{searchWord}||'%'
+        	</when>
+           	<when test="option==4">
+           	    AND P.PCONTENT like '%'||#{searchWord}||'%'
+        	</when>
+        </choose>
         OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
 		FETCH NEXT #{cri.amount} ROWS ONLY
     
@@ -19,24 +37,90 @@
     
     <select id="getTotalList" resultType = "Integer">
     
-        SELECT COUNT(PREFER)
-        FROM PARTYPHOTOBOARD
+        SELECT COUNT(P.PREFER)
+        FROM PARTYPHOTOBOARD P
+        JOIN USERINFO U
+        ON P.EMAIL = U.EMAIL
         WHERE PARTYCODE = #{partyCode}
+        <choose>
+        	<when test="searchWord==null">
+        	</when>
+        	<when test="option==1">
+        		AND P.PCONTENT like '%'||#{searchWord}||'%'
+        		AND P.PSUBJECT like '%'||#{searchWord}||'%'
+        		AND U.NICKNAME like '%'||#{searchWord}||'%'
+        	</when>
+        	<when test="option==2">
+        	    AND U.NICKNAME like '%'||#{searchWord}||'%'
+        	</when>
+           	<when test="option==3">
+           	    AND P.PSUBJECT like '%'||#{searchWord}||'%'
+        	</when>
+           	<when test="option==4">
+           	    AND P.PCONTENT like '%'||#{searchWord}||'%'
+        	</when>
+        </choose>
     
     </select>
     
     <select id="getDetail" resultType = "com.pm.myapp.domain.board.PartyPhotoDTO">
     
-        SELECT P.PREFER, P.PDATE, P.PARTYCODE, P.CONTENT, P.PSUBJECT, U.NICKNAME, P.READNUM
+        SELECT P.PREFER, P.PDATE, P.PARTYCODE, P.PCONTENT, P.PSUBJECT, P.EMAIL, U.NICKNAME, P.READNUM
         FROM PARTYPHOTOBOARD P
         JOIN USERINFO U
         ON P.EMAIL = U.EMAIL
         WHERE P.PARTYCODE = #{partyCode} AND P.PREFER = #{prefer}
         
     </select>
+    
+    <select id="getPhoto" resultType = "String">
+    
+        SELECT PARTYPIC
+        FROM PARTYPHOTO
+        WHERE PARTYCODE = #{partyCode} AND PREFER = #{prefer}
+        
+    </select>
+    
+    <select id="getReplyList" resultType = "com.pm.myapp.domain.board.PartyPhotoReDTO">
+    
+        SELECT P.PREREFER, P.PRECONTENT, P.PREDATE, P.PREFER, P.PARTYCODE, P.EMAIL, U.NICKNAME
+        FROM PARTYPHOTORE P
+        JOIN USERINFO U
+        ON U.EMAIL = P.EMAIL
+        WHERE P.PARTYCODE = #{partyCode} AND PREFER = #{prefer}
+        OFFSET (#{recri.reCurrPage}-1) * #{recri.reAmount} ROWS
+		FETCH NEXT #{recri.reAmount} ROWS ONLY
+        
+    </select>
+    
+	<select id="getTotalReply" resultType = "Integer">
+    
+        SELECT COUNT(PREREFER)
+        FROM PARTYPHOTORE
+        WHERE PARTYCODE = #{partyCode} AND PREFER = #{prefer}
+        
+    </select>
 
+    <select id="maxRefer" resultType="Integer">
+    
+    	SELECT MAX(PREFER)
+    	FROM PARTYPHOTOBOARD
+    	WHERE PARTYCODE = #{dto.partycode}
+    
+    </select>
 
-    <insert id="insert">
+    <insert id="writePhotoBoard">
+    
+    	INSERT INTO PARTYPHOTOBOARD(PREFER, PDATE, PSUBJECT, PCONTENT, PARTYCODE, EMAIL, READNUM)
+    	VALUES(#{dto.prefer}, sysdate, #{dto.psubject}, #{dto.pcontent},
+    		  #{dto.partycode}, #{dto.email}, 0)
+
+    </insert>
+    
+    <insert id="registerImage" parameterType="hashMap">
+    
+    	INSERT INTO PARTYPHOTO(PREFER, PARTYPIC, PARTYCODE)
+    	VALUES(#{prefer}, #{fileLocation}, #{partyCode})
 
     </insert>
 
