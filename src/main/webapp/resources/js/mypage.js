@@ -1,5 +1,3 @@
-// import Swal from "sweetalert2";
-
 const inputEmail = document.querySelector(".input-email");
 const inputId = document.querySelector(".input-id");
 const inputNickname = document.querySelector(".input-nickname");
@@ -7,11 +5,13 @@ const inputFile = document.querySelector(".input-file");
 const profileImg = document.querySelector(".img-profile img");
 const selectBtn = document.querySelector(".select-btn");
 const saveBtn = document.querySelector(".save-btn");
+const withdrawalBtn = document.querySelector('.withdrawal-btn');
 const formData = new FormData();
+const id = inputId.value;
 
-const handleSubmit = (e) => {
+// 프로필 수정 이벤트
+const handleProfileSubmit = (e) => {
     e.preventDefault();
-    const id = inputId.value;
 
     formData.append("email", inputEmail.value);
 
@@ -39,7 +39,7 @@ const handleSubmit = (e) => {
                 profileImg.setAttribute("src", data.fileLocation);
             }
             inputNickname.value = data.nickname;
-
+            Swal.fire("수정 성공", "수정이 완료되었습니다.", "success")
         })
 
         .catch((err) => {
@@ -47,23 +47,43 @@ const handleSubmit = (e) => {
         });
 };
 
-const handleClick = (e) => {
+// 이미지 업로드 버튼
+const handleUploadClick = (e) => {
     e.preventDefault();
     inputFile.click();
 }
 
-
+// 이미지 업로드 시 미리보기
 inputFile.onchange = () => {
     let fileList = inputFile.files;
 
     const reader = new FileReader();
     reader.readAsDataURL(fileList[0]);
 
-    reader.onload= function(){
+    reader.onload = function () {
         profileImg.src = reader.result;
     }
 }
 
+const handleWithdrawalSubmit = (e) => {
+    e.preventDefault();
+
+    let data = {
+        email: inputEmail.value
+    }
+
+    fetch(`/users/${id}/withdrawal`, {
+        method: "POST",
+        headers: {},
+        body: JSON.stringify(data),
+    })
+        .then((res) => console.log(res))
+        .catch((err) => {
+            console.log(err);
+        });
+}
+
 // inputFile.addEventListener("change", handleChange);
-saveBtn.addEventListener("click", handleSubmit);
-selectBtn.addEventListener("click", handleClick);
+saveBtn.addEventListener("click", handleProfileSubmit);
+selectBtn.addEventListener("click", handleUploadClick);
+withdrawalBtn.addEventListener("click", handleWithdrawalSubmit);

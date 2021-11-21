@@ -2,7 +2,7 @@ package com.pm.myapp.service;
 
 
 import com.pm.myapp.domain.PartyVO;
-import com.pm.myapp.service.main.ProfileService;
+import com.pm.myapp.service.main.UserService;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.java.Log;
@@ -26,10 +26,10 @@ import java.util.Map;
         "file:src/main/webapp/WEB-INF/spring/root-context.xml",
         "file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml"
 })
-public class ProfileServiceTests {
+public class UserServiceTests {
 
     @Autowired
-    private ProfileService service;
+    private UserService service;
 
     @Before
     public void setup(){

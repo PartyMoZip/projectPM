@@ -113,19 +113,10 @@
                         <input type="text" class="w-100 form-control" placeholder="진짜 탈퇴하실거에요?">
 
                         <div class="d-flex justify-content-center mt-3">
-                            <button type="button" class="btn btn-danger align-self-center">탈퇴하기</button>
+                            <button type="button" class="btn btn-danger align-self-center withdrawal-btn">탈퇴하기</button>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree"
-             data-bs-parent="#accordionFlushExample">
-            <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the
-                <code>.accordion-flush</code> class. This is the third item's accordion body. Nothing more exciting
-                happening here in terms of content, but just filling up the space to make it look, at least at first
-                glance, a bit more representative of how this would look in a real-world application.
             </div>
         </div>
     </div>
@@ -138,11 +129,11 @@
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.10/dist/sweetalert2.all.min.js"></script>
 
 <script src="${pageContext.request.contextPath}/resources/js/modal.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/swiper.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/mypage.js"></script>
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 
 </script>

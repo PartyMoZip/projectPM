@@ -4,15 +4,12 @@ package com.pm.myapp.controller.main;
 import com.pm.myapp.aws.AwsUpload;
 import com.pm.myapp.controller.join.LoginController;
 import com.pm.myapp.domain.UserDTO;
-import com.pm.myapp.service.main.ProfileService;
+import com.pm.myapp.service.main.UserService;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,7 +28,7 @@ import java.util.UUID;
 public class MyPageRestController {
 
     @Setter(onMethod_ = @Autowired)
-    private ProfileService service;
+    private UserService service;
 
     @Setter(onMethod_ = @Autowired)
     private AwsUpload awsUpload;
@@ -85,25 +82,16 @@ public class MyPageRestController {
 
     } // editProfile
 
-    // 이메일 수정
-    @PostMapping("/editEmail")
-    public void editEmail() {
-        log.debug("editEmail() invoked.");
-
-    } // editEmail
-
-    // 비밀번호 수정
-    @PostMapping("/editPassword")
-    public void editPassword() {
-        log.debug("editPassword() invoked.");
-
-    } // editPassword
-
     // 회원 탈퇴
     @PostMapping("/withdrawal")
-    public void withdrawal() {
-        log.debug("withdrawal() invoked.");
+    public String deleteAccount(HttpServletRequest request) {
+        log.debug("deleteAccount() invoked.");
 
-    } // withdrawal
+        HttpSession session = request.getSession();
+
+        log.info("session: {}", session);
+
+        return "index";
+    } // deleteAccount
 
 } // end class

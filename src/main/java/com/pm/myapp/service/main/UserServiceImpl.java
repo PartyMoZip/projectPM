@@ -1,7 +1,7 @@
 package com.pm.myapp.service.main;
 
 import com.pm.myapp.domain.PartyVO;
-import com.pm.myapp.mapper.ProfileMapper;
+import com.pm.myapp.mapper.UserMapper;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
@@ -15,10 +15,10 @@ import java.util.Map;
 @NoArgsConstructor
 
 @Service
-public class ProfileServiceImpl implements ProfileService {
+public class UserServiceImpl implements UserService {
 
     @Setter(onMethod_ = @Autowired)
-    private ProfileMapper mapper;
+    private UserMapper mapper;
 
 
     @Override

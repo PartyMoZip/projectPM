@@ -80,7 +80,6 @@ public class SearchController {
         cri.setAmount(9);
         cri.setPagesPerPage(9);
 
-
         List<PartyVO> list;
         int totalAmount;
 

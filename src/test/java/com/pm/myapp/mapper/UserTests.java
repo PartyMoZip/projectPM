@@ -21,10 +21,10 @@ import java.util.Map;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
-public class ProfileTests {
+public class UserTests {
 
     @Setter(onMethod_ = @Autowired)
-    private ProfileMapper mapper;
+    private UserMapper mapper;
 
     @Before
     public void setup() {
