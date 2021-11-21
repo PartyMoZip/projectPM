@@ -13,6 +13,9 @@ public interface SearchMapper {
     // 파티 전체 조회
     public abstract List<PartyVO> getPartyList(Criteria cri);
 
+    // 검색어 자동완성
+    public abstract List<PartyVO> getKeyword(SearchWordDTO searchWord);
+
     // 검색된 파티만 조회
     public abstract List<PartyVO> getPartyListBySearch(
             @Param("cri") Criteria cri,

@@ -135,7 +135,6 @@
 <script src="${pageContext.request.contextPath}/resources/js/swiper.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/mypage.js"></script>
 <script>
-
 </script>
 
 

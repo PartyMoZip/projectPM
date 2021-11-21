@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.servlet.http.Part;
 import java.util.List;
 
 @Log4j2
@@ -34,6 +35,18 @@ public class SearchMapperTests {
         log.info("\t+ mapper: {}", this.mapper);
         log.info("\t+ type: {}", this.mapper.getClass().getName());
     } // setup
+
+    // 검색어 자동완성 기능 테스트
+    @Test
+    public void testGetKeyword(){
+        log.info("testGetKeyword() invoked.");
+
+        SearchWordDTO searchWord = new SearchWordDTO();
+        searchWord.setWord("축");
+
+        List<PartyVO> list = this.mapper.getKeyword(searchWord);
+        list.forEach(log::info);
+    } // testGetKeyword
 
     // 페이징 파티 목록 조회
     @Test
