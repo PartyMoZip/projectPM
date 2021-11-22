@@ -97,8 +97,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 
         } else {  // 로그인에 실패했다면....
 
-            // 카카오 로그인 페이지로 이동
-            res.sendRedirect("/login/loginPage");
+            res.sendRedirect("/login");
         } // if-else
     } //postHandle
 

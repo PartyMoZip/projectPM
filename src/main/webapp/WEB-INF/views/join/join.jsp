@@ -30,7 +30,7 @@
     <h1>Welcome</h1>
     <div class="login">
       <div class="row">
-        <a href="/login/loginPage" data-content="Sing up">
+        <a href="/login/loginPage" data-content="Sign up">
           <img src="/resources/images/kakao_login_image.png"/></a>
       </div>
       <div class="row">
