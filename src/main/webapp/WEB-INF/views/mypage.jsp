@@ -135,7 +135,6 @@
 <script src="${pageContext.request.contextPath}/resources/js/mypage.js"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-
 </script>
 
 
