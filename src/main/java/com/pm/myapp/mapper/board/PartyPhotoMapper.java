@@ -63,6 +63,8 @@ public interface PartyPhotoMapper {
     // 6. 댓글 등록
     // 글 개수 체크
     public abstract Integer checkReply(@Param("dto") PartyPhotoReDTO dto);
+    // 시퀀스 마지막 번호 체크
+    public abstract Integer checkLastSeq(String last_seq);
     // 시퀀스 만들기 ( 글 개수가 0이라면 )
     public abstract Integer createSeq(String create_seq);
     // 시퀀스 실행
@@ -77,6 +79,14 @@ public interface PartyPhotoMapper {
     
     // 8. 댓글 삭제
     public abstract Integer deletePhotoBoardReply(@Param("dto") PartyPhotoReDTO dto);
-
+    
+    
+    // 9. 좋아요 기능
+    // 좋아요 확인
+    public abstract Integer checkPhotoHeart(@Param("hdto")HeartDTO hdto);
+    // 좋아요 up
+    public abstract Integer upHeart(@Param("hdto")HeartDTO hdto);
+    // 좋아요 down
+    public abstract Integer downHeart(@Param("hdto")HeartDTO hdto);
 
 } // end interface

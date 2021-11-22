@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.pm.myapp.domain.Criteria;
 import com.pm.myapp.domain.ReplyCriteria;
+import com.pm.myapp.domain.board.HeartDTO;
 import com.pm.myapp.domain.board.PartyPhotoDTO;
 import com.pm.myapp.domain.board.PartyPhotoReDTO;
 
@@ -54,5 +55,8 @@ public interface PartyPhotoService {
 	
 	// 8. 게시물 댓글 삭제 //
 	public abstract boolean deletePhotoBoardComment(PartyPhotoReDTO dto);
+	
+	// 9. 좋아요 기능 //
+	public abstract boolean checkPhotoBoardHeart(HeartDTO hdto);
 	
 } // end interface

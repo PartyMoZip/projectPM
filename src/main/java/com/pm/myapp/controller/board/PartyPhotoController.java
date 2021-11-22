@@ -20,6 +20,7 @@ import com.pm.myapp.aws.AwsUpload;
 import com.pm.myapp.domain.Criteria;
 import com.pm.myapp.domain.PageDTO;
 import com.pm.myapp.domain.ReplyCriteria;
+import com.pm.myapp.domain.board.HeartDTO;
 import com.pm.myapp.domain.board.PartyPhotoDTO;
 import com.pm.myapp.domain.board.PartyPhotoReDTO;
 import com.pm.myapp.service.board.PartyPhotoService;
@@ -397,19 +398,17 @@ public class PartyPhotoController {
 	// 포토 갤러리 - 좋아요 기능
 	@PostMapping("/heart")
 	public String givePhotoHeart(
-			Integer prefer,
-			Integer partyCode,
-			String email,
+			HeartDTO hdto,
 			@ModelAttribute("cri") Criteria cri,
 			RedirectAttributes rttrs
 			) {
-		log.debug("givePhotoHeart({}, {}, {}, {})",prefer,partyCode,email,cri);
+		log.debug("givePhotoHeart({}, {})",hdto,cri);
 		
-		//boolean heartCheck = this.service.checkPhotoBoardHeart(prefer,partyCode,email);		
-		//log.info("\t+ heartCheck : {}", heartCheck);
+		boolean heartCheck = this.service.checkPhotoBoardHeart(hdto);		
+		log.info("\t+ heartCheck : {}", heartCheck);
 		
-		rttrs.addAttribute("prefer", prefer);
-		rttrs.addAttribute("partyCode", partyCode);
+		rttrs.addAttribute("prefer", hdto.getPrefer());
+		rttrs.addAttribute("partyCode", hdto.getPartyCode());
 		rttrs.addAttribute("cri", cri);
 		
 		return "/partyphoto/detail";

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.pm.myapp.domain.Criteria;
 import com.pm.myapp.domain.ReplyCriteria;
+import com.pm.myapp.domain.board.HeartDTO;
 import com.pm.myapp.domain.board.PartyPhotoDTO;
 import com.pm.myapp.domain.board.PartyPhotoReDTO;
 import com.pm.myapp.mapper.board.PartyPhotoMapper;
@@ -173,7 +174,11 @@ public class PartyPhotoServiceImpl implements PartyPhotoService {
 		int prefer = dto.getPrefer();
 		int partyCode = dto.getPartyCode();
 		
-		if(writeNumber==0) {
+		String last_seq = "SEQ_PARTYPHOTORE"  + "_" + partyCode + "_" + prefer;
+		Integer lastNumber = this.mapper.checkLastSeq(last_seq);
+		log.info("\t+ lastNumber : {}", lastNumber);
+		
+		if(writeNumber==0 && lastNumber==null) {
 			
 			String create_seq = "create sequence SEQ_PARTYPHOTORE"  + "_" + partyCode + "_" + prefer + " START WITH 1 INCREMENT BY 1 Nocache";
 			this.mapper.createSeq(create_seq);
@@ -212,6 +217,25 @@ public class PartyPhotoServiceImpl implements PartyPhotoService {
 		
 		return (affectedLine==1);
 	} // deletePhotoBoardComment
+
+	@Override
+	public boolean checkPhotoBoardHeart(HeartDTO hdto) {
+		log.debug("checkPhotoBoardHeart({}) invoked.",hdto);
+		
+		Integer currHit = this.mapper.checkPhotoHeart(hdto);
+		Integer nextHit = 0;
+		
+		if(currHit==0) {
+			nextHit = this.mapper.upHeart(hdto);
+		}else {
+			nextHit = this.mapper.downHeart(hdto);
+		} // if-else
+		
+		Integer affectedHeart = this.mapper.checkPhotoHeart(hdto);
+		log.info("\t+ affectedHeart : {}", affectedHeart);
+		
+		return (affectedHeart==1);
+	} // checkPhotoBoardHeart
 
 	
 	

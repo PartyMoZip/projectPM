@@ -163,6 +163,12 @@
     
     </select>
     
+    <select id="checkLastSeq" resultType="Integer">
+    
+		SELECT LAST_NUMBER FROM USER_SEQUENCES WHERE SEQUENCE_NAME = #{last_seq}
+    	
+    </select>
+    
     <select id="createSeq" parameterType="Hashmap">
     
     	${create_seq}
@@ -196,6 +202,13 @@
 		WHERE PARTYCODE=#{dto.partyCode} AND PREFER=#{dto.prefer} AND PREREFER=#{dto.prerefer}
 	
 	</delete>
+	
+	<select id="checkPhotoHeart" resultType="Integer">
+    
+    	SELECT HIT FROM PHOTOHEART
+    	WHERE PARTYCODE=#{hdto.partyCode} AND PREFER=#{hdto.prefer} AND EMAIL=#{hdto.email}
+    	
+    </select>
 
 
 </mapper>

@@ -177,8 +177,8 @@ public class PartyPhotoBoardMapperTests {
 		
 		dto.setEmail("test1@test.com");
 		dto.setPartyCode(1);
-		dto.setPrecontent("댓글내용");
-		dto.setPrefer(3);
+		dto.setPrecontent("댓글내용5");
+		dto.setPrefer(5);
 		
 		Integer writeNumber = this.mapper.checkReply(dto);
 		log.info("\t+ writeNumber : {}", writeNumber);
@@ -186,7 +186,11 @@ public class PartyPhotoBoardMapperTests {
 		int prefer = dto.getPrefer();
 		int partyCode = dto.getPartyCode();
 		
-		if(writeNumber==0) {
+		String last_seq = "SEQ_PARTYPHOTORE"  + "_" + partyCode + "_" + prefer;
+		Integer lastNumber = this.mapper.checkLastSeq(last_seq);
+		log.info("\t+ lastNumber : {}", lastNumber);
+		
+		if(writeNumber==0 && lastNumber==null) {
 			
 			String create_seq = "create sequence SEQ_PARTYPHOTORE"  + "_" + partyCode + "_" + prefer + " START WITH 1 INCREMENT BY 1 Nocache";
 			this.mapper.createSeq(create_seq);
