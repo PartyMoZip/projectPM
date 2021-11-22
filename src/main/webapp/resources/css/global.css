@@ -34,24 +34,21 @@ a:hover {
     color: var(--primary-color);
 }
 
-/* 모달 로그인 창*/
-.modal {
-    position: fixed;
-    top: 50%;
-    transform: translateY(-25%);
+
+
+
+/*로그인 버튼 css*/
+.dropdown.text-end > .btn.btn-outline-success:hover {
+    background-color: #669900;
+    color: #fff;
 }
 
-.modal-body {
-    display: block;
-    text-align: center;
+.dropdown.text-end > .btn.btn-outline-success > a {
+    text-decoration: none;
+    color: #669900;
 }
 
-.modal-header {
-    display: block;
-    padding: 20px 0 !important;
-    text-align: center;
+.dropdown.text-end > .btn.btn-outline-success > a:hover {
+    color: #fff;
 }
 
-.modal-body > div {
-    margin: 20px auto;
-}
