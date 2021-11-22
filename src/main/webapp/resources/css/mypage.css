@@ -7,12 +7,31 @@
     margin-bottom: 20px;
 }
 
+.enter-btn {
+    color: white;
+}
+
+.enter-btn:hover {
+    color: var(--primary-color-light);
+}
+
+.leave-btn {
+    color: var(--bs-danger);
+}
+
+.leave-btn:hover {
+    color: white;
+}
+
 .header h4 {
     display: inline-block;
     font-weight: bold;
 }
 
 .party-container {
+    min-width: 70%;
+    margin-bottom: 20px;
+    padding:2rem;
 
 }
 

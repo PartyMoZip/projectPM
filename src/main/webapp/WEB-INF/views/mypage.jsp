@@ -28,25 +28,34 @@
         </div>
 
         <%-- 수정 필요 --%>
-        <c:forEach items="${list}" var="party">
-            <div class="party-container container-lg d-flex justify-content-between align-items-center">
-                <h5>
-                        ${party.partyName}
-                </h5>
-                <div class="d-grid gap-2 d-md-flex justify-content-end">
-                    <div class="btn-wrapper">
-                        <button type="button" class="btn mypage-btn btn-primary px-4 me-md-2">
-                            <a href="#">파티입장</a>
-                        </button>
+        <c:choose>
+            <c:when test="${list != null}">
+                <c:forEach items="${list}" var="party">
+                    <div class="party-container container-sm d-flex justify-content-between align-items-center shadow-sm">
+                        <h5>
+                                ${party.partyName}
+                        </h5>
+                        <div class="d-grid gap-2 d-md-flex justify-content-end">
+                            <div class="btn-wrapper">
+                                <button type="button" class="btn mypage-btn btn-primary px-4 me-md-2">
+                                    <a href="#" class="enter-btn">파티입장</a>
+                                </button>
+                            </div>
+                            <div class="btn-wrapper">
+                                <button type="button" class="btn mypage-btn btn-outline-secondary px-4">
+                                    <a href="#" class="leave-btn">파티탈퇴</a>
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="btn-wrapper">
-                        <button type="button" class="btn mypage-btn btn-outline-secondary px-4">
-                            <a href="#">파티탈퇴</a>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </c:forEach>
+                </c:forEach>
+            </c:when>
+            <c:otherwise>
+                <h4>
+                    아직 가입하신 파티가 없어요!
+                </h4>
+            </c:otherwise>
+        </c:choose>
     </div>
 
 
@@ -110,7 +119,7 @@
                             <span class="h5">그동안 이용해주셔서 감사합니다.😂</span>
                         </p>
 
-                        <input type="text" class="w-100 form-control" placeholder="진짜 탈퇴하실거에요?">
+                        <input type="text" class="w-100 form-control input-withdrawal" placeholder="진짜 탈퇴하실거에요?">
 
                         <div class="d-flex justify-content-center mt-3">
                             <button type="button" class="btn btn-danger align-self-center withdrawal-btn">탈퇴하기</button>
@@ -129,13 +138,11 @@
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.10/dist/sweetalert2.all.min.js"></script>
 
 <script src="${pageContext.request.contextPath}/resources/js/modal.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/swiper.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/mypage.js"></script>
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
-</script>
 
 
 </body>

@@ -23,7 +23,7 @@ import java.util.UUID;
 @Log4j2
 @NoArgsConstructor
 
-@RequestMapping("/users/{id}")
+@RequestMapping("/my/profile")
 @RestController
 public class MyPageRestController {
 
@@ -37,7 +37,7 @@ public class MyPageRestController {
     @PostMapping("/edit-profile")
     public Map<String, String> editProfile(
             HttpServletRequest request, // 세션 업데이트를 위함
-            @RequestParam("email") String email,
+            @RequestParam(value = "email", required = false) String email,
             @RequestParam(value = "nickname", required = false) String nickname,
             @RequestParam(value = "fileLocation", required = false) MultipartFile fileLocation
     ) throws IOException {
@@ -83,15 +83,26 @@ public class MyPageRestController {
     } // editProfile
 
     // 회원 탈퇴
-    @PostMapping("/withdrawal")
-    public String deleteAccount(HttpServletRequest request) {
+    @PatchMapping("/withdrawal")
+    public Map<String, Boolean> deleteAccount(HttpServletRequest request) {
         log.debug("deleteAccount() invoked.");
 
         HttpSession session = request.getSession();
+        Map<String, Boolean> data = new HashMap<>();
+
+        UserDTO dto = (UserDTO) session.getAttribute(LoginController.authKey);
 
         log.info("session: {}", session);
+        log.info("dto: {}", dto);
 
-        return "index";
+        boolean result = this.service.withdrawal(dto.getEmail());
+        data.put("result", result);
+
+        // 로그아웃
+        session.invalidate();
+        request.getSession(true);
+
+        return data;
     } // deleteAccount
 
 } // end class

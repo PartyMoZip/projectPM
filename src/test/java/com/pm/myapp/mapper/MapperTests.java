@@ -1,4 +1,4 @@
-/*
+package com.pm.myapp.mapper;/*
 package com.pm.myapp.mapper;
 
 import org.junit.After;

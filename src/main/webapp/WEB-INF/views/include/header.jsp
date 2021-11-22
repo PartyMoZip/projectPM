@@ -47,7 +47,7 @@
                                  class="rounded-circle">
                         </a>
                         <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-                            <li><a class="dropdown-item" href="/users/${sessionScope.__AUTH__.hashCode()}">프로필</a></li>
+                            <li><a class="dropdown-item" href="/my/profile">프로필</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
