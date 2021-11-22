@@ -160,7 +160,58 @@ public class PartyPhotoServiceImpl implements PartyPhotoService {
 		log.info("\t+ affectedLine : {}", affectedLine);
 		
 		return (affectedLine==1);
+		
 	} // deletePartyPhoto
+
+	@Override
+	public boolean writePhotoBoardComment(PartyPhotoReDTO dto) {
+		log.debug("writePhotoBoardComment({}) invoked.",dto);
+		
+		Integer writeNumber = this.mapper.checkReply(dto);
+		log.info("\t+ writeNumber : {}", writeNumber);
+		
+		int prefer = dto.getPrefer();
+		int partyCode = dto.getPartyCode();
+		
+		if(writeNumber==0) {
+			
+			String create_seq = "create sequence SEQ_PARTYPHOTORE"  + "_" + partyCode + "_" + prefer + " START WITH 1 INCREMENT BY 1 Nocache";
+			this.mapper.createSeq(create_seq);
+			
+		} // if
+		
+		String read_seq = "SELECT SEQ_PARTYPHOTORE"  + "_" + partyCode + "_" + prefer + "." + "NEXTVAL " + "FROM DUAL";
+		Integer seqNum = this.mapper.getMaxPrerefer(read_seq);
+		
+		dto.setPrerefer(seqNum);
+		
+		Integer affectedLine = this.mapper.writePartyPhotoReply(dto);
+		log.info("\t+ affectedLine : {}", affectedLine);
+		
+		return (affectedLine==1);
+		
+	} // writePhotoBoardComment
+
+	@Override
+	public boolean modifyPhotoBoardComment(PartyPhotoReDTO dto) {
+		log.debug("modifyPhotoBoardComment({}) invoked.",dto);
+		
+		Integer affectedLine = this.mapper.updatePhotoBoardReply(dto);
+		log.info("\t+ affectedLine : {}", affectedLine);
+		
+		return (affectedLine==1);
+		
+	} // modifyPhotoBoardComment
+
+	@Override
+	public boolean deletePhotoBoardComment(PartyPhotoReDTO dto) {
+		log.debug("deletePhotoBoardComment({}) invoked.",dto);
+		
+		Integer affectedLine = this.mapper.deletePhotoBoardReply(dto);
+		log.info("\t+ affectedLine : {}", affectedLine);
+		
+		return (affectedLine==1);
+	} // deletePhotoBoardComment
 
 	
 	

@@ -169,6 +169,74 @@ public class PartyPhotoBoardMapperTests {
 
 	} // testDeletePhotoBoard
 	
+	@Test
+	public void testWritePhotoBoardComment() { // TEST OK
+		log.debug("testWritePhotoBoardComment() invoked.");
+		
+		PartyPhotoReDTO dto = new PartyPhotoReDTO();
+		
+		dto.setEmail("test1@test.com");
+		dto.setPartyCode(1);
+		dto.setPrecontent("댓글내용");
+		dto.setPrefer(3);
+		
+		Integer writeNumber = this.mapper.checkReply(dto);
+		log.info("\t+ writeNumber : {}", writeNumber);
+		
+		int prefer = dto.getPrefer();
+		int partyCode = dto.getPartyCode();
+		
+		if(writeNumber==0) {
+			
+			String create_seq = "create sequence SEQ_PARTYPHOTORE"  + "_" + partyCode + "_" + prefer + " START WITH 1 INCREMENT BY 1 Nocache";
+			this.mapper.createSeq(create_seq);
+			
+		} // if
+		
+		String read_seq = "SELECT SEQ_PARTYPHOTORE"  + "_" + partyCode + "_" + prefer + "." + "NEXTVAL " + "FROM DUAL";
+		Integer seqNum = this.mapper.getMaxPrerefer(read_seq);
+		
+		dto.setPrerefer(seqNum);
+		
+		Integer affectedLine = this.mapper.writePartyPhotoReply(dto);
+		log.info("\t+ affectedLine : {}", affectedLine);
+		
+	} // testWritePhotoBoardComment
+	
+	
+	@Test
+	public void testUpdatePhotoBoardReply() { // TEST OK
+		log.debug("testUpdatePhotoBoardReply() invoked.");
+		
+		PartyPhotoReDTO dto = new PartyPhotoReDTO();
+		
+		dto.setEmail("test1@test.com");
+		dto.setPartyCode(1);
+		dto.setPrecontent("댓글내용_수정");
+		dto.setPrefer(3);
+		dto.setPrerefer(1);
+		
+		Integer affectedLine = this.mapper.updatePhotoBoardReply(dto);
+		log.info("\t+ affectedLine : {}", affectedLine);
+		
+	} // testUpdatePhotoBoardReply
+	
+	@Test
+	public void testDeletePhotoBoardReply() { // TEST OK
+		log.debug("testDeletePhotoBoardReply() invoked.");
+		
+		PartyPhotoReDTO dto = new PartyPhotoReDTO();
+		
+		dto.setPartyCode(1);
+		dto.setPrefer(3);
+		dto.setPrerefer(2);
+		
+		Integer affectedLine = this.mapper.deletePhotoBoardReply(dto);
+		log.info("\t+ affectedLine : {}", affectedLine);
+		
+	} // testDeletePhotoBoardReply
+	
+	
 	@After
 	public void tearDown() {
 		log.debug("tearDown() invoked.");

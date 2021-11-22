@@ -107,8 +107,7 @@ public class PartyPhotoController {
 		// 댓글 페이지네이션 처리
 		PageDTO pageDTO = new PageDTO(recri, totalAmount);
 		model.addAttribute("replyPageMaker", pageDTO);
-		
-		
+				
 	} // getPhotoBoardDetail
 	
 	// 포토 갤러리 작성 - view
@@ -339,8 +338,8 @@ public class PartyPhotoController {
 			) {
 		log.debug("writeComment({}, {}, {}, {} ,{}) invoked.",prefer, partyCode, cri, recri, dto);
 		
-		//boolean result = this.service.writePhotoBoardComment(prefer, partyCode);
-		//log.info("\t+ result : {}",result);
+		boolean result = this.service.writePhotoBoardComment(dto);
+		log.info("\t+ result : {}",result);
 		
 		rttrs.addAttribute("prefer", prefer);
 		rttrs.addAttribute("partyCode", partyCode);
@@ -354,20 +353,18 @@ public class PartyPhotoController {
 	// 포토 갤러리 - 댓글 수정
 	@PostMapping("/editcomment")
 	public String editComment(
-			Integer prefer,
-			Integer partyCode,
 			@ModelAttribute("cri") Criteria cri,
 			ReplyCriteria recri,
 			PartyPhotoReDTO dto,
 			RedirectAttributes rttrs
 			) {
-		log.debug("editComment({}, {}, {}, {} ,{}) invoked.",prefer, partyCode, cri, recri, dto);
+		log.debug("editComment({}, {}, {}) invoked.", cri, recri, dto);
 
-		//boolean result = this.service.modifyPhotoBoardComment(prefer, partyCode);
-		//log.info("\t+ result : {}",result);
+		boolean result = this.service.modifyPhotoBoardComment(dto);
+		log.info("\t+ result : {}",result);
 		
-		rttrs.addAttribute("prefer", prefer);
-		rttrs.addAttribute("partyCode", partyCode);
+		rttrs.addAttribute("prefer", dto.getPrefer());
+		rttrs.addAttribute("partyCode", dto.getPartyCode());
 		rttrs.addAttribute("cri", cri);
 		rttrs.addAttribute("recri", recri);
 
@@ -378,19 +375,18 @@ public class PartyPhotoController {
 	// 포토 갤러리 - 댓글 삭제
 	@PostMapping("/deletecomment")
 	public String deleteComment(
-			Integer prefer,
-			Integer partyCode,
+			PartyPhotoReDTO dto,
 			@ModelAttribute("cri") Criteria cri,
 			ReplyCriteria recri,
 			RedirectAttributes rttrs
 			) {
-		log.debug("deleteComment() invoked.");
+		log.debug("deleteComment({}, {}, {}) invoked.",dto,cri,recri);
 		
-		//boolean result = this.service.deletePhotoBoardComment(prefer, partyCode);
-		//log.info("\t+ result : {}",result);
+		boolean result = this.service.deletePhotoBoardComment(dto);
+		log.info("\t+ result : {}",result);
 		
-		rttrs.addAttribute("prefer", prefer);
-		rttrs.addAttribute("partyCode", partyCode);
+		rttrs.addAttribute("prefer", dto.getPrefer());
+		rttrs.addAttribute("partyCode", dto.getPartyCode());
 		rttrs.addAttribute("cri", cri);
 		rttrs.addAttribute("recri", recri);
 

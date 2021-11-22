@@ -156,6 +156,46 @@
     
     </delete>
     
+    <select id="checkReply" resultType="Integer">
+    
+    	SELECT COUNT(PREREFER) FROM PARTYPHOTORE
+    	WHERE PARTYCODE = #{dto.partyCode} AND PREFER = #{dto.prefer}
+    
+    </select>
+    
+    <select id="createSeq" parameterType="Hashmap">
+    
+    	${create_seq}
+    
+    </select>
+    
+    <select id="getMaxPrerefer" resultType="Integer">
+    
+    	${read_seq}
+    	
+    </select>
+    
+    <insert id="writePartyPhotoReply">
+    
+    	INSERT INTO PARTYPHOTORE(PREREFER, PRECONTENT, PREDATE, PREFER, PARTYCODE, EMAIL)
+		VALUES(#{dto.prerefer}, #{dto.precontent}, sysdate, #{dto.prefer}, #{dto.partyCode}, #{dto.email})
+		    
+    </insert>
+    
+    <update id="updatePhotoBoardReply">
+    
+    	UPDATE PARTYPHOTORE
+    	SET PRECONTENT = #{dto.precontent}
+    	WHERE PARTYCODE=#{dto.partyCode} AND PREFER=#{dto.prefer} AND PREREFER=#{dto.prerefer}
+    
+    </update>
+
+	<delete id="deletePhotoBoardReply">
+	
+		DELETE FROM PARTYPHOTORE
+		WHERE PARTYCODE=#{dto.partyCode} AND PREFER=#{dto.prefer} AND PREREFER=#{dto.prerefer}
+	
+	</delete>
 
 
 </mapper>

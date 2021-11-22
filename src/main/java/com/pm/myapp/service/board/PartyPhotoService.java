@@ -46,5 +46,13 @@ public interface PartyPhotoService {
 	// 글 내용 삭제
 	public abstract boolean deletePartyPhoto(Integer prefer, Integer partyCode);
 
+	// 6. 게시물 댓글 작성 //
+	public abstract boolean writePhotoBoardComment(PartyPhotoReDTO dto);
+	
+	// 7. 게시물 댓글 수정 //
+	public abstract boolean modifyPhotoBoardComment(PartyPhotoReDTO dto);
+	
+	// 8. 게시물 댓글 삭제 //
+	public abstract boolean deletePhotoBoardComment(PartyPhotoReDTO dto);
 	
 } // end interface
