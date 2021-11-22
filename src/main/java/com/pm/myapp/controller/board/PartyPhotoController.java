@@ -1,11 +1,28 @@
 package com.pm.myapp.controller.board;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.pm.myapp.aws.AwsUpload;
+import com.pm.myapp.domain.Criteria;
+import com.pm.myapp.domain.PageDTO;
+import com.pm.myapp.domain.ReplyCriteria;
+import com.pm.myapp.domain.board.HeartDTO;
+import com.pm.myapp.domain.board.PartyPhotoDTO;
+import com.pm.myapp.domain.board.PartyPhotoReDTO;
 import com.pm.myapp.service.board.PartyPhotoService;
 
 import lombok.NoArgsConstructor;
@@ -23,67 +40,379 @@ public class PartyPhotoController {
 	@Setter(onMethod_= {@Autowired})
 	private PartyPhotoService service;
 	
-	// 포토 갤러리 목록
-	@GetMapping("/getPhotoBoardList")
-	public void getPhotoBoardList() {
-		log.debug("getPhotoBoardList() invoked.");
-		
-	} // getPhotoBoardList
+	@Setter(onMethod_= {@Autowired})
+	private AwsUpload awsUpload;
 	
-	// 포토 갤러리 검색
-	@GetMapping("/searchPhotoBoard")
-	public void searchPhotoBoard() {
-		log.debug("searchPhotoBoard() invoked.");
+	// 포토 갤러리 목록 - 검색 포함
+	@GetMapping("/list")
+	public void getPhotoBoardList(
+			@ModelAttribute("partyCode") Integer partyCode,
+			@ModelAttribute("searchWord") String searchWord,
+			@ModelAttribute("option") Integer option,
+			@ModelAttribute("cri") Criteria cri,
+			Model model) {
+		log.debug("getPhotoBoardList({}, {}, {}, {}) invoked.",partyCode, searchWord,option, cri);
 		
-	} // searchPhotoBoard
+		// 포토 갤러리는 페이지당 글이 9개
+		cri.setAmount(9);
+		
+		// 처음으로 조회할 시에는 option 값이 함께 들어올 수 없음. 따라서 기본으로 1로 들어가는 것이 필요
+		if(option == null || option == 0) {
+			option = 1;
+		} // if
+		
+		// 글 목록 불러오기
+		List<PartyPhotoDTO> list = this.service.getPartyPhotoList(partyCode, searchWord, option, cri);
+		log.info("\t+ list : {}",list);
+		model.addAttribute("__LIST__",list);
+		
+		// 총 게시물 수 구하기
+		Integer totalAmount = this.service.getTotalPartyPhotoList(partyCode, searchWord, option);
+		log.info("\t+ : {}",totalAmount);
+		
+		// 글 페이지네이션 처리
+		PageDTO pageDTO = new PageDTO(cri, totalAmount);
+		model.addAttribute("pageMaker", pageDTO);
+		
+	} // getPhotoBoardList  
+	
+	// 포토 갤러리 상세보기
+	@GetMapping("/detail")
+	public void getPhotoBoardDetail(
+			Integer partyCode,
+			Integer prefer,
+			@ModelAttribute("cri") Criteria cri,
+			ReplyCriteria recri,
+			Model model) {
+		log.debug("getPhotoBoardDetail({}, {}, {}) invoked.",partyCode, cri, recri);
+		
+		// 갤러리 글 상세내용 불러오기
+		PartyPhotoDTO detail = this.service.getPhotoBoardDetail(prefer, partyCode);
+		log.info("\t+ detail : {}", detail);
+		model.addAttribute("__DETAIL__", detail);
+		
+		// 갤러리 사진 불러오기
+		List<String> photo = this.service.getPhotoAddress(prefer,partyCode);
+		log.info("\t+ photo : {}",photo);
+		model.addAttribute("__PHOTO__", photo);
+		
+		// 댓글 목록 불러오기
+		List<PartyPhotoReDTO> replyList = this.service.getPhotoReplyList(prefer,partyCode,recri);
+		log.info("\t+ replyList : {}", replyList);
+		model.addAttribute("__COMMENT__", replyList);
+		
+		// 총 댓글 개수 구하기
+		Integer totalAmount = this.service.getTotalPhotoReplyList(prefer,partyCode);
+		log.info("\t+ totalAmount : {}",totalAmount);
+		
+		// 댓글 페이지네이션 처리
+		PageDTO pageDTO = new PageDTO(recri, totalAmount);
+		model.addAttribute("replyPageMaker", pageDTO);
+				
+	} // getPhotoBoardDetail
+	
+	// 포토 갤러리 작성 - view
+	@GetMapping("/writeview")
+	public void writePhotoBoardView() {
+		log.debug("writePhotoBoardView() invoked.");
+
+	} // writePhotoBoardView
 	
 	// 포토 갤러리 작성
-	@PostMapping("/writePhotoBoard")
-	public void writePhotoBoard() {
-		log.debug("writePhotoBoard() invoked.");
-
+	@PostMapping("/write")
+	public String writePhotoBoard(
+			@ModelAttribute("cri") Criteria cri,
+			PartyPhotoDTO dto,
+			MultipartFile[] images,
+			RedirectAttributes rtts
+			) throws IOException {
+		log.debug("writePhotoBoard({}) invoked.",dto);
+		
+		// 글 내용 업로드
+		Integer newRefer = this.service.writePartyPhoto(dto);
+		log.info("\t+ newRefer : {}",newRefer);
+		
+		int partyCode = dto.getPartycode();
+		
+		if(images != null) {
+		// 사진 업로드
+		// 파티코드와 날짜 합쳐서 새로운 폴더 준비
+		String imagePath = "image/photogallery/" + partyCode + "/" + newRefer + "/";
+		log.debug("\t+ imagePath : {}",imagePath);
+		
+			for(MultipartFile image : images) {
+				
+				// 랜덤값 형성 및 aws에 파일 업로드
+				UUID uuid = UUID.randomUUID(); // 랜덤값
+				String imageUrl = awsUpload.fileUpload(image, imagePath, uuid);
+				log.info("\t+ imageUrl : {}",imageUrl);
+			        
+				String originalName = image.getOriginalFilename(); // 파일의 원래 이름
+				String newName = uuid + "_" +image.getOriginalFilename();
+					
+				// DB에 이미지 정보 저장하기
+				// HashMap을 이용하여 DTO 처럼 사용할 예정
+				// Mapper.xml 에 갔을 때 key를 입력하면 value 값이 들어감
+				// value의 타입이 object인건 value의 타입이 모두 같은것이 아니기 때문
+				Map<String, Object> imageInfo = new HashMap<String, Object>();
+				imageInfo.put("oldFilename", originalName); // 기존 파일 이름
+				imageInfo.put("newFilename", newName); // 새로운 파일 이름
+				imageInfo.put("fileLocation", imageUrl); // 파일 이름 주소
+				imageInfo.put("partyCode", partyCode);
+				imageInfo.put("prefer", newRefer);
+					
+				boolean result = this.service.registerImages(imageInfo);
+				log.info("\t + result : {}",result);
+			
+			} // for
+			
+		} // if
+		
+		rtts.addAttribute("partyCode", partyCode);
+		
+		return "redirect:/partyphoto/list";
+		
 	} // writePhotoBoard
 	
+	// 포토 갤러리 수정 - view
+	@GetMapping("/editview")
+	public void editPhotoBoardView(
+			Integer prefer,
+			Integer partyCode,
+			Model model
+			) {
+		log.debug("editPhotoBoardView() invoked.");
+		
+		// 갤러리 글 상세내용 불러오기
+		PartyPhotoDTO detail = this.service.getPhotoBoardDetail(prefer, partyCode);
+		log.info("\t+ detail : {}", detail);
+		model.addAttribute("__DETAIL__", detail);
+		
+		// 갤러리 사진 불러오기
+		List<String> photo = this.service.getPhotoAddress(prefer,partyCode);
+		log.info("\t+ photo : {}",photo);
+		model.addAttribute("__PHOTO__", photo);
+
+	} // editPhotoBoardView
+	
 	// 포토 갤러리 수정
-	@PostMapping("/editPhotoBoard")
-	public void editPhotoBoard() {
+	@PostMapping("/edit")
+	public String editPhotoBoard(
+			@ModelAttribute("cri") Criteria cri,
+			PartyPhotoDTO dto,
+			MultipartFile[] images,
+			String[] deleteFileLocations,
+			RedirectAttributes rttrs
+			) throws IOException {
 		log.debug("editPhotoBoard() invoked.");
 
+		// 글 내용 업로드
+		boolean resultNum = this.service.modifyPartyPhoto(dto);
+		log.info("\t+ resultNum : {}",resultNum);
+		
+		int partyCode = dto.getPartycode();
+		int prefer = dto.getPrefer();
+		
+		/*
+		 
+		 1. 게시판 상세보기
+		 2. 수정
+		 3. 내용 불러오기
+		 4. 삭제할 사진 눌러서 삭제
+		 
+		 기존의 것들과 확인이 불가능
+		 
+		 ( 기존에 있는 것들 : 주소만 가지고 있음 >> 삭제 or 유지 
+		 ( 새로 등록할 사진 : 파일 )
+		 
+		 */		
+		
+		// 삭제할 그림 목록 가져오기
+		if(deleteFileLocations != null) {
+
+			// 1. 해당 경로 데이터베이스에서 삭제
+			for(String file : deleteFileLocations) {
+				
+				boolean deleteResult  = this.service.deleteImages(file);
+				log.info("\t+ deleteResult : {}",deleteResult);
+			
+			} // for
+			
+			// 2. aws 에서 그림 완전 삭제
+			awsUpload.deleteFiles(deleteFileLocations);
+			
+		} // if
+		
+		// 새로운 이미지 등록
+		if(images != null) {
+		// 사진 업로드
+		// 파티코드와 날짜 합쳐서 새로운 폴더 준비
+		String imagePath = "image/photogallery/" + partyCode + "/" + dto.getPrefer() + "/";
+		log.debug("\t+ imagePath : {}",imagePath);
+		
+			for(MultipartFile image : images) {
+				
+				// 랜덤값 형성 및 aws에 파일 업로드
+				UUID uuid = UUID.randomUUID(); // 랜덤값
+				String imageUrl = awsUpload.fileUpload(image, imagePath, uuid);
+				log.info("\t+ imageUrl : {}",imageUrl);
+			        
+				String originalName = image.getOriginalFilename(); // 파일의 원래 이름
+				String newName = uuid + "_" + image.getOriginalFilename();
+					
+				// DB에 이미지 정보 저장하기
+				// HashMap을 이용하여 DTO 처럼 사용할 예정
+				// Mapper.xml 에 갔을 때 key를 입력하면 value 값이 들어감
+				// value의 타입이 object인건 value의 타입이 모두 같은것이 아니기 때문
+				Map<String, Object> imageInfo = new HashMap<String, Object>();
+				imageInfo.put("oldFilename", originalName); // 기존 파일 이름
+				imageInfo.put("newFilename", newName); // 새로운 파일 이름
+				imageInfo.put("fileLocation", imageUrl); // 파일 이름 주소
+				imageInfo.put("partyCode", partyCode);
+				imageInfo.put("prefer", prefer);
+				
+				boolean result = this.service.registerImages(imageInfo);
+				log.info("\t + result : {}",result);
+			
+			} // for
+			
+		} // if
+		
+		rttrs.addAttribute("partyCode", partyCode);
+		rttrs.addAttribute("prefer", dto.getPrefer());
+		rttrs.addAttribute("cri", cri);
+
+		return "redirect:/partyphoto/detail";
+		
 	} // editPhotoBoard
 	
 	// 포토 갤러리 삭제
-	@PostMapping("/deletePhotoBoard")
-	public void deletePhotoBoard() {
-		log.debug("deletePhotoBoard() invoked.");
+	@PostMapping("/delete")
+	public String deletePhotoBoard(
+			Integer prefer,
+			Integer partyCode,
+			@ModelAttribute("cri") Criteria cri
+			) {
+		log.debug("deletePhotoBoard({}, {}) invoked.",prefer, partyCode);
+		
+		// 글의 댓글 삭제
+		boolean resultDelRe = this.service.deletePartyPhotoReply(prefer, partyCode);
+		log.info("\t+ resultDelRe : {}",resultDelRe);
+		
+		// 삭제할 그림 목록 가져오기
+		List<String> photo = this.service.getPhotoAddress(prefer,partyCode);
+		log.info("\t+ photo : {}",photo);
+		
+		if(photo!=null) {
+			
+			// 1. 해당 경로 데이터베이스에서 삭제
+			for(String file : photo) {
+				
+				boolean deleteResult  = this.service.deleteImages(file);
+				log.info("\t+ deleteResult : {}",deleteResult);
+			
+			} // for
+			
+			// 2. aws 에서 그림 완전 삭제
+			String[] delete = (String[]) photo.toArray();
+			awsUpload.deleteFiles(delete);
+			
+		} // if
+		
+		// 글 내용 삭제
+		boolean resultDel = this.service.deletePartyPhoto(prefer, partyCode);
+		log.info("\t+ resultDel : {}",resultDel);
 
+		return "redirect:/partyphoto/list";
+		
 	} // deletePhotoBoard
 	
-	// 포토갤러리 - 댓글 목록
-	@GetMapping("/getComment")
-	public void getComment() {
-		log.debug("getComment() invoked.");
-		
-	} // getComment
-	
 	// 포토 갤러리 - 댓글 작성
-	@PostMapping("/writeComment")
-	public void writeComment() {
-		log.debug("writeComment() invoked.");
+	@PostMapping("/writecomment")
+	public String writeComment(
+			Integer prefer,
+			Integer partyCode,
+			@ModelAttribute("cri") Criteria cri,
+			ReplyCriteria recri,
+			PartyPhotoReDTO dto,
+			RedirectAttributes rttrs
+			) {
+		log.debug("writeComment({}, {}, {}, {} ,{}) invoked.",prefer, partyCode, cri, recri, dto);
+		
+		boolean result = this.service.writePhotoBoardComment(dto);
+		log.info("\t+ result : {}",result);
+		
+		rttrs.addAttribute("prefer", prefer);
+		rttrs.addAttribute("partyCode", partyCode);
+		rttrs.addAttribute("cri", cri);
+		rttrs.addAttribute("recri", recri);
+
+		return "/partyphoto/detail";
 
 	} // writeComment
 	
 	// 포토 갤러리 - 댓글 수정
-	@PostMapping("/editComment")
-	public void editComment() {
-		log.debug("editComment() invoked.");
+	@PostMapping("/editcomment")
+	public String editComment(
+			@ModelAttribute("cri") Criteria cri,
+			ReplyCriteria recri,
+			PartyPhotoReDTO dto,
+			RedirectAttributes rttrs
+			) {
+		log.debug("editComment({}, {}, {}) invoked.", cri, recri, dto);
 
+		boolean result = this.service.modifyPhotoBoardComment(dto);
+		log.info("\t+ result : {}",result);
+		
+		rttrs.addAttribute("prefer", dto.getPrefer());
+		rttrs.addAttribute("partyCode", dto.getPartyCode());
+		rttrs.addAttribute("cri", cri);
+		rttrs.addAttribute("recri", recri);
+
+		return "redirect:/partyphoto/detail";
+		
 	} // editComment
 	
 	// 포토 갤러리 - 댓글 삭제
-	@PostMapping("/deleteComment")
-	public void deleteComment() {
-		log.debug("deleteComment() invoked.");
+	@PostMapping("/deletecomment")
+	public String deleteComment(
+			PartyPhotoReDTO dto,
+			@ModelAttribute("cri") Criteria cri,
+			ReplyCriteria recri,
+			RedirectAttributes rttrs
+			) {
+		log.debug("deleteComment({}, {}, {}) invoked.",dto,cri,recri);
+		
+		boolean result = this.service.deletePhotoBoardComment(dto);
+		log.info("\t+ result : {}",result);
+		
+		rttrs.addAttribute("prefer", dto.getPrefer());
+		rttrs.addAttribute("partyCode", dto.getPartyCode());
+		rttrs.addAttribute("cri", cri);
+		rttrs.addAttribute("recri", recri);
+
+		return "redirect:/partyphoto/detail";
 
 	} // deleteComment
+	
+	// 포토 갤러리 - 좋아요 기능
+	@PostMapping("/heart")
+	public String givePhotoHeart(
+			HeartDTO hdto,
+			@ModelAttribute("cri") Criteria cri,
+			RedirectAttributes rttrs
+			) {
+		log.debug("givePhotoHeart({}, {})",hdto,cri);
+		
+		boolean heartCheck = this.service.checkPhotoBoardHeart(hdto);		
+		log.info("\t+ heartCheck : {}", heartCheck);
+		
+		rttrs.addAttribute("prefer", hdto.getPrefer());
+		rttrs.addAttribute("partyCode", hdto.getPartyCode());
+		rttrs.addAttribute("cri", cri);
+		
+		return "/partyphoto/detail";
+		
+	} // givePhotoHeart
 
 } // end class

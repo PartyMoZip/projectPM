@@ -12,7 +12,6 @@
 	</delete>
 
 	<select id="getList" resultType="com.pm.myapp.domain.MyPartyListVO">
-
 		
 		SELECT P.PARTYCODE, P.PARTYNAME, P.PARTYSCORE, P.CREATEDATE, P.LOGOPIC 
 		FROM PARTY P
@@ -44,7 +43,6 @@
 	</insert>
 	
 	<select id="getRecParties" resultType="com.pm.myapp.domain.MyPartyListVO">
-
 
 		SELECT P.PARTYCODE, P.PARTYNAME, P.PARTYSCORE, P.CREATEDATE, P.LOGOPIC
 		FROM PARTY P
