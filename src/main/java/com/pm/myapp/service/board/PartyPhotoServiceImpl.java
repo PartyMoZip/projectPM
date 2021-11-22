@@ -67,6 +67,7 @@ public class PartyPhotoServiceImpl implements PartyPhotoService {
 		log.info("\t+ list : {}",list);
 		
 		return list;
+		
 	} // getPhotoAddress
 
 	@Override
@@ -87,6 +88,7 @@ public class PartyPhotoServiceImpl implements PartyPhotoService {
 		log.info("\t+ totalNum : {}",totalNum);
 		
 		return totalNum;
+		
 	} // getTotalPhotoReplyList
 
 	@Override
@@ -100,8 +102,10 @@ public class PartyPhotoServiceImpl implements PartyPhotoService {
 		
 		// 게시글 등록
 		Integer affectedLine = this.mapper.writePhotoBoard(dto);
-
+		log.info("\t+ affectedLine : {}", affectedLine);
+		
 		return newRefer;
+		
 	} // writePartyPhoto
 
 	@Override
@@ -109,9 +113,54 @@ public class PartyPhotoServiceImpl implements PartyPhotoService {
 		log.debug("registerImages({}) invoked.",imageInfo);
 		
 		Integer affectedLine = this.mapper.registerImage(imageInfo);
-
+		log.info("\t+ affectedLine : {}", affectedLine);
+		
 		return (affectedLine==1);
+		
 	} // registerImages
+
+	@Override
+	public boolean modifyPartyPhoto(PartyPhotoDTO dto) {
+		log.debug("modifyPartyPhoto({}) invoked.",dto);
+		
+		Integer affectedLine = this.mapper.updatePartyPhoto(dto);
+		log.info("\t+ affectedLine : {}", affectedLine);
+		
+		return (affectedLine==1);
+		
+	} // modifyPartyPhoto
+
+	@Override
+	public boolean deleteImages(String file) {
+		log.debug("deleteImages({}) invoked.",file);
+		
+		Integer affectedLine = this.mapper.deletePhoto(file);
+		log.info("\t+ affectedLine : {}", affectedLine);
+		
+		return (affectedLine==1);
+		
+	} // deleteImages
+
+	@Override
+	public boolean deletePartyPhotoReply(Integer prefer, Integer partyCode) {
+		log.debug("deletePartyPhotoReply({},{}) invoked.",prefer,partyCode);
+		
+		Integer affectedLine = this.mapper.deletePhotoReply(prefer,partyCode);
+		log.info("\t+ affectedLine : {}", affectedLine);
+		
+		return (affectedLine!=0);
+		
+	} // deletePartyPhotoReply
+
+	@Override
+	public boolean deletePartyPhoto(Integer prefer, Integer partyCode) {
+		log.debug("deletePartyPhoto({},{}) invoked.",prefer,partyCode);
+		
+		Integer affectedLine = this.mapper.deletePhotoBoard(prefer,partyCode);
+		log.info("\t+ affectedLine : {}", affectedLine);
+		
+		return (affectedLine==1);
+	} // deletePartyPhoto
 
 	
 	

@@ -34,4 +34,17 @@ public interface PartyPhotoService {
 	// 글 사진 등록
 	public abstract boolean registerImages(Map<String, Object> imageInfo);
 	
+    // 4. 게시물 수정 //
+	// 글 내용 수정
+	public abstract boolean modifyPartyPhoto(PartyPhotoDTO dto);
+	// 삭제할 사진 지우기
+	public abstract boolean deleteImages(String file);
+	
+	// 5. 게시물 삭제 //
+	// 해당 글 댓글 삭제
+	public abstract boolean deletePartyPhotoReply(Integer prefer, Integer partyCode);
+	// 글 내용 삭제
+	public abstract boolean deletePartyPhoto(Integer prefer, Integer partyCode);
+
+	
 } // end interface

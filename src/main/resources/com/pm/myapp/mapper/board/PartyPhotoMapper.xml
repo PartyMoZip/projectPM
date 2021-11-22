@@ -125,14 +125,37 @@
     </insert>
 
 
-    <update id="update">
+    <update id="updatePartyPhoto">
+    	
+    	UPDATE PARTYPHOTOBOARD
+    	SET PSUBJECT = #{dto.psubject},
+    	PCONTENT = #{dto.pcontent}
+    	WHERE PREFER = #{dto.prefer} AND PARTYCODE = #{dto.partycode}
 
     </update>
 
 
-    <delete id="delete">
-
+    <delete id="deletePhoto">
+    
+		DELETE FROM PARTYPHOTO
+		WHERE PARTYPIC=#{file}
+    
     </delete>
+    
+    <delete id="deletePhotoReply">
+    
+		DELETE FROM PARTYPHOTORE
+		WHERE PARTYCODE = #{partyCode} AND PREFER = #{prefer}
+    
+    </delete>
+    
+    <delete id="deletePhotoBoard">
+    
+		DELETE FROM PARTYPHOTOBOARD
+		WHERE PARTYCODE = #{partyCode} AND PREFER = #{prefer}
+    
+    </delete>
+    
 
 
 </mapper>

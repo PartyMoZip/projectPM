@@ -201,8 +201,9 @@ public class PartyPhotoController {
 			@ModelAttribute("cri") Criteria cri,
 			PartyPhotoDTO dto,
 			MultipartFile[] images,
+			String[] deleteFileLocations,
 			RedirectAttributes rttrs
-			) {
+			) throws IOException {
 		log.debug("editPhotoBoard() invoked.");
 
 		// 글 내용 업로드
@@ -210,7 +211,39 @@ public class PartyPhotoController {
 		log.info("\t+ resultNum : {}",resultNum);
 		
 		int partyCode = dto.getPartycode();
+		int prefer = dto.getPrefer();
 		
+		/*
+		 
+		 1. 게시판 상세보기
+		 2. 수정
+		 3. 내용 불러오기
+		 4. 삭제할 사진 눌러서 삭제
+		 
+		 기존의 것들과 확인이 불가능
+		 
+		 ( 기존에 있는 것들 : 주소만 가지고 있음 >> 삭제 or 유지 
+		 ( 새로 등록할 사진 : 파일 )
+		 
+		 */		
+		
+		// 삭제할 그림 목록 가져오기
+		if(deleteFileLocations != null) {
+
+			// 1. 해당 경로 데이터베이스에서 삭제
+			for(String file : deleteFileLocations) {
+				
+				boolean deleteResult  = this.service.deleteImages(file);
+				log.info("\t+ deleteResult : {}",deleteResult);
+			
+			} // for
+			
+			// 2. aws 에서 그림 완전 삭제
+			awsUpload.deleteFiles(deleteFileLocations);
+			
+		} // if
+		
+		// 새로운 이미지 등록
 		if(images != null) {
 		// 사진 업로드
 		// 파티코드와 날짜 합쳐서 새로운 폴더 준비
@@ -225,7 +258,7 @@ public class PartyPhotoController {
 				log.info("\t+ imageUrl : {}",imageUrl);
 			        
 				String originalName = image.getOriginalFilename(); // 파일의 원래 이름
-				String newName = uuid + "_" +image.getOriginalFilename();
+				String newName = uuid + "_" + image.getOriginalFilename();
 					
 				// DB에 이미지 정보 저장하기
 				// HashMap을 이용하여 DTO 처럼 사용할 예정
@@ -236,12 +269,14 @@ public class PartyPhotoController {
 				imageInfo.put("newFilename", newName); // 새로운 파일 이름
 				imageInfo.put("fileLocation", imageUrl); // 파일 이름 주소
 				imageInfo.put("partyCode", partyCode);
-					
+				imageInfo.put("prefer", prefer);
+				
 				boolean result = this.service.registerImages(imageInfo);
 				log.info("\t + result : {}",result);
 			
-			}
-		}
+			} // for
+			
+		} // if
 		
 		rttrs.addAttribute("partyCode", partyCode);
 		rttrs.addAttribute("prefer", dto.getPrefer());
@@ -259,10 +294,35 @@ public class PartyPhotoController {
 			@ModelAttribute("cri") Criteria cri
 			) {
 		log.debug("deletePhotoBoard({}, {}) invoked.",prefer, partyCode);
-
-		boolean result = this.service.deletePartyPhoto(prefer, partyCode);
-		log.info("\t+ result : {}",result);
 		
+		// 글의 댓글 삭제
+		boolean resultDelRe = this.service.deletePartyPhotoReply(prefer, partyCode);
+		log.info("\t+ resultDelRe : {}",resultDelRe);
+		
+		// 삭제할 그림 목록 가져오기
+		List<String> photo = this.service.getPhotoAddress(prefer,partyCode);
+		log.info("\t+ photo : {}",photo);
+		
+		if(photo!=null) {
+			
+			// 1. 해당 경로 데이터베이스에서 삭제
+			for(String file : photo) {
+				
+				boolean deleteResult  = this.service.deleteImages(file);
+				log.info("\t+ deleteResult : {}",deleteResult);
+			
+			} // for
+			
+			// 2. aws 에서 그림 완전 삭제
+			String[] delete = (String[]) photo.toArray();
+			awsUpload.deleteFiles(delete);
+			
+		} // if
+		
+		// 글 내용 삭제
+		boolean resultDel = this.service.deletePartyPhoto(prefer, partyCode);
+		log.info("\t+ resultDel : {}",resultDel);
+
 		return "redirect:/partyphoto/list";
 		
 	} // deletePhotoBoard
@@ -279,8 +339,8 @@ public class PartyPhotoController {
 			) {
 		log.debug("writeComment({}, {}, {}, {} ,{}) invoked.",prefer, partyCode, cri, recri, dto);
 		
-		boolean result = this.service.writePhotoBoardComment(prefer, partyCode);
-		log.info("\t+ result : {}",result);
+		//boolean result = this.service.writePhotoBoardComment(prefer, partyCode);
+		//log.info("\t+ result : {}",result);
 		
 		rttrs.addAttribute("prefer", prefer);
 		rttrs.addAttribute("partyCode", partyCode);
@@ -303,8 +363,8 @@ public class PartyPhotoController {
 			) {
 		log.debug("editComment({}, {}, {}, {} ,{}) invoked.",prefer, partyCode, cri, recri, dto);
 
-		boolean result = this.service.modifyPhotoBoardComment(prefer, partyCode);
-		log.info("\t+ result : {}",result);
+		//boolean result = this.service.modifyPhotoBoardComment(prefer, partyCode);
+		//log.info("\t+ result : {}",result);
 		
 		rttrs.addAttribute("prefer", prefer);
 		rttrs.addAttribute("partyCode", partyCode);
@@ -326,8 +386,8 @@ public class PartyPhotoController {
 			) {
 		log.debug("deleteComment() invoked.");
 		
-		boolean result = this.service.deletePhotoBoardComment(prefer, partyCode);
-		log.info("\t+ result : {}",result);
+		//boolean result = this.service.deletePhotoBoardComment(prefer, partyCode);
+		//log.info("\t+ result : {}",result);
 		
 		rttrs.addAttribute("prefer", prefer);
 		rttrs.addAttribute("partyCode", partyCode);
@@ -349,8 +409,8 @@ public class PartyPhotoController {
 			) {
 		log.debug("givePhotoHeart({}, {}, {}, {})",prefer,partyCode,email,cri);
 		
-		boolean heartCheck = this.service.checkPhotoBoardHeart(prefer,partyCode,email);		
-		log.info("\t+ heartCheck : {}", heartCheck);
+		//boolean heartCheck = this.service.checkPhotoBoardHeart(prefer,partyCode,email);		
+		//log.info("\t+ heartCheck : {}", heartCheck);
 		
 		rttrs.addAttribute("prefer", prefer);
 		rttrs.addAttribute("partyCode", partyCode);

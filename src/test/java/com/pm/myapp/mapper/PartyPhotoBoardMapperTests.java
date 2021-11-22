@@ -134,6 +134,41 @@ public class PartyPhotoBoardMapperTests {
 
 	} // testWritePhotoBoard
 	
+	@Test
+	public void testUpdatePhotoBoard() { // TEST OK
+		log.debug("testUpdatePhotoBoard() invoked.");
+		
+		PartyPhotoDTO dto = new PartyPhotoDTO();
+		dto.setPartycode(1);
+		dto.setPrefer(2);		
+		dto.setPsubject("제목_수정");
+		dto.setPcontent("내용_수정");
+
+		int count = this.mapper.updatePartyPhoto(dto);
+		log.info("\t+ count : {}",count);
+		
+		String file = "test";
+		
+		Integer result = this.mapper.deletePhoto(file);
+		log.info("\t+ result : {}",result);
+
+	} // testUpdatePhotoBoard
+	
+	@Test
+	public void testDeletePhotoBoard() { // TEST OK
+		log.debug("testDeletePhotoBoard() invoked.");
+		
+		int partyCode = 1;
+		int prefer = 2;
+
+		Integer count1 = this.mapper.deletePhotoReply(prefer, partyCode);
+		log.info("\t+ count1 : {}",count1);
+		
+		Integer count2 = this.mapper.deletePhotoBoard(prefer, partyCode);
+		log.info("\t+ count2 : {}",count2);
+
+	} // testDeletePhotoBoard
+	
 	@After
 	public void tearDown() {
 		log.debug("tearDown() invoked.");

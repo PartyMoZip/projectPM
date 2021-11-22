@@ -25,6 +25,7 @@ public interface PartyPhotoMapper {
     		@Param("option") Integer option
     		);
 
+    
     // 2. 게시글 상세 조회 //
     
     // 게시글 상세 가져오기
@@ -46,14 +47,20 @@ public interface PartyPhotoMapper {
     // 사진 등록 하기
     public abstract Integer registerImage(Map<String, Object> imageInfo);
 
-    //4. 게시물 수정
-    public abstract int update(PartyPhotoDTO partyPhoto);
+    
+    //4. 게시물 수정 //
+    // 게시글 내용 수정
+    public abstract Integer updatePartyPhoto(@Param("dto") PartyPhotoDTO dto);
+    // 기존 사진 삭제
+    public abstract Integer deletePhoto(String file);
+    // 새로운 사진 등록 >> 3. 새로운 게시물 등록의 사진 등록 하기 이용
 
     //5. 게시물 삭제
-    public abstract int remove(Integer prefer);
+    // 게시물의 댓글 삭제
+    public abstract Integer deletePhotoReply(@Param("prefer") Integer prefer, @Param("partyCode") Integer partyCode);
+    // 게시물 삭제
+    public abstract Integer deletePhotoBoard(@Param("prefer") Integer prefer, @Param("partyCode") Integer partyCode);
 
-    // 7. 댓글 목록
-    public abstract List<FreeBoardReplyVO> getListReply();
 
     // 8. 댓글 등록
     public abstract Integer insert(FreeBoardReplyVO freeReply);
@@ -64,12 +71,5 @@ public interface PartyPhotoMapper {
     // 10. 댓글 삭제
     public abstract int delete(Integer mfrrefer);
 
-    // 11. 댓글 개수
-    public abstract Integer getTotalReply();
 
-    // 12. 댓글 번호 생성
-    public abstract Integer insertRefer(FreeBoardReplyDTO freeReply);
-
-
-
-}
+} // end interface
