@@ -41,7 +41,8 @@ public class MyPartyMapperTests {
 	@Test
 	public void testQuitParty() { // 통과 완료
 		log.debug("testQuitParty() invoked.");
-		
+
+
 		String email = "test4@test.com";
 		Integer partyCode = 5;
 		

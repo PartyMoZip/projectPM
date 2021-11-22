@@ -35,16 +35,19 @@
                         <h5>
                                 ${party.partyName}
                         </h5>
+
                         <div class="d-grid gap-2 d-md-flex justify-content-end">
                             <div class="btn-wrapper">
                                 <button type="button" class="btn mypage-btn btn-primary px-4 me-md-2">
                                     <a href="#" class="enter-btn">파티입장</a>
                                 </button>
+                                <input type="hidden" class="input-partycode" value="${party.partyCode}">
                             </div>
                             <div class="btn-wrapper">
-                                <button type="button" class="btn mypage-btn btn-outline-danger px-4">
-                                    <a href="#" class="leave-btn">파티탈퇴</a>
+                                <button type="button" class="btn mypage-btn btn-outline-danger px-4 leave-btn">
+                                    파티탈퇴
                                 </button>
+                                <input type="hidden" class="input-partycode" value="${party.partyCode}">
                             </div>
                         </div>
                     </div>

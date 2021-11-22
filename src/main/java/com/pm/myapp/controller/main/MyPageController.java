@@ -38,8 +38,11 @@ public class MyPageController {
         UserDTO dto = (UserDTO) session.getAttribute(LoginController.authKey);
 
         List<PartyVO> list = this.service.getMyPartyList(dto.getEmail());
+        log.info("list.size() :{}", list.size());
 
-        model.addAttribute("list", list);
+        if (list.size() != 0) {
+            model.addAttribute("list", list);
+        } // if
 
         return "/mypage";
     } // showMyPage

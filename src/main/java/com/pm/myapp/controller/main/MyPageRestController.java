@@ -1,10 +1,13 @@
 package com.pm.myapp.controller.main;
 
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.pm.myapp.aws.AwsUpload;
 import com.pm.myapp.controller.join.LoginController;
 import com.pm.myapp.domain.UserDTO;
 import com.pm.myapp.service.main.UserService;
+import com.pm.myapp.service.partyfm.MyPartyService;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
@@ -28,10 +31,36 @@ import java.util.UUID;
 public class MyPageRestController {
 
     @Setter(onMethod_ = @Autowired)
-    private UserService service;
+    private UserService userService;
+
+    @Setter(onMethod_ = @Autowired)
+    private MyPartyService myPartyService;
 
     @Setter(onMethod_ = @Autowired)
     private AwsUpload awsUpload;
+
+    // 파티 탈퇴
+    @DeleteMapping("/withdrawal-party")
+    public Map<String, Boolean> withdrawalParty(
+            @RequestBody String json
+    ) {
+        log.debug("withdrawalParty() invoked.");
+        log.info("json: {}", json);
+
+        JsonElement element = JsonParser.parseString(json);
+
+        log.info("element: {}", element);
+
+        String email = element.getAsJsonObject().get("email").getAsString();
+        Integer partyCode = element.getAsJsonObject().get("partyCode").getAsInt();
+
+        boolean result = this.myPartyService.doQuit(email, partyCode);
+
+        Map<String, Boolean> data = new HashMap<>();
+        data.put("result", result);
+
+        return data;
+    } // withdrawalParty
 
     // 프로필 수정
     @PostMapping("/edit-profile")
@@ -67,7 +96,7 @@ public class MyPageRestController {
         profile.put("nickname", nickname);
         profile.put("fileLocation", imageUrl); // 파일 이름 주소
 
-        boolean result = this.service.editProfile(profile);
+        boolean result = this.userService.editProfile(profile);
         log.info("\t + result : {}", result);
 
         Map<String, String> data = new HashMap<>();
@@ -95,7 +124,7 @@ public class MyPageRestController {
         log.info("session: {}", session);
         log.info("dto: {}", dto);
 
-        boolean result = this.service.withdrawal(dto.getEmail());
+        boolean result = this.userService.withdrawal(dto.getEmail());
         data.put("result", result);
 
         // 로그아웃

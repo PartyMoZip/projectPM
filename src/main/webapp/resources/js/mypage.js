@@ -1,3 +1,5 @@
+const enterBtn = document.querySelector('.enter-btn');
+const leaveBtns = document.querySelectorAll('.leave-btn');
 const inputEmail = document.querySelector(".input-email");
 const inputNickname = document.querySelector(".input-nickname");
 const inputFile = document.querySelector(".input-file");
@@ -8,6 +10,45 @@ const inputWithdrawal = document.querySelector('.input-withdrawal')
 const withdrawalBtn = document.querySelector('.withdrawal-btn');
 const formData = new FormData();
 
+
+// 파티 탈퇴 이벤트
+const handleLeaveParty = (e) => {
+    e.preventDefault();
+    console.log(e.target.nextElementSibling);
+
+    const partyCode = e.target.nextElementSibling.value;
+
+    let data = {};
+    data.email = inputEmail.value;
+    data.partyCode = partyCode;
+
+    console.log(data);
+
+    fetch("/my/profile/withdrawal-party", {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json;",
+        },
+        body: JSON.stringify(data),
+    })
+        .then((res) => res.json())
+        .then((data) => {
+            console.log(data);
+
+            if (data.result) {
+                Swal.fire('성공', '파티 탈퇴가 완료되었습니다.', 'success');
+                setTimeout(function () {
+                    location.href = "http://localhost:8090/my/profile";
+                }, 2000)
+
+            } else {
+                Swal.fire('실패', '에러가 발생했습니다.', 'error')
+            } // if
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+} // handleLeaveParty
 
 // 프로필 수정 이벤트
 const handleProfileSubmit = (e) => {
@@ -27,9 +68,9 @@ const handleProfileSubmit = (e) => {
         formData.append("fileLocation", inputFile.files[0]);
     } // if
 
-     for (let pair of formData.entries()) {
-         console.log(pair[0] + ', ' + pair[1]);
-     }
+    for (let pair of formData.entries()) {
+        console.log(pair[0] + ', ' + pair[1]);
+    }
 
     fetch(`/my/profile/edit-profile`, {
         method: "POST",
@@ -84,7 +125,9 @@ const handleWithdrawalSubmit = (e) => {
 
         fetch(`/my/profile/withdrawal`, {
             method: "PATCH",
-            headers: {},
+            headers: {
+                "Content-Type": "application/json",
+            },
             body: JSON.stringify(data),
         })
             .then((res) => res.json())
@@ -110,7 +153,10 @@ const handleWithdrawalSubmit = (e) => {
 
 } // handleWithdrawalSubmit
 
-// inputFile.addEventListener("change", handleChange);
+// enterBtn.addEventListener("click")
+for (const leaveBtn of leaveBtns) {
+    leaveBtn.addEventListener("click", handleLeaveParty)
+}
 saveBtn.addEventListener("click", handleProfileSubmit);
 selectBtn.addEventListener("click", handleUploadClick);
 withdrawalBtn.addEventListener("click", handleWithdrawalSubmit);

@@ -12,7 +12,7 @@ import java.util.List;
 // 나의 파티 매퍼
 public interface MyPartyMapper {
 
-    public abstract Integer quitParty(String email, Integer partyCode);
+    public abstract Integer quitParty(@Param("email") String email, @Param("partyCode") Integer partyCode);
 
     public abstract MyPartyListVO getList(@Param("email") String email, @Param("cri") Criteria cri);
 
