@@ -34,9 +34,9 @@
                 <c:choose>
                     <c:when test="${sessionScope.__AUTH__ == null}">
                         &nbsp;&nbsp; <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-outline-success" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal">
-                            로그인
+                        <button type="button" class="btn btn-outline-success">
+                            <a href="/login">
+                                로그인</a>
                         </button>
                     </c:when>
 
@@ -55,29 +55,6 @@
                         </ul>
                     </c:otherwise>
                 </c:choose>
-            </div>
-        </div>
-
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header"><h5 class="modal-title" id="exampleModalLabel">로그인</h5>
-
-                    </div>
-                    <div class="modal-body">
-                        <div class="kakaoLogin">
-                            <a href="/login/loginPage" data-content="Sing up">
-                                <img src="/resources/images/kakao_login_image.png"/></a>
-                        </div>
-                        <div class="naverLogin">
-                            네이버 로그인
-                        </div>
-                    </div>
-                    <%--<div class="modal-footer">--%>
-                    <%--    <button type="button" class="close btn btn-outline-danger" data-dismiss="modal">닫기</button>--%>
-                    <%--</div>--%>
-                </div>
             </div>
         </div>
 
