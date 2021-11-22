@@ -42,7 +42,7 @@
                                 </button>
                             </div>
                             <div class="btn-wrapper">
-                                <button type="button" class="btn mypage-btn btn-outline-secondary px-4">
+                                <button type="button" class="btn mypage-btn btn-outline-danger px-4">
                                     <a href="#" class="leave-btn">파티탈퇴</a>
                                 </button>
                             </div>
