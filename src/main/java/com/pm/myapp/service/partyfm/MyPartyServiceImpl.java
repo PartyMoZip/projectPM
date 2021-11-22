@@ -2,6 +2,7 @@ package com.pm.myapp.service.partyfm;
 import java.util.Arrays;
 import java.util.List;
 
+import com.pm.myapp.domain.PartyVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

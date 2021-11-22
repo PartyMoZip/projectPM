@@ -1,0 +1,22 @@
+{
+  "name": "projectpm",
+  "version": "1.0.0",
+  "dependencies": {
+    "sweetalert2": "^11.2.0"
+  },
+  "description": "취미를 공유하는 파티 찾기 웹 사이트입니다.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PartyMoZip/projectPM.git"
+  },
+  "author": "chicori3",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PartyMoZip/projectPM/issues"
+  },
+  "homepage": "https://github.com/PartyMoZip/projectPM#readme",
+  "type": "module"
+}

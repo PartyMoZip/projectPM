@@ -5,7 +5,7 @@
 <head>
     <title>파티모집</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link rel="icon" href="${pageContext.request.contextPath}resources/images/favicon.ico"/>
+    <link rel="icon" href="${pageContext.request.contextPath}/resources/images/favicon.ico"/>
 
     <%--CSS--%>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"

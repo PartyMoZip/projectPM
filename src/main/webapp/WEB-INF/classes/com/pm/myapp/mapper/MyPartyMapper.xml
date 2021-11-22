@@ -10,6 +10,7 @@
 		FROM PARTYUSER
 		WHERE EMAIL = #{email} and PARTYCODE = #{partyCode}
 	</delete>
+
   
   <select id="getMyPartyList" resultType="com.pm.myapp.domain.PartyVO">
 
@@ -41,6 +42,7 @@
         ]]>
 
     </select>
+
 
 	<select id="getList" resultType="com.pm.myapp.domain.MyPartyListVO">
 

@@ -37,17 +37,7 @@ public class MyPartyMapperTests {
 		log.info("\t + type : {}", this.mapper.getClass().getName());
 	} // setup
 
-  @Test
-  public void testGetMyPartyList() {
-      log.debug("testGetMyPartyList() invoked.");
 
-      String email = "test5@test.com";
-      // String email = "";
-
-      List<PartyVO> list = this.mapper.getMyPartyList(email);
-      list.forEach(log::info);
-  } // end testGetMyPartyList
-	
 	@Test
 	public void testQuitParty() { // 통과 완료
 		log.debug("testQuitParty() invoked.");

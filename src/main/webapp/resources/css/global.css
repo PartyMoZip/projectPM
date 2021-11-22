@@ -21,6 +21,15 @@ body {
     font-family: 'Noto Sans KR', 'Segoe UI', sans-serif;
 }
 
+a {
+    text-decoration: none !important
+}
+
+a:hover {
+    text-decoration: none !important
+}
+
+
 .nav-link:hover {
     color: var(--primary-color);
 }

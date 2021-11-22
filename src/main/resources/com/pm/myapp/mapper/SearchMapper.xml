@@ -85,7 +85,7 @@
                     partyname like '%'
                 </otherwise>
             </choose>
-          
+
             <if test='searchWord.hobby != null and !searchWord.hobby.equals("")'>
                 AND p.hobbycode = (SELECT hobbycode FROM hobby WHERE hobbyname LIKE '%'||#{searchWord.hobby}||'%')
             </if>

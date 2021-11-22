@@ -55,7 +55,6 @@ public class CommonExceptionHandler {
 
         model.addAttribute("exception", e);
 
-
         return "errorPage";
     } // handleNoHandlerFoundException
 
