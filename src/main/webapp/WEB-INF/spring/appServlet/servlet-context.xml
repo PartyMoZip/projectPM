@@ -52,6 +52,7 @@
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/login/doLogin" />
+			<mvc:mapping path="/login/naverDoLogin" />
 			<beans:ref bean="LoginInterceptor"/>
 		</mvc:interceptor>
 
