@@ -28,12 +28,13 @@ public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object handler) throws Exception {
         log.debug("=======================================");
-        log.debug("1. preHandle({}, {}, {}) invoked.", req, res, handler);
+        log.debug("1. LoginInterceptor preHandle({}, {}, {}) invoked.", req, res, handler);
         log.debug("=======================================");
 
         // Session Scope에 바인딩되어있는(않을 수도 있음), 인증정보를 삭제
         HttpSession session = req.getSession();
         session.removeAttribute(LoginController.authKey);
+        req.getSession(true);
 
         log.info("\t+ 이전에 바인딩 되어있을 수 있는 인증정보를 삭제");
 
@@ -46,7 +47,7 @@ public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public void postHandle(HttpServletRequest req, HttpServletResponse res, Object handler, ModelAndView modelAndView) throws Exception {
         log.debug("=======================================");
-        log.debug("2. postHandle({}, {}, {}, {}) invoked.", req, res, handler, modelAndView);
+        log.debug("2. LoginInterceptor postHandle({}, {}, {}, {}) invoked.", req, res, handler, modelAndView);
         log.debug("=======================================");
 
         // UserController 의 handler method에서 수행한 결과인,

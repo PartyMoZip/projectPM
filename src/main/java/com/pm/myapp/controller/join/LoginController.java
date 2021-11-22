@@ -3,10 +3,12 @@ package com.pm.myapp.controller.join;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pm.myapp.domain.UserDTO;
+
 import com.pm.myapp.domain.kakao.KakaoTokenDTO;
 import com.pm.myapp.domain.kakao.KakaoUserDTO;
 import com.pm.myapp.domain.naver.NaverTokenDTO;
 import com.pm.myapp.domain.naver.NaverUserDTO;
+
 import com.pm.myapp.service.join.LoginService;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,6 +27,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
+
+import javax.servlet.http.HttpServletRequest;
 
 import javax.servlet.http.HttpSession;
 import java.net.URI;
@@ -203,6 +207,7 @@ public class LoginController {
 		}
 		return userInfo;
 	} //getUserInfo
+
 
 
 	//------------------------ naver login---------------------------------------//

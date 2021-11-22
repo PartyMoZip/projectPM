@@ -32,7 +32,7 @@ public class AuthInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object handler)
             throws Exception {
         log.debug("=======================================");
-        log.debug("1. preHandle({}, {}, {}) invoked.", req, res, handler);
+        log.debug("1. AuthInterceptor preHandle({}, {}, {}) invoked.", req, res, handler);
         log.debug("=======================================");
 
         //--------------------------------//
@@ -53,6 +53,7 @@ public class AuthInterceptor implements HandlerInterceptor {
 
             // 2. 현재의 요청이 회원만이 보낼 수 있는 요청이라면(로그인 된 이후 사용할수 있는 메뉴라면) --> 로그인 창으로 이동
             res.sendRedirect("/login/loginPage");
+            return false;
         } // if
 
         // 가로챈 요청을, 이 인터셉터 뒤에, 컨트롤러가 있으면 --> 컨트롤러에게 요청을 넘겨주겠다.
