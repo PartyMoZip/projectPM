@@ -56,11 +56,10 @@
 		</mvc:interceptor>
 
 		<mvc:interceptor>
-			<mvc:mapping path="/login/doLogin2" />
-			<!--<mvc:mapping path="/1번게시판/**" />-->
-			<!--<mvc:mapping path="/2번게시판/**" />-->
-			<beans:ref bean="AuthInterceptor"/>
+			<mvc:mapping path="/my/**"/>
+			<beans:ref bean="AuthInterceptor" />
 		</mvc:interceptor>
+
 
 	</mvc:interceptors>
 

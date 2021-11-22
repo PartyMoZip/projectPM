@@ -27,9 +27,9 @@ const handleProfileSubmit = (e) => {
         formData.append("fileLocation", inputFile.files[0]);
     } // if
 
-    /* for (let pair of formData.entries()) {
+     for (let pair of formData.entries()) {
          console.log(pair[0] + ', ' + pair[1]);
-     }*/
+     }
 
     fetch(`/my/profile/edit-profile`, {
         method: "POST",
