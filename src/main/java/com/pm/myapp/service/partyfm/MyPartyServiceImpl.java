@@ -36,16 +36,6 @@ public class MyPartyServiceImpl implements MyPartyService{
 	} // doQuit
 
 	@Override
-	public List<PartyVO> getMyPartyList(String email) {
-		log.debug("getMyPartyList({}) invoked.",email);
-
-		List<PartyVO> list= this.mapper.getMyPartyList(email);
-		log.info("\t+ list : {}", list);
-
-		return list;
-	} // getMyPartyList
-
-	@Override
 	public MyPartyListVO getPartyList(String email, Criteria cri) {
 		log.debug("getPartyList({},{}) invoked.",email,cri);
 		

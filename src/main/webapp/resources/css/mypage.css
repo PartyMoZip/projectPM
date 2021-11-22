@@ -7,12 +7,27 @@
     margin-bottom: 20px;
 }
 
+.enter-btn {
+    color: white;
+}
+
+.leave-btn {
+    color: var(--bs-danger);
+}
+
+.mypage-btn:hover a{
+    color: white;
+}
+
 .header h4 {
     display: inline-block;
     font-weight: bold;
 }
 
 .party-container {
+    min-width: 70%;
+    margin-bottom: 20px;
+    padding: 2rem;
 
 }
 

@@ -77,10 +77,8 @@ public class SearchController {
         log.info("searchList() invoked.");
 
         // Criteria 초기화
-        if (cri.getAmount() == 0 || cri.getPagesPerPage() == 0) {
-            cri.setAmount(9);
-            cri.setPagesPerPage(9);
-        } // if
+        cri.setAmount(9);
+        cri.setPagesPerPage(9);
 
         List<PartyVO> list;
         int totalAmount;

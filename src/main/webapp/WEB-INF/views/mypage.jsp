@@ -27,19 +27,35 @@
             <h4>나의 파티</h4>
         </div>
 
-        <div class="party-container container-lg d-flex justify-content-between align-items-center">
-            <h5>
-                팀 맹구
-            </h5>
-            <div class="d-grid gap-2 d-md-flex justify-content-end">
-                <div class="btn-wrapper">
-                    <button type="button" class="btn mypage-btn btn-primary px-4 me-md-2">파티입장</button>
-                </div>
-                <div class="btn-wrapper">
-                    <button type="button" class="btn mypage-btn btn-outline-secondary px-4">파티탈퇴</button>
-                </div>
-            </div>
-        </div>
+        <%-- 수정 필요 --%>
+        <c:choose>
+            <c:when test="${list != null}">
+                <c:forEach items="${list}" var="party">
+                    <div class="party-container container-sm d-flex justify-content-between align-items-center shadow-sm">
+                        <h5>
+                                ${party.partyName}
+                        </h5>
+                        <div class="d-grid gap-2 d-md-flex justify-content-end">
+                            <div class="btn-wrapper">
+                                <button type="button" class="btn mypage-btn btn-primary px-4 me-md-2">
+                                    <a href="#" class="enter-btn">파티입장</a>
+                                </button>
+                            </div>
+                            <div class="btn-wrapper">
+                                <button type="button" class="btn mypage-btn btn-outline-danger px-4">
+                                    <a href="#" class="leave-btn">파티탈퇴</a>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </c:forEach>
+            </c:when>
+            <c:otherwise>
+                <h4>
+                    아직 가입하신 파티가 없어요!
+                </h4>
+            </c:otherwise>
+        </c:choose>
     </div>
 
 
@@ -49,23 +65,31 @@
             <h4>프로필 설정</h4>
         </div>
 
-        <div class="container-lg d-flex justify-content-center">
-            <div class="d-flex flex-column justify-content-center align-items-center">
-                <div class="img-profile justify-content-center align-items-center">
-                    <img src="${sessionScope.__AUTH__.userPic}" alt="프로필 사진">
-                </div>
-                <div class="d-flex flex-column justify-content-center align-items-center w-100 col-3 mt-3">
-                    <span class="align-self-baseline label-nickname">닉네임</span>
+        <form action="/users/${sessionScope.__AUTH__.hashCode()}/edit-profile" class="form-data"
+              enctype="multipart/form-data">
+            <input type="hidden" class="input-email" name="email" value="${sessionScope.__AUTH__.email}"/>
+            <input type="hidden" name="id" class="input-id" value="${sessionScope.__AUTH__.hashCode()}">
+            <div class="container-lg d-flex justify-content-center">
+                <div class="d-flex flex-column justify-content-center align-items-center">
+                    <div class="img-profile justify-content-center align-items-center">
+                        <img src="${sessionScope.__AUTH__.userPic}" alt="프로필 사진">
+                    </div>
+                    <div class="mt-2">
+                        <button type="button" class="btn btn-outline-primary select-btn">
+                            이미지 업로드
+                        </button>
+                        <input type="file" class="form-control input-file visually-hidden" name="fileLocation">
+                    </div>
+                    <div class="d-flex flex-column justify-content-center align-items-center w-100 col-3 mt-3">
+                        <span class="align-self-baseline label-nickname">닉네임</span>
+                        <input type="text" class="form-control input-nickname mt-2" name="nickname"
+                               value="${sessionScope.__AUTH__.nickname}">
+                    </div>
 
-                    <input type="text" class="form-control input-nickname mt-2" name="nickname"
-                           value="${sessionScope.__AUTH__.nickname}">
+                    <button type="submit" class="btn btn-primary mt-4 save-btn">저장하기</button>
                 </div>
-
-                <button type="button" class="btn btn-primary mt-4">저장하기</button>
             </div>
-
-
-        </div>
+        </form>
     </div>
 
     <%--회원 탈퇴--%>
@@ -76,7 +100,6 @@
                         data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
                     <div class="header d-flex justify-content-between">
                         <h4>회원 탈퇴</h4>
-
                     </div>
                 </button>
             </h2>
@@ -92,43 +115,34 @@
                         <p>그래도 탈퇴하시겠다면 다음 유의사항을 꼭 읽어주세요.</p>
                         <p>1. 작성한 컨텐츠는 완전히 삭제되지 않으며, 삭제를 원하시면 탈퇴 전에 직접 삭제를 해주셔야 합니다.<br>
                             2. 탈퇴 후 동일한 카카오 계정으로 가입이 불가능합니다.<br>
-                            3. 탈퇴하시겠다면 아래 입력창에 비밀번호를 입력해주세요. <br><br>
+                            3. 탈퇴하시겠다면 아래 입력창에 "네, 탈퇴하겠습니다."를 입력해주세요. <br><br>
                             <span class="h5">그동안 이용해주셔서 감사합니다.😂</span>
                         </p>
-                        <p></p>
 
-                        <input type="text" class="w-100 form-control" name="password" placeholder="진짜 탈퇴하실거에요?">
+                        <input type="text" class="w-100 form-control input-withdrawal" placeholder="진짜 탈퇴하실거에요?">
 
                         <div class="d-flex justify-content-center mt-3">
-                            <button type="button" class="btn btn-danger align-self-center">탈퇴하기</button>
+                            <button type="button" class="btn btn-danger align-self-center withdrawal-btn">탈퇴하기</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree"
-             data-bs-parent="#accordionFlushExample">
-            <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the
-                <code>.accordion-flush</code> class. This is the third item's accordion body. Nothing more exciting
-                happening here in terms of content, but just filling up the space to make it look, at least at first
-                glance, a bit more representative of how this would look in a real-world application.
-            </div>
-        </div>
-    </div>
     </div>
 </main>
 
 <%--FOOTER--%>
 <jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/include/footer.jsp"/>
 
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.10/dist/sweetalert2.all.min.js"></script>
+
 <script src="${pageContext.request.contextPath}/resources/js/modal.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/swiper.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/mypage.js"></script>
 
 
 </body>
