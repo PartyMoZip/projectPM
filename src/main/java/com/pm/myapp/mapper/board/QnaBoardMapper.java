@@ -17,6 +17,9 @@ public interface QnaBoardMapper {
     // 총 게시물 개수
     public abstract Integer getTotalCount();
 
+    // 문의 게시판 검색 게시물 개수
+    public abstract Integer getTotalSearchCount(String option, String keyword);
+
     // 문의 게시물 글쓰기
     public abstract Integer writeQnaBoard(QnaBoardDTO qnaBoard);
 

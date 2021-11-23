@@ -31,5 +31,7 @@ public interface NoticeBoardService {
     // 8. 총 게시물 개수 반환
     public abstract Integer getTotal();
 
+    // 검색 결과 게시물 개수 반환
+    public abstract Integer getTotalSearch(String option, String keyword);
 
 } //end interface

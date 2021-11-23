@@ -91,6 +91,13 @@ public class PartyFreeServiceImpl implements PartyFreeService, InitializingBean,
         return this.mapper.getTotalCount();
     }
 
+    @Override
+    public Integer getTotalSearch(String option, String keyword) {
+        log.debug("getTotalSearch() invoked.");
+
+        return this.mapper.getTotalSearchCount(option, keyword);
+    }
+
     // 댓글 목록
     @Override
     public List<PartyFreeReplyVO> getReply(Integer pfrefer, Integer partycode, Criteria cri) {
