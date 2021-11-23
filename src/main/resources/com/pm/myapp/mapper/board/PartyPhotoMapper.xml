@@ -101,6 +101,13 @@
         
     </select>
     
+    <select id="checkPhotoHeart" resultType="Integer">
+    
+    	SELECT SUM(HIT) FROM PHOTOHEART
+	    WHERE PARTYCODE = #{partyCode} AND PREFER = #{prefer}
+    
+    </select>
+    
 	<select id="getTotalReply" resultType = "Integer">
     
         SELECT COUNT(PREREFER)

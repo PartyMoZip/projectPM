@@ -81,10 +81,11 @@ public class PartyPhotoController {
 	public void getPhotoBoardDetail(
 			Integer partyCode,
 			Integer prefer,
+			String email,
 			@ModelAttribute("cri") Criteria cri,
 			ReplyCriteria recri,
 			Model model) {
-		log.debug("getPhotoBoardDetail({}, {}, {}) invoked.",partyCode, cri, recri);
+		log.debug("getPhotoBoardDetail({}, {}, {}, {}, {}) invoked.",partyCode, prefer, email, cri, recri);
 		
 		// 읽기번호 증가
 		boolean readOk = this.service.readPhotoBoard(prefer, partyCode);
@@ -114,6 +115,22 @@ public class PartyPhotoController {
 		// 댓글 페이지네이션 처리
 		PageDTO pageDTO = new PageDTO(recri, totalAmount);
 		model.addAttribute("replyPageMaker", pageDTO);
+		
+		// 내 좋아요 불러오기
+		// 로그인 중이라면 좋아요 눌렀는지 아닌지 표시
+		// 아니라면 아닌체로 표시
+		if(email!=null) {
+			Integer myHeart = this.service.getMyPartyPhotoHeart(prefer,partyCode,email);
+			log.info("\t+ myHeart : {}",myHeart);
+			model.addAttribute("__MYHEART__", myHeart);
+		} else {
+			model.addAttribute("__MYHEART__", 0);
+		} // if-else
+		
+		// 총 좋아요 개수 불러오기
+		Integer totalHeart = this.service.getTotalPartyPhotoHeart(prefer,partyCode);
+		log.info("\t+ totalHeart : {}",totalHeart);
+		model.addAttribute("__TOTALHEART__", totalHeart);
 				
 	} // getPhotoBoardDetail
 	
@@ -406,12 +423,15 @@ public class PartyPhotoController {
 	public String givePhotoHeart(
 			HeartDTO hdto,
 			@ModelAttribute("cri") Criteria cri,
-			RedirectAttributes rttrs
+			RedirectAttributes rttrs,
+			Model model
 			) {
 		log.debug("givePhotoHeart({}, {})",hdto,cri);
 		
-		boolean heartCheck = this.service.checkPhotoBoardHeart(hdto);		
+		Integer heartCheck = this.service.checkPhotoBoardHeart(hdto);		
 		log.info("\t+ heartCheck : {}", heartCheck);
+		
+		model.addAttribute("__MYHEART__", heartCheck);
 		
 		rttrs.addAttribute("prefer", hdto.getPrefer());
 		rttrs.addAttribute("partyCode", hdto.getPartyCode());

@@ -101,6 +101,35 @@ public class PartyPhotoServiceImpl implements PartyPhotoService {
 		return totalNum;
 		
 	} // getTotalPhotoReplyList
+	
+	@Override
+	public Integer getMyPartyPhotoHeart(Integer prefer, Integer partyCode, String email) {
+		log.debug("getTotalPartyPhotoHeart({}, {}, {}) invoked.",prefer,partyCode,email);
+		
+		HeartDTO hdto = new HeartDTO();
+		hdto.setPrefer(prefer);
+		hdto.setPartyCode(partyCode);
+		hdto.setEmail(email);
+		
+		Integer affectedHeart = this.mapper.checkPhotoHeart(hdto);
+		log.info("\t+ affectedHeart : {}", affectedHeart);
+		
+		return affectedHeart;
+	} // getMyPartyPhotoHeart
+	
+	@Override
+	public Integer getTotalPartyPhotoHeart(Integer prefer, Integer partyCode) {
+		log.debug("getTotalPartyPhotoHeart({}, {}) invoked.",prefer,partyCode);
+		
+		Integer totalHeart = this.mapper.checkPhotoHeart(prefer, partyCode);
+		log.info("\t+ totalHeart : {}",totalHeart);
+		
+		if(totalHeart==null) {
+			totalHeart = 0;
+		} // if
+		
+		return totalHeart;
+	} // getTotalPartyPhotoHeart
 
 	@Override
 	public Integer writePartyPhoto(PartyPhotoDTO dto) {
@@ -239,7 +268,7 @@ public class PartyPhotoServiceImpl implements PartyPhotoService {
 	} // deletePhotoBoardComment
 
 	@Override
-	public boolean checkPhotoBoardHeart(HeartDTO hdto) {
+	public Integer checkPhotoBoardHeart(HeartDTO hdto) {
 		log.debug("checkPhotoBoardHeart({}) invoked.",hdto);
 		
 		Integer currHit = this.mapper.checkPhotoHeart(hdto);
@@ -266,7 +295,7 @@ public class PartyPhotoServiceImpl implements PartyPhotoService {
 		Integer affectedHeart = this.mapper.checkPhotoHeart(hdto);
 		log.info("\t+ affectedHeart : {}", affectedHeart);
 		
-		return (affectedHeart==1);
+		return affectedHeart;
 	} // checkPhotoBoardHeart
 	
 	
