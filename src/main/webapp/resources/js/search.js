@@ -8,6 +8,7 @@ const searchInput = document.querySelector(".input-search");
 const selectForm = document.querySelector(".select-form");
 const paginationForm = document.querySelector("#paginationForm");
 
+
 // 취미 메뉴 검색 창 클릭 이벤트 막기
 const handlePrevent = (e) => {
     e.stopPropagation();
@@ -35,6 +36,7 @@ const handleClickCategory = (e) => {
 
     selectForm.submit();
 }
+
 
 hobbySearchBar.addEventListener('click', handlePrevent);
 hobbyMenu.addEventListener("click", handleClickCategory);

@@ -63,18 +63,25 @@
     <div class="container">
 
         <%--검색창--%>
-        <div class="container-sm search-wrapper">
-            <form action="/search/searchList" method="get" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-                <input type="text" name="word" class="form-control" placeholder="찾고 있는 파티를 입력해보세요."
-                       aria-label="Search">
-                <button class="search-btn">
-                <span>
-                    <i class="fas fa-search"></i>
-                </span>
-                </button>
-            </form>
+        <div class="container-sm d-flex justify-content-center align-items-center">
+            <div class="search-wrapper">
+                <form action="/search/searchList" method="get" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+                    <div class="container-sm p-0">
+                        <input type="text" name="word" id="search-bar" class="form-control"
+                               placeholder="찾고 있는 파티를 입력해보세요."
+                               aria-label="Search">
+                        <button class="search-btn">
+                    <span>
+                        <i class="fas fa-search"></i>
+                    </span>
+                        </button>
+                    </div>
+                    <div class="search-box hide">
+                        <ul class="search-ul"></ul>
+                    </div>
+                </form>
+            </div>
         </div>
-
 
 
         <%--내 파티 목록--%>
@@ -110,7 +117,7 @@
                                 <p class="card-text"><c:out value="${party.partyName}"/></p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
-                                    	<button type="button" class="btn btn-sm btn-outline-secondary">View</button>     
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
                                     </div>
                                     <small class="text-muted"><c:out value="${party.hobbyName}"/></small>
                                     <small class="text-muted"><c:out value="${party.localName}"/></small>
@@ -120,75 +127,6 @@
                         </div>
                     </div>
                 </c:forEach>
-                <%--<div class="col">
-                    <div class="card shadow-sm">
-                        <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
-                             xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
-                             preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
-                            <rect width="100%" height="100%" fill="#55595c"></rect>
-                            <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
-                        </svg>
-
-                        <div class="card-body">
-                            <p class="card-text">파티 이름</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                                </div>
-                                <small class="text-muted">#축구</small>
-                                <small class="text-muted">#강남</small>
-                                <small class="text-muted">활동점수 18</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card shadow-sm">
-                        <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
-                             xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
-                             preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
-                            <rect width="100%" height="100%" fill="#55595c"></rect>
-                            <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
-                        </svg>
-
-                        <div class="card-body">
-                            <p class="card-text">파티 이름</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                                </div>
-                                <small class="text-muted">#축구</small>
-                                <small class="text-muted">#강남</small>
-                                <small class="text-muted">활동점수 18</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card shadow-sm">
-                        <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
-                             xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
-                             preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
-                            <rect width="100%" height="100%" fill="#55595c"></rect>
-                            <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
-                        </svg>
-
-                        <div class="card-body">
-                            <p class="card-text">파티 이름</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                                </div>
-                                <small class="text-muted">#축구</small>
-                                <small class="text-muted">#강남</small>
-                                <small class="text-muted">활동점수 18</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>--%>
             </div>
         </div>
 
@@ -227,7 +165,7 @@
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/modal.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/swiper.js"></script>
-
+<script src="${pageContext.request.contextPath}/resources/js/autocomplete.js"></script>
 
 </body>
 </html>
