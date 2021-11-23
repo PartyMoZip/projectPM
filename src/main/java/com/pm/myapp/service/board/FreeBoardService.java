@@ -23,10 +23,13 @@ public interface FreeBoardService {
     public abstract boolean deleteBoard(Integer frefer);
 
     // 자유 게시판 검색
-    public abstract List<FreeBoardSearchVO> search(String searchOption, String keyword, Criteria cri);
+    public abstract List<FreeBoardSearchVO> search(String option, String keyword, Criteria cri);
 
     // 총 게시물 개수 반환
     public abstract Integer getTotal();
+
+    // 검색 결과 게시물 개수 반환
+    public abstract Integer getTotalSearch(String option, String keyword);
 
     // 9. 댓글 등록
     public abstract boolean writeReply(FreeBoardReplyDTO freeReply);

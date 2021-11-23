@@ -15,8 +15,11 @@ public interface FreeBoardMapper {
     // 자유 게시판 상세보기
     public abstract FreeBoardVO readFreeBoard(Integer frefer);
 
-    // 자유 게시물 개수
+    // 자유 게시판 개수
     public abstract Integer getTotalCount();
+
+    // 자유 게시판 검색 게시물 개수
+    public abstract Integer getTotalSearchCount(String option, String keyword);
     
     // 자유 게시판 글쓰기
     public abstract Integer registerFreeBoard(FreeBoardDTO writeFB);

@@ -29,19 +29,19 @@ public class FreeBoardController {
 	// 자유 게시판 목록 - 페이징 처리
 	@GetMapping("/getFreeBoardList")
 	public String getFreeBoardList(
-			@ModelAttribute("cri") Criteria criteria, Model model) {
-		log.debug("getFreeBoardList({}) invoked.", criteria);
-		List<FreeBoardListVO> list = this.service.getListPerPage(criteria);
+			@ModelAttribute("cri") Criteria cri, Model model) {
+		log.debug("getFreeBoardList({}) invoked.", cri);
+		List<FreeBoardListVO> list = this.service.getListPerPage(cri);
 
 		log.info("\t + list size : {}", list.size());
 		model.addAttribute("list", list);
 
 		// 페이징 처리
 		Integer totalAmount = this.service.getTotal();
-		PageDTO pageDTO = new PageDTO(criteria, totalAmount);
+		PageDTO pageDTO = new PageDTO(cri, totalAmount);
 		model.addAttribute("pageMaker", pageDTO);
 
-		return "/free/list";
+		return "/freeboard/boardList";
 		
 	} // getFreeBoardList
 
@@ -53,12 +53,12 @@ public class FreeBoardController {
 		FreeBoardVO boardDetail = this.service.getBoardDetail(frefer);
 		log.info("\t + board : {}", boardDetail);
 		List<FreeBoardReplyVO> reply = this.service.getReply(frefer, cri);
-		model.addAttribute("reply", reply);
-		model.addAttribute("board", boardDetail);
+        model.addAttribute("boardDetail", boardDetail);
+        model.addAttribute("reply", reply);
 
 	} // showFreeDetail
 
-	// 자유 게시판 작성
+	// 자유 게시판 글쓰기
 	@PostMapping("/writeFreeBoard")
 	public String writeFreeBoard(FreeBoardDTO writeFB, RedirectAttributes rttrs) {
 		log.debug("writeFreeBoard({}) invoked.", writeFB);
@@ -66,19 +66,19 @@ public class FreeBoardController {
 		boolean result = this.service.writeBoard(writeFB);
 		rttrs.addAttribute("result", result);
 
-		return "redirect:/party/register";
+		return "redirect:/freeboard/boardWrite";
 	} // writeFreeBoard
 
 	// 자유 게시판 수정 view
 	@GetMapping("/editFreeBoardView")
-	public void editFreeBoardView(@ModelAttribute("cri") Criteria cri, Integer frefer, Model model){
+	public String editFreeBoardView(@ModelAttribute("cri") Criteria cri, Integer frefer, Model model){
 		log.debug("editFreeBoardView({}, {}) invoked",cri,frefer);
 
 		FreeBoardVO boardDetail = this.service.getBoardDetail(frefer);
 		log.info("\t + board : {}", boardDetail);
+		model.addAttribute("__boardDetail__",boardDetail);
 
-		model.addAttribute("__BoardDetail__",boardDetail);
-
+		return "/freeboard/boardModify";
 	} // editFreeBoardView
 
 	// 자유 게시판 수정
@@ -89,7 +89,7 @@ public class FreeBoardController {
 		boolean result = this.service.editBoard(freeBoard);
 		rttrs.addAttribute("resultmod", result);
 
-		return "redirect:/free/modify";
+		return "redirect:/freeboard/showFreeDetail";
 
 	} // editFreeBoard
 
@@ -98,37 +98,38 @@ public class FreeBoardController {
 	public String deleteFreeBoard(@RequestParam("frefer") Integer frefer, RedirectAttributes rttrs) {
 		log.debug("deleteFreeBoard({}) invoked.", frefer);
 		boolean result = this.service.deleteBoard(frefer);
-		rttrs.addAttribute("resultdel", result);
+		rttrs.addAttribute("result", result);
 
-		return "redirect:/free/list";
+		return "redirect:/freeboard/boardList";
 
 	} // deleteFreeBoard
 
 	// 자유 게시판 검색
 	@GetMapping("/searchFreeBoard")
-	public String searchFreeBoard(@ModelAttribute("cri") Criteria cri, String searchOption, String keyword, Model model) {
+	public String searchFreeBoard(@ModelAttribute("cri") Criteria cri, String option, String keyword, Model model) {
 		log.debug("searchFreeBoard() invoked.");
 
-		List<FreeBoardSearchVO> searchList = this.service.search(searchOption, keyword, cri);
+		List<FreeBoardSearchVO> searchList = this.service.search(option, keyword, cri);
 		model.addAttribute("__list__", searchList);
 
 		// 페이징 처리
-		Integer totalAmount = this.service.getTotal();
+		Integer totalAmount = this.service.getTotalSearch(option, keyword);
 		PageDTO pageDTO = new PageDTO(cri, totalAmount);
 		model.addAttribute("pageMaker", pageDTO);
 
-		return "/free/list";
+		return "/freeboard/searchList";
 	} // searchFreeBoard
 	
 	// 자유 게시판  - 댓글 목록
 	@GetMapping("/getComment")
-	public void getComment(Model model, Integer frefer, Criteria cri) {
+	public String getComment(Model model, Integer frefer, Criteria cri) {
 		log.debug("getComment() invoked.");
 		List<FreeBoardReplyVO> list = this.service.getReply(frefer, cri);
 
 		log.info("\t + list size : {}", list.size());
 		model.addAttribute("list", list);
 
+		return "getFreeList";
 	} // commentList
 	
 	// 자유 게시판  - 댓글 작성
@@ -139,7 +140,7 @@ public class FreeBoardController {
 		boolean result = this.service.writeReply(freeReply);
 		rttrs.addAttribute("resultWriteComment", result);
 
-		return "redirect:/party/showDetail";
+		return "getFreeList";
 
 	} // writeComment
 	
@@ -152,7 +153,7 @@ public class FreeBoardController {
 		rttrs.addAttribute("resultEditComment", result);
 
 		//게시글 상세페이지로 돌아가야되는데 이름 뭔데
-		return "redirect:/party/showDetail";
+		return "getFreeList";
 
 	} // editComment
 	
@@ -164,7 +165,7 @@ public class FreeBoardController {
 		boolean result = this.service.deleteReply(frerefer);
 		rttrs.addAttribute("resultDeleteComment", result);
 
-		return "redirect:/party/showDetail";
+		return "getFreeList";
 
 	} // deleteComment
 

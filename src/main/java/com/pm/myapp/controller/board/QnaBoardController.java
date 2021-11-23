@@ -31,26 +31,25 @@ public class QnaBoardController {
 	// 문의 게시판 목록 - 페이징 처리
 	@GetMapping("/getQuestionBoardList")
 	public String getQuestionBoardList(
-			@ModelAttribute("cri") Criteria criteria, Model model) {
-		log.debug("getQuestionBoardList() invoked.", model);
-		List<QnaBoardListVO> list = this.service.getListPerPage(criteria);
-
+			@ModelAttribute("cri") Criteria cri, Model model) {
+		log.debug("getQuestionBoardList({}) invoked.", cri);
+		List<QnaBoardListVO> list = this.service.getListPerPage(cri);
 		log.info("\t + list size : {}", list.size());
 		model.addAttribute("list", list);
 
 		// 페이징 처리
 		Integer totalAmount = this.service.getTotal();
-		PageDTO pageDTO = new PageDTO(criteria, totalAmount);
+		PageDTO pageDTO = new PageDTO(cri, totalAmount);
 		model.addAttribute("pageMaker", pageDTO);
 
-		return "/Qna/list";
+		return "/qnaboard/boardList";
 
 	} // getQuestionBoardList
 
 	// 문의 게시판 상세보기
 	@GetMapping("/showQnaDetail")
 	public void showQnaDetail(@ModelAttribute("cri") Criteria cri, Integer qrefer, Model model) {
-		log.debug("showQnaDetail({}, {}, {}) invoked.", cri, qrefer);
+		log.debug("showQnaDetail({}, {}) invoked.", cri, qrefer);
 
 		QnaBoardVO boardDetail = this.service.getBoardDetail(qrefer);
 		log.info("\t + board : {}", boardDetail);
@@ -107,14 +106,14 @@ public class QnaBoardController {
 
 	// 문의 게시판  검색
 	@GetMapping("/searchQuestionBoard")
-	public void searchQuestionBoard(@ModelAttribute("cri") Criteria cri, String searchOption, String keyword, Model model) {
+	public void searchQuestionBoard(@ModelAttribute("cri") Criteria cri, String option, String keyword, Model model) {
 		log.debug("searchQuestionBoard() invoked.");
 
-		List<QnaBoardSearchVO> searchList = this.service.search(searchOption, keyword, cri);
+		List<QnaBoardSearchVO> searchList = this.service.search(option, keyword, cri);
 		model.addAttribute("__list__", searchList);
 
 		// 페이징 처리
-		Integer totalAmount = this.service.getTotal();
+		Integer totalAmount = this.service.getTotalSearch(option, keyword);
 		PageDTO pageDTO = new PageDTO(cri, totalAmount);
 		model.addAttribute("pageMaker", pageDTO);
 

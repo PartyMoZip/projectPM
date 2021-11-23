@@ -6,6 +6,7 @@ public class PartyFreeSearchVO {
 
     private Integer pfrefer;
     private String pfsubject;
+    private String pfcontent;
     private Date pfdate;
     private String email;
 }

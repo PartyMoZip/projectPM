@@ -28,6 +28,7 @@ public class NoticeBoardServiceImpl implements NoticeBoardService{
     @Override
     public List<NoticeBoardListVO> getListPerPage(Criteria cri) {
         log.debug("getListPerPage({}) invoked.",cri);
+
         List<NoticeBoardListVO> allBoards = this.mapper.getListWithPaging(cri);
         log.info("\t + allBoards : {}", allBoards);
 
@@ -94,4 +95,12 @@ public class NoticeBoardServiceImpl implements NoticeBoardService{
 
         return this.mapper.getTotalCount();
     }
+
+    // 검색 결과 게시물 개수 반환
+    @Override
+    public Integer getTotalSearch(String option, String keyword) {
+        log.debug("getTotalSearch() invoked.");
+
+        return this.mapper.getTotalSearchCount(option, keyword);
+    } // getTotalSearch
 }

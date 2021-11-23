@@ -42,13 +42,13 @@ public class PartyFreeController {
 		PageDTO pageDTO = new PageDTO(criteria, totalAmount);
 		model.addAttribute("pageMaker", pageDTO);
 
-		return "/partyFree/list";
+		return "/partyFree/boardList";
 		
 	} // getPFreeBoardList
 
 	// 파티 자유 게시판 상세보기
 	@GetMapping("/showPartyFDetail")
-	public void showPartyFDetail(@ModelAttribute("cri") Criteria cri, Integer pfrefer, Integer partycode, Model model) {
+	public String showPartyFDetail(@ModelAttribute("cri") Criteria cri, Integer pfrefer, Integer partycode, Model model) {
 		log.debug("get({}, {}, {}) invoked.", cri, pfrefer, partycode);
 		PartyFreeVO partyFDetail = this.service.getBoardDetail(pfrefer, partycode);
 		log.info("\t + partyFree : {}", partyFDetail);
@@ -56,28 +56,29 @@ public class PartyFreeController {
 		model.addAttribute("partyFree", partyFDetail);
 		model.addAttribute("reply", reply);
 
+		return "partyFree/boardDetail";
 	} // showPartyFDetail
 
-	// 파티 자유 게시판 작성
+	// 파티 자유 게시판 글쓰기
 	@PostMapping("/writePFreeBoard")
 	public String writePFreeBoard(PartyFreeDTO partyFB, RedirectAttributes rttrs) {
 		log.debug("writePFreeBoard({}) invoked.", partyFB);
 		boolean result = this.service.writeFBoard(partyFB);
 		rttrs.addAttribute("result", result);
 
-		return "redirect:/partyFree/register";
+		return "redirect:/partyFree/boardWrite";
 	} // writePFreeBoard
 
 	// 파티 자유 게시판 수정 View
 	@GetMapping("/editPFBoardView")
-	public void editPFBoardView(@ModelAttribute("cri") Criteria cri, Integer pfrefer, Integer partycode, Model model) {
+	public String editPFBoardView(@ModelAttribute("cri") Criteria cri, Integer pfrefer, Integer partycode, Model model) {
 		log.debug("editPFBoardView({}, {})", cri, pfrefer, partycode);
 
 		PartyFreeVO boardDetail = this.service.getBoardDetail(pfrefer, partycode);
 		log.info("\t + boardDetail : {}", boardDetail);
 
 		model.addAttribute("__boardDetail__", boardDetail);
-
+		return "/partyFree/boardModify";
 	} // editPFBoardView
 
 	// 파티 자유 게시판  수정
@@ -87,7 +88,7 @@ public class PartyFreeController {
 		boolean result = this.service.editBoard(partyFree);
 		rttrs.addAttribute("resultmod",result);
 
-		return "redirect:/partyFree/modify";
+		return "redirect:/partyFree/boardDetail";
 
 	} // editPFreeBoard
 
@@ -98,27 +99,35 @@ public class PartyFreeController {
 		boolean result = this.service.deleteBoard(pfrefer);
 		rttrs.addAttribute("resultDel", result);
 
-		return "redirect:/partyFree/list";
+		return "redirect:/partyFree/boardList";
 	} // deletePFreeBoard
 
 	// 파티 자유 게시판  검색
 	@GetMapping("/searchPFreeBoard")
-	public void searchPFreeBoard(@ModelAttribute("cri") Criteria cri, String searchOption, String keyword, Model model) {
+	public String searchPFreeBoard(@ModelAttribute("cri") Criteria cri, String option, String keyword, Model model) {
 		log.debug("searchPFreeBoard() invoked.");
 
-		List<PartyFreeSearchVO> searchList = this.service.search(searchOption, keyword, cri);
+		List<PartyFreeSearchVO> searchList = this.service.search(option, keyword, cri);
 		model.addAttribute("__list__", searchList);
 
+		// 페이징 처리
+		Integer totalAmount = this.service.getTotalSearch(option, keyword);
+		PageDTO pageDTO = new PageDTO(cri, totalAmount);
+		model.addAttribute("pageMaker", pageDTO);
+
+		return "/partyFree/searchList";
 	} // searchPFreeBoard
 	
 	// 파티 자유 게시판  - 댓글 목록
 	@GetMapping("/getComment")
-	public void getComment(Model model, Integer pfrefer, Integer partycode, Criteria cri) {
+	public String getComment(Model model, Integer pfrefer, Integer partycode, Criteria cri) {
 		log.debug("getComment() invoked.");
 		List<PartyFreeReplyVO> list = this.service.getReply(pfrefer, partycode, cri);
 
 		log.info("\t + list size : {}", list.size());
 		model.addAttribute("list", list);
+
+		return "redirect:/partyFree/boardDetail";
 	} // commentList
 	
 	// 파티 자유 게시판  - 댓글 작성
@@ -129,8 +138,7 @@ public class PartyFreeController {
 		boolean result = this.service.writeReply(partyReply);
 		rttrs.addAttribute("resultWrtieComment", result);
 
-		return "redirect:/partyFree/list";
-
+		return "redirect:/partyFree/boardDetail";
 	} // writeComment
 	
 	// 파티 자유 게시판  - 댓글 수정
@@ -141,8 +149,7 @@ public class PartyFreeController {
 		boolean result = this.service.editReply(partyReply);
 		rttrs.addAttribute("resultEdit", result);
 
-		return "redirect:/partyFree/get";
-
+		return "redirect:/partyFree/boardDetail";
 	} // editComment
 	
 	// 파티 자유 게시판  - 댓글 삭제
@@ -153,7 +160,7 @@ public class PartyFreeController {
 		boolean result = this.service.deleteReply(pfrerefer);
 		rttrs.addAttribute("resultDeleteComm", result);
 
-		return "redirect:/partyFree/get";
+		return "redirect:/partyFree/boardDetail";
 	} // deleteComment
 	
 } // end class

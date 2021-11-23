@@ -1,0 +1,164 @@
+/* 감싸는 전체 div 너비, 중앙 정렬 */
+.all-wrap {
+    margin: 20px auto;
+    width: 80%;
+}
+
+/* 버튼 디자인 */
+.btn.btn-primary {
+    width: 70px;
+    height: 34px;
+    padding: 3px;
+    font-size: 12px;
+    font-weight: 600;
+    background: none;
+    color: black;
+    border: 2px solid #669900;
+}
+
+.btn.btn-primary:hover {
+    color: #fff;
+    background-color: #669900;
+}
+
+.bottom-menu {
+    display: flex;
+}
+
+.d-grid.gap-2.d-md-block {
+    float : right;
+    margin-top : 2px;
+}
+
+
+.flex-sm-fill.text-sm-center.nav-link {
+    border-radius: 100px;
+    margin-top: 20px;
+    color: black;
+    cursor: pointer;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.flex-sm-fill.text-sm-center.nav-link:hover {
+    color: #669900;
+}
+
+.flex-sm-fill.text-sm-center.nav-link:focus {
+    color: #669900;
+}
+
+.flex-sm-fill.text-sm-center.nav-link.active {
+    background-color: #669900;
+    font-weight: 600;
+}
+
+.flex-sm-fill.text-sm-center.nav-link.active:hover {
+    font-weight: 600;
+    color: #fff;
+}
+
+#freebar {
+    width : 20%;
+}
+
+.title_text {
+   font-weight : 400;
+    font-size : 60px;
+    word-wrap : break-word;
+    word-break : break-word;
+    margin-top : 15px;
+    margin-bottom : 10px;
+}
+
+.title_area {
+    font-weight : 400;
+    font-size : 60px;
+    word-wrap : break-word;
+    word-break : break-word;
+    margin-top : 15px;
+    margin-bottom : 10px;
+    border : 0px solid black;
+}
+
+.content {
+    font-size : 50px;
+    margin-top : 15px;
+    margin-bottom : 10px;
+}
+
+.img_thumb {
+    border-radius : 50%;
+}
+
+.covuer_info {
+    margin : 20px 0px 20px 0px;
+}
+
+.profile_thumb {
+    position : relative;
+    width : 50px;
+    height : 50px;
+    float : left;
+    margin-right : 5px;
+    display: block;
+}
+
+.profile_thumb:after {
+    content : "";
+    position : absolute;
+    top : 0;
+    left : 0;
+    right : 0;
+    bottom : 0;
+    display : block;
+    border : 1px solid rgba(0,0,0,0.5);
+    border-radius: 50%;
+}
+
+.ms-3 {
+    margin-top : 10px;
+    margin-bottom : 25px;
+    float : right;
+}
+
+.comment_area {
+    margin-top : 15px;
+}
+
+.comment_text {
+    margin-top : 60px;
+    margin-bottom : 15px;
+}
+
+.confirm_button {
+    float : right;
+}
+
+#commentContent {
+    border: 0px solid;
+    max-width: 65vw;
+    margin : 0;
+}
+
+#commentContent:focus {
+    outline : none;
+}
+
+.commentWrite_Wrap {
+    border : 1px solid #e4e4e4;
+    padding : 10px 0px 10px 20px;
+    border-radius : 2px;
+    max-width : 70vw;
+    text-align : center;
+    margin : 0 auto;
+}
+
+textarea{
+    resize: none;
+}
+
+.button_area {
+    float : right;
+    height : 20px;
+}

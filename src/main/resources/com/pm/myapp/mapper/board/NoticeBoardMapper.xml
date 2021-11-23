@@ -5,14 +5,14 @@
 <mapper namespace="com.pm.myapp.mapper.board.NoticeBoardMapper">
 
     <select id="getListWithPaging" resultType="com.pm.myapp.domain.board.NoticeBoardListVO">
-    <![CDATA[
-			SELECT
-				N.nrefer, n.nsubject, n.ndate, u.nickname, n.readnum
-			FROM NOTICEBOARD N
-			JOIN USERINFO U ON N.EMAIL = U.EMAIL
-			OFFSET (#{currPage}-1) * #{amount} ROWS
-			FETCH NEXT #{amount} ROWS ONLY
-		]]>
+        <![CDATA[
+                SELECT
+                    N.nrefer, n.nsubject, n.ndate, u.nickname, n.readnum
+                FROM NOTICEBOARD N
+                JOIN USERINFO U ON N.EMAIL = U.EMAIL
+                OFFSET (#{currPage}-1) * #{amount} ROWS
+                FETCH NEXT #{amount} ROWS ONLY
+            ]]>
     </select>
 
     <select id="readNoticeBoard" resultType="com.pm.myapp.domain.board.NoticeBoardVO">
@@ -33,9 +33,9 @@
 
     <select id="getTotalCount" resultType="int">
         <![CDATA[
-        SELECT COUNT(nrefer)
-        FROM NOTICEBOARD
-        WHERE nrefer > 0
+            SELECT COUNT(nrefer)
+            FROM NOTICEBOARD
+            WHERE nrefer > 0
 
         ]]>
 
@@ -43,12 +43,54 @@
 
     <select id = "searchNoticeBoard" resultType="com.pm.myapp.domain.board.NoticeBoardSearchVO">
 
-        SELECT N.NREFER, N.NSUBJECT, N.NDATE, U.NICKNAME, U.EMAIL
+        SELECT N.NREFER, N.NSUBJECT, N.NCONTENT, N.NDATE, U.EMAIL ,U.NICKNAME
         FROM NOTICEBOARD N
-            JOIN USERINFO U ON N.EMAIL = U.EMAIL
-            WHERE N.NSUBJECT LIKE #{keyword} ORDER BY NREFER DESC
-            OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
-            FETCH NEXT #{cri.amount} ROWS ONLY
+        JOIN USERINFO U ON N.EMAIL = U.EMAIL
+        WHERE
+        <choose>
+        <when test = "option == '1'">
+            U.NICKNAME LIKE CONCAT('%', #{keyword}, '%')
+            OR N.NCONTENT LIKE CONCAT('%', #{keyword}, '%')
+            OR N.NSUBJECT LIKE CONCAT('%', #{keyword}, '%')
+        </when>
+        <when test = "option == '2">
+            U.NICKNAME LIKE CONCAT('%', #{keyword}, '%')
+        </when>
+        <when test = "option == '3'">
+            N.NSUBJECT LIKE CONCAT('%', #{keyword}, '%')
+        </when>
+        <when test = "option == '4'">
+            N.NCONTENT LIKE CONCAT('%', #{keyword}, '%')
+        </when>
+        </choose>
+        OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
+        FETCH NEXT #{cri.amount} ROWS ONLY
+
+    </select>
+
+    <!-- 검색 게시물 조회 -->
+    <select id = "getTotalSearchCount" resultType = "Integer">
+
+        SELECT COUNT(N.NREFER)
+        FROM NOTICEBOARD N
+        JOIN USERINFO U ON N.EMAIL = U.EMAIL
+        WHERE
+        <choose>
+            <when test = "option == '1'">
+                U.NICKNAME LIKE CONCAT('%', #{keyword}, '%')
+                OR F.FCONTENT LIKE CONCAT('%', #{keyword}, '%')
+                OR F.FSUBJECT LIKE CONCAT('%', #{keyword}, '%')
+            </when>
+            <when test = "option == '2">
+                U.NICKNAME LIKE CONCAT('%', #{keyword}, '%')
+            </when>
+            <when test = "option == '3'">
+                N.NSUBJECT LIKE CONCAT('%', #{keyword}, '%')
+            </when>
+            <when test = "option == '4'">
+                N.NCONTENT LIKE CONCAT('%', #{keyword}, '%')
+            </when>
+        </choose>
 
     </select>
 
@@ -60,12 +102,12 @@
         WHERE NREFER = #{nRefer}
     </update>
 
-
     <delete id="deleteNoticeBoard">
         DELETE
         FROM NOTICEBOARD
         WHERE NREFER=#{nrefer}
     </delete>
 
+    <
 
 </mapper>
