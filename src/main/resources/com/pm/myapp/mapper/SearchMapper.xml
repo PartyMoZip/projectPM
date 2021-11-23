@@ -16,6 +16,29 @@
 
     </select>
 
+    <!-- 검색어 자동완성 -->
+    <select id="getContainsWord" resultType="com.pm.myapp.domain.PartyVO">
+
+        SELECT p.partycode,
+               p.partyname,
+               p.partyscore,
+               p.createdate,
+               p.logopic,
+               p.coverpic,
+               p.partyprofile,
+               p.partybanned,
+               l.localname,
+               h.hobbyname
+        FROM party p
+                 JOIN hobby h ON p.hobbycode = h.hobbycode
+                 JOIN localinfo l ON p.localcode = l.localcode
+        WHERE partyname LIKE '%' || #{searchWord.word} || '%'
+           OR h.hobbyname LIKE '%' || #{searchWord.word} || '%'
+           OR l.localname LIKE '%' || #{searchWord.word} || '%'
+        ORDER BY partycode DESC
+        OFFSET (#{cri.currPage} - 1) * #{cri.amount} ROWS FETCH NEXT #{cri.amount} ROWS ONLY
+    </select>
+
     <!--페이징 처리된 검색한 파티 목록 조회-->
     <select id="getPartyListBySearch" parameterType="map" resultType="com.pm.myapp.domain.PartyVO">
 

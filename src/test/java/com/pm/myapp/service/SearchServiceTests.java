@@ -14,6 +14,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.List;
 
@@ -38,6 +39,25 @@ public class SearchServiceTests {
         assert this.service != null;
         log.info("\t+ service: {}", this.service);
     } // setup
+
+    // 검색어 자동완성
+    @Test
+    public void testGetContainsWord() {
+        log.info("testGetContainsWord() invoked.");
+
+        Criteria cri = new Criteria();
+        cri.setAmount(5);
+
+        SearchWordDTO searchWord = new SearchWordDTO();
+        searchWord.setWord("축구");
+        
+        List<PartyVO> list = this.service.getContainsWord(cri, searchWord);
+        log.info("list: {}", list);
+
+        assert list != null;
+
+        list.forEach(log::info);
+    } // testGetContainsWord
 
     // 페이징 파티 목록 조회
     @Test

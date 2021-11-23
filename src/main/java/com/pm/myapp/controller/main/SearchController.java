@@ -143,11 +143,4 @@ public class SearchController {
 
     } // selectCategory
 
-    // 카테고리 검색
-    @GetMapping("/getCategory")
-    public void getCategory() {
-        log.debug("getCategory() invoked.");
-
-    } // getCategory
-
 } // end class
