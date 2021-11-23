@@ -30,6 +30,8 @@
 		</init-param>
 
 		<load-on-startup>1</load-on-startup>
+		<!-- 클라이언트가 다수일 경우 클라이언트들이 동시에 전송할 수 있도록 비동기 처리 -->
+		<async-supported>true</async-supported>
 	</servlet>
 		
 	<servlet-mapping>
