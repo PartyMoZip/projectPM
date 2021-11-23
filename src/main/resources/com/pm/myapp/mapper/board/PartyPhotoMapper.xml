@@ -63,6 +63,14 @@
     
     </select>
     
+    <update id="readIt">
+    
+    	UPDATE PARTYPHOTOBOARD
+    	SET READNUM = READNUM + 1
+        WHERE PARTYCODE = #{partyCode} AND PREFER = #{prefer}
+    
+    </update>
+    
     <select id="getDetail" resultType = "com.pm.myapp.domain.board.PartyPhotoDTO">
     
         SELECT P.PREFER, P.PDATE, P.PARTYCODE, P.PCONTENT, P.PSUBJECT, P.EMAIL, U.NICKNAME, P.READNUM
@@ -93,6 +101,13 @@
         
     </select>
     
+    <select id="checkPhotoHeart" resultType="Integer">
+    
+    	SELECT SUM(HIT) FROM PHOTOHEART
+	    WHERE PARTYCODE = #{partyCode} AND PREFER = #{prefer}
+    
+    </select>
+    
 	<select id="getTotalReply" resultType = "Integer">
     
         SELECT COUNT(PREREFER)
@@ -106,6 +121,13 @@
     	SELECT MAX(PREFER)
     	FROM PARTYPHOTOBOARD
     	WHERE PARTYCODE = #{dto.partycode}
+    
+    </select>
+
+    <select id="checkPrefer" resultType="Integer">
+    
+    	SELECT COUNT(PREFER) FROM PARTYPHOTOBOARD
+    	WHERE PARTYCODE = #{dto.partyCode}
     
     </select>
 
@@ -158,7 +180,7 @@
     
     <select id="checkReply" resultType="Integer">
     
-    	SELECT COUNT(PREREFER) FROM PARTYPHOTORE
+    	SELECT MAX(PREREFER) FROM PARTYPHOTORE
     	WHERE PARTYCODE = #{dto.partyCode} AND PREFER = #{dto.prefer}
     
     </select>
@@ -175,7 +197,7 @@
     
     </select>
     
-    <select id="getMaxPrerefer" resultType="Integer">
+    <select id="getNextVal" resultType="Integer">
     
     	${read_seq}
     	
@@ -209,6 +231,30 @@
     	WHERE PARTYCODE=#{hdto.partyCode} AND PREFER=#{hdto.prefer} AND EMAIL=#{hdto.email}
     	
     </select>
+    
+    <select id="makeHeart" resultType="Integer">
+    
+    	INSERT INTO PHOTOHEART(HIT, EMAIL, PREFER, PARTYCODE)
+    	VALUES(0,#{hdto.email},#{hdto.prefer},#{hdto.partyCode})
+    	
+    </select>
+    
+    <update id="upHeart">
+    
+    	UPDATE PHOTOHEART
+    	SET HIT = 1
+    	WHERE PARTYCODE=#{hdto.partyCode} AND PREFER=#{hdto.prefer} AND EMAIL=#{hdto.email}
+    	
+    </update>
+      
+    <update id="downHeart">
+    
+    	UPDATE PHOTOHEART
+    	SET HIT = 0
+    	WHERE PARTYCODE=#{hdto.partyCode} AND PREFER=#{hdto.prefer} AND EMAIL=#{hdto.email}
+    	
+    </update>
+    
 
 
 </mapper>

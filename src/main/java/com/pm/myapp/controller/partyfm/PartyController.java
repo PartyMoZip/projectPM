@@ -88,12 +88,14 @@ public class PartyController {
 	
 	// 파티 메인 보기 [작동]
 	@GetMapping("/showmain")
-	public void showPartyMain(Integer partyCode, Model model) {
+	public String showPartyMain(Integer partyCode, Model model) {
 		log.debug("showPartyMain({}) invoked.",partyCode);
 		PartyVO party = this.service.getParty(partyCode);
 		log.info("\t + party : {}", party);
 		
 		model.addAttribute("__PARTY__",party);
+		
+		return "/party/partyMain";
 
 	} // showPartyMain
 	

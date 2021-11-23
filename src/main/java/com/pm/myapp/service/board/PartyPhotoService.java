@@ -20,6 +20,8 @@ public interface PartyPhotoService {
 			Integer partyCode, String searchWord, Integer option);
 	
 	// 2. 포토 갤러리 상세 보기
+	// 조회수 올리기
+	public abstract boolean readPhotoBoard(Integer prefer, Integer partyCode);
 	// 글 상세 보기
 	public abstract PartyPhotoDTO getPhotoBoardDetail(Integer prefer, Integer partyCode);
 	// 사진 불러오기
@@ -28,6 +30,10 @@ public interface PartyPhotoService {
 	public abstract List<PartyPhotoReDTO> getPhotoReplyList(Integer prefer, Integer partyCode, ReplyCriteria recri);
 	// 댓글 총 개수 구하기
 	public abstract Integer getTotalPhotoReplyList(Integer prefer, Integer partyCode);
+	// 내 좋아요 불러오기
+	public abstract Integer getMyPartyPhotoHeart(Integer prefer, Integer partyCode, String email);
+	// 좋아요 총 개수 구하기
+	public abstract Integer getTotalPartyPhotoHeart(Integer prefer, Integer partyCode);
 	
 	// 3. 포토 갤러리 쓰기
 	// 글 내용 등록
@@ -57,6 +63,6 @@ public interface PartyPhotoService {
 	public abstract boolean deletePhotoBoardComment(PartyPhotoReDTO dto);
 	
 	// 9. 좋아요 기능 //
-	public abstract boolean checkPhotoBoardHeart(HeartDTO hdto);
+	public abstract Integer checkPhotoBoardHeart(HeartDTO hdto);
 	
 } // end interface
