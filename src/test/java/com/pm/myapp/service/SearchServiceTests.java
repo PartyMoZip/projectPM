@@ -14,7 +14,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.List;
 
@@ -45,13 +44,10 @@ public class SearchServiceTests {
     public void testGetContainsWord() {
         log.info("testGetContainsWord() invoked.");
 
-        Criteria cri = new Criteria();
-        cri.setAmount(5);
-
         SearchWordDTO searchWord = new SearchWordDTO();
         searchWord.setWord("축구");
-        
-        List<PartyVO> list = this.service.getContainsWord(cri, searchWord);
+
+        List<PartyVO> list = this.service.getContainsWord(searchWord);
         log.info("list: {}", list);
 
         assert list != null;

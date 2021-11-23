@@ -12,7 +12,7 @@ public interface SearchService {
     public abstract List<PartyVO> getPartyList(Criteria cri);
 
     // 검색어 자동완성
-    public abstract List<PartyVO> getContainsWord(Criteria cri, SearchWordDTO searchWord);
+    public abstract List<PartyVO> getContainsWord(SearchWordDTO searchWord);
 
     // 페이징 검색어 포함된 파티 목록 조회
     public abstract List<PartyVO> getPartyListBySearch(
