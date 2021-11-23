@@ -2,6 +2,10 @@ package com.pm.myapp.domain.board;
 
 import java.util.Date;
 
+import lombok.Value;
+
+
+@Value
 public class NoticeBoardListVO {
 
     private Integer nRefer;

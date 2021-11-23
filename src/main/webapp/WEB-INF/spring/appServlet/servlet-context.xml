@@ -31,6 +31,7 @@
 	<context:component-scan base-package="com.pm.myapp.exception" />
 	<context:component-scan base-package="com.pm.myapp.service" />
 	<context:component-scan base-package="com.pm.myapp.interceptor" />
+	<context:component-scan base-package="com.pm.myapp.chat" />
 	<context:component-scan base-package="com.pm.myapp.aws" />
 
 
@@ -65,14 +66,12 @@
 
 
 	</mvc:interceptors>
-	
-	<!-- 
+	 
 	<beans:bean id="ChattingHandler" class="com.pm.myapp.chat.ChattingHandler"/>
 	
 	<websocket:handlers>
 		<websocket:mapping handler="chattingHandler" path="/chatting"/>
 		<websocket:sockjs></websocket:sockjs>
 	</websocket:handlers>
-	 -->
 
 </beans:beans>
