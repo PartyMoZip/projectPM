@@ -121,7 +121,7 @@ public class PartyPhotoServiceImpl implements PartyPhotoService {
 	public Integer getTotalPartyPhotoHeart(Integer prefer, Integer partyCode) {
 		log.debug("getTotalPartyPhotoHeart({}, {}) invoked.",prefer,partyCode);
 		
-		Integer totalHeart = this.mapper.checkPhotoHeart(prefer, partyCode);
+		Integer totalHeart = this.mapper.checkTotalPhotoHeart(prefer, partyCode);
 		log.info("\t+ totalHeart : {}",totalHeart);
 		
 		if(totalHeart==null) {

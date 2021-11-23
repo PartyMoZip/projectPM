@@ -37,7 +37,7 @@ public interface PartyPhotoMapper {
     // 게시글 댓글 총 개수 구하기
     public abstract Integer getTotalReply(@Param("prefer") Integer prefer, @Param("partyCode") Integer partyCode);
     // 게시글 좋아요 총 개수 구하기
-    public abstract Integer checkPhotoHeart(@Param("prefer") Integer prefer, @Param("partyCode") Integer partyCode);
+    public abstract Integer checkTotalPhotoHeart(@Param("prefer") Integer prefer, @Param("partyCode") Integer partyCode);
     
     // 3. 새로운 게시물 등록 //    
     // 게시글 등록 전 파티 별 게시판 최대 글 번호 알아내기

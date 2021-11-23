@@ -101,7 +101,7 @@
         
     </select>
     
-    <select id="checkPhotoHeart" resultType="Integer">
+    <select id="checkTotalPhotoHeart" resultType="Integer">
     
     	SELECT SUM(HIT) FROM PHOTOHEART
 	    WHERE PARTYCODE = #{partyCode} AND PREFER = #{prefer}

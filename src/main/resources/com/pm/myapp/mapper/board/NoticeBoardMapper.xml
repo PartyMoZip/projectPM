@@ -108,6 +108,5 @@
         WHERE NREFER=#{nrefer}
     </delete>
 
-    <
 
 </mapper>
