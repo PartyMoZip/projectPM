@@ -86,6 +86,12 @@ public class PartyPhotoController {
 			Model model) {
 		log.debug("getPhotoBoardDetail({}, {}, {}) invoked.",partyCode, cri, recri);
 		
+		// 읽기번호 증가
+		boolean readOk = this.service.readPhotoBoard(prefer, partyCode);
+		if(readOk) {
+			log.info("{}번 파티 포토게시판 {}번 글 읽기 성공",partyCode,prefer);
+			} // if
+		
 		// 갤러리 글 상세내용 불러오기
 		PartyPhotoDTO detail = this.service.getPhotoBoardDetail(prefer, partyCode);
 		log.info("\t+ detail : {}", detail);

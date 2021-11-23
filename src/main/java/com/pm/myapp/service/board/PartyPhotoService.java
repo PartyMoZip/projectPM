@@ -20,6 +20,8 @@ public interface PartyPhotoService {
 			Integer partyCode, String searchWord, Integer option);
 	
 	// 2. 포토 갤러리 상세 보기
+	// 조회수 올리기
+	public abstract boolean readPhotoBoard(Integer prefer, Integer partyCode);
 	// 글 상세 보기
 	public abstract PartyPhotoDTO getPhotoBoardDetail(Integer prefer, Integer partyCode);
 	// 사진 불러오기
