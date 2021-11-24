@@ -3,13 +3,50 @@ const searchBox = document.querySelector(".search-box");
 const searchUl = document.querySelector(".search-ul");
 let cache = "";
 
+const badgeClass = (element) => {
+    element.classList.add("badge");
+    element.classList.add("rounded-pill");
+    element.classList.add("bg-secondary");
+}
+
 // 검색어 자동완성 리스트 채우기
 const fillSearch = (data) => {
     searchUl.innerHTML = "";
     data.forEach((el, idx) => {
         console.log(el);
         const li = document.createElement("li");
-        li.innerHTML = el.partyName;
+        const leftBox = document.createElement("div");
+        const thumbBox = document.createElement("div");
+        const thumbnail = document.createElement("img");
+        const party = document.createElement("span");
+
+        const rightBox = document.createElement("div");
+        const hobby = document.createElement("span");
+        const local = document.createElement("span");
+        const link = document.createElement("a");
+
+        leftBox.classList.add("left-box");
+        thumbBox.classList.add("thumb-box");
+        party.classList.add("mx-3");
+        thumbnail.setAttribute("src", el.logoPic);
+        party.innerHTML = el.partyName;
+        thumbBox.appendChild(thumbnail);
+        leftBox.appendChild(thumbBox);
+        leftBox.appendChild(party);
+
+        rightBox.classList.add("right-box");
+        badgeClass(hobby);
+        badgeClass(local);
+        rightBox.appendChild(hobby);
+        rightBox.appendChild(local);
+        hobby.innerHTML = el.hobbyName;
+        local.innerHTML = el.localName;
+
+        link.setAttribute("href", `/`);
+
+        link.appendChild(leftBox);
+        link.appendChild(rightBox);
+        li.appendChild(link);
         searchUl.appendChild(li);
     })
 }
@@ -25,14 +62,15 @@ const loadData = (word) => {
         data.word = word;
         console.log(data); // {word = "축구"}
 
-
-        fetch(cache, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json;",
-            },
-            body: JSON.stringify(data),
-        })
+        fetch(cache,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json;",
+                },
+                body: JSON.stringify(data),
+            }
+        )
             .then((res) => res.json())
             .then((data) => {
                 console.log(data);

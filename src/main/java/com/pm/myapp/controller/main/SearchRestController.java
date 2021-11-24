@@ -32,7 +32,7 @@ public class SearchRestController {
     // 검색어 자동완성
     @PostMapping(
             value = "/{word}",
-            produces = "application/text; charset=utf8"
+            produces = "application/text; charset=utf8" // 설정하지 않으면 한글이 깨짐
     )
     public String getContainsWord(
             @RequestBody String json
@@ -40,20 +40,20 @@ public class SearchRestController {
         log.debug("getContainsWord() invoked.");
         log.info("json: {}", json);
 
+        // JSON 데이터 변환 Gson
         Gson gson = new Gson();
         SearchWordDTO searchWord = new SearchWordDTO();
 
+        // JSON -> String
         JsonElement element = JsonParser.parseString(json);
-
         String word = element.getAsJsonObject().get("word").getAsString();
+
         searchWord.setWord(word);
 
-        log.info("searchWord: {}", searchWord);
-
         List<PartyVO> list = this.service.getContainsWord(searchWord);
-
         list.forEach(log::info);
 
+        // list -> JSON 변환
         String serializeString = gson.toJson(list);
         log.info("serializeString: {}", serializeString);
 

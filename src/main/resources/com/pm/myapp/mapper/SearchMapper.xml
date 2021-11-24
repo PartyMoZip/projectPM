@@ -19,7 +19,16 @@
     <!-- 검색어 자동완성 -->
     <select id="getContainsWord" resultType="com.pm.myapp.domain.PartyVO">
 
-        SELECT *
+        SELECT partycode,
+               partyname,
+               partyscore,
+               createdate,
+               logopic,
+               coverpic,
+               partyprofile,
+               partybanned,
+               localname,
+               hobbyname
         FROM (SELECT p.partycode,
                      p.partyname,
                      p.partyscore,

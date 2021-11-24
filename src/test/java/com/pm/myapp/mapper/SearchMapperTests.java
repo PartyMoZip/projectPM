@@ -41,7 +41,7 @@ public class SearchMapperTests {
         log.info("testGetContainsWord() invoked.");
 
         SearchWordDTO searchWord = new SearchWordDTO();
-        searchWord.setWord("축구");
+        searchWord.setWord("행복");
 
         List<PartyVO> list = this.mapper.getContainsWord(searchWord);
         list.forEach(log::info);

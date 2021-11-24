@@ -77,7 +77,9 @@
                         </button>
                     </div>
                     <div class="search-box hide">
-                        <ul class="search-ul"></ul>
+                        <ul class="search-ul p-0">
+               
+                        </ul>
                     </div>
                 </form>
             </div>
