@@ -72,9 +72,9 @@ public class SearchController {
     // } // showPartyList
 
     // 카테고리 선택
-    @GetMapping("/searchList")
+    @GetMapping("/list")
     public String selectCategory(Criteria cri, SearchWordDTO searchWordDTO, Model model) {
-        log.info("searchList() invoked.");
+        log.info("search list() invoked.");
 
         // Criteria 초기화
         cri.setAmount(9);
@@ -139,7 +139,7 @@ public class SearchController {
         model.addAttribute("list", list);
         model.addAttribute("pageMaker", pageDTO);
 
-        return "/search/searchList";
+        return "search";
 
     } // selectCategory
 

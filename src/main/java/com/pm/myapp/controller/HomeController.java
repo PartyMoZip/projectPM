@@ -1,11 +1,9 @@
 package com.pm.myapp.controller;
 
 import com.pm.myapp.controller.join.LoginController;
-import com.pm.myapp.domain.MyPartyVO;
 import com.pm.myapp.domain.PartyVO;
 import com.pm.myapp.domain.UserDTO;
 import com.pm.myapp.service.main.UserService;
-import com.pm.myapp.service.partyfm.MyPartyService;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
@@ -35,18 +33,20 @@ public class HomeController {
         HttpSession session = req.getSession();
         log.info("\t+ session : {}", session.getAttribute(LoginController.authKey));
 
+        List<PartyVO> list;
+
         if (session.getAttribute(LoginController.authKey) != null && session != null) {
 
             UserDTO dto = (UserDTO) session.getAttribute(LoginController.authKey);
 
-            List<PartyVO> list = this.service.getMyPartyList(dto.getEmail());
+            list = this.service.getMyPartyList(dto.getEmail());
 
-            model.addAttribute("list", list);
         } else {
-            List<PartyVO> list = this.service.getMyPartyList("");
-
-            model.addAttribute("list", list);
+            list = this.service.getMyPartyList("");
         } // if-else
+
+        if (list.size() != 0)
+            model.addAttribute("list", list);
 
         return "index";
     }

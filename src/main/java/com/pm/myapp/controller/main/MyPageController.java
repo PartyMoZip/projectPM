@@ -40,10 +40,13 @@ public class MyPageController {
         List<PartyVO> list = this.service.getMyPartyList(dto.getEmail());
         log.info("list.size() :{}", list.size());
 
-        if (list.size() != 0) {
-            model.addAttribute("list", list);
+        // 아직 가입한 파티가 없을 때
+        if (list.size() == 0) {
+            list = this.service.getMyPartyList("");
         } // if
 
+        model.addAttribute("list", list);
+        
         return "/mypage";
     } // showMyPage
 
