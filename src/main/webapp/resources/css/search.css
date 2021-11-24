@@ -24,9 +24,16 @@
 .dropdown-item:hover {
     background-color: var(--primary-color);
     color: var(--primary-color-text);
-
 }
 
 .dropdown-search:focus {
     outline: none;
+}
+
+.menu-hobby{
+    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
+}
+
+.menu-local{
+    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
 }
