@@ -50,7 +50,7 @@
                             </c:otherwise>
                         </c:choose>
                     </h4>
-                    <input type="hidden" class="wordInput" name="word" value="${searchWord}">
+                    <input type="hidden" class="word-input" name="word" value="${searchWord}">
                     <div class="btn-group">
                         <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
                                 aria-expanded="false">
