@@ -169,7 +169,7 @@
 <script src="${pageContext.request.contextPath}/resources/js/swiper.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/search.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/autocomplete.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/color.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/mainpage.js"></script>
 
 </body>
 </html>
