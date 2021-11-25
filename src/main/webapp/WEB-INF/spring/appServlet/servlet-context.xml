@@ -48,6 +48,7 @@
 
 	<beans:bean id = "LoginInterceptor" class="com.pm.myapp.interceptor.LoginInterceptor"/>
 	<beans:bean id = "AuthInterceptor" class="com.pm.myapp.interceptor.AuthInterceptor"/>
+	<beans:bean id = "PartyInterceptor" class="com.pm.myapp.interceptor.PartyInterceptor"/>
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/login/doLogin" />
@@ -57,9 +58,21 @@
 
 		<mvc:interceptor>
 			<mvc:mapping path="/my/**"/>
+			<mvc:mapping path="/party/**"/>
+			<mvc:mapping path="/partyfunc/**"/>
+			<mvc:mapping path="/partyphoto/**"/>
+			<mvc:mapping path="/partyfree/**"/>
 			<beans:ref bean="AuthInterceptor" />
 		</mvc:interceptor>
 
+		<mvc:interceptor>
+			<mvc:mapping path="/party/**"/>
+			<mvc:mapping path="/partyfunc/**"/>
+			<mvc:mapping path="/partyphoto/**"/>
+			<mvc:mapping path="/partyfree/**"/>
+			<mvc:exclude-mapping path="/party/editparty" />
+			<beans:ref bean="PartyInterceptor" />
+		</mvc:interceptor>
 
 	</mvc:interceptors>
 	

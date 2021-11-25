@@ -10,7 +10,18 @@
 	<script type="text/javascript">
 		var webSocket = {
 			init: function(param) {
+				// 2) /chat라는 url 을 담은 Object를 받고 웹소켓의 url로 정해줌
+				console.log(param);
+				// Object object
+				console.log('param : ' + param);
+				// {url : '/chat'}
 				this._url = param.url;
+				console.log('param.url : ' + param.url);
+				// this.url = /chat
+				console.log('${param}');
+				// {bang_id=aa}
+				// ${param.bang_id} = aa
+
 				this._initSocket();
 			},
 			sendChat: function() {
@@ -18,6 +29,7 @@
 				$('#message').val('');
 			},
 			sendEnter: function() {
+				// 4) 입장 함수 시작
 				this._sendMessage('${param.bang_id}', 'CMD_ENTER', $('#message').val());
 				$('#message').val('');
 			},
@@ -43,25 +55,44 @@
 				this._socket.close();
 			},
 			_initSocket: function() {
-				this._socket = new SockJS(this._url);
-				this._socket.onopen = function(evt) {
+				// 3) socket에 url을 인자로 받는 SockJS 객체 형성
+				this._socket = new SockJS(this._url); // handshake
+				this._socket.onopen = function(evt) { // handshake 완료
+					console.log(evt);
+					// type : open
+					// 열리면 webSocket의 sendEnter 메서드 실행
 					webSocket.sendEnter();
 				};
-				this._socket.onmessage = function(evt) {
-					webSocket.receiveMessage(JSON.parse(evt.data));
+				// 7) chatHandler에서 보낸 {"msg":"5bx2ikig님이 입장 했습니다.","bang_id":"aa","cmd":"CMD_ENTER"} 받음
+				this._socket.onmessage = function(evt) { // socket에서 정보를 수신했을 때 실행됨
+					console.log('evt.data : ' + evt.data);
+					webSocket.receiveMessage(JSON.parse(evt.data))
+
 				};
 				this._socket.onclose = function(evt) {
 					webSocket.closeMessage(JSON.parse(evt.data));
 				}
 			},
 			_sendMessage: function(bang_id, cmd, msg) {
+				// 5) 방 아이디 , 커맨드(명령), 메세지 가져옴
+				console.log("bang_id : "+ bang_id);
+				// 방 아이디 aa
+				console.log("cmd : "+ cmd);
+				// 커맨드 CMD_ENTER
+				console.log("msg : "+ msg);
+				// msg 공백
 				var msgData = {
 						bang_id : bang_id,
 						cmd : cmd,
 						msg : msg
 				};
+				// 제이슨 데이터를 스트링화 시킴
 				var jsonData = JSON.stringify(msgData);
 				this._socket.send(jsonData);
+				console.log('jsonData : ' + jsonData);
+				// payload 로 보내면 채팅핸들러가 받음
+
+				// 6) chatHandler에서 세션과 비교하며 전달메세지를 뿌릴 작업을 함
 			}
 		};
 	</script>	
@@ -69,6 +100,7 @@
         $(window).on('load', function () {
 			webSocket.init({ url: '<c:url value="/chat" />' });	
 		});
+		// 1) 페이지 로딩 전에 웹소켓 초기 세팅 시작
 	</script>
 </head>
 <body>
