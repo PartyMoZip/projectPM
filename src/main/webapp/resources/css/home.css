@@ -1,4 +1,5 @@
 @import "global.css";
+@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
 
 /*캐러셀*/
 .carousel-indicators .active {
@@ -61,23 +62,23 @@
     padding: 14px 24px;
 }
 
-.search-ul a{
+.search-ul a {
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.search-ul li:last-child{
+.search-ul li:last-child {
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
 }
 
-.search-ul li:hover{
+.search-ul li:hover {
     background-color: #DEFDBE;
 }
 
-.search-ul .left-box{
+.search-ul .left-box {
     display: flex;
     align-items: center;
 }
@@ -87,18 +88,18 @@
     height: 34px;
 }
 
-.thumb-box img{
+.thumb-box img {
     width: 100%;
     display: block;
     height: 100%;
 }
 
-.left-box span{
+.left-box span {
     text-decoration: none;
-    color:var(--primary-text-color) !important;
+    color: var(--primary-text-color) !important;
 }
 
-.right-box span:first-child{
+.right-box span:first-child {
     margin-right: 5px;
 }
 
@@ -184,4 +185,13 @@
     width: 100%;
     /*height: 100%;*/
     object-fit: cover;
+}
+
+.swiper-item{
+
+}
+
+.swiper-item span {
+    font-family: 'Do Hyeon', sans-serif;
+    font-size: 2.5rem;
 }

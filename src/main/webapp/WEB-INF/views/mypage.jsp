@@ -29,7 +29,7 @@
 
         <%-- 수정 필요 --%>
         <c:choose>
-            <c:when test="${list != null}">
+            <c:when test="${list.size() != 0}">
                 <c:forEach items="${list}" var="party">
                     <div class="party-container container-sm d-flex justify-content-between align-items-center shadow-sm">
                         <h5>

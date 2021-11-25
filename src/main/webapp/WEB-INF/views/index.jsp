@@ -65,21 +65,19 @@
         <%--검색창--%>
         <div class="container-sm d-flex justify-content-center align-items-center">
             <div class="search-wrapper">
-                <form action="/search/searchList" method="get" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+                <form action="/search/list" method="get" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
                     <div class="container-sm p-0">
                         <input type="text" name="word" id="search-bar" class="form-control"
                                placeholder="찾고 있는 파티를 입력해보세요."
                                aria-label="Search">
                         <button class="search-btn">
-                    <span>
-                        <i class="fas fa-search"></i>
-                    </span>
+                            <span>
+                                <i class="fas fa-search"></i>
+                            </span>
                         </button>
                     </div>
                     <div class="search-box hide">
-                        <ul class="search-ul p-0">
-               
-                        </ul>
+                        <ul class="search-ul p-0"></ul>
                     </div>
                 </form>
             </div>
@@ -91,7 +89,7 @@
         <div class="album py-5">
             <div class="header">
                 <c:choose>
-                    <c:when test="${list != null && sessionScope.__AUTH__.email != null}">
+                    <c:when test="${list != null && sessionScope.__AUTH__.email != null && result == true}">
                         <h4>나의 파티</h4>
 
                         <span class="icon">
@@ -139,15 +137,15 @@
             </div>
             <div class="swiper mySwiper">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide" style="background-color: darkcyan">축구</div>
-                    <div class="swiper-slide" style="background-color:tomato">야구</div>
-                    <div class="swiper-slide" style="background-color:bisque">컴퓨터게임</div>
-                    <div class="swiper-slide" style="background-color: violet">등산</div>
-                    <div class="swiper-slide" style="background-color: dodgerblue">공부</div>
-                    <div class="swiper-slide" style="background-color: mediumaquamarine">당구</div>
-                    <div class="swiper-slide" style="background-color: green">보드게임</div>
-                    <div class="swiper-slide" style="background-color: cadetblue">DIY</div>
-                    <div class="swiper-slide" style="background-color: peru">요리</div>
+                    <div class="swiper-slide swiper-item"><span>축구</span></div>
+                    <div class="swiper-slide swiper-item"><span>야구</span></div>
+                    <div class="swiper-slide swiper-item"><span>컴퓨터게임</span></div>
+                    <div class="swiper-slide swiper-item"><span>등산</span></div>
+                    <div class="swiper-slide swiper-item"><span>공부</span></div>
+                    <div class="swiper-slide swiper-item"><span>당구</span></div>
+                    <div class="swiper-slide swiper-item"><span>보드게임</span></div>
+                    <div class="swiper-slide swiper-item"><span>DIY</span></div>
+                    <div class="swiper-slide swiper-item"><span>요리</span></div>
                 </div>
                 <div class="swiper-pagination"></div>
             </div>
@@ -171,6 +169,7 @@
 <script src="${pageContext.request.contextPath}/resources/js/swiper.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/search.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/autocomplete.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/color.js"></script>
 
 </body>
 </html>

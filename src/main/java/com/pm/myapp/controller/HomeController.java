@@ -34,19 +34,29 @@ public class HomeController {
         log.info("\t+ session : {}", session.getAttribute(LoginController.authKey));
 
         List<PartyVO> list;
+        boolean result = false;
 
+        // 로그인 했을 경우
         if (session.getAttribute(LoginController.authKey) != null && session != null) {
 
             UserDTO dto = (UserDTO) session.getAttribute(LoginController.authKey);
 
             list = this.service.getMyPartyList(dto.getEmail());
+            result = true;
+
+            // 가입한 파티가 없을 경우
+            if (list.size() == 0) {
+                list = this.service.getMyPartyList("");
+                result = false;
+            } // if
 
         } else {
+            // 로그인 하지 않았을 경우
             list = this.service.getMyPartyList("");
         } // if-else
 
-        if (list.size() != 0)
-            model.addAttribute("list", list);
+        model.addAttribute("result", result);
+        model.addAttribute("list", list);
 
         return "index";
     }
