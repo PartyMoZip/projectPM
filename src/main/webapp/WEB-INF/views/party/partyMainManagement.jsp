@@ -135,7 +135,7 @@
 		integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
 		crossorigin="anonymous"></script>
 	<!-- 제이쿼리 -->
-	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<!-- 스윗알러트 -->
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<script
