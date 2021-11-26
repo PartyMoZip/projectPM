@@ -32,6 +32,7 @@ public class PartyFuncController {
 	public String view_chat(
 			HttpServletRequest request,
 			HttpServletResponse response,
+			Integer partyCode,
 			Model model) throws Exception {
 
 		return "/chat/view_chat";
