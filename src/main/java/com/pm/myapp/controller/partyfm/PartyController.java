@@ -96,7 +96,7 @@ public class PartyController {
 		model.addAttribute("__PARTY__",party);
 		
 		return "/party/partyMain";
-		
+
 	} // showPartyMain
 	
 	// 파티 관리 페이지 [작동]

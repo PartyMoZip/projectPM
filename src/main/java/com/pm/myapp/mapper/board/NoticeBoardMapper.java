@@ -18,8 +18,11 @@ public interface NoticeBoardMapper {
     // 공지 게시판 상세보기
     public abstract NoticeBoardVO readNoticeBoard(Integer nrefer);
 
-    // 자유게시판 총 게시물 개수 반환
+    // 공지 게시판 총 게시물 개수 반환
     public abstract Integer getTotalCount();
+
+    // 공지 게시판 검색 게시물 개수
+    public abstract Integer getTotalSearchCount(String option, String keyword);
 
     // 공지 게시판 글쓰기
     public abstract Integer writeNoticeBoard(NoticeBoardDTO noticeBoard);
@@ -33,5 +36,5 @@ public interface NoticeBoardMapper {
     // 공지 게시판 삭제
     public abstract int deleteNoticeBoard(Integer nrefer);
 
-
+    //
 }

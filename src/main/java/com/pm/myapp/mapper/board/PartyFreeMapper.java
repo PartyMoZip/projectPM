@@ -29,6 +29,9 @@ public interface PartyFreeMapper {
     // 파티 내 자유 게시판  개수 반환
     public abstract Integer getTotalCount();
 
+    // 파티 내 자유 게시판 검색 게시물 개수
+    public abstract  Integer getTotalSearchCount(String option, String keyword);
+
     // 8. 댓글 목록
     public abstract List<PartyFreeReplyVO> getCommentListPaging(@Param("pfrefer")Integer pfrefer, @Param("partycode") Integer partycode, @Param("cri") Criteria cri);
 

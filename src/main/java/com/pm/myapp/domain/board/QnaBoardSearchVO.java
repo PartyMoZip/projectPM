@@ -6,6 +6,7 @@ public class QnaBoardSearchVO {
 
     private Integer qrefer;
     private String qsubject;
+    private String qcontent;
     private Date qdate;
     private String email;
     private String nickname;

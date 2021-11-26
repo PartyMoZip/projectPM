@@ -27,10 +27,11 @@ public class FreeBoardServiceImpl implements FreeBoardService, InitializingBean,
     @Override
     public List<FreeBoardListVO> getListPerPage(Criteria cri) {
         log.debug("getListPerPage({}) invoked.", cri);
-        List<FreeBoardListVO> allBoards = this.mapper.getListWithPaging(cri);
-        log.info("\t + allBoards : {}", allBoards);
 
-        return allBoards;
+        List<FreeBoardListVO> freeBoard = this.mapper.getListWithPaging(cri);
+        log.info("\t + allBoards : {}", freeBoard);
+
+        return freeBoard;
     } // getListPerPage
 
     // 자유 게시판 상세보기
@@ -79,11 +80,12 @@ public class FreeBoardServiceImpl implements FreeBoardService, InitializingBean,
 
     // 자유 게시글 검색
     @Override
-    public List<FreeBoardSearchVO> search(String searchOption, String keyword, Criteria cri) {
-        String searchOption_mod = "f." + searchOption;
+    public List<FreeBoardSearchVO> search(String option, String keyword, Criteria cri) {
+        String searchOption_mod = "f." + option;
         String keyword_mod = "%"+keyword+"%";
 
         List<FreeBoardSearchVO> searchList = this.mapper.searchFreeBoard(searchOption_mod, keyword_mod, cri);
+
 
         return searchList;
     } // search
@@ -95,6 +97,14 @@ public class FreeBoardServiceImpl implements FreeBoardService, InitializingBean,
 
         return this.mapper.getTotalCount();
     } // getTotal
+
+    // 검색 결과 게시물 개수 반환
+    @Override
+    public Integer getTotalSearch(String option, String keyword) {
+        log.debug("getTotalSearch() invoked.");
+
+        return this.mapper.getTotalSearchCount(option, keyword);
+    } // getTotalSearch
 
     // 댓글 목록
     @Override

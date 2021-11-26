@@ -20,6 +20,16 @@ public class QnaBoardServiceImpl implements QnaBoardService {
     @Setter(onMethod_=@Autowired)
     private QnaBoardMapper mapper;
 
+    // 문의 게시판 목록 - 페이징 처리
+    @Override
+    public List<QnaBoardListVO> getListPerPage(Criteria cri) {
+        log.debug("getListPerPage({}) invoked.", cri);
+        List<QnaBoardListVO> qnaBoard = this.mapper.getListWithPaging(cri);
+        log.info("\t + allBoards : {}", qnaBoard);
+
+        return qnaBoard;
+    }
+    
     // 글쓰기
     @Override
     public boolean writeBoard(QnaBoardDTO qnaBoard) {
@@ -60,30 +70,31 @@ public class QnaBoardServiceImpl implements QnaBoardService {
         return qnaBoard;
     }
 
+    // 문의 게시판 검색
     @Override
-    public List<QnaBoardSearchVO> search(String searchOption, String keyword, Criteria cri) {
+    public List<QnaBoardSearchVO> search(String option, String keyword, Criteria cri) {
 
-        String searchOption_mod = "f." + searchOption;
+        String searchOption_mod = "f." + option;
         String keyword_mod = "%"+keyword+"%";
         List<QnaBoardSearchVO> searchList = this.mapper.searchQnaBoard(searchOption_mod, keyword_mod, cri);
 
         return searchList;
     }
 
-    @Override
-    public List<QnaBoardListVO> getListPerPage(Criteria cri) {
-        log.debug("getListPerPage({}) invoked.", cri);
-        List<QnaBoardListVO> QnaBoard = this.mapper.getListWithPaging(cri);
-        log.info("\t + allBoards : {}", QnaBoard);
-        return null;
-    }
-
+    // 총 게시물 개수 반환
     @Override
     public Integer getTotal() {
         log.debug("getTotal({}) invoked.");
         return this.mapper.getTotalCount();
     }
 
+    // 검색 결과 게시물 개수 반환
+    @Override
+    public Integer getTotalSearch(String option, String keyword) {
+        log.debug("getTotalSearch() invoked.");
+
+        return this.mapper.getTotalSearchCount(option, keyword);
+    }
 
     // 댓글등록
     @Override

@@ -289,6 +289,14 @@
             <scope>provided</scope>
         </dependency>
 
+		<!-- spring-websocket -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-websocket</artifactId>
+		    <version>5.3.13</version>
+		</dependency>
+
+
         <!-- jackson-databind -->
         <!-- 스프링의 컨트롤러 메소드가 뷰의 이름이 아니라, 일반 자바객체(문자열도 포함)를 반환하는 경우
                 스프링이 아래의 변환 라이브러리를 자동으로 찾아서 사용하고, 이 라이브러리를 이용해서

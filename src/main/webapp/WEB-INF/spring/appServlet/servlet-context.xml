@@ -3,7 +3,9 @@
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
+		http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
@@ -29,6 +31,7 @@
 	<context:component-scan base-package="com.pm.myapp.exception" />
 	<context:component-scan base-package="com.pm.myapp.service" />
 	<context:component-scan base-package="com.pm.myapp.interceptor" />
+	<context:component-scan base-package="com.pm.myapp.chat" />
 	<context:component-scan base-package="com.pm.myapp.aws" />
 
 
@@ -63,5 +66,12 @@
 
 
 	</mvc:interceptors>
+	 
+	<beans:bean id="ChattingHandler" class="com.pm.myapp.chat.ChattingHandler"/>
+	
+	<websocket:handlers>
+		<websocket:mapping handler="chattingHandler" path="/chatting"/>
+		<websocket:sockjs></websocket:sockjs>
+	</websocket:handlers>
 
 </beans:beans>

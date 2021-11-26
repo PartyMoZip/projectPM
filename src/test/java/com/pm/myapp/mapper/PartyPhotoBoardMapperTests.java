@@ -14,6 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.pm.myapp.domain.Criteria;
 import com.pm.myapp.domain.ReplyCriteria;
+import com.pm.myapp.domain.board.HeartDTO;
 import com.pm.myapp.domain.board.PartyPhotoDTO;
 import com.pm.myapp.domain.board.PartyPhotoReDTO;
 import com.pm.myapp.mapper.board.PartyPhotoMapper;
@@ -63,6 +64,18 @@ public class PartyPhotoBoardMapperTests {
 	} // testGetList
 	
 	@Test
+	public void testReadIt() { // TEST OK
+		log.debug("testReadIt() invoked.");
+		
+		int partyCode = 4;
+		int prefer = 1;
+		
+		Integer result = this.mapper.readIt(prefer, partyCode);
+		log.info("\t+ result : {}",result);
+		
+	} // testReadIt
+	
+	@Test
 	public void testGetDetail() { // TEST OK
 		log.debug("testGetDetail() invoked.");
 		
@@ -109,25 +122,37 @@ public class PartyPhotoBoardMapperTests {
 		log.debug("testWritePhotoBoard() invoked.");
 		
 		PartyPhotoDTO dto = new PartyPhotoDTO();
-		dto.setPartycode(1);
-		
-		// 파티별 게시판 최대 MaxRefer 찾기
-		Integer refer = this.mapper.maxRefer(dto);
-		log.info("\t+ refer : {}", refer);
-		Integer newRefer = refer + 1;
-		dto.setPrefer(newRefer);
-		
+		dto.setPartycode(4);		
 		dto.setPsubject("제목");
 		dto.setPcontent("내용");
-		dto.setEmail("test1@test.com");		
+		dto.setEmail("test8@test.com");		
 		
-		int count = this.mapper.writePhotoBoard(dto);
-		log.info("\t+ count : {}",count);
+		int partyCode = dto.getPartycode();
+		
+		String last_seq = "SEQ_PARTYPHOTOBOARD"  + "_" + partyCode;
+		Integer lastNumber = this.mapper.checkLastSeq(last_seq);
+		log.info("\t+ lastNumber : {}", lastNumber);
+		
+		if(lastNumber==null) {
+			
+			String create_seq = "create sequence SEQ_PARTYPHOTOBOARD"  + "_" + partyCode + " START WITH 1 INCREMENT BY 1 Nocache";
+			this.mapper.createSeq(create_seq);
+			
+		} // if
+		
+		String read_seq = "SELECT SEQ_PARTYPHOTOBOARD"  + "_" + partyCode + "." + "NEXTVAL " + "FROM DUAL";
+		Integer seqNum = this.mapper.getNextVal(read_seq);
+		
+		dto.setPrefer(seqNum);
+		
+		// 게시글 등록
+		Integer affectedLine = this.mapper.writePhotoBoard(dto);
+		log.info("\t+ affectedLine : {}", affectedLine);
 		
 		Map<String, Object> imageInfo = new HashMap<>();
-		imageInfo.put("prefer", 2);
+		imageInfo.put("prefer", seqNum);
 		imageInfo.put("fileLocation", "test");
-		imageInfo.put("partyCode", 1);
+		imageInfo.put("partyCode", 4);
 		
 		Integer result = this.mapper.registerImage(imageInfo);
 		log.info("\t+ result : {}",result);
@@ -198,7 +223,7 @@ public class PartyPhotoBoardMapperTests {
 		} // if
 		
 		String read_seq = "SELECT SEQ_PARTYPHOTORE"  + "_" + partyCode + "_" + prefer + "." + "NEXTVAL " + "FROM DUAL";
-		Integer seqNum = this.mapper.getMaxPrerefer(read_seq);
+		Integer seqNum = this.mapper.getNextVal(read_seq);
 		
 		dto.setPrerefer(seqNum);
 		
@@ -239,6 +264,40 @@ public class PartyPhotoBoardMapperTests {
 		log.info("\t+ affectedLine : {}", affectedLine);
 		
 	} // testDeletePhotoBoardReply
+	
+	@Test
+	public void testHeart() { // TEST OK
+		log.debug("testHeart() invoked.");
+		
+		HeartDTO hdto = new HeartDTO();
+		
+		hdto.setPartyCode(1);
+		hdto.setPrefer(7);
+		hdto.setEmail("test10@test.com");
+		
+		Integer currHit = this.mapper.checkPhotoHeart(hdto);
+		
+		if(currHit==null) {
+			
+			Integer insertHeart = this.mapper.makeHeart(hdto);
+			log.info("\t+ insertHeart : {}", insertHeart);
+			
+			currHit = this.mapper.checkPhotoHeart(hdto);
+			
+		} // if
+		
+		Integer nextHit = 0;
+		
+		if(currHit==0) {
+			nextHit = this.mapper.upHeart(hdto);
+		}else {
+			nextHit = this.mapper.downHeart(hdto);
+		} // if-else
+		
+		Integer affectedHeart = this.mapper.checkPhotoHeart(hdto);
+		log.info("\t+ affectedHeart : {}", affectedHeart);
+		
+	} // testHeart
 	
 	
 	@After

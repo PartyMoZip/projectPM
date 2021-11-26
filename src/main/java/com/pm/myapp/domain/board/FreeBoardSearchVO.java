@@ -10,6 +10,7 @@ public class FreeBoardSearchVO {
 
     private Integer frefer;
     private String fsubject;
+    private String fcontent;
     private Date fdate;
     private String email;
     private String nickname;
