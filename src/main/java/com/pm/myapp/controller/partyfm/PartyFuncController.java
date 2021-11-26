@@ -32,9 +32,8 @@ public class PartyFuncController {
 
 	@GetMapping("/calendar")
 	public String list() {
-
 		return "fullcalendar/fullcalendar";
-	}
+	}//list
 
 
 	@ResponseBody
@@ -51,9 +50,9 @@ public class PartyFuncController {
 			calendarDto.setEnd(endDate);
 
 			service.insertCal(calendarDto);
-		}
+		} //for
 		return null;
-	}
+	} //insertCal
 
 	//GMT 9시간 빼기 메소드
 	public Date formatDate(Date date) throws ParseException {
@@ -62,7 +61,7 @@ public class PartyFuncController {
 		String format = timeFormat.format(cal.getTime());
 		Date newFormat = timeFormat.parse(format);
 		return newFormat;
-	}
+	} //formatDate
 
 
 

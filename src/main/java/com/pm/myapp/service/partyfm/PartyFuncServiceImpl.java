@@ -21,6 +21,6 @@ public class PartyFuncServiceImpl implements PartyFuncService{
     @Override
     public Integer insertCal(CalendarDTO calendarDto) {
         return mapper.insertCal(calendarDto);
-    }
+    } //insertCal
 
 } //end class

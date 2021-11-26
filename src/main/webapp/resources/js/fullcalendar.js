@@ -40,6 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function allSave() {
+    alert("저장되었습니다");
     let allEvent = calendar.getEvents();
     //console.log(allEvent);
     let events = new Array();
