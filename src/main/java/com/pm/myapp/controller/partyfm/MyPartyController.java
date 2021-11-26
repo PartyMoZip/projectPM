@@ -44,7 +44,7 @@ public class MyPartyController {
 	
 	// 내 파티목록 조회
 	@GetMapping("/getMyPartyList")
-	public void getMyPartyList(@ModelAttribute("cri") Criteria cri,String email, Model model) {
+	public void getMyPartyList(@ModelAttribute("cri") Criteria cri, String email, Model model) {
 		log.debug("getMyPartyList() invoked.");
 		
 		MyPartyListVO party = this.service.getPartyList(email,cri);

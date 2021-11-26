@@ -58,16 +58,23 @@ public class FreeBoardController {
 
 	} // showFreeDetail
 
-	// 자유 게시판 글쓰기
-	@PostMapping("/writeFreeBoard")
+	// 자유 게시판 글쓰기 완료
+	@PostMapping("/writeFreeBoardOk")
 	public String writeFreeBoard(FreeBoardDTO writeFB, RedirectAttributes rttrs) {
 		log.debug("writeFreeBoard({}) invoked.", writeFB);
-
 		boolean result = this.service.writeBoard(writeFB);
 		rttrs.addAttribute("result", result);
 
-		return "redirect:/freeboard/boardWrite";
+		return "redirect:/freeboard/boardList";
 	} // writeFreeBoard
+
+    // 자유 게시판 글 쓰기 화면
+    @GetMapping("/writeFreeBoardView")
+    public String writeFreeBoardView(@ModelAttribute("cri") Criteria cri) {
+        log.debug("writeFreeBoardView() invoked.");
+
+        return "/freeboard/boardWrite";
+    }
 
 	// 자유 게시판 수정 view
 	@GetMapping("/editFreeBoardView")
@@ -87,7 +94,7 @@ public class FreeBoardController {
 		log.debug("editFreeBoard({}) invoked.", freeBoard);
 
 		boolean result = this.service.editBoard(freeBoard);
-		rttrs.addAttribute("resultmod", result);
+		rttrs.addAttribute("result", result);
 
 		return "redirect:/freeboard/showFreeDetail";
 
@@ -129,7 +136,7 @@ public class FreeBoardController {
 		log.info("\t + list size : {}", list.size());
 		model.addAttribute("list", list);
 
-		return "getFreeList";
+        return "redirect:/freeboard/showFreeDetail";
 	} // commentList
 	
 	// 자유 게시판  - 댓글 작성
@@ -140,8 +147,7 @@ public class FreeBoardController {
 		boolean result = this.service.writeReply(freeReply);
 		rttrs.addAttribute("resultWriteComment", result);
 
-		return "getFreeList";
-
+        return "redirect:/freeboard/showFreeDetail";
 	} // writeComment
 	
 	// 자유 게시판  - 댓글 수정
@@ -152,9 +158,8 @@ public class FreeBoardController {
 		boolean result = this.service.editReply(freeReply);
 		rttrs.addAttribute("resultEditComment", result);
 
-		//게시글 상세페이지로 돌아가야되는데 이름 뭔데
-		return "getFreeList";
 
+        return "redirect:/freeboard/showFreeDetail";
 	} // editComment
 	
 	// 자유 게시판  - 댓글 삭제
@@ -165,8 +170,7 @@ public class FreeBoardController {
 		boolean result = this.service.deleteReply(frerefer);
 		rttrs.addAttribute("resultDeleteComment", result);
 
-		return "getFreeList";
-
+        return "redirect:/freeboard/showFreeDetail";
 	} // deleteComment
 
 

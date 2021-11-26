@@ -7,10 +7,10 @@ import java.util.Date;
 @Data
 public class FreeBoardDTO {
 
+    private Integer fRefer;
     private String fSubject;
     private String fContent;
     private String email;
     private String freePhoto;
-    private Integer fRefer;
 
 } // end class

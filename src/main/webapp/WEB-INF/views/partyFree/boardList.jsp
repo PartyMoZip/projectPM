@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/boardList.css"/>
 
 
-    <title>파티모집</title>
+    <title>파티모집 -  파티 자유</title>
 </head>
 <body>
 <%--HEADER--%>
@@ -30,7 +30,7 @@
 <main>
     <div class="all-wrap">
         <nav id="freebar" class="nav nav-pills flex-column flex-sm-row">
-            <a class="flex-sm-fill text-sm-center nav-link active" href="#">자유게시판</a>
+            <a class="flex-sm-fill text-sm-center nav-link active" href="#">파티 - 자유게시판</a>
         </nav>
         <!-- 자유게시판 테이블 시작 -->
         <div class="table-responsive">
@@ -91,7 +91,11 @@
 
         <!-- 버튼 -->
         <div class="d-grid gap-2 d-md-block">
-            <button class="btn btn-primary" type="button">글쓰기</button>
+            <button type="button" class="btn btn-primary btn-sm"
+                    onclick="location.href='/partyfree/writePFreeBoardView'">
+                <i class="fas fa-list-ul"></i>
+                <span>글쓰기</span>
+            </button>
         </div>
         <div id="pagination">
             <form id="paginationForm">
@@ -171,7 +175,7 @@
 <!-- 제이쿼리 -->
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
-<script src="${pageContext.request.contextPath}/resources/js/freeboard.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/board.js"></script>
 </body>
 
 </html>

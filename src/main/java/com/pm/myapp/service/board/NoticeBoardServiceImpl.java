@@ -26,13 +26,13 @@ public class NoticeBoardServiceImpl implements NoticeBoardService{
 
     // 공지 게시판 목록 - 페이징 처리
     @Override
-    public List<NoticeBoardListVO> getListPerPage(Criteria cri) {
+    public List<NoticeBoardListVO> getListPerPage(String searchWord, Integer option, Criteria cri) {
         log.debug("getListPerPage({}) invoked.",cri);
 
-        List<NoticeBoardListVO> allBoards = this.mapper.getListWithPaging(cri);
-        log.info("\t + allBoards : {}", allBoards);
+        List<NoticeBoardListVO> noticeBoard = this.mapper.getListWithPaging(searchWord, option, cri);
+        log.info("\t + noticeBaord : {}", noticeBoard);
 
-        return allBoards;
+        return noticeBoard;
     }
 
     // 공지 게시판 상세보기
@@ -50,7 +50,8 @@ public class NoticeBoardServiceImpl implements NoticeBoardService{
     public boolean writeBoard(NoticeBoardDTO writeNB) {
         log.debug("writeBoard({}) invoked.", writeNB);
 
-        int affectedRows = this.mapper.writeNoticeBoard(writeNB);
+        int affectedRows = this.
+                mapper.writeNoticeBoard(writeNB);
         log.debug("\t + affectedRows : {}", affectedRows);
 
         return (affectedRows == 1);
@@ -58,13 +59,14 @@ public class NoticeBoardServiceImpl implements NoticeBoardService{
 
     // 공지 게시판 글수정
     @Override
-    public boolean editBoard(NoticeBoardDTO noticeBoard) {
+    public void editBoard(NoticeBoardDTO noticeBoard) {
         log.debug("editBoard({}) invoked.", noticeBoard);
 
-        int affectedRows = this.mapper.editNoticeBoard(noticeBoard);
-        log.info("\t + affectedRows : {}", affectedRows);
+       /* int affectedRows = this.*/
+                mapper.editNoticeBoard(noticeBoard);
+        /*log.info("\t + affectedRows : {}", affectedRows);*/
 
-        return (affectedRows == 1);
+
     } // modify
 
     // 글삭제
@@ -90,10 +92,10 @@ public class NoticeBoardServiceImpl implements NoticeBoardService{
 
     // 총 게시물 개수 반환
     @Override
-    public Integer getTotal() {
+    public Integer getTotal(String searchWord, Integer option) {
         log.debug("getTotal({}) invoked.");
 
-        return this.mapper.getTotalCount();
+        return this.mapper.getTotalCount(searchWord, option);
     }
 
     // 검색 결과 게시물 개수 반환

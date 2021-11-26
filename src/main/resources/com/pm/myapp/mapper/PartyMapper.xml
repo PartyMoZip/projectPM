@@ -4,6 +4,16 @@
 
 <mapper namespace="com.pm.myapp.mapper.PartyMapper">
     
+    <select id="checkIt" resultType="com.pm.myapp.domain.PartyMemberCheckVO">
+    
+    SELECT PARTYCODE
+    FROM PARTYUSER
+    <![CDATA[ 
+    	WHERE EMAIL = #{email} AND AUTHCODE > 0
+    ]]>
+
+    </select>
+    
     <select id="getInfo" resultType="com.pm.myapp.domain.PartyVO">
     
     SELECT P.PARTYCODE, P.PARTYNAME, P.PARTYSCORE, P.CREATEDATE, P.LOGOPIC,

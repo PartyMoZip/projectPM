@@ -1,10 +1,17 @@
 package com.pm.myapp.controller.partyfm;
 
+
 import com.pm.myapp.domain.CalendarDTO;
+import org.springframework.web.bind.annotation.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.pm.myapp.service.partyfm.PartyFuncService;
 
@@ -26,6 +33,7 @@ public class PartyFuncController {
 	
 	@Setter(onMethod_= {@Autowired})
 	private PartyFuncService service;
+
 
 	SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
 	Calendar cal = Calendar.getInstance();
@@ -63,6 +71,18 @@ public class PartyFuncController {
 		return newFormat;
 	} //formatDate
 
+  // 채팅방 입장
+	@GetMapping("/partychat")
+	public String view_chat(
+			HttpServletRequest request,
+			HttpServletResponse response,
+			Integer partyCode,
+			Model model) throws Exception {
+
+		return "/chat/view_chat";
+		
+	} // view_chat
 
 
 } //end class
+
