@@ -21,7 +21,7 @@
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
 
-    <title>파티모집 - 파티 자유</title>
+    <title>파티모집 - 공지</title>
 </head>
 <body>
 <%--HEADER--%>
@@ -31,15 +31,14 @@
         <div class="container-sm">
             <ul class="nav nav-pills">
                 <li class="nav-item"><a class="nav-link active"
-                                        aria-current="page" href="#">파티 자유게시판</a></li>
+                                        aria-current="page" href="#">공지게시판</a></li>
             </ul>
-            <input hidden id="boardName" value="lost">
             <div class="table-Detail">
 
                 <!--product details-->
                 <div class="content">
                     <div class="title_area">
-                        <h5 class="title_text">${boardDetail.pfrefer}</h5>
+                        <h5 class="title_text">${board.NSubject}</h5>
                     </div>
 
                     <div class="info_desc">
@@ -48,30 +47,37 @@
                                  height="50" class="img_thumb">
                         </div>
                         <div class="cover_info">
-                                <span>${boardDetail.pfdate}</span>
-                                <span>조회 ${boardDetail.readnum}</span>
+                            <div>${board.nickname}<br>
+                                <span>${board.NDate}</span>
+                                <span>조회 ${board.readnum}</span>
+                            </div>
                         </div>
                     </div>
                     <hr>
-                    <span style="text-align : left;">${boardDetail.pfcontent}</span>
+                    <span style="text-align : left;">${board.NContent}</span>
                 </div>
                 <div class="container">
                     <div class="container-btnGroup">
+
                         <%--                                        <c:set value="${sessionScope.id}" var="id"/>--%>
                         <%-- <c:if test="${boardDetail.nickname eq nickname}">--%>
                         <button type="button" class="btn btn-primary btn-sm"
-                                onclick="location.href='/partyfree/editPFBoardView?pfrefer=${boardDetail.pfrefer}'">
+                                onclick="location.href='/noticeboard/editNoticeBoardView?nrefer=${board.NRefer}'">
                             <i class="fas fa-pen"></i>
                             <span>수정</span>
                         </button>
-                        <button type="button" class="btn btn-primary btn-sm"
-                                onclick="location.href='/partyfree/deletePFreeBoard?pfrefer=${boardDetail.pfrefer}'">
+
+                        <button type="submit" id="deleteButton" class="btn btn-primary btn-sm"
+                              <%--  onclick="location.href='/noticeboard/deleteNoticeBoard?'"--%>>
+                            <form action="/noticeboard/deleteNoticeBoard" name="deleteButton" method="post">
+                            <input type="hidden" id="nRefer" name="nrefer" value="${board.NRefer}">
                             <i class="fas fa-trash-alt"></i>
                             <span>삭제</span>
+                            </form>
                         </button>
                         <%--  </c:if>--%>
                         <button type="button" class="btn btn-primary btn-sm"
-                                onclick="location.href='/partyfree/getPFreeBoardList?currPage=${cri.currPage}'">
+                                onclick="location.href='/noticeboard/getNoticeBoardList?currPage=${cri.currPage}'">
                             <i class="fas fa-list-ul"></i>
                             <span>목록</span>
                         </button>
@@ -94,5 +100,38 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
 <script src="${pageContext.request.contextPath}/resources/js/board.js"></script>
+<script>
+
+
+    $(document).ready(function () {
+        $('#deleteButton').click(function() {
+
+
+            var formObj=$('form');
+            formObj.attr('method','post');
+            formObj.attr('action','/noticeboard/deleteNoticeBoard');
+
+            formObj.submit();
+
+        }) // click #modifyBtn
+
+
+
+        /*  var msg =
+
+        if (msg != ""){
+            alert(mag);
+        }
+    });
+
+    function deleteConfirm(){
+        if(!confirm("삭제하시겠습니까?")){
+            return false;
+        }else {
+            location.href="/noticeboard/deleteNoticeBoard";
+
+        }*/
+    })
+</script>
 </body>
 </html>

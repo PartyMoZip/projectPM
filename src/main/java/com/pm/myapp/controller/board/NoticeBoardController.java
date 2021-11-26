@@ -1,5 +1,6 @@
 package com.pm.myapp.controller.board;
 
+
 import com.pm.myapp.domain.Criteria;
 import com.pm.myapp.domain.board.NoticeBoardDTO;
 import com.pm.myapp.domain.board.NoticeBoardListVO;
@@ -27,106 +28,114 @@ import java.util.List;
 @Controller
 public class NoticeBoardController {
 
-	@Setter(onMethod_ = { @Autowired })
-	private NoticeBoardService service;
+    @Setter(onMethod_ = { @Autowired })
+    private NoticeBoardService service;
 
-	// 공지 게시판 목록 - 페이징 처리
-	@GetMapping("/getNoticeBoardList")
-	public String getNoticeBoardList(
-			@ModelAttribute("cri") Criteria cri, Model model) {
-		log.debug("getNoticeBoardList({}) invoked.", cri);
-		List<NoticeBoardListVO> list = this.service.getListPerPage(cri);
+    // 공지 게시판 목록 - 페이징 처리
+    @GetMapping("/getNoticeBoardList")
+    public String getNoticeBoardList(
+            @ModelAttribute("searchWord") String searchWord,
+            @ModelAttribute("option") Integer option,
+            @ModelAttribute("cri") Criteria cri, Model model) {
+        log.debug("getNoticeBoardList({}) invoked.", cri);
+        List<NoticeBoardListVO> list = this.service.getListPerPage(searchWord, option, cri);
 
-		log.info("\t + list size : {}", list.size());
-		model.addAttribute("list", list);
+        log.info("\t + list size : {}", list.size());
+        model.addAttribute("list", list);
 
-		// 페이징 처리
-		Integer totalAmount = this.service.getTotal();
-		PageDTO pageDTO = new PageDTO(cri, totalAmount);
-		model.addAttribute("pageMaker", pageDTO);
+        // 페이징 처리
+        Integer totalAmount = this.service.getTotal(searchWord, option);
+        PageDTO pageDTO = new PageDTO(cri, totalAmount);
+        model.addAttribute("pageMaker", pageDTO);
 
-		return "/noticeboard/boardList";
+        return "/noticeboard/boardList";
 
-	} // getNoticeBoardList
+    } // getNoticeBoardList
 
-	// 게시판 상세보기
-	@GetMapping("/showNoticeDetail")
-	public String showNoticeDetail(@ModelAttribute("criteria")Criteria criteria, Integer nrefer, Model model) {
-		log.debug("get({}, {}) invoked.", criteria, nrefer);
+    // 게시판 상세보기
+    @GetMapping("/showNoticeDetail")
+    public void showNoticeDetail(@ModelAttribute("cri")Criteria cri, Integer nrefer, Model model) {
+        log.debug("get({}, {}) invoked.", cri, nrefer);
 
-		NoticeBoardVO board = this.service.getBoardDetail(nrefer);
-		log.info("\t + board : {}", board);
+        NoticeBoardVO board = this.service.getBoardDetail(nrefer);
+        log.info("\t + board : {}", board);
 
-		model.addAttribute("board", board);
+        model.addAttribute("board", board);
 
-		return "noticeboard/boardDetail";
+    }
 
-	}
+    // 공지 게시판 글쓰기 완료
+    @PostMapping("/writeNoticeBoardOk")
+    public String writeNoticeBoard(NoticeBoardDTO noticeBoard, RedirectAttributes rttrs) {
+        log.debug("writeNoticeBoard({}) invoked.", noticeBoard);
+        boolean result = this.service.writeBoard(noticeBoard);
+        rttrs.addAttribute("resultRegister", result);
 
-	// 공지 게시판 글쓰기
-	@PostMapping("/writeNoticeBoard")
-	public String writeNoticeBoard(NoticeBoardDTO noticeBoard, RedirectAttributes rttrs) {
-		log.debug("writeNoticeBoard({}) invoked.", noticeBoard);
+        return "redirect:/noticeboard/getNoticeBoardList";
 
-		boolean result = this.service.writeBoard(noticeBoard);
-		rttrs.addAttribute("resultRegister", result);
+    } // writeNoticeBoard
 
-		return "redirect:/noticeboard/boardWrite";
+    // 공지 게시판 글 쓰기 화면
+    @GetMapping("/writeNoticeBoardView")
+    public String writeNoticeBoardView(@ModelAttribute("cri") Criteria cri) {
+        log.debug("writeNoticeBoardView() invoked.");
 
-	} // writeNoticeBoard
-
-	// 공지 게시판 수정 view
-	@GetMapping("/editNoticeBoardView")
-	public String editNoitceBoardView(@ModelAttribute("cri") Criteria cri, Integer nrefer, Model model) {
-		log.debug("editNoticeBoardView({}, {}) invoked.", cri, nrefer);
-
-		NoticeBoardVO boardDetail = this.service.getBoardDetail(nrefer);
-		log.info("\t + boardDetail : {}", boardDetail);
-
-		model.addAttribute("__BoardDetail", boardDetail);
-
-		return "noticeboard/boardModify";
-	}
-
-	// 공지 게시판 수정
-	@PostMapping("/editNoticeBoard")
-	public String editNoticeBoard(NoticeBoardDTO noticeBoard, RedirectAttributes rttrs) {
-		log.debug("editNoticeBoard({}) invoked.", noticeBoard);
-
-		boolean result = this.service.editBoard(noticeBoard);
-		rttrs.addAttribute("resultmodify", result);
-
-		return "redirect:/noticeboard/boardDetail";
-
-	} // editNoticeBoard
-
-	// 공지 게시판 삭제
-	@PostMapping("/deleteNoticeBoard")
-	public String deleteNoticeBoard(@RequestParam("nrefer") Integer nrefer, RedirectAttributes rttrs) {
-		log.debug("deleteNoticeBoard({}) invoked.", nrefer);
-		boolean result = this.service.deleteBoard(nrefer);
-		rttrs.addAttribute("resultDelete", result);
+        return "/noticeboard/boardWrite";
+    } // writeNoticeBoardView
 
 
-		return "redirect:/noticeboard/boardList";
+    // 공지 게시판 수정 view
+    @GetMapping("/editNoticeBoardView")
+    public String editNoticeBoardView(@ModelAttribute("cri") Criteria cri, Integer nrefer, Model model) {
+        log.debug("editNoticeBoardView({}, {}) invoked.", cri, nrefer);
 
-	} // deleteNoticeBoard
+        NoticeBoardVO boardDetail = this.service.getBoardDetail(nrefer);
+        log.info("\t + boardDetail : {}", boardDetail);
+        model.addAttribute("__boardDetail__", boardDetail);
 
-	// 공지 게시판 검색
-	@GetMapping("/searchNoticeBoard")
-	public String searchNoticeBoard(@ModelAttribute("cri") Criteria cri, String option, String keyword, Model model) {
-		log.debug("searchNoticeBoard() invoked.");
+        return "/noticeboard/boardModify";
+    } // editNoticeBoardView
 
-		List<NoticeBoardSearchVO> searchList = this.service.search(option, keyword, cri);
-		model.addAttribute("__list__", searchList);
+    // 공지 게시판 수정
+    @PostMapping("/editNoticeBoard")
+    public String editNoticeBoard(NoticeBoardDTO noticeBoard/*, RedirectAttributes rttrs*/) {
+        log.debug("editNoticeBoard({}) invoked.", noticeBoard);
 
-		// 페이징 처리
-		Integer totalAmount = this.service.getTotalSearch(option, keyword);
-		PageDTO pageDTO = new PageDTO(cri, totalAmount);
-		model.addAttribute("pageMaker", pageDTO);
+        /*boolean result =*/
+                service.editBoard(noticeBoard);
+       /* rttrs.addAttribute("result", result);*/
 
-		return "/noticeboard/searchList";
-	} // searchNoticeBoard
+        return "redirect:/noticeboard/getNoticeBoardList";
+
+    } // editNoticeBoard
+
+    // 공지 게시판 삭제
+    @PostMapping("/deleteNoticeBoard")
+    public String deleteNoticeBoard(@RequestParam("nrefer") Integer nrefer, RedirectAttributes rttrs) {
+        log.debug("deleteNoticeBoard({}) invoked.", nrefer);
+        boolean result = this.service.deleteBoard(nrefer);
+        rttrs.addAttribute("resultDelete", result);
+
+
+        return "redirect:/noticeboard/getNoticeBoardList";
+
+    } // deleteNoticeBoard
+
+    // 공지 게시판 검색 결과 화면
+    @GetMapping("/searchNoticeBoard")
+    public String searchNoticeBoard(@ModelAttribute("cri") Criteria cri, String option, String keyword, Model model) {
+        log.debug("searchNoticeBoard() invoked.");
+
+        List<NoticeBoardSearchVO> searchList = this.service.search(option, keyword, cri);
+        model.addAttribute("__list__", searchList);
+
+        // 페이징 처리
+        Integer totalAmount = this.service.getTotalSearch(option, keyword);
+        PageDTO pageDTO = new PageDTO(cri, totalAmount);
+        model.addAttribute("pageMaker", pageDTO);
+
+        return "/noticeboard/searchList";
+    } // searchNoticeBoard
 
 
 } // end class

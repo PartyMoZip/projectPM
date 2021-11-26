@@ -12,14 +12,14 @@ import java.util.List;
 public interface NoticeBoardMapper {
 
     // 공지 게시판 목록 - 페이징 처리
-    public  abstract List<NoticeBoardListVO> getListWithPaging(Criteria cri);
+    public  abstract List<NoticeBoardListVO> getListWithPaging(@Param("searchWord") String searchWord, @Param("option") Integer option, @Param("cri") Criteria cri);
 // public abstract List<NoticeBoardVO> getNoticeBoardList();
 
     // 공지 게시판 상세보기
     public abstract NoticeBoardVO readNoticeBoard(Integer nrefer);
 
     // 공지 게시판 총 게시물 개수 반환
-    public abstract Integer getTotalCount();
+    public abstract Integer getTotalCount(@Param("searchWord") String searchWord, @Param("option") Integer option);
 
     // 공지 게시판 검색 게시물 개수
     public abstract Integer getTotalSearchCount(String option, String keyword);

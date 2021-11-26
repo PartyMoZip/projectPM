@@ -5,18 +5,37 @@
 <mapper namespace="com.pm.myapp.mapper.board.NoticeBoardMapper">
 
     <select id="getListWithPaging" resultType="com.pm.myapp.domain.board.NoticeBoardListVO">
-        <![CDATA[
-                SELECT
-                    N.nrefer, n.nsubject, n.ndate, u.nickname, n.readnum
-                FROM NOTICEBOARD N
-                JOIN USERINFO U ON N.EMAIL = U.EMAIL
-                OFFSET (#{currPage}-1) * #{amount} ROWS
-                FETCH NEXT #{amount} ROWS ONLY
-            ]]>
+
+        SELECT N.NREFER, N.NSUBJECT, N.NCONTENT, N.NDATE, U.EMAIL ,U.NICKNAME, N.READNUM
+        FROM NOTICEBOARD N
+        JOIN USERINFO U
+        ON N.EMAIL = U.EMAIL
+        WHERE N.PARTYCODE = #{partyCode}
+        <choose>
+            <when test="searchWord==null">
+            </when>
+            <when test="option==1">
+                AND N.NCONTENT like '%'||#{searchWord}||'%'
+                AND N.NSUBJECT like '%'||#{searchWord}||'%'
+                AND U.NICKNAME like '%'||#{searchWord}||'%'
+            </when>
+            <when test="option==2">
+                AND U.NICKNAME like '%'||#{searchWord}||'%'
+            </when>
+            <when test="option==3">
+                AND N.NSUBJECT like '%'||#{searchWord}||'%'
+            </when>
+            <when test="option==4">
+                AND N.NCONTENT like '%'||#{searchWord}||'%'
+            </when>
+        </choose>
+        OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
+        FETCH NEXT #{cri.amount} ROWS ONLY
+
     </select>
 
     <select id="readNoticeBoard" resultType="com.pm.myapp.domain.board.NoticeBoardVO">
-        SELECT n.nrefer, n.nsubject, n.ncontent, n.ndate, u.nickname, n.readnum
+        SELECT n.nrefer, n.nsubject, n.ncontent, n.ndate, u.nickname,u.email, n.readnum
         FROM NOTICEBOARD N
         JOIN USERINFO U ON N.email = U.email
         WHERE NREFER = #{nrefer}
@@ -27,17 +46,35 @@
     <insert id="writeNoticeBoard">
 
         INSERT INTO NOTICEBOARD(NREFER, NSUBJECT, NCONTENT, NDATE, NICKNAME, EMAIL, READNUM)
-        VALUES(SEQ_NOTICEBOARD.nextval, #{nsubject}, #{ncontent}, sysdate, 'admin', #{email}, 0)
+        VALUES(SEQ_NOTICEBOARD.nextval, #{nSubject}, #{nContent}, sysdate, 'admin', 'test1@test.com', 0)
 
     </insert>
 
-    <select id="getTotalCount" resultType="int">
-        <![CDATA[
-            SELECT COUNT(nrefer)
-            FROM NOTICEBOARD
-            WHERE nrefer > 0
+    <select id="getTotalCount" resultType="Integer">
 
-        ]]>
+        SELECT COUNT(N.NREFER)
+        FROM NOTICEBOARD N
+        JOIN USERINFO U
+        ON N.EMAIL = U.EMAIL
+        WHERE N.PARTYCODE = #{partyCode}
+        <choose>
+            <when test="searchWord==null">
+            </when>
+            <when test="option==1">
+                AND N.NCONTENT like '%'||#{searchWord}||'%'
+                AND N.NSUBJECT like '%'||#{searchWord}||'%'
+                AND U.NICKNAME like '%'||#{searchWord}||'%'
+            </when>
+            <when test="option==2">
+                AND U.NICKNAME like '%'||#{searchWord}||'%'
+            </when>
+            <when test="option==3">
+                AND N.NSUBJECT like '%'||#{searchWord}||'%'
+            </when>
+            <when test="option==4">
+                AND N.NCONTENT like '%'||#{searchWord}||'%'
+            </when>
+        </choose>
 
     </select>
 
@@ -94,18 +131,18 @@
 
     </select>
 
-    <update id="editNoticeBoard">
+    <update id="editNoticeBoard" parameterType="com.pm.myapp.domain.board.NoticeBoardDTO">
         UPDATE NOTICEBOARD
         SET
-            NSUBJECT = #{nSubject},
-            NCONTENT = #{nContent}
-        WHERE NREFER = #{nRefer}
+            nsubject = #{nSubject},
+            ncontent = #{nContent}
+        WHERE nrefer = #{nRefer}
     </update>
 
     <delete id="deleteNoticeBoard">
         DELETE
         FROM NOTICEBOARD
-        WHERE NREFER=#{nrefer}
+        WHERE NREFER=#{nRefer}
     </delete>
 
 
