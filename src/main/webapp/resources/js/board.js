@@ -18,3 +18,5 @@ $(document).ready(function () {
 $('#menu li > a').on('click', function () {
     $('#mystatus').text($(this).text());
 })
+
+

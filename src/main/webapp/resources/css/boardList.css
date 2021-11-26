@@ -1,45 +1,46 @@
+@import "global.css";
+
 /* 감싸는 전체 div 너비, 중앙 정렬 */
 .all-wrap {
     margin: 20px auto;
     width: 80%;
 }
 
-/* 파티관리 > 정렬 탭 색상 컨트롤 */
-a.nav-link.dropdown-toggle {
+/*자유게시판 탭 메뉴 css*/
+.nav.nav-pills {
+    margin-top : 50px;
+    margin-bottom : 30px;
+    justify-content: left;
+}
+
+.nav-pills .nav-item {
+    margin-right: 5px;
+}
+
+.nav-pills .nav-link.active {
+    background-color: var(--primary-color) !important;
+    padding: 3px 6px;
+    font-size: 25px;
+}
+
+.nav-pills .nav-link {
+    padding: 3px 6px;
+    background-color: lightgrey;
     color: #212529;
 }
 
-a.nav-link.dropdown-toggle.show {
-    color: #212529;
+.nav-pills .nav-link:hover {
+    background-color: #669900;
+    color: #fff;
 }
 
-a.dropdown-item:active {
-    color: #212529;
-    background-color: rgba(0, 0, 0, 0.075);
+table {
+    text-align : center;
 }
 
-/* th, td 수평, 수직 중앙 정렬 */
-th {
-    text-align: center;
-    vertical-align: middle;
-    font-weight: 400;
-}
+/*
 
-td {
-    text-align: center;
-    vertical-align: middle;
-}
-
-/* 파티관리 활동점수 정렬 드롭박스 css 정리 */
-a.nav-link.dropdown-toggle {
-    margin-bottom: 4px;
-    vertical-align: middle;
-    text-align: center;
-    z-index: 1;
-    font-weight: 400;
-}
-
-/* 체크박스 디자인 */
+!* 체크박스 디자인 *!
 .checkbox-group {
     vertical-align: middle;
     text-align: center;
@@ -85,7 +86,8 @@ input[type="checkbox"]:checked::before {
     border-radius: 2px;
     transform: scale(1) translate(-50%, -50%);
 }
-/* 체크박스 디자인 끝 */
+!* 체크박스 디자인 끝 *!
+*/
 
 /* 버튼 디자인 */
 .btn.btn-primary {
@@ -111,12 +113,13 @@ input[type="checkbox"]:checked::before {
 /* 검색창 */
 .search-wrapper {
     margin-top: 20px;
-    max-width: 500px;
+    max-width: 500px !important;
     position: relative;
 }
 
 .d-grid.gap-2.d-md-block {
     float : right;
+    margin-top : 2px;
 
 }
 
@@ -191,33 +194,3 @@ input[type="checkbox"]:checked::before {
     margin-bottom : 0px;
 }
 
-.flex-sm-fill.text-sm-center.nav-link {
-    border-radius: 100px;
-    margin-top: 20px;
-    color: black;
-    cursor: pointer;
-    font-weight: 600;
-    margin-bottom: 20px;
-}
-
-.flex-sm-fill.text-sm-center.nav-link:hover {
-    color: #669900;
-}
-
-.flex-sm-fill.text-sm-center.nav-link:focus {
-    color: #669900;
-}
-
-.flex-sm-fill.text-sm-center.nav-link.active {
-    background-color: #669900;
-    font-weight: 600;
-}
-
-.flex-sm-fill.text-sm-center.nav-link.active:hover {
-    font-weight: 600;
-    color: #fff;
-}
-
-#freebar {
-    width : 20%;
-}

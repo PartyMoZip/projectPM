@@ -56,18 +56,26 @@ public class PartyFreeController {
 		model.addAttribute("partyFree", partyFDetail);
 		model.addAttribute("reply", reply);
 
-		return "partyFree/boardDetail";
+		return "/partyFree/boardDetail";
 	} // showPartyFDetail
 
-	// 파티 자유 게시판 글쓰기
-	@PostMapping("/writePFreeBoard")
+	// 파티 자유 게시판 글쓰기 완료
+	@PostMapping("/writePFreeBoardOk")
 	public String writePFreeBoard(PartyFreeDTO partyFB, RedirectAttributes rttrs) {
 		log.debug("writePFreeBoard({}) invoked.", partyFB);
 		boolean result = this.service.writeFBoard(partyFB);
 		rttrs.addAttribute("result", result);
 
-		return "redirect:/partyFree/boardWrite";
+		return "redirect:/partyFree/boardList";
 	} // writePFreeBoard
+
+    // 파치 자유 게시판 글 쓰기 화면
+    @GetMapping("/writePFreeBoardView")
+    public String writePFBoardView(@ModelAttribute("cri") Criteria cri) {
+        log.debug("writePFBoardView() invoked.");
+
+        return "/partyFree/boardWrite";
+    }
 
 	// 파티 자유 게시판 수정 View
 	@GetMapping("/editPFBoardView")

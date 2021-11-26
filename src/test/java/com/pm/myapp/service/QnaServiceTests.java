@@ -58,9 +58,9 @@ public class QnaServiceTests {
     public void testModify() {
         log.debug("testModify() invoked.");
 
-        QnaBoardVO board = new QnaBoardVO(1, "TEST", "TESTQna", null, "yewoni", "test1@test.com");
+     /*   QnaBoardVO board = new QnaBoardVO(1, "TEST", "TESTQna", null, "yewoni", "test1@test.com",0);
         Objects.requireNonNull(board);
-        log.info("\t + board : {}", board);
+        log.info("\t + board : {}", board);*/
     }
 
     @Test

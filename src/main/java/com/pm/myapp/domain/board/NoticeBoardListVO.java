@@ -11,6 +11,7 @@ public class NoticeBoardListVO {
     private Integer nRefer;
     private String nSubject;
     private Date nDate;
+    private String email;
     private String nickname;
     private Integer readnum;
 
