@@ -78,8 +78,13 @@
 	
 	<beans:bean id="HandlerChat" class="com.pm.myapp.chat.HandlerChat"/>
 	<websocket:handlers allowed-origin-patterns="*">
+	
 		<websocket:mapping handler="HandlerChat" path="/chat"/>
+		<websocket:handshake-interceptors>
+   			<beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
+        </websocket:handshake-interceptors>
 		<websocket:sockjs websocket-enabled="true"/>
+
 	</websocket:handlers>
 
 </beans:beans>
