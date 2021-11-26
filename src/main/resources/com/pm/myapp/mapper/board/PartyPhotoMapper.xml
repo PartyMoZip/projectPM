@@ -16,9 +16,9 @@
         	<when test="searchWord==null">
         	</when>
         	<when test="option==1">
-        		AND P.PCONTENT like '%'||#{searchWord}||'%'
-        		AND P.PSUBJECT like '%'||#{searchWord}||'%'
-        		AND U.NICKNAME like '%'||#{searchWord}||'%'
+        		AND (P.PCONTENT like '%'||#{searchWord}||'%'
+        		OR P.PSUBJECT like '%'||#{searchWord}||'%'
+        		OR U.NICKNAME like '%'||#{searchWord}||'%')
         	</when>
         	<when test="option==2">
         	    AND U.NICKNAME like '%'||#{searchWord}||'%'
@@ -30,6 +30,7 @@
            	    AND P.PCONTENT like '%'||#{searchWord}||'%'
         	</when>
         </choose>
+        ORDER BY P.PREFER DESC
         OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
 		FETCH NEXT #{cri.amount} ROWS ONLY
     
@@ -96,6 +97,7 @@
         JOIN USERINFO U
         ON U.EMAIL = P.EMAIL
         WHERE P.PARTYCODE = #{partyCode} AND PREFER = #{prefer}
+        ORDER BY P.PREREFER DESC
         OFFSET (#{recri.reCurrPage}-1) * #{recri.reAmount} ROWS
 		FETCH NEXT #{recri.reAmount} ROWS ONLY
         

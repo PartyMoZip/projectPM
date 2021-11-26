@@ -5,10 +5,13 @@ import java.util.Map;
 
 import com.pm.myapp.domain.Criteria;
 import com.pm.myapp.domain.PartyDTO;
+import com.pm.myapp.domain.PartyMemberCheckVO;
 import com.pm.myapp.domain.PartyUserVO;
 import com.pm.myapp.domain.PartyVO;
 
 public interface PartyService {
+	
+	public abstract List<PartyMemberCheckVO> checkPartyMember(String email);
 
 	public abstract PartyVO getParty(Integer partyCode);
 	

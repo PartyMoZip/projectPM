@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.pm.myapp.domain.Criteria;
 import com.pm.myapp.domain.PartyDTO;
+import com.pm.myapp.domain.PartyMemberCheckVO;
 import com.pm.myapp.domain.PartyUserVO;
 import com.pm.myapp.domain.PartyVO;
 
@@ -44,6 +45,16 @@ public class PartyMapperTests {
 		log.info("\t + mapper : {}", this.mapper);
 		log.info("\t + type : {}", this.mapper.getClass().getName());
 	} // setup
+	
+	@Test
+	public void testCheckIt() { // 성공
+		log.debug("testCheckIt() invoked.");
+		
+		String email = "test5@test.com";
+		List<PartyMemberCheckVO> result = this.mapper.checkIt(email);
+		log.info("\t+ result : {}",result);
+
+	} // testCheckIt
 	
 	
 	@Test

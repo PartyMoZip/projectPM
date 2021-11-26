@@ -14,10 +14,6 @@
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<mvc:annotation-driven />
 	
-	<!-- 파티로고 이미지 불러오기 -->
-	<mvc:resources mapping="/logoImages/**" location="file:///C:/ProjectPM/ImageUpload/PartyLogo/"/>
-	<!-- 파티메인 이미지 불러오기 -->
-    <mvc:resources mapping="/mainImages/**" location="file:///C:/ProjectPM/ImageUpload/PartyMainImage/"/>
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<mvc:resources mapping="/resources/**" location="/resources/" />
     
@@ -52,6 +48,7 @@
 
 	<beans:bean id = "LoginInterceptor" class="com.pm.myapp.interceptor.LoginInterceptor"/>
 	<beans:bean id = "AuthInterceptor" class="com.pm.myapp.interceptor.AuthInterceptor"/>
+	<beans:bean id = "PartyInterceptor" class="com.pm.myapp.interceptor.PartyInterceptor"/>
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/login/doLogin" />
@@ -61,17 +58,28 @@
 
 		<mvc:interceptor>
 			<mvc:mapping path="/my/**"/>
+			<mvc:mapping path="/party/**"/>
+			<mvc:mapping path="/partyfunc/**"/>
+			<mvc:mapping path="/partyphoto/**"/>
+			<mvc:mapping path="/partyfree/**"/>
 			<beans:ref bean="AuthInterceptor" />
 		</mvc:interceptor>
 
+		<mvc:interceptor>
+			<mvc:mapping path="/party/**"/>
+			<mvc:mapping path="/partyfunc/**"/>
+			<mvc:mapping path="/partyphoto/**"/>
+			<mvc:mapping path="/partyfree/**"/>
+			<mvc:exclude-mapping path="/party/editparty" />
+			<beans:ref bean="PartyInterceptor" />
+		</mvc:interceptor>
 
 	</mvc:interceptors>
-	 
-	<beans:bean id="ChattingHandler" class="com.pm.myapp.chat.ChattingHandler"/>
 	
-	<websocket:handlers>
-		<websocket:mapping handler="chattingHandler" path="/chatting"/>
-		<websocket:sockjs></websocket:sockjs>
+	<beans:bean id="HandlerChat" class="com.pm.myapp.chat.HandlerChat"/>
+	<websocket:handlers allowed-origin-patterns="*">
+		<websocket:mapping handler="HandlerChat" path="/chat"/>
+		<websocket:sockjs websocket-enabled="true"/>
 	</websocket:handlers>
 
 </beans:beans>
