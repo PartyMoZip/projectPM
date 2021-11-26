@@ -30,26 +30,26 @@
 			<li class="nav-item"><a class="nav-link active"
 				aria-current="page" href="/party/partyMain">메인</a></li>
 			<li class="nav-item"><a class="nav-link"
-				href="/party/leaderpage">파티관리</a></li>
+				href="/party/leaderpage?partyCode=${__PARTY__.partyCode}">파티관리</a></li>
 			<li class="nav-item"><a class="nav-link" href="#">파티원</a></li>
-			<li class="nav-item"><a class="nav-link" href="#">자유게시판</a></li>
-			<li class="nav-item"><a class="nav-link" href="#">포토갤러리</a></li>
-			<li class="nav-item"><a class="nav-link" href="#">채팅</a></li>
+			<li class="nav-item"><a class="nav-link" href="/partyfree/getPFreeBoardList">자유게시판</a></li>
+			<li class="nav-item"><a class="nav-link" href="/partyphoto/list?partyCode=${__PARTY__.partyCode}">포토갤러리</a></li>
+			<li class="nav-item"><a class="nav-link" href="/partyfunc/partychat?partyCode=${__PARTY__.partyCode}">채팅</a></li>
 		</ul>
 		<div class="container">
 			<div class="container-party">
 				<div class="partyImage">
 					<img alt="파티메인이미지" class="img-fluid"
-						src="https://github.com/EUN-Ng/bitcamp/blob/master/img/1.jpg?raw=true">
+						src="${__PARTY__.coverPic}">
 				</div>
 
 				<div class="partyInfo">
 					<div class="partyInfo-content">
 						<div class="partyInfo-content-title">
-							<h5>김진건의 돌아온 솔로 파티</h5>
-							<p>파티창설일자:&nbsp;2021.11.23</p>
+							<h5>파티명 : ${__PARTY__.partyName}</h5>
+							<p>개설 날짜 : ${__PARTY__.createDate}</p>
 							<p>파티인원 수:&nbsp;20명</p>
-							<p>새로운 사랑을 찾아 산기슭을 찾아 헤매는 진건이형처럼</p>
+							<p>${__PARTY__.partyProfile}</p>
 							<p>우리는 새로운 사람을 만나는 파티입니다.</p>
 						</div>
 					</div>
