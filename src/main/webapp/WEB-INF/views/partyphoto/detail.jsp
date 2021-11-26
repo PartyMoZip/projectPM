@@ -33,7 +33,7 @@
     </form>
 
     <hr>
-    <c:forEach items="{__COMMENT__}" var="comment">
+    <c:forEach items="${__COMMENT__}" var="comment">
         <form action="/partyphoto/editcommit" method="post">
             <input type="hidden" name="currPage" value="${cri.currPage}">
             <input type="hidden" name="reCurrPage" value="${recri.reCurrPage}">
