@@ -7,10 +7,13 @@ import org.apache.ibatis.annotations.Param;
 
 import com.pm.myapp.domain.Criteria;
 import com.pm.myapp.domain.PartyDTO;
+import com.pm.myapp.domain.PartyMemberCheckVO;
 import com.pm.myapp.domain.PartyUserVO;
 import com.pm.myapp.domain.PartyVO;
 
 public interface PartyMapper {
+	
+	public abstract List<PartyMemberCheckVO> checkIt(String email);
 
 	public abstract PartyVO getInfo(Integer partyCode);
 	

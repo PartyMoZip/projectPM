@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.pm.myapp.domain.Criteria;
 import com.pm.myapp.domain.PartyDTO;
+import com.pm.myapp.domain.PartyMemberCheckVO;
 import com.pm.myapp.domain.PartyUserVO;
 import com.pm.myapp.domain.PartyVO;
 import com.pm.myapp.mapper.PartyMapper;
@@ -45,6 +46,16 @@ public class PartyServiceImpl implements PartyService,InitializingBean, Disposab
 	} // afterPropertiesSet
 	
 	//===========================================================================
+	
+	
+	@Override
+	public List<PartyMemberCheckVO> checkPartyMember(String email) {
+		log.debug("checkPartyMember({}) invoked.",email);
+		
+		List<PartyMemberCheckVO> checkList = this.mapper.checkIt(email);
+		
+		return checkList;
+	} // 
 	
 	@Override
 	public PartyVO getParty(Integer partyCode) {

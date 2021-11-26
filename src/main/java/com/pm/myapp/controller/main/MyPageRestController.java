@@ -90,7 +90,7 @@ public class MyPageRestController {
 
         if (fileLocation != null) {
             imageUrl = awsUpload.fileUpload(fileLocation, imagePath, uuid);
-        }
+        } // if
 
         profile.put("email", email);
         profile.put("nickname", nickname);
@@ -100,10 +100,12 @@ public class MyPageRestController {
         log.info("\t + result : {}", result);
 
         Map<String, String> data = new HashMap<>();
+        
         if (!imageUrl.equals("")) {
             data.put("fileLocation", imageUrl);
             user.setUserPic(imageUrl); // 세션 스코프 프로필 이미지 경로 재설정
-        }
+        } // if
+        
         data.put("nickname", nickname);
         user.setNickname(nickname);
 
