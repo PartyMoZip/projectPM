@@ -26,8 +26,10 @@
 
     <select id="getMyPartyList" resultType="com.pm.myapp.domain.PartyVO">
 
-        select * From (
-        SELECT p.partycode,
+        SELECT * From (
+        SELECT
+        l.localcode,
+        p.partycode,
         p.partyname,
         p.partyscore,
         p.createdate,
