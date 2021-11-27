@@ -5,15 +5,30 @@
 <mapper namespace="com.pm.myapp.mapper.board.QnaBoardMapper">
 
     <select id="getListWithPaging" resultType="com.pm.myapp.domain.board.QnaBoardListVO">
-        <![CDATA[
-            SELECT
-                Q.qrefer, Q.qsubject, Q.qdate, u.nickname, Q.readnum
-            FROM QNABOARD Q
-            JOIN USERINFO U ON Q.email = U.email
-            ORDER BY qrefer desc
-            OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
-            FETCH NEXT #{cri.amount} ROWS ONLY
-        ]]>
+        SELECT Q.QREFER, Q.QSUBJECT, Q.QCONTENT, Q.QDATE, Q.EMAIL ,U.NICKNAME, Q.READNUM
+        FROM QNABOARD Q
+        JOIN USERINFO U
+        ON Q.EMAIL = U.EMAIL
+        <choose>
+            <when test="searchWord==null">
+            </when>
+            <when test="option==1">
+                WHERE Q.QCONTENT like '%'||#{searchWord}||'%'
+                OR Q.QSUBJECT like '%'||#{searchWord}||'%'
+                OR U.NICKNAME like '%'||#{searchWord}||'%'
+            </when>
+            <when test="option==2">
+                WHERE U.NICKNAME like '%'||#{searchWord}||'%'
+            </when>
+            <when test="option==3">
+                WHERE Q.QSUBJECT like '%'||#{searchWord}||'%'
+            </when>
+            <when test="option==4">
+                WHERE Q.QCONTENT like '%'||#{searchWord}||'%'
+            </when>
+        </choose>
+        OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
+        FETCH NEXT #{cri.amount} ROWS ONLY
 
     </select>
 
@@ -34,12 +49,30 @@
     </insert>
 
     <select id="getTotalCount" resultType="Integer">
-        <![CDATA[
-        SELECT COUNT(qrefer)
-        FROM QNABOARD
-        WHERE qrefer > 0
 
-        ]]>
+        SELECT COUNT(Q.QREFER)
+        FROM QNABOARD Q
+        JOIN USERINFO U
+        ON Q.EMAIL = U.EMAIL
+        <choose>
+            <when test="searchWord==null">
+            </when>
+            <when test="option==1">
+                WHERE Q.QCONTENT like '%'||#{searchWord}||'%'
+                OR Q.QSUBJECT like '%'||#{searchWord}||'%'
+                OR U.NICKNAME like '%'||#{searchWord}||'%'
+            </when>
+            <when test="option==2">
+                WHERE U.NICKNAME like '%'||#{searchWord}||'%'
+            </when>
+            <when test="option==3">
+                WHERE Q.QSUBJECT like '%'||#{searchWord}||'%'
+            </when>
+            <when test="option==4">
+                WHERE Q.QCONTENT like '%'||#{searchWord}||'%'
+            </when>
+        </choose>
+
 
     </select>
 
@@ -53,24 +86,24 @@
 
     <select id="searchQnaBoard" resultType="com.pm.myapp.domain.board.QnaBoardSearchVO">
 
-            SELECT Q.QREFER, Q.QSUBJECT, Q.QCONTENT, Q.QDATE, U.EMAIL, U.NICKNAME
+            SELECT Q.QREFER, Q.QSUBJECT, Q.QCONTENT, Q.QDATE, U.EMAIL, U.NICKNAME, Q.READNUM
             FROM QNABOARD Q
             JOIN USERINFO U ON Q.EMAIL = U.EMAIL
             WHERE
             <choose>
                 <when test = "option == '1'">
-                    U.NICKNAME LIKE CONCAT('%', #{keyword}, '%')
+                    WHERE U.NICKNAME LIKE CONCAT('%', #{keyword}, '%')
                     OR Q.QCONTENT LIKE CONCAT('%', #{keyword}, '%')
                     OR Q.QSUBJECT LIKE CONCAT('%', #{keyword}, '%')
                 </when>
                 <when test = "option == '2">
-                    U.NICKNAME LIKE CONCAT('%', #{keyword}, '%')
+                    WHERE U.NICKNAME LIKE CONCAT('%', #{keyword}, '%')
                 </when>
                 <when test = "option == '3'">
-                    Q.QSUBJECT LIKE CONCAT('%', #{keyword}, '%')
+                    WHERE Q.QSUBJECT LIKE CONCAT('%', #{keyword}, '%')
                 </when>
                 <when test = "option == '4'">
-                    Q.QCONTENT LIKE CONCAT('%', #{keyword}, '%')
+                    WHERE Q.QCONTENT LIKE CONCAT('%', #{keyword}, '%')
                 </when>
             </choose>
             OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS

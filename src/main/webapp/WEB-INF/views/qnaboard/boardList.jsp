@@ -118,7 +118,7 @@
 
         <!-- 검색창 -->
         <!-- 검색창 -->
-        <form action="검색URL" method="get">
+        <form action="/qnaboard/getQnaBoardList" method="get">
             <div class="container-sm search-wrapper">
                 <div class="input-group mb-3">
                     <div class="selectBox">
