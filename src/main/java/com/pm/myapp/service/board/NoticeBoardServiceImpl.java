@@ -82,9 +82,9 @@ public class NoticeBoardServiceImpl implements NoticeBoardService{
 
     // 게시물 검색
     @Override
-    public List<NoticeBoardSearchVO> search(String searchOption, String keyword, Criteria cri) {
-        String searchOption_mod = "n." + searchOption;
-        String keyword_mod = "%" + keyword + "%";
+    public List<NoticeBoardSearchVO> search(String searchWord, Integer option, Criteria cri) {
+        String searchOption_mod = "";
+        Integer keyword_mod = 0;
         List<NoticeBoardSearchVO> searchList = this.mapper.searchNoticeBoard(searchOption_mod, keyword_mod, cri);
 
         return searchList;
@@ -100,9 +100,9 @@ public class NoticeBoardServiceImpl implements NoticeBoardService{
 
     // 검색 결과 게시물 개수 반환
     @Override
-    public Integer getTotalSearch(String option, String keyword) {
+    public Integer getTotalSearch(String searchWord, Integer option) {
         log.debug("getTotalSearch() invoked.");
 
-        return this.mapper.getTotalSearchCount(option, keyword);
+        return this.mapper.getTotalSearchCount(searchWord, option);
     } // getTotalSearch
 }

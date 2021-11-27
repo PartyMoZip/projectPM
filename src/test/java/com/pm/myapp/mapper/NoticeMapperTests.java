@@ -110,7 +110,7 @@ public class NoticeMapperTests {
 		log.debug("testSearchNoticeBoard() invoked.");
 
 		String searchOption = "n.nsubject";
-		String keyword = "%왜%";
+		Integer keyword = 0;
 		Criteria cri = new Criteria();
 		cri.setAmount(10);
 		cri.setCurrPage(1);

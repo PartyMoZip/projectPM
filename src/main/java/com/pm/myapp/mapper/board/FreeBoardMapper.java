@@ -9,17 +9,17 @@ import java.util.List;
 public interface FreeBoardMapper {
 
     // 자유 게시판 목록 - 페이징 처리
-    public abstract List<FreeBoardListVO> getListWithPaging(Criteria cri);
+    public abstract List<FreeBoardListVO> getListWithPaging(@Param("searchWord") String searchWord, @Param("option") Integer option, @Param("cri") Criteria cri);
     // public abstract List<FreeBoardVO> getFreeBoardList();
 
     // 자유 게시판 상세보기
     public abstract FreeBoardVO readFreeBoard(Integer frefer);
 
     // 자유 게시판 개수
-    public abstract Integer getTotalCount();
+    public abstract Integer getTotalCount(@Param("searchWord") String searchWord, @Param("option") Integer option);
 
     // 자유 게시판 검색 게시물 개수
-    public abstract Integer getTotalSearchCount(String option, String keyword);
+    public abstract Integer getTotalSearchCount(String searchWord, Integer option);
     
     // 자유 게시판 글쓰기
     public abstract Integer registerFreeBoard(FreeBoardDTO writeFB);
@@ -28,7 +28,7 @@ public interface FreeBoardMapper {
     public abstract Integer updateFreeBoard(FreeBoardDTO freeBoard);
 
     // 자유 게시물 검색
-    public abstract List<FreeBoardSearchVO> searchFreeBoard(@Param("searchOption") String searchOption, @Param("keyword")String keyword, @Param("cri")Criteria cri);
+    public abstract List<FreeBoardSearchVO> searchFreeBoard(@Param("searchWord") String searchOption_mod, @Param("option") String keyword_mod, @Param("cri")Criteria cri);
 
     // 자유 게시판 삭제
     public abstract int deleteFreeBoard(Integer frefer);

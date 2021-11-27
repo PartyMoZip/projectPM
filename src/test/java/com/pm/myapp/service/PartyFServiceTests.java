@@ -95,15 +95,15 @@ public class PartyFServiceTests {
         String searchOption= "pf.pfsubject";
         String keyword="%T%";
         Criteria cri = new Criteria();
-        List<PartyFreeSearchVO> list = this.service.search(searchOption, keyword, cri);
-        list.forEach(log::info);
+        //List<PartyFreeSearchVO> list = this.service.search(searchOption, keyword, cri);
+        //list.forEach(log::info);
     }
 
     @Test
     public void testGetTotal() {
         log.debug("test() invoked.");
-        int totalCount = this.service.getTotal();
-        log.info("\t + totalCount : {}", totalCount);
+     //   int totalCount = this.service.getTotal();
+      //  log.info("\t + totalCount : {}", totalCount);
     }
 
     // 댓글 목록

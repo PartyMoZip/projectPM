@@ -22,7 +22,7 @@ public interface NoticeBoardMapper {
     public abstract Integer getTotalCount(@Param("searchWord") String searchWord, @Param("option") Integer option);
 
     // 공지 게시판 검색 게시물 개수
-    public abstract Integer getTotalSearchCount(String option, String keyword);
+    public abstract Integer getTotalSearchCount(String searchWord, Integer option);
 
     // 공지 게시판 글쓰기
     public abstract Integer writeNoticeBoard(NoticeBoardDTO noticeBoard);
@@ -31,7 +31,7 @@ public interface NoticeBoardMapper {
     public abstract int editNoticeBoard(NoticeBoardDTO noticeBoard);
 
     // 공지 게시판 검색
-    public abstract List<NoticeBoardSearchVO> searchNoticeBoard(@Param("searchOption") String searchOption, @Param("keyword")String keyword, @Param("cri")Criteria cri);
+    public abstract List<NoticeBoardSearchVO> searchNoticeBoard(String searchWord, Integer keyword_mod, Criteria cri);
 
     // 공지 게시판 삭제
     public abstract int deleteNoticeBoard(Integer nrefer);

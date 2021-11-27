@@ -2,10 +2,7 @@ package com.pm.myapp.controller.board;
 
 
 import com.pm.myapp.domain.Criteria;
-import com.pm.myapp.domain.board.NoticeBoardDTO;
-import com.pm.myapp.domain.board.NoticeBoardListVO;
-import com.pm.myapp.domain.board.NoticeBoardSearchVO;
-import com.pm.myapp.domain.board.NoticeBoardVO;
+import com.pm.myapp.domain.board.*;
 import com.pm.myapp.domain.PageDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,9 +31,16 @@ public class NoticeBoardController {
     // 공지 게시판 목록 - 페이징 처리
     @GetMapping("/getNoticeBoardList")
     public String getNoticeBoardList(
-            @ModelAttribute("searchWord") String searchWord,
-            @ModelAttribute("option") Integer option,
+            @ModelAttribute("sdto") BoardSearchListDTO sdto,
             @ModelAttribute("cri") Criteria cri, Model model) {
+        String searchWord = sdto.getSearchWord();
+        Integer option = sdto.getOption();
+
+        // 처음으로 조회할 시에는 option 값이 함께 들어올 수 없음. 따라서 기본으로 1로 들어가는 것이 필요
+        if(option == null || option == 0) {
+            option = 1;
+        } // if
+
         log.debug("getNoticeBoardList({}) invoked.", cri);
         List<NoticeBoardListVO> list = this.service.getListPerPage(searchWord, option, cri);
 
@@ -123,14 +127,14 @@ public class NoticeBoardController {
 
     // 공지 게시판 검색 결과 화면
     @GetMapping("/searchNoticeBoard")
-    public String searchNoticeBoard(@ModelAttribute("cri") Criteria cri, String option, String keyword, Model model) {
+    public String searchNoticeBoard(@ModelAttribute("cri") Criteria cri, String searchWord, Integer option, Model model) {
         log.debug("searchNoticeBoard() invoked.");
 
-        List<NoticeBoardSearchVO> searchList = this.service.search(option, keyword, cri);
+        List<NoticeBoardSearchVO> searchList = this.service.search(searchWord, option, cri);
         model.addAttribute("__list__", searchList);
 
         // 페이징 처리
-        Integer totalAmount = this.service.getTotalSearch(option, keyword);
+        Integer totalAmount = this.service.getTotalSearch(searchWord, option);
         PageDTO pageDTO = new PageDTO(cri, totalAmount);
         model.addAttribute("pageMaker", pageDTO);
 

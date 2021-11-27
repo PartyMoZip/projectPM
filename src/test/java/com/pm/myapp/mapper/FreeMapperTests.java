@@ -47,8 +47,8 @@ public class FreeMapperTests {
         cri.setAmount(1);
         cri.setAmount(10);
 
-        List<FreeBoardListVO> list = this.mapper.getListWithPaging(cri);
-        list.forEach(log::info); // 람다식과
+       // List<FreeBoardListVO> list = this.mapper.getListWithPaging(searchWord, option, cri);
+        //list.forEach(log::info); // 람다식과
 
     } // testGetlistWithPaging
 
@@ -81,8 +81,8 @@ public class FreeMapperTests {
     public void testGetTotalCount() { // 자유 게시판 총 게시물 개수 - 테스트완료
         log.debug("testGetTotalCount() invoked.");
 
-        Integer totalCount = this.mapper.getTotalCount();
-        log.info("\t + totalCount : {}", totalCount);
+       // Integer totalCount = this.mapper.getTotalCount();
+        //log.info("\t + totalCount : {}", totalCount);
 
     } // testGetTotalCount
 

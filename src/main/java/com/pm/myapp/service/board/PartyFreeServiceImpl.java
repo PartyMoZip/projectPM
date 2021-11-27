@@ -25,9 +25,9 @@ public class PartyFreeServiceImpl implements PartyFreeService, InitializingBean,
 
     // 파티 자유 게시판 목록 -  페이징 처리
     @Override
-    public List<PartyFreeListVO> getListPerPage(Criteria cri) {
+    public List<PartyFreeListVO> getListPerPage(String searchWord, Integer option, Criteria cri) {
         log.debug("getListPerPage({}) invoked.", cri);
-        List<PartyFreeListVO> partyFree = this.mapper.getListWithPaging(cri);
+        List<PartyFreeListVO> partyFree = this.mapper.getListWithPaging(searchWord, option, cri);
         log.info("\t + partyFree : {}", partyFree);
         return partyFree;
     }
@@ -76,9 +76,9 @@ public class PartyFreeServiceImpl implements PartyFreeService, InitializingBean,
 
     // 파티 자유 게시판 검색
     @Override
-    public List<PartyFreeSearchVO> search(String searchOption, String keyword, Criteria cri) {
-        String searchOption_mod = "pf." + searchOption;
-        String keyword_mod = "%" + keyword + "%";
+    public List<PartyFreeSearchVO> search(String searchWord, Integer option, Criteria cri) {
+        String searchOption_mod = "pf." + searchWord;
+        Integer keyword_mod = 0;
 
         List<PartyFreeSearchVO> searchList = this.mapper.searchPartyFree(searchOption_mod, keyword_mod, cri);
         return searchList;
@@ -86,16 +86,16 @@ public class PartyFreeServiceImpl implements PartyFreeService, InitializingBean,
 
     // 총 게시물 개수 반환
     @Override
-    public Integer getTotal() {
+    public Integer getTotal(String searchWord, Integer option) {
         log.debug("getTotal() invoked.");
-        return this.mapper.getTotalCount();
+        return this.mapper.getTotalCount(searchWord, option);
     }
 
     @Override
-    public Integer getTotalSearch(String option, String keyword) {
+    public Integer getTotalSearch(String searchWord, Integer option) {
         log.debug("getTotalSearch() invoked.");
 
-        return this.mapper.getTotalSearchCount(option, keyword);
+        return this.mapper.getTotalSearchCount(searchWord, option);
     }
 
     // 댓글 목록

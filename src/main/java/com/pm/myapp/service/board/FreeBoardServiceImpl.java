@@ -25,10 +25,10 @@ public class FreeBoardServiceImpl implements FreeBoardService, InitializingBean,
 
     // 자유 게시판 목록 - 페이징 처리
     @Override
-    public List<FreeBoardListVO> getListPerPage(Criteria cri) {
+    public List<FreeBoardListVO> getListPerPage(String searchWord, Integer option, Criteria cri) {
         log.debug("getListPerPage({}) invoked.", cri);
 
-        List<FreeBoardListVO> freeBoard = this.mapper.getListWithPaging(cri);
+        List<FreeBoardListVO> freeBoard = this.mapper.getListWithPaging(searchWord, option, cri);
         log.info("\t + allBoards : {}", freeBoard);
 
         return freeBoard;
@@ -80,9 +80,9 @@ public class FreeBoardServiceImpl implements FreeBoardService, InitializingBean,
 
     // 자유 게시글 검색
     @Override
-    public List<FreeBoardSearchVO> search(String option, String keyword, Criteria cri) {
-        String searchOption_mod = "f." + option;
-        String keyword_mod = "%"+keyword+"%";
+    public List<FreeBoardSearchVO> search(String searchWord, Integer option, Criteria cri) {
+        String searchOption_mod = "f." + searchWord;
+        String keyword_mod = "%"+option+"%";
 
         List<FreeBoardSearchVO> searchList = this.mapper.searchFreeBoard(searchOption_mod, keyword_mod, cri);
 
@@ -92,18 +92,18 @@ public class FreeBoardServiceImpl implements FreeBoardService, InitializingBean,
 
     // 총 게시물 개수 반환
     @Override
-    public Integer getTotal() {
+    public Integer getTotal(String searchWord, Integer option) {
         log.debug("getTotal() invoked.");
 
-        return this.mapper.getTotalCount();
+        return this.mapper.getTotalCount(searchWord, option);
     } // getTotal
 
     // 검색 결과 게시물 개수 반환
     @Override
-    public Integer getTotalSearch(String option, String keyword) {
+    public Integer getTotalSearch(String searchWord, Integer option) {
         log.debug("getTotalSearch() invoked.");
 
-        return this.mapper.getTotalSearchCount(option, keyword);
+        return this.mapper.getTotalSearchCount(searchWord, option);
     } // getTotalSearch
 
     // 댓글 목록

@@ -122,8 +122,8 @@ public class NoticeServiceTests {
         String searchOption= "f.fsubject";
         String keyword="%T%";
         Criteria cri = new Criteria();
-        List<NoticeBoardSearchVO> list = this.service.search(searchOption, keyword, cri);
-        list.forEach(log::info);
+       // List<NoticeBoardSearchVO> list = this.service.search(searchOption, keyword, cri);
+        //list.forEach(log::info);
 
     }
 

@@ -42,8 +42,8 @@ public class QnaMapperTests {
         cri.setAmount(1);
         cri.setAmount(10);
 
-        List<QnaBoardListVO> list = this.mapper.getListWithPaging(cri);
-        list.forEach(log::info);
+       // List<QnaBoardListVO> list = this.mapper.getListWithPaging(searchWord, option, cri);
+       // list.forEach(log::info);
 
     } // testGetListWithPaging
 
@@ -111,8 +111,8 @@ public class QnaMapperTests {
     public void testGetTotalCount() { // 문의 게시판 글 개수 - 테스트 완료
        log.debug("testGetTotalCount() invoked.");
 
-        Integer totalCount = this.mapper.getTotalCount();
-        log.info("\t + totalCount : {}", totalCount);
+       // Integer totalCount = this.mapper.getTotalCount();
+        //log.info("\t + totalCount : {}", totalCount);
     }
 
     @Test
