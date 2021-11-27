@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -71,11 +72,11 @@
 <main>
 
     <!-- 파티프로필 설정 -->
-    <div class="container mt-5 px-5 profile-box shadow-sm">
+    <%--<div class="container mt-5 px-5 profile-box shadow-sm">
         <div class="header">
             <h4>파티프로필 설정</h4>
         </div>
-        <div class="container-lg d-flex justify-content-center">
+        <div class="container-sm d-flex justify-content-center flex-column">
             <div
                     class="d-flex flex-column justify-content-center align-items-center">
                 <div class="container-partyProfileImg">
@@ -90,8 +91,7 @@
                 <button type="button" class="btn btn-outline-primary">업로드</button>
             </div>
 
-            <div
-                    class="d-flex flex-column justify-content-center align-items-center">
+            <div class="d-flex flex-column justify-content-center align-items-center mt-4">
                 <div class="container-partyProfileName">
                     <span class="align-self-baseline label-partyname">파티이름</span> <input
                         type="text" class="form-control input-partyname mt-2"
@@ -100,6 +100,36 @@
                 <button type="submit" class="btn btn-primary mt-4 save-btn">저장</button>
             </div>
         </div>
+    </div>--%>
+    <div class="container mt-5 px-5 profile-box shadow-sm">
+        <div class="header">
+            <h4>파티 프로필 설정</h4>
+        </div>
+
+        <form class="form-data" enctype="multipart/form-data">
+            <input type="hidden" class="input-partycode" name="partyCode" value="${__PARTY__.partyCode}"/>
+
+            <div class="container-lg d-flex justify-content-center align-items-center">
+                <div class="d-flex flex-column justify-content-center align-items-center">
+                    <div class="img-profile justify-content-center align-items-center">
+                        <img src="${__PARTY__.coverPic}" alt="파티 프로필 사진" width="700px" height="auto">
+                    </div>
+                    <div class="mt-2">
+                        <button type="button" class="btn btn-outline-primary select-btn">
+                            이미지 업로드
+                        </button>
+                        <input type="file" class="form-control input-file visually-hidden" name="fileLocation" accept="image/*">
+                    </div>
+                    <div class="d-flex flex-column justify-content-center align-items-center w-100 col-3 mt-4">
+                        <span class="align-self-baseline label-partyname">파티 이름</span>
+                        <input type="text" class="form-control input-partyname mt-2" name="partyName"
+                               value="${__PARTY__.partyName}">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary mt-4 save-btn">저장하기</button>
+                </div>
+            </div>
+        </form>
     </div>
 
     <div class="container mt-5 px-5 profile-box shadow-sm">
@@ -171,6 +201,6 @@
 <!-- 스윗알러트 -->
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script
-        src="${pageContext.request.contextPath}/resources/js/partyMain.js"></script>
+        src="${pageContext.request.contextPath}/resources/js/partyedit.js"></script>
 </body>
 </html>

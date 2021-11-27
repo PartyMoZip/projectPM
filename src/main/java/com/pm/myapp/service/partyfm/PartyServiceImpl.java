@@ -90,8 +90,8 @@ public class PartyServiceImpl implements PartyService,InitializingBean, Disposab
 	} // undoJoin
 	
 	@Override
-	public boolean editLogo(Map<String, Object> imageInfo) {
-		log.debug("editLogo({}) invoked.",imageInfo);
+	public boolean editPartyProfile(Map<String, Object> imageInfo) {
+		log.debug("editPartyProfile({}) invoked.",imageInfo);
 		
 		int affectedLine = this.mapper.modifyLogo(imageInfo);
 		
@@ -99,14 +99,14 @@ public class PartyServiceImpl implements PartyService,InitializingBean, Disposab
 		
 		return (affectedLine==1);
 		
-	} // editLogo
+	} // editPartyProfile
 	
 
 	@Override
-	public boolean editPartyMainImage(Map<String, Object> imageInfo) {
-		log.debug("editPartyMainImage({}) invoked.",imageInfo);
+	public boolean editPartyMainImage(Map<String, Object> partyInfo) {
+		log.debug("editPartyMainImage({}) invoked.",partyInfo);
 
-		int affectedLine = this.mapper.modifyMainImage(imageInfo);
+		int affectedLine = this.mapper.modifyMainImage(partyInfo);
 		
 		return (affectedLine==1);
 	} // editPartyMainImage

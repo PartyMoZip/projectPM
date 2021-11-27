@@ -41,7 +41,6 @@
                         <p>개설 날짜 : ${__PARTY__.createDate}</p>
                         <p>파티인원 :&nbsp;${__PARTY__.count}명</p>
                         <p>${__PARTY__.partyProfile}</p>
-                        <p>우리는 새로운 사람을 만나는 파티입니다.</p>
                     </div>
                 </div>
             </div>
@@ -1214,6 +1213,6 @@
 <!-- 스윗알러트 -->
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script
-        src="${pageContext.request.contextPath}/resources/js/partyMain.js"></script>
+        src="${pageContext.request.contextPath}/resources/js/party.js"></script>
 </body>
 </html>

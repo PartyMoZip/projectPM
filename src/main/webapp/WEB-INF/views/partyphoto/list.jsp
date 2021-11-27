@@ -306,7 +306,7 @@
 	<!-- 스윗알러트 -->
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<script
-		src="${pageContext.request.contextPath}/resources/js/partyMain.js"></script>
+		src="${pageContext.request.contextPath}/resources/js/partyedit.js"></script>
 
 </body>
 </html>

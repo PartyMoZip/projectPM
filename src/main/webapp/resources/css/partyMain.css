@@ -120,7 +120,6 @@ h4 {
 .container-partyProfileImg {
 	width: 30vw;
 	height: 50vh;
-	margin-right: 40px;
 }
 
 .container-partyProfileName {
@@ -151,7 +150,6 @@ h4 {
 }
 
 .btn.btn-outline-primary {
-	margin-right: 40px;
 	border: 1px solid var(--primary-color);
 	color: var(--primary-color);
 }

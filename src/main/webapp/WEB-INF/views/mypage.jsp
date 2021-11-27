@@ -68,10 +68,9 @@
             <h4>프로필 설정</h4>
         </div>
 
-        <form action="/users/${sessionScope.__AUTH__.hashCode()}/edit-profile" class="form-data"
-              enctype="multipart/form-data">
+        <form class="form-data" enctype="multipart/form-data">
             <input type="hidden" class="input-email" name="email" value="${sessionScope.__AUTH__.email}"/>
-            <input type="hidden" name="id" class="input-id" value="${sessionScope.__AUTH__.hashCode()}">
+
             <div class="container-lg d-flex justify-content-center">
                 <div class="d-flex flex-column justify-content-center align-items-center">
                     <div class="img-profile justify-content-center align-items-center">
