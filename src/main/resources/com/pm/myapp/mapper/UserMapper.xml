@@ -4,27 +4,24 @@
 <mapper namespace="com.pm.myapp.mapper.UserMapper">
 
     <select id="selectUser" parameterType="HashMap" resultType="com.pm.myapp.domain.UserDTO">
-        SELECT
-            EMAIL as email ,
-            NICKNAME as nickname,
-            USERPIC as userPic
-        from USERINFO
+        SELECT EMAIL,
+               NICKNAME,
+               USERPIC,
+               USERBANNED
+        FROM USERINFO
 
-        WHERE EMAIL=#{email}
+        WHERE EMAIL = #{email}
     </select>
 
     <insert id="insertUser" parameterType="com.pm.myapp.domain.UserDTO">
-        INSERT INTO USERINFO(
-            EMAIL,
-            NICKNAME,
-            USERPIC,
-            USERBANNED
-        ) values (
-                     #{email},
-                     #{nickname},
-                     #{userPic},
-                     #{userBanned}
-                 )
+        INSERT INTO USERINFO(EMAIL,
+                             NICKNAME,
+                             USERPIC,
+                             USERBANNED)
+        VALUES (#{email},
+                #{nickname},
+                #{userPic},
+                #{userBanned})
     </insert>
 
     <select id="getMyPartyList" resultType="com.pm.myapp.domain.PartyVO">

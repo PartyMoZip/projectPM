@@ -1,4 +1,5 @@
 @import "global.css";
+@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
 
 /* 파티메인페이지 시작 */
 /* 파티메인페이지 메뉴바 css */
@@ -82,9 +83,9 @@ h5 {
 	text-align: center;
 	margin: 0 auto;
 	width: fit-content;
-	color: var(--primary-color);
-	font-weight: 600;
-	text-shadow: 1px 1px 1px gray;
+	color: var(--primary-text-color);
+	font-family: 'Do Hyeon', sans-serif;
+	font-size: 3rem;
 }
 
 .partyInfo-content-title {
@@ -245,7 +246,7 @@ input::-webkit-search-cancel-button {
 }
 
 .album.py-5 .mt-4 {
-	margin-top: none;
+	margin-top: 0;
 }
 
 /* 파티메인 포토갤러리 끝 */

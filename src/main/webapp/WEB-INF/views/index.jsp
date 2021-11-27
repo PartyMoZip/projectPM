@@ -14,7 +14,6 @@
           integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/home.css?after">
-    <%--<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/button.scss?after">--%>
 
 </head>
 
