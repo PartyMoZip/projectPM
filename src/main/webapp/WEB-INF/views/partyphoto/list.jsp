@@ -100,7 +100,7 @@
 				<li class="nav-item"><a class="nav-link" href="#">일정</a></li>
 				<li class="nav-item"><a class="nav-link" href="#">파티원</a></li>
 				<li class="nav-item"><a class="nav-link"
-					href="/partyfree/getPFreeBoardList">자유게시판</a></li>
+					href="/partyFree/boardList?partyCode=${partyCode}">자유게시판</a></li>
 				<li class="nav-item"><a class="nav-link active"
 					href="/partyphoto/list?partyCode=${partyCode}">포토갤러리</a></li>
 				<li class="nav-item"><a class="nav-link"
@@ -129,7 +129,7 @@
 								<div class="d-flex justify-content-between align-items-center">
 									<div class="btn-group">
 										<button type="button" class="btn btn-sm btn-outline-secondary"
-											onClick="location.href='./detail';">View</button>
+											onClick="location.href='/partyphoto/detail?partyCode=${ldto.partyCode}&currPage=${cri.currPage}';">View</button>
 									</div>
 									<small class="text-muted"><c:out
 											value="게시날짜 넣어줘 형. 좋아요 카운트 넣으실?" /></small>
