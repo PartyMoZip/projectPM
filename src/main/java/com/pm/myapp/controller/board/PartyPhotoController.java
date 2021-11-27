@@ -77,6 +77,9 @@ public class PartyPhotoController {
 		PageDTO pageDTO = new PageDTO(cri, totalAmount);
 		model.addAttribute("pageMaker", pageDTO);
 		
+		// 파티 코드 강제 주입
+	    model.addAttribute("partyCode", partyCode);
+		
 	} // getPhotoBoardList  
 	
 	// 포토 갤러리 상세보기
