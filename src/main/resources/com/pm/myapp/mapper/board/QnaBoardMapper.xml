@@ -11,8 +11,8 @@
             FROM QNABOARD Q
             JOIN USERINFO U ON Q.email = U.email
             ORDER BY qrefer desc
-            OFFSET (#{currPage}-1) * #{amount} ROWS
-            FETCH NEXT #{amount} ROWS ONLY
+            OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
+            FETCH NEXT #{cri.amount} ROWS ONLY
         ]]>
 
     </select>
@@ -52,21 +52,61 @@
     </update>
 
     <select id="searchQnaBoard" resultType="com.pm.myapp.domain.board.QnaBoardSearchVO">
-       <![CDATA[
-            SELECT Q.QREFER, Q.QSUBJECT, Q.QDATE, U.EMAIL, U.NICKNAME
+
+            SELECT Q.QREFER, Q.QSUBJECT, Q.QCONTENT, Q.QDATE, U.EMAIL, U.NICKNAME
             FROM QNABOARD Q
             JOIN USERINFO U ON Q.EMAIL = U.EMAIL
-            WHERE Q.QSUBJECT LIKE #{keyword} ORDER BY QREFER DESC
+            WHERE
+            <choose>
+                <when test = "option == '1'">
+                    U.NICKNAME LIKE CONCAT('%', #{keyword}, '%')
+                    OR Q.QCONTENT LIKE CONCAT('%', #{keyword}, '%')
+                    OR Q.QSUBJECT LIKE CONCAT('%', #{keyword}, '%')
+                </when>
+                <when test = "option == '2">
+                    U.NICKNAME LIKE CONCAT('%', #{keyword}, '%')
+                </when>
+                <when test = "option == '3'">
+                    Q.QSUBJECT LIKE CONCAT('%', #{keyword}, '%')
+                </when>
+                <when test = "option == '4'">
+                    Q.QCONTENT LIKE CONCAT('%', #{keyword}, '%')
+                </when>
+            </choose>
             OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
             FETCH NEXT #{cri.amount} ROWS ONLY
-        ]]>
+
+    </select>
+
+    <!-- 총 게시물 개수 -->
+    <select id = "getTotalSearchCount" resultType = "Integer">
+
+        SELECT COUNT(Q.QREFER)
+        FROM QNABOARD Q
+        JOIN USERINFO U ON F.EMAIL = U.EMAIL
+        WHERE
+        <choose>
+            <when test = "option == '1'">
+                U.NICKNAME LIKE CONCAT('%', #{keyword}, '%')
+                OR Q.QCONTENT LIKE CONCAT('%', #{keyword}, '%')
+                OR Q.QSUBJECT LIKE CONCAT('%', #{keyword}, '%')
+            </when>
+            <when test = "option == '2">
+                U.NICKNAME LIKE CONCAT('%', #{keyword}, '%')
+            </when>
+            <when test = "option == '3'">
+                Q.QSUBJECT LIKE CONCAT('%', #{keyword}, '%')
+            </when>
+            <when test = "option == '4'">
+                Q.QCONTENT LIKE CONCAT('%', #{keyword}, '%')
+            </when>
+        </choose>
     </select>
 
     <delete id="deleteQnaBoard">
         DELETE
         FROM QNABOARD
         WHERE QREFER=#{qrefer}
-
     </delete>
 
     <select id="getCommentListPaging" resultType = "com.pm.myapp.domain.board.QnaBoardReplyVO">
@@ -85,7 +125,6 @@
         INSERT INTO QNABOARDRE(qrerefer, qrecontent, qredate, qrefer, email)
         VALUES(SEQ_FREEBOARDRE.nextval, #{qrecontent}, sysdate, #{qrefer}, #{email})
 
-
     </insert>
 
     <select id="getTotalComment" resultType="int">
@@ -93,7 +132,6 @@
             SELECT COUNT(qrerefer)
             FROM QNABOARDRE
             WHERE qrerefer > 0
-
         ]]>
     </select>
 
@@ -109,7 +147,6 @@
         DELETE
         FROM QNABOARDRE
         WHERE QREREFER=#{qrerefer}
-
     </delete>
 
 

@@ -1,0 +1,164 @@
+@import "global.css";
+@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
+
+
+/* 감싸는 전체 div 너비, 중앙 정렬 */
+.all-wrap {
+    margin: 20px auto;
+    width: 80%;
+}
+
+.inner-container {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--divider-color);
+}
+
+/*자유게시판 탭 메뉴 css*/
+.nav.nav-pills {
+    margin-top: 50px;
+    justify-content: left;
+}
+
+.nav-pills .nav-item {
+    margin-right: 5px;
+}
+
+.nav-pills .nav-link.active {
+    background-color: var(--primary-color) !important;
+    padding: 3px 6px;
+    font-size: 25px;
+}
+
+.nav-pills .nav-link {
+    padding: 3px 6px;
+    background-color: lightgrey;
+    color: #212529;
+}
+
+.nav-pills .nav-link:hover {
+    background-color: #669900;
+    color: #fff;
+}
+
+
+/* 버튼 디자인 */
+.btn.btn-primary {
+    width: 70px;
+    height: 34px;
+    padding: 3px;
+    font-size: 12px;
+    font-weight: 600;
+    background: none;
+    color: black;
+    border: 2px solid #669900;
+}
+
+.btn.btn-primary:hover {
+    color: #fff;
+    background-color: #669900;
+}
+
+.bottom-menu {
+    display: flex;
+}
+
+.d-grid.gap-2.d-md-block {
+    float: right;
+    margin-top: 2px;
+}
+/*
+.title {
+    display : flex;
+    flex-direction: row;
+    width : 808px;
+    padding-bottom : 10px;
+    border-bottom : 1px solid #d2d2d2;
+    font-weight : 400;
+    margin-top : 20px;
+}
+*/
+
+.title .titlearea_input {
+    display: block;
+    width: 100%;
+    min-height : 40px;
+    padding : 11px 12px 10px;
+    border : 1px solid #ebecef;
+    box-sizing : border-box;
+    overflow : hidden;
+    resize : none;
+    word-break : break-all;
+    font-size :15px;
+    letter-spacing: -.23px;
+    line-height : 17px;
+    outline : none;
+    margin-top : 20px;
+}
+
+.content {
+    min-height:4rem;
+    font-size: 1.1rem;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    border: 1px solid lightgray;
+    padding: 4px 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.05), 0 6px 20px 0 rgba(0, 0, 0, 0.05);
+}
+
+.product-photo{
+    padding-top : 10px;
+}
+
+.photo_content {
+    min-height: 8rem;
+    font-size: 1.2rem;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    border: 1px solid lightgray;
+    padding: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.05), 0 6px 20px 0 rgba(0, 0, 0, 0.05);
+}
+
+
+
+.img_thumb {
+    border-radius: 50%;
+}
+
+.covuer_info {
+    margin: 20px 0px 20px 0px;
+}
+
+.confirm_button {
+    float: right;
+}
+
+textarea {
+    resize: none;
+}
+
+.button_area {
+    float: right;
+    height: 30px;
+    margin: 0 -28px;
+    padding: 20px 29px 0;
+    border-top: 1px solid #f8f8f8;
+}
+
+.button_container {
+    height: 20px;
+    margin: 20px 0;
+    float: right;
+    width: 220px;
+}
+
+.btn-outline-warning {
+    margin: 10px 0px 10px 0px;
+}
+
+.container-btnGroup {
+    margin-top: 20px;
+    text-align: end;
+}

@@ -44,8 +44,8 @@ public class PartyFMapperTests {
         cri.setAmount(1);
         cri.setAmount(10);
 
-        List<PartyFreeListVO> list = this.mapper.getListWithPaging(cri);
-        list.forEach(log::info);
+       // List<PartyFreeListVO> list = this.mapper.getListWithPaging(searchWord, option, cri);
+        //list.forEach(log::info);
     } // testGetListWithPaging
 
     @Test
@@ -103,7 +103,7 @@ public class PartyFMapperTests {
         log.debug("testSearchPartyFree() invoked.");
 
         String searchOption= "pf.pfsubject";
-        String keyword="%t%";
+        Integer keyword= 0;
         Criteria cri = new Criteria();
         cri.setAmount(10);
         cri.setCurrPage(1);
@@ -116,8 +116,8 @@ public class PartyFMapperTests {
     public void testGetTotalCount() { // 파티 자유 게시판 총 개수 - 테스트 완료
         log.debug("testGetTotalCount() invoked.");
 
-        Integer totalCount = this.mapper.getTotalCount();
-        log.info("\t + totalCount : {}", totalCount);
+       // Integer totalCount = this.mapper.getTotalCount();
+       // log.info("\t + totalCount : {}", totalCount);
     } // testGetTotalCount
 
 

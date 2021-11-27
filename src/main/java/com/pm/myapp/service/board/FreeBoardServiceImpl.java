@@ -25,12 +25,13 @@ public class FreeBoardServiceImpl implements FreeBoardService, InitializingBean,
 
     // 자유 게시판 목록 - 페이징 처리
     @Override
-    public List<FreeBoardListVO> getListPerPage(Criteria cri) {
+    public List<FreeBoardListVO> getListPerPage(String searchWord, Integer option, Criteria cri) {
         log.debug("getListPerPage({}) invoked.", cri);
-        List<FreeBoardListVO> allBoards = this.mapper.getListWithPaging(cri);
-        log.info("\t + allBoards : {}", allBoards);
 
-        return allBoards;
+        List<FreeBoardListVO> freeBoard = this.mapper.getListWithPaging(searchWord, option, cri);
+        log.info("\t + allBoards : {}", freeBoard);
+
+        return freeBoard;
     } // getListPerPage
 
     // 자유 게시판 상세보기
@@ -79,22 +80,31 @@ public class FreeBoardServiceImpl implements FreeBoardService, InitializingBean,
 
     // 자유 게시글 검색
     @Override
-    public List<FreeBoardSearchVO> search(String searchOption, String keyword, Criteria cri) {
-        String searchOption_mod = "f." + searchOption;
-        String keyword_mod = "%"+keyword+"%";
+    public List<FreeBoardSearchVO> search(String searchWord, Integer option, Criteria cri) {
+        String searchOption_mod = "f." + searchWord;
+        String keyword_mod = "%"+option+"%";
 
         List<FreeBoardSearchVO> searchList = this.mapper.searchFreeBoard(searchOption_mod, keyword_mod, cri);
+
 
         return searchList;
     } // search
 
     // 총 게시물 개수 반환
     @Override
-    public Integer getTotal() {
+    public Integer getTotal(String searchWord, Integer option) {
         log.debug("getTotal() invoked.");
 
-        return this.mapper.getTotalCount();
+        return this.mapper.getTotalCount(searchWord, option);
     } // getTotal
+
+    // 검색 결과 게시물 개수 반환
+    @Override
+    public Integer getTotalSearch(String searchWord, Integer option) {
+        log.debug("getTotalSearch() invoked.");
+
+        return this.mapper.getTotalSearchCount(searchWord, option);
+    } // getTotalSearch
 
     // 댓글 목록
     @Override

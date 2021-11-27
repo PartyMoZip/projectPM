@@ -8,7 +8,7 @@ import java.util.List;
 public interface PartyFreeService {
 
     // 파티 자유 게시판 목록 - 페이징 처리
-    public abstract List<PartyFreeListVO> getListPerPage(Criteria criteria);
+    public abstract List<PartyFreeListVO> getListPerPage(String searchWord, Integer option, Criteria cri);
 
     // 파티 자유 게시판 상세보기
     public abstract PartyFreeVO getBoardDetail(Integer  pfrefer, Integer partycode);
@@ -23,10 +23,13 @@ public interface PartyFreeService {
     public abstract boolean deleteBoard(Integer pfrefer);
 
     // 파티 자유 게시판 검색
-   public abstract List<PartyFreeSearchVO> search(String searchOption, String keyword, Criteria cri);
+   public abstract List<PartyFreeSearchVO> search(String searchWord, Integer option, Criteria cri);
 
     // 파티 자유 게시판 총 개수 반환
-    public abstract Integer getTotal();
+    public abstract Integer getTotal(String searchWord, Integer option);
+
+    // 검색 결과 게시물 개수 반환
+    public abstract Integer getTotalSearch(String searchWord, Integer option);
 
     // 9. 댓글 목록
     public abstract List<PartyFreeReplyVO> getReply(Integer pfrefer, Integer partycode, Criteria cri);

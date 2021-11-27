@@ -21,6 +21,7 @@ import com.pm.myapp.domain.Criteria;
 import com.pm.myapp.domain.PageDTO;
 import com.pm.myapp.domain.ReplyCriteria;
 import com.pm.myapp.domain.board.HeartDTO;
+import com.pm.myapp.domain.board.PartyPhotoBoardListDTO;
 import com.pm.myapp.domain.board.PartyPhotoDTO;
 import com.pm.myapp.domain.board.PartyPhotoReDTO;
 import com.pm.myapp.service.board.PartyPhotoService;
@@ -46,11 +47,13 @@ public class PartyPhotoController {
 	// 포토 갤러리 목록 - 검색 포함
 	@GetMapping("/list")
 	public void getPhotoBoardList(
-			@ModelAttribute("partyCode") Integer partyCode,
-			@ModelAttribute("searchWord") String searchWord,
-			@ModelAttribute("option") Integer option,
+			@ModelAttribute("ldto") PartyPhotoBoardListDTO ldto,
 			@ModelAttribute("cri") Criteria cri,
 			Model model) {
+		Integer partyCode = ldto.getPartyCode();
+		String searchWord = ldto.getSearchWord();
+		Integer option = ldto.getOption();
+		
 		log.debug("getPhotoBoardList({}, {}, {}, {}) invoked.",partyCode, searchWord,option, cri);
 		
 		// 포토 갤러리는 페이지당 글이 9개
@@ -68,23 +71,35 @@ public class PartyPhotoController {
 		
 		// 총 게시물 수 구하기
 		Integer totalAmount = this.service.getTotalPartyPhotoList(partyCode, searchWord, option);
-		log.info("\t+ : {}",totalAmount);
+		log.info("\t+ totalAmount : {}",totalAmount);
 		
 		// 글 페이지네이션 처리
 		PageDTO pageDTO = new PageDTO(cri, totalAmount);
 		model.addAttribute("pageMaker", pageDTO);
+		
+		// 파티 코드 강제 주입
+		model.addAttribute("partyCode", partyCode);
 		
 	} // getPhotoBoardList  
 	
 	// 포토 갤러리 상세보기
 	@GetMapping("/detail")
 	public void getPhotoBoardDetail(
-			Integer partyCode,
-			Integer prefer,
+			@ModelAttribute("ldto") PartyPhotoBoardListDTO ldto,
+			@ModelAttribute("prefer") Integer prefer,
+			String email,
 			@ModelAttribute("cri") Criteria cri,
-			ReplyCriteria recri,
+			@ModelAttribute("recri") ReplyCriteria recri,
 			Model model) {
-		log.debug("getPhotoBoardDetail({}, {}, {}) invoked.",partyCode, cri, recri);
+		Integer partyCode = ldto.getPartyCode();
+		
+		log.debug("getPhotoBoardDetail({}, {}, {}, {}, {}) invoked.",partyCode, prefer, email, cri, recri);
+		
+		// 읽기번호 증가
+		boolean readOk = this.service.readPhotoBoard(prefer, partyCode);
+		if(readOk) {
+			log.info("{}번 파티 포토게시판 {}번 글 읽기 성공",partyCode,prefer);
+			} // if
 		
 		// 갤러리 글 상세내용 불러오기
 		PartyPhotoDTO detail = this.service.getPhotoBoardDetail(prefer, partyCode);
@@ -108,12 +123,31 @@ public class PartyPhotoController {
 		// 댓글 페이지네이션 처리
 		PageDTO pageDTO = new PageDTO(recri, totalAmount);
 		model.addAttribute("replyPageMaker", pageDTO);
+		
+		// 내 좋아요 불러오기
+		// 로그인 중이라면 좋아요 눌렀는지 아닌지 표시
+		// 아니라면 아닌체로 표시
+		if(email!=null) {
+			Integer myHeart = this.service.getMyPartyPhotoHeart(prefer,partyCode,email);
+			log.info("\t+ myHeart : {}",myHeart);
+			model.addAttribute("__MYHEART__", myHeart);
+		} else {
+			model.addAttribute("__MYHEART__", 0);
+		} // if-else
+		
+		// 총 좋아요 개수 불러오기
+		Integer totalHeart = this.service.getTotalPartyPhotoHeart(prefer,partyCode);
+		log.info("\t+ totalHeart : {}",totalHeart);
+		model.addAttribute("__TOTALHEART__", totalHeart);
 				
 	} // getPhotoBoardDetail
 	
 	// 포토 갤러리 작성 - view
 	@GetMapping("/writeview")
-	public void writePhotoBoardView() {
+	public void writePhotoBoardView(
+			@ModelAttribute("ldto") PartyPhotoBoardListDTO ldto,
+			@ModelAttribute("cri") Criteria cri
+			) {
 		log.debug("writePhotoBoardView() invoked.");
 
 	} // writePhotoBoardView
@@ -177,11 +211,13 @@ public class PartyPhotoController {
 	// 포토 갤러리 수정 - view
 	@GetMapping("/editview")
 	public void editPhotoBoardView(
-			Integer prefer,
-			Integer partyCode,
+			@ModelAttribute("ldto") PartyPhotoBoardListDTO ldto,
+			@ModelAttribute("prefer") Integer prefer,
+			@ModelAttribute("cri") Criteria cri,
 			Model model
 			) {
-		log.debug("editPhotoBoardView() invoked.");
+		Integer partyCode = ldto.getPartyCode();
+		log.debug("editPhotoBoardView({}, {}) invoked.", ldto, prefer);
 		
 		// 갤러리 글 상세내용 불러오기
 		PartyPhotoDTO detail = this.service.getPhotoBoardDetail(prefer, partyCode);
@@ -280,7 +316,7 @@ public class PartyPhotoController {
 		
 		rttrs.addAttribute("partyCode", partyCode);
 		rttrs.addAttribute("prefer", dto.getPrefer());
-		rttrs.addAttribute("cri", cri);
+		rttrs.addAttribute("currPage", cri.getCurrPage());
 
 		return "redirect:/partyphoto/detail";
 		
@@ -291,7 +327,8 @@ public class PartyPhotoController {
 	public String deletePhotoBoard(
 			Integer prefer,
 			Integer partyCode,
-			@ModelAttribute("cri") Criteria cri
+			@ModelAttribute("cri") Criteria cri,
+			RedirectAttributes rttrs
 			) {
 		log.debug("deletePhotoBoard({}, {}) invoked.",prefer, partyCode);
 		
@@ -323,6 +360,8 @@ public class PartyPhotoController {
 		boolean resultDel = this.service.deletePartyPhoto(prefer, partyCode);
 		log.info("\t+ resultDel : {}",resultDel);
 
+		rttrs.addAttribute("partyCode", partyCode);
+		
 		return "redirect:/partyphoto/list";
 		
 	} // deletePhotoBoard
@@ -337,17 +376,17 @@ public class PartyPhotoController {
 			PartyPhotoReDTO dto,
 			RedirectAttributes rttrs
 			) {
-		log.debug("writeComment({}, {}, {}, {} ,{}) invoked.",prefer, partyCode, cri, recri, dto);
+		log.debug("writeComment({}, {}, {}, {}, {}) invoked.",prefer, partyCode, cri, recri, dto);
 		
 		boolean result = this.service.writePhotoBoardComment(dto);
 		log.info("\t+ result : {}",result);
 		
 		rttrs.addAttribute("prefer", prefer);
 		rttrs.addAttribute("partyCode", partyCode);
-		rttrs.addAttribute("cri", cri);
-		rttrs.addAttribute("recri", recri);
+		rttrs.addAttribute("currPage", cri.getCurrPage());
+		rttrs.addAttribute("reCurrPage", recri.getReCurrPage());
 
-		return "/partyphoto/detail";
+		return "redirect:/partyphoto/detail";
 
 	} // writeComment
 	
@@ -366,8 +405,8 @@ public class PartyPhotoController {
 		
 		rttrs.addAttribute("prefer", dto.getPrefer());
 		rttrs.addAttribute("partyCode", dto.getPartyCode());
-		rttrs.addAttribute("cri", cri);
-		rttrs.addAttribute("recri", recri);
+		rttrs.addAttribute("currPage", cri.getCurrPage());
+		rttrs.addAttribute("reCurrPage", recri.getReCurrPage());
 
 		return "redirect:/partyphoto/detail";
 		
@@ -388,8 +427,8 @@ public class PartyPhotoController {
 		
 		rttrs.addAttribute("prefer", dto.getPrefer());
 		rttrs.addAttribute("partyCode", dto.getPartyCode());
-		rttrs.addAttribute("cri", cri);
-		rttrs.addAttribute("recri", recri);
+		rttrs.addAttribute("currPage", cri.getCurrPage());
+		rttrs.addAttribute("reCurrPage", recri.getReCurrPage());
 
 		return "redirect:/partyphoto/detail";
 
@@ -400,16 +439,21 @@ public class PartyPhotoController {
 	public String givePhotoHeart(
 			HeartDTO hdto,
 			@ModelAttribute("cri") Criteria cri,
-			RedirectAttributes rttrs
+			@ModelAttribute("recri") ReplyCriteria recri,
+			RedirectAttributes rttrs,
+			Model model
 			) {
 		log.debug("givePhotoHeart({}, {})",hdto,cri);
 		
-		boolean heartCheck = this.service.checkPhotoBoardHeart(hdto);		
+		Integer heartCheck = this.service.checkPhotoBoardHeart(hdto);		
 		log.info("\t+ heartCheck : {}", heartCheck);
+		
+		model.addAttribute("__MYHEART__", heartCheck);
 		
 		rttrs.addAttribute("prefer", hdto.getPrefer());
 		rttrs.addAttribute("partyCode", hdto.getPartyCode());
-		rttrs.addAttribute("cri", cri);
+		rttrs.addAttribute("currPage", cri.getCurrPage());
+		rttrs.addAttribute("reCurrPage", recri.getReCurrPage());
 		
 		return "/partyphoto/detail";
 		

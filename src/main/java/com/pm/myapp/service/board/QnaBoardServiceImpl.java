@@ -20,6 +20,16 @@ public class QnaBoardServiceImpl implements QnaBoardService {
     @Setter(onMethod_=@Autowired)
     private QnaBoardMapper mapper;
 
+    // 문의 게시판 목록 - 페이징 처리
+    @Override
+    public List<QnaBoardListVO> getListPerPage(String searchWord, Integer option, Criteria cri) {
+        log.debug("getListPerPage({}) invoked.", cri);
+        List<QnaBoardListVO> qnaBoard = this.mapper.getListWithPaging(searchWord, option, cri);
+        log.info("\t + allBoards : {}", qnaBoard);
+
+        return qnaBoard;
+    }
+    
     // 글쓰기
     @Override
     public boolean writeBoard(QnaBoardDTO qnaBoard) {
@@ -60,30 +70,31 @@ public class QnaBoardServiceImpl implements QnaBoardService {
         return qnaBoard;
     }
 
+    // 문의 게시판 검색
     @Override
-    public List<QnaBoardSearchVO> search(String searchOption, String keyword, Criteria cri) {
+    public List<QnaBoardSearchVO> search(String searchWord, Integer option, Criteria cri) {
 
-        String searchOption_mod = "f." + searchOption;
-        String keyword_mod = "%"+keyword+"%";
+        String searchOption_mod = "f." + searchWord;
+        String keyword_mod = "%"+option+"%";
         List<QnaBoardSearchVO> searchList = this.mapper.searchQnaBoard(searchOption_mod, keyword_mod, cri);
 
         return searchList;
     }
 
+    // 총 게시물 개수 반환
     @Override
-    public List<QnaBoardListVO> getListPerPage(Criteria cri) {
-        log.debug("getListPerPage({}) invoked.", cri);
-        List<QnaBoardListVO> QnaBoard = this.mapper.getListWithPaging(cri);
-        log.info("\t + allBoards : {}", QnaBoard);
-        return null;
-    }
-
-    @Override
-    public Integer getTotal() {
+    public Integer getTotal(String searchWord, Integer option) {
         log.debug("getTotal({}) invoked.");
-        return this.mapper.getTotalCount();
+        return this.mapper.getTotalCount(searchWord, option);
     }
 
+    // 검색 결과 게시물 개수 반환
+    @Override
+    public Integer getTotalSearch(String searchWord, Integer option) {
+        log.debug("getTotalSearch() invoked.");
+
+        return this.mapper.getTotalSearchCount(searchWord, option);
+    }
 
     // 댓글등록
     @Override

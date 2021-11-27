@@ -6,14 +6,30 @@
 
     <select id="getListWithPaging" resultType = "com.pm.myapp.domain.board.PartyFreeListVO">
 
-        <![CDATA[
-            SELECT PF.PFREFER, PF.PFDATE, PF.PFSUBJECT, U.email, PF.readnum
+            SELECT PF.PFREFER, PF.PFDATE, PF.PFCONTENT , PF.PFSUBJECT, U.EMAIL, PF.READNUM
             FROM PARTYFREEBOARD PF
-            JOIN USERINFO U ON PF.email = U.email
-            ORDER BY pfrefer desc
-            OFFSET (#{currPage}-1) * #{amount} ROWS
-            FETCH NEXT #{amount} ROWS ONLY
-        ]]>
+            JOIN USERINFO U
+            ON PF.EMAIL = U.EMAIL
+            <choose>
+                <when test="searchWord==null">
+                </when>
+                <when test="option==1">
+                    WHERE PF.PFCONTENT like '%'||#{searchWord}||'%'
+                    OR PF.PFSUBJECT like '%'||#{searchWord}||'%'
+                    OR U.NICKNAME like '%'||#{searchWord}||'%'
+                </when>
+                <when test="option==2">
+                    WHERE U.NICKNAME like '%'||#{searchWord}||'%'
+                </when>
+                <when test="option==3">
+                    WHERE PF.PFSUBJECT like '%'||#{searchWord}||'%'
+                </when>
+                <when test="option==4">
+                    WHERE PF.PFCONTENT like '%'||#{searchWord}||'%'
+                </when>
+                </choose>
+                OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
+                FETCH NEXT #{cri.amount} ROWS ONLY
 
     </select>
 
@@ -25,12 +41,28 @@
     </select>
 
     <select id="getTotalCount" resultType="int">
-        <![CDATA[
-            SELECT COUNT(pfrefer)
-            FROM PARTYFREEBOARD
-            WHERE pfrefer > 0
-
-        ]]>
+        SELECT COUNT(PF.PFREFER)
+        FROM PARTYFREEBOARD PF
+        JOIN USERINFO U
+        ON PF.EMAIL = U.EMAIL
+        <choose>
+            <when test="searchWord==null">
+            </when>
+            <when test="option==1">
+                WHERE PF.PFCONTENT like '%'||#{searchWord}||'%'
+                OR PF.PFSUBJECT like '%'||#{searchWord}||'%'
+                OR U.NICKNAME like '%'||#{searchWord}||'%'
+            </when>
+            <when test="option==2">
+                WHERE U.NICKNAME like '%'||#{searchWord}||'%'
+            </when>
+            <when test="option==3">
+                WHERE PF.PFSUBJECT like '%'||#{searchWord}||'%'
+            </when>
+            <when test="option==4">
+                WHERE PF.PFCONTENT like '%'||#{searchWord}||'%'
+            </when>
+        </choose>
     </select>
 
     <insert id="writePFreeBoard">
@@ -49,14 +81,54 @@
     </update>
 
     <select id="searchPartyFree" resultType="com.pm.myapp.domain.board.PartyFreeSearchVO">
-         <![CDATA[
-            SELECT PF.PFREFER, PF.PFSUBJECT, PF.PFDATE, PF.email
+
+            SELECT PF.PFREFER, PF.PFSUBJECT, PF.PFCONTENT, PF.PFDATE, PF.email
             FROM PARTYFREEBOARD PF
             JOIN USERINFO U ON PF.email = U.email
-            WHERE PF.PFSUBJECT LIKE #{keyword} ORDER BY PFREFER DESC
+            WHERE
+            <choose>
+                <when test = "option == '1'">
+                U.EMAIL LIKE CONCAT('%', #{keyword}, '%')
+               OR PF.PFCONTENT LIKE CONCAT('%', #{keyword}, '%')
+               OR PF.PFSUBJECT LIKE CONCAT('%', #{keyword}, '%')
+                </when>
+                <when test = "option == '2">
+                U.EMAIL LIKE CONCAT('%', #{keyword}, '%')
+                </when>
+                <when test = "option == '3'">
+                PF.PFSUBJECT LIKE CONCAT('%', #{keyword}, '%')
+                </when>
+                <when test = "option == '4'">
+                PF.PFCONTENT LIKE CONCAT('%', #{keyword}, '%')
+                </when>
+            </choose>
             OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
             FETCH NEXT #{cri.amount} ROWS ONLY
-        ]]>
+
+    </select>
+
+    <select id = "getTotalSearchCount" resultType="Integer">
+        SELECT COUNT(PF.PFREFER)
+        FROM PARTYFREEBOARD PF
+        JOIN USERINFO U ON PF.EMAIL = U.EMAIL
+        WHERE
+        <choose>
+            <when test = "option == '1'">
+                U.EMAIL LIKE CONCAT('%', #{keyword}, '%')
+                OR PF.PFCONTENT LIKE CONCAT('%', #{keyword}, '%')
+                OR PF.PFSUBJECT LIKE CONCAT('%', #{keyword}, '%')
+            </when>
+            <when test = "option == '2">
+                U.EMAIL LIKE CONCAT('%', #{keyword}, '%')
+            </when>
+            <when test = "option == '3'">
+                PF.PFSUBJECT LIKE CONCAT('%', #{keyword}, '%')
+            </when>
+            <when test = "option == '4'">
+                PF.PFCONTENT LIKE CONCAT('%', #{keyword}, '%')
+            </when>
+        </choose>
+
     </select>
 
     <delete id="deletePFreeBoard">

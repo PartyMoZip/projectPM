@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pm.myapp.mapper.board.FreeBoardMapper">
+
+    <select id="getListWithPaging" resultType="com.pm.myapp.domain.board.FreeBoardListVO">
+        <![CDATA[
+            SELECT
+                F.frefer, F.fsubject, F.fdate, U.nickname, F.readnum
+            FROM FREEBOARD F
+            JOIN USERINFO U ON F.email = U.email
+            ORDER BY frefer desc
+            OFFSET (#{currPage}-1) * #{amount} ROWS
+            FETCH NEXT #{amount} ROWS ONLY
+        ]]>
+
+    </select>
+
+    <select id="readFreeBoard" resultType="com.pm.myapp.domain.board.FreeBoardVO">
+        SELECT
+            F.frefer, F.fsubject,F.fcontent, F.fdate, U.nickname, F.freephoto, F.readnum
+        FROM FREEBOARD F
+        JOIN USERINFO U ON F.email = U.email
+        WHERE F.frefer = #{frefer}
+
+    </select>
+
+    <insert id="registerFreeBoard">
+
+        INSERT INTO FREEBOARD(FREFER, FSUBJECT, FCONTENT, fdate, EMAIL, FREEPHOTO, READNUM)
+        VALUES(SEQ_FREEBOARD.nextval, #{fSubject}, #{fContent}, sysdate, #{email}, #{freePhoto}, 0)
+
+    </insert>
+
+    <!-- 총 게시물 개수 -->
+    <select id="getTotalCount" resultType="Integer">
+
+        SELECT COUNT(frefer)
+        FROM FREEBOARD
+
+
+    </select>
+
+    <update id="updateFreeBoard">
+        UPDATE FREEBOARD
+        SET
+            FSUBJECT = #{fSubject},
+            FCONTENT = #{fContent},
+            FREEPHOTO = #{freePhoto}
+        WHERE FREFER = #{fRefer}
+    </update>
+
+    <!-- 페이징 처리된 목록 조회 -->
+    <select id="searchFreeBoard" resultType="com.pm.myapp.domain.board.FreeBoardSearchVO">
+
+        SELECT F.FREFER, F.FSUBJECT, F.FCONTENT, F.FDATE, U.EMAIL, U.NICKNAME, F.READNUM
+        FROM FREEBOARD F
+        JOIN USERINFO U ON F.EMAIL = U.EMAIL
+        WHERE
+        <choose>
+            <!-- <when test = "searchOption =  U.NICKNAME || F.FSUBJECT || F.FCONTENT">
+                 AND (U.NICKNAME LIKE CONCAT('%', #{keywor}, '%')
+                 OR F.FSUBJECT LIKE CONCAT('%', #{keyword}, '%')
+                 OR F.FCONTENT LIKE CONCAT('%', #{keyword}, '%'))
+             </when>-->
+            <when test = "option == '1'">
+                U.NICKNAME LIKE CONCAT('%', #{keyword}, '%')
+                OR F.FCONTENT LIKE CONCAT('%', #{keyword}, '%')
+                OR F.FSUBJECT LIKE CONCAT('%', #{keyword}, '%')
+            </when>
+            <when test = "option == '2">
+                U.NICKNAME LIKE CONCAT('%', #{keyword}, '%')
+            </when>
+            <when test = "option == '3'">
+                F.FSUBJECT LIKE CONCAT('%', #{keyword}, '%')
+            </when>
+            <when test = "option == '4'">
+                F.FCONTENT LIKE CONCAT('%', #{keyword}, '%')
+            </when>
+        </choose>
+        OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
+        FETCH NEXT #{cri.amount} ROWS ONLY
+
+    </select>
+
+
+    <!-- 총 게시물 개수 -->
+    <select id = "getTotalSearchCount" resultType = "Integer">
+
+        SELECT COUNT(F.FREFER)
+        FROM FREEBOARD F
+        JOIN USERINFO U ON F.EMAIL = U.EMAIL
+        WHERE
+        <choose>
+            <!-- <when test = "searchOption =  U.NICKNAME || F.FSUBJECT || F.FCONTENT">
+                 AND (U.NICKNAME LIKE CONCAT('%', #{keywor}, '%')
+                 OR F.FSUBJECT LIKE CONCAT('%', #{keyword}, '%')
+                 OR F.FCONTENT LIKE CONCAT('%', #{keyword}, '%'))
+             </when>-->
+            <when test = "option == '1'">
+                U.NICKNAME LIKE CONCAT('%', #{keyword}, '%')
+                OR F.FCONTENT LIKE CONCAT('%', #{keyword}, '%')
+                OR F.FSUBJECT LIKE CONCAT('%', #{keyword}, '%')
+            </when>
+            <when test = "option == '2">
+                U.NICKNAME LIKE CONCAT('%', #{keyword}, '%')
+            </when>
+            <when test = "option == '3'">
+                F.FSUBJECT LIKE CONCAT('%', #{keyword}, '%')
+            </when>
+            <when test = "option == '4'">
+                F.FCONTENT LIKE CONCAT('%', #{keyword}, '%')
+            </when>
+        </choose>
+
+    </select>
+
+    <delete id="deleteFreeBoard">
+        DELETE
+        FROM FREEBOARD
+        WHERE FREFER=#{frefer}
+    </delete>
+
+    <select id="getCommentListPaging" resultType="com.pm.myapp.domain.board.FreeBoardReplyVO">
+        <![CDATA[
+            SELECT
+                FRE.frerefer, FRE.frecontent, FRE.fredate, FRE.frefer, U.nickname
+            FROM FREEBOARDRE FRE
+            JOIN USERINFO U ON FRE.email = U.email
+            WHERE frefer = #{frefer}
+            ORDER BY frerefer desc
+            OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
+            FETCH NEXT #{cri.amount} ROWS ONLY
+        ]]>
+
+     </select>
+
+    <insert id="writeComment">
+
+        INSERT INTO FREEBOARDRE(frerefer, frecontent, fredate, frefer, email)
+        VALUES(SEQ_FREEBOARDRE.nextval, #{frecontent}, sysdate, #{frefer}, #{email})
+
+
+    </insert>
+
+
+    <select id="getTotalReply" resultType="int">
+        <![CDATA[
+            SELECT COUNT(frerefer)
+            FROM FREEBOARDRE
+            WHERE frerefer > 0
+        ]]>
+    </select>
+
+    <update id="editComment">
+        UPDATE FREEBOARDRE
+        SET
+            FRECONTENT = #{frecontent}
+        WHERE FREREFER = #{frerefer}
+    </update>
+
+
+    <delete id="deleteComment">
+        DELETE
+        FROM FREEBOARDRE
+        WHERE FREREFER=#{frerefer}
+    </delete>
+
+</mapper>

@@ -11,7 +11,7 @@ import java.util.List;
 public interface NoticeBoardService {
 
     // 공지 게시판 목록 - 페이징 처리
-    public abstract List<NoticeBoardListVO> getListPerPage(Criteria criteria);
+    public abstract List<NoticeBoardListVO> getListPerPage(String searchWord, Integer option, Criteria cri);
 
     // 공지 게시판 상세보기
     public abstract NoticeBoardVO getBoardDetail(Integer nrefer);
@@ -20,16 +20,18 @@ public interface NoticeBoardService {
     public abstract boolean writeBoard(NoticeBoardDTO writeNB);
 
     // 공지 게시판 수정
-    public abstract boolean editBoard(NoticeBoardDTO noticeBoard);
+    public abstract void editBoard(NoticeBoardDTO noticeBoard);
 
     // 공지 게시글 삭제
     public abstract  boolean deleteBoard(Integer nrefer);
 
     // 공지 게시판 검색
-    public abstract List<NoticeBoardSearchVO> search(String searchOption, String keyword, Criteria cri);
+    public abstract List<NoticeBoardSearchVO> search(String searchWord, Integer option, Criteria cri);
 
     // 8. 총 게시물 개수 반환
-    public abstract Integer getTotal();
+    public abstract Integer getTotal(String searchWord, Integer option);
 
+    // 검색 결과 게시물 개수 반환
+    public abstract Integer getTotalSearch(String searchWord, Integer option);
 
 } //end interface

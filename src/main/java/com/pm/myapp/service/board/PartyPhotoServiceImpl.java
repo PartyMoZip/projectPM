@@ -50,6 +50,16 @@ public class PartyPhotoServiceImpl implements PartyPhotoService {
 	} // getTotalPartyPhotoList
 
 	@Override
+	public boolean readPhotoBoard(Integer prefer, Integer partyCode) {
+		log.debug("readPhotoBoard({}, {}) invoked.",prefer,partyCode);
+		
+		Integer affectedLine = this.mapper.readIt(prefer, partyCode);
+		log.info("\t+ affectedLine : {}",affectedLine);
+		
+		return (affectedLine==1);
+	} // readPhotoBoard
+	
+	@Override
 	public PartyPhotoDTO getPhotoBoardDetail(Integer prefer, Integer partyCode) {
 		log.debug("getPhotoBoardDetail({}, {}) invoked.",prefer,partyCode);
 		
@@ -91,21 +101,63 @@ public class PartyPhotoServiceImpl implements PartyPhotoService {
 		return totalNum;
 		
 	} // getTotalPhotoReplyList
+	
+	@Override
+	public Integer getMyPartyPhotoHeart(Integer prefer, Integer partyCode, String email) {
+		log.debug("getTotalPartyPhotoHeart({}, {}, {}) invoked.",prefer,partyCode,email);
+		
+		HeartDTO hdto = new HeartDTO();
+		hdto.setPrefer(prefer);
+		hdto.setPartyCode(partyCode);
+		hdto.setEmail(email);
+		
+		Integer affectedHeart = this.mapper.checkPhotoHeart(hdto);
+		log.info("\t+ affectedHeart : {}", affectedHeart);
+		
+		return affectedHeart;
+	} // getMyPartyPhotoHeart
+	
+	@Override
+	public Integer getTotalPartyPhotoHeart(Integer prefer, Integer partyCode) {
+		log.debug("getTotalPartyPhotoHeart({}, {}) invoked.",prefer,partyCode);
+		
+		Integer totalHeart = this.mapper.checkTotalPhotoHeart(prefer, partyCode);
+		log.info("\t+ totalHeart : {}",totalHeart);
+		
+		if(totalHeart==null) {
+			totalHeart = 0;
+		} // if
+		
+		return totalHeart;
+	} // getTotalPartyPhotoHeart
 
 	@Override
 	public Integer writePartyPhoto(PartyPhotoDTO dto) {
 		log.debug("writePartyPhoto({}) invoked.",dto);
+
+		int partyCode = dto.getPartycode();
 		
-		// 파티별 게시판 최대 MaxRefer 찾기
-		Integer refer = this.mapper.maxRefer(dto);
-		Integer newRefer = refer + 1;
-		dto.setPrefer(newRefer);
+		String last_seq = "SEQ_PARTYPHOTOBOARD"  + "_" + partyCode;
+		Integer lastNumber = this.mapper.checkLastSeq(last_seq);
+		log.info("\t+ lastNumber : {}", lastNumber);
+		
+		if(lastNumber==null) {
+			
+			String create_seq = "create sequence SEQ_PARTYPHOTOBOARD"  + "_" + partyCode + " START WITH 1 INCREMENT BY 1 Nocache";
+			this.mapper.createSeq(create_seq);
+			
+		} // if
+		
+		String read_seq = "SELECT SEQ_PARTYPHOTOBOARD"  + "_" + partyCode + "." + "NEXTVAL " + "FROM DUAL";
+		Integer seqNum = this.mapper.getNextVal(read_seq);
+		
+		dto.setPrefer(seqNum);
 		
 		// 게시글 등록
 		Integer affectedLine = this.mapper.writePhotoBoard(dto);
 		log.info("\t+ affectedLine : {}", affectedLine);
 		
-		return newRefer;
+		return seqNum;
 		
 	} // writePartyPhoto
 
@@ -168,9 +220,6 @@ public class PartyPhotoServiceImpl implements PartyPhotoService {
 	public boolean writePhotoBoardComment(PartyPhotoReDTO dto) {
 		log.debug("writePhotoBoardComment({}) invoked.",dto);
 		
-		Integer writeNumber = this.mapper.checkReply(dto);
-		log.info("\t+ writeNumber : {}", writeNumber);
-		
 		int prefer = dto.getPrefer();
 		int partyCode = dto.getPartyCode();
 		
@@ -178,7 +227,7 @@ public class PartyPhotoServiceImpl implements PartyPhotoService {
 		Integer lastNumber = this.mapper.checkLastSeq(last_seq);
 		log.info("\t+ lastNumber : {}", lastNumber);
 		
-		if(writeNumber==0 && lastNumber==null) {
+		if(lastNumber==null) {
 			
 			String create_seq = "create sequence SEQ_PARTYPHOTORE"  + "_" + partyCode + "_" + prefer + " START WITH 1 INCREMENT BY 1 Nocache";
 			this.mapper.createSeq(create_seq);
@@ -186,7 +235,7 @@ public class PartyPhotoServiceImpl implements PartyPhotoService {
 		} // if
 		
 		String read_seq = "SELECT SEQ_PARTYPHOTORE"  + "_" + partyCode + "_" + prefer + "." + "NEXTVAL " + "FROM DUAL";
-		Integer seqNum = this.mapper.getMaxPrerefer(read_seq);
+		Integer seqNum = this.mapper.getNextVal(read_seq);
 		
 		dto.setPrerefer(seqNum);
 		
@@ -219,24 +268,35 @@ public class PartyPhotoServiceImpl implements PartyPhotoService {
 	} // deletePhotoBoardComment
 
 	@Override
-	public boolean checkPhotoBoardHeart(HeartDTO hdto) {
+	public Integer checkPhotoBoardHeart(HeartDTO hdto) {
 		log.debug("checkPhotoBoardHeart({}) invoked.",hdto);
 		
 		Integer currHit = this.mapper.checkPhotoHeart(hdto);
+		
+		if(currHit==null) {
+			
+			Integer insertHeart = this.mapper.makeHeart(hdto);
+			log.info("\t+ insertHeart : {}", insertHeart);
+			
+			currHit = this.mapper.checkPhotoHeart(hdto);
+			
+		} // if
+		
 		Integer nextHit = 0;
 		
 		if(currHit==0) {
 			nextHit = this.mapper.upHeart(hdto);
+			log.info("\t+ nextHit : {}", nextHit);
 		}else {
 			nextHit = this.mapper.downHeart(hdto);
+			log.info("\t+ nextHit : {}", nextHit);
 		} // if-else
 		
 		Integer affectedHeart = this.mapper.checkPhotoHeart(hdto);
 		log.info("\t+ affectedHeart : {}", affectedHeart);
 		
-		return (affectedHeart==1);
+		return affectedHeart;
 	} // checkPhotoBoardHeart
-
 	
 	
 } // end class

@@ -16,9 +16,9 @@
         	<when test="searchWord==null">
         	</when>
         	<when test="option==1">
-        		AND P.PCONTENT like '%'||#{searchWord}||'%'
-        		AND P.PSUBJECT like '%'||#{searchWord}||'%'
-        		AND U.NICKNAME like '%'||#{searchWord}||'%'
+        		AND (P.PCONTENT like '%'||#{searchWord}||'%'
+        		OR P.PSUBJECT like '%'||#{searchWord}||'%'
+        		OR U.NICKNAME like '%'||#{searchWord}||'%')
         	</when>
         	<when test="option==2">
         	    AND U.NICKNAME like '%'||#{searchWord}||'%'
@@ -30,6 +30,7 @@
            	    AND P.PCONTENT like '%'||#{searchWord}||'%'
         	</when>
         </choose>
+        ORDER BY P.PREFER DESC
         OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
 		FETCH NEXT #{cri.amount} ROWS ONLY
     
@@ -63,6 +64,14 @@
     
     </select>
     
+    <update id="readIt">
+    
+    	UPDATE PARTYPHOTOBOARD
+    	SET READNUM = READNUM + 1
+        WHERE PARTYCODE = #{partyCode} AND PREFER = #{prefer}
+    
+    </update>
+    
     <select id="getDetail" resultType = "com.pm.myapp.domain.board.PartyPhotoDTO">
     
         SELECT P.PREFER, P.PDATE, P.PARTYCODE, P.PCONTENT, P.PSUBJECT, P.EMAIL, U.NICKNAME, P.READNUM
@@ -88,9 +97,17 @@
         JOIN USERINFO U
         ON U.EMAIL = P.EMAIL
         WHERE P.PARTYCODE = #{partyCode} AND PREFER = #{prefer}
+        ORDER BY P.PREREFER DESC
         OFFSET (#{recri.reCurrPage}-1) * #{recri.reAmount} ROWS
 		FETCH NEXT #{recri.reAmount} ROWS ONLY
         
+    </select>
+    
+    <select id="checkTotalPhotoHeart" resultType="Integer">
+    
+    	SELECT SUM(HIT) FROM PHOTOHEART
+	    WHERE PARTYCODE = #{partyCode} AND PREFER = #{prefer}
+    
     </select>
     
 	<select id="getTotalReply" resultType = "Integer">
@@ -106,6 +123,13 @@
     	SELECT MAX(PREFER)
     	FROM PARTYPHOTOBOARD
     	WHERE PARTYCODE = #{dto.partycode}
+    
+    </select>
+
+    <select id="checkPrefer" resultType="Integer">
+    
+    	SELECT COUNT(PREFER) FROM PARTYPHOTOBOARD
+    	WHERE PARTYCODE = #{dto.partyCode}
     
     </select>
 
@@ -158,7 +182,7 @@
     
     <select id="checkReply" resultType="Integer">
     
-    	SELECT COUNT(PREREFER) FROM PARTYPHOTORE
+    	SELECT MAX(PREREFER) FROM PARTYPHOTORE
     	WHERE PARTYCODE = #{dto.partyCode} AND PREFER = #{dto.prefer}
     
     </select>
@@ -175,7 +199,7 @@
     
     </select>
     
-    <select id="getMaxPrerefer" resultType="Integer">
+    <select id="getNextVal" resultType="Integer">
     
     	${read_seq}
     	
@@ -209,6 +233,30 @@
     	WHERE PARTYCODE=#{hdto.partyCode} AND PREFER=#{hdto.prefer} AND EMAIL=#{hdto.email}
     	
     </select>
+    
+    <select id="makeHeart" resultType="Integer">
+    
+    	INSERT INTO PHOTOHEART(HIT, EMAIL, PREFER, PARTYCODE)
+    	VALUES(0,#{hdto.email},#{hdto.prefer},#{hdto.partyCode})
+    	
+    </select>
+    
+    <update id="upHeart">
+    
+    	UPDATE PHOTOHEART
+    	SET HIT = 1
+    	WHERE PARTYCODE=#{hdto.partyCode} AND PREFER=#{hdto.prefer} AND EMAIL=#{hdto.email}
+    	
+    </update>
+      
+    <update id="downHeart">
+    
+    	UPDATE PHOTOHEART
+    	SET HIT = 0
+    	WHERE PARTYCODE=#{hdto.partyCode} AND PREFER=#{hdto.prefer} AND EMAIL=#{hdto.email}
+    	
+    </update>
+    
 
 
 </mapper>

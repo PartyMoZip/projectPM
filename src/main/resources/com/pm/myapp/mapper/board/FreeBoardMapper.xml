@@ -5,16 +5,33 @@
 <mapper namespace="com.pm.myapp.mapper.board.FreeBoardMapper">
 
     <select id="getListWithPaging" resultType="com.pm.myapp.domain.board.FreeBoardListVO">
-        
-        <![CDATA[
-			SELECT
-			    F.frefer, F.fsubject, F.fdate, U.nickname, F.readnum
-			FROM FREEBOARD F
-			JOIN USERINFO U ON F.email = U.email
-			ORDER BY frefer desc
-			OFFSET (#{currPage}-1) * #{amount} ROWS
-			FETCH NEXT #{amount} ROWS ONLY
-		]]>
+
+            SELECT
+                F.fRefer, F.fSubject, F.fContent, F.fDate, U.nickname, F.email, F.readnum
+            FROM FREEBOARD F
+            JOIN USERINFO U
+            ON F.email = U.email
+            <choose>
+                <when test="searchWord==null">
+                </when>
+                <when test="option==1">
+                    WHERE F.FCONTENT like '%'||#{searchWord}||'%'
+                    OR F.FSUBJECT like '%'||#{searchWord}||'%'
+                    OR U.NICKNAME like '%'||#{searchWord}||'%'
+                </when>
+                <when test="option==2">
+                    WHERE U.NICKNAME like '%'||#{searchWord}||'%'
+                </when>
+                <when test="option==3">
+                     WHERE F.FSUBJECT like '%'||#{searchWord}||'%'
+                </when>
+                <when test="option==4">
+                    WHERE F.FCONTENT like '%'||#{searchWord}||'%'
+                </when>
+                </choose>
+                    ORDER BY FREFER DESC
+                    OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
+                    FETCH NEXT #{cri.amount} ROWS ONLY
 
     </select>
 
@@ -34,11 +51,32 @@
 
     </insert>
 
-
+    <!-- 총 게시물 개수 -->
     <select id="getTotalCount" resultType="Integer">
 
-            SELECT COUNT(frefer)
-            FROM FREEBOARD
+        SELECT COUNT(F.FREFER)
+        FROM FREEBOARD F
+        JOIN USERINFO U
+        ON F.EMAIL = U.EMAIL
+        <choose>
+            <when test="searchWord==null">
+            </when>
+            <when test="option==1">
+                WHERE F.FCONTENT like '%'||#{searchWord}||'%'
+                OR F.FSUBJECT like '%'||#{searchWord}||'%'
+                OR U.NICKNAME like '%'||#{searchWord}||'%'
+            </when>
+            <when test="option==2">
+                WHERE U.NICKNAME like '%'||#{searchWord}||'%'
+            </when>
+            <when test="option==3">
+                WHERE F.FSUBJECT like '%'||#{searchWord}||'%'
+            </when>
+            <when test="option==4">
+                WHERE F.FCONTENT like '%'||#{searchWord}||'%'
+            </when>
+        </choose>
+
 
     </select>
 
@@ -51,36 +89,78 @@
         WHERE FREFER = #{fRefer}
     </update>
 
-
+    <!-- 페이징 처리된 목록 조회 -->
     <select id="searchFreeBoard" resultType="com.pm.myapp.domain.board.FreeBoardSearchVO">
-     <![CDATA[
-        SELECT F.FREFER, F.FSUBJECT, F.FDATE, U.EMAIL, U.NICKNAME
+
+        SELECT F.FREFER, F.FSUBJECT, F.FCONTENT, F.FDATE, U.EMAIL, U.NICKNAME, F.READNUM
         FROM FREEBOARD F
-                 JOIN USERINFO U ON F.EMAIL = U.EMAIL
-                WHERE F.FSUBJECT LIKE #{keyword} ORDER BY FREFER DESC
-                OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
-                FETCH NEXT #{cri.amount} ROWS ONLY
-        ]]>
+        JOIN USERINFO U ON F.EMAIL = U.EMAIL
+        WHERE
+        <choose>
+            <when test = "option == '1'">
+                U.NICKNAME LIKE CONCAT('%', #{keyword}, '%')
+                OR F.FCONTENT LIKE CONCAT('%', #{keyword}, '%')
+                OR F.FSUBJECT LIKE CONCAT('%', #{keyword}, '%')
+            </when>
+            <when test = "option == '2">
+                U.NICKNAME LIKE CONCAT('%', #{keyword}, '%')
+            </when>
+            <when test = "option == '3'">
+                F.FSUBJECT LIKE CONCAT('%', #{keyword}, '%')
+            </when>
+            <when test = "option == '4'">
+                F.FCONTENT LIKE CONCAT('%', #{keyword}, '%')
+            </when>
+        </choose>
+        OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
+        FETCH NEXT #{cri.amount} ROWS ONLY
+
+    </select>
+
+
+    <!-- 총 게시물 개수 -->
+    <select id = "getTotalSearchCount" resultType = "Integer">
+
+        SELECT COUNT(F.FREFER)
+        FROM FREEBOARD F
+        JOIN USERINFO U ON F.EMAIL = U.EMAIL
+        WHERE
+        <choose>
+            <when test = "option == '1'">
+                U.NICKNAME LIKE CONCAT('%', #{keyword}, '%')
+                OR F.FCONTENT LIKE CONCAT('%', #{keyword}, '%')
+                OR F.FSUBJECT LIKE CONCAT('%', #{keyword}, '%')
+            </when>
+            <when test = "option == '2">
+                U.NICKNAME LIKE CONCAT('%', #{keyword}, '%')
+            </when>
+            <when test = "option == '3'">
+                F.FSUBJECT LIKE CONCAT('%', #{keyword}, '%')
+            </when>
+            <when test = "option == '4'">
+                F.FCONTENT LIKE CONCAT('%', #{keyword}, '%')
+            </when>
+        </choose>
+
     </select>
 
     <delete id="deleteFreeBoard">
         DELETE
         FROM FREEBOARD
         WHERE FREFER=#{frefer}
-
     </delete>
 
     <select id="getCommentListPaging" resultType="com.pm.myapp.domain.board.FreeBoardReplyVO">
         <![CDATA[
-             SELECT
+            SELECT
                 FRE.frerefer, FRE.frecontent, FRE.fredate, FRE.frefer, U.nickname
-             FROM FREEBOARDRE FRE
-             JOIN USERINFO U ON FRE.email = U.email
-             WHERE frefer = #{frefer}
-             ORDER BY frerefer desc
-             OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
-             FETCH NEXT #{cri.amount} ROWS ONLY
-         ]]>
+            FROM FREEBOARDRE FRE
+            JOIN USERINFO U ON FRE.email = U.email
+            WHERE frefer = #{frefer}
+            ORDER BY frerefer desc
+            OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
+            FETCH NEXT #{cri.amount} ROWS ONLY
+        ]]>
 
      </select>
 
@@ -95,9 +175,9 @@
 
     <select id="getTotalReply" resultType="int">
         <![CDATA[
-        SELECT COUNT(frerefer)
-        FROM FREEBOARDRE
-        WHERE frerefer > 0
+            SELECT COUNT(frerefer)
+            FROM FREEBOARDRE
+            WHERE frerefer > 0
         ]]>
     </select>
 
@@ -113,7 +193,6 @@
         DELETE
         FROM FREEBOARDRE
         WHERE FREREFER=#{frerefer}
-
     </delete>
 
 </mapper>

@@ -1,0 +1,196 @@
+@import "global.css";
+
+/* 감싸는 전체 div 너비, 중앙 정렬 */
+.all-wrap {
+    margin: 20px auto;
+    width: 80%;
+}
+
+/*자유게시판 탭 메뉴 css*/
+.nav.nav-pills {
+    margin-top : 50px;
+    margin-bottom : 30px;
+    justify-content: left;
+}
+
+.nav-pills .nav-item {
+    margin-right: 5px;
+}
+
+.nav-pills .nav-link.active {
+    background-color: var(--primary-color) !important;
+    padding: 3px 6px;
+    font-size: 25px;
+}
+
+.nav-pills .nav-link {
+    padding: 3px 6px;
+    background-color: lightgrey;
+    color: #212529;
+}
+
+.nav-pills .nav-link:hover {
+    background-color: #669900;
+    color: #fff;
+}
+
+table {
+    text-align : center;
+}
+
+/*
+
+!* 체크박스 디자인 *!
+.checkbox-group {
+    vertical-align: middle;
+    text-align: center;
+    margin-right: -5px;
+}
+
+.checkbox-group input.bigCheck {
+    font-size: 1em;
+    width: 1.25em;
+    height: 1.25em;
+    vertical-align: middle;
+}
+
+input[type="checkbox"] {
+    -webkit-appearance: none;
+    position: relative;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    outline: none !important;
+    border: 1px solid #212529;
+    border-radius: 2px;
+    background: #fbfbfb;
+}
+
+input[type="checkbox"]::before {
+    content: "\2713";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    overflow: hidden;
+    transform: scale(0) translate(-50%, -50%);
+    line-height: 1;
+}
+
+input[type="checkbox"]:checked {
+    background-color: #669900;
+    border-color: rgba(255, 255, 255, 1);
+    color: white;
+}
+
+input[type="checkbox"]:checked::before {
+    border-radius: 2px;
+    transform: scale(1) translate(-50%, -50%);
+}
+!* 체크박스 디자인 끝 *!
+*/
+
+/* 버튼 디자인 */
+.btn.btn-primary {
+    width: 70px;
+    height: 34px;
+    padding: 3px;
+    font-size: 12px;
+    font-weight: 600;
+    background: none;
+    color: black;
+    border: 2px solid #669900;
+}
+
+.btn.btn-primary:hover {
+    color: #fff;
+    background-color: #669900;
+}
+
+.bottom-menu {
+    display: flex;
+}
+
+/* 검색창 */
+.search-wrapper {
+    margin-top: 20px;
+    max-width: 500px !important;
+    position: relative;
+}
+
+.d-grid.gap-2.d-md-block {
+    float : right;
+    margin-top : 2px;
+
+}
+
+.search-btn {
+    color: var(--secondary-text-color);
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 10px;
+    background-color: inherit;
+    border: unset;
+    outline: none;
+
+}
+
+.search-wrapper input {
+    border-radius: 10rem;
+    padding: 0;
+    height: 50px;
+}
+
+/* 검색창 border 적용 */
+.input-group>:not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+    border-top-right-radius: 10rem;
+    border-bottom-right-radius: 10rem;
+    border-left: none;
+    border-width: 2px;
+    border-color: #669900;
+}
+
+/* 버튼 아이콘 border 제거 */
+#searchIcon {
+    border: none;
+}
+
+.div1 {
+    margin-top: 12px;
+    margin-left: 15px;
+}
+
+.selectBox {
+    position: relative;
+    border-bottom-left-radius: 10rem;
+    border-top-left-radius: 10rem;
+    width: 100px;
+    margin: 5px 0px 5px 5px;
+    height: 50px;
+    border: 2px solid #669900;
+}
+
+.selectBox .optionSelect {
+    width: inherit;
+    height: inherit;
+    background: transparent;
+    border: 0 none;
+    outline: 0 none;
+    position: relative;
+    z-index: 3;
+    margin: 0 auto;
+}
+
+.input-group > .form-control, .input-group > .form-select {
+    margin-top: 5px;
+}
+
+.page-link {
+    color: black;
+}
+
+#pagination {
+    margin : 70px;
+    margin-bottom : 0px;
+}
+

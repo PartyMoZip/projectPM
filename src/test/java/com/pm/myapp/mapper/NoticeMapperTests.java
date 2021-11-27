@@ -44,8 +44,8 @@ public class NoticeMapperTests {
 		Criteria cri = new Criteria();
 		cri.setAmount(1);
 		cri.setAmount(10);
-		List<NoticeBoardListVO> list = this.mapper.getListWithPaging(cri);
-		list.forEach(log::info);
+//		List<NoticeBoardListVO> list = this.mapper.getListWithPaging(cri);
+//		list.forEach(log::info);
 
 	} // testGetListWithPaging
 
@@ -78,8 +78,8 @@ public class NoticeMapperTests {
 	public void testGetTotalCount() { // 공지 게시판 총 게시물 개수 - 테스트 완료
 		log.debug("testGetTotalCount() invoked.");
 
-		Integer totalCount = this.mapper.getTotalCount();
-		log.info("\t + totalCount : {}", totalCount);
+		//Integer totalCount = this.mapper.getTotalCount();
+		//log.info("\t + totalCount : {}", totalCount);
 
 	} // testGetTotalCount
 
@@ -110,7 +110,7 @@ public class NoticeMapperTests {
 		log.debug("testSearchNoticeBoard() invoked.");
 
 		String searchOption = "n.nsubject";
-		String keyword = "%왜%";
+		Integer keyword = 0;
 		Criteria cri = new Criteria();
 		cri.setAmount(10);
 		cri.setCurrPage(1);

@@ -108,10 +108,10 @@ public class NoticeServiceTests {
         cri.setCurrPage(1);
         cri.setAmount(10);
 
-        List<NoticeBoardListVO> boardList = this.service.getListPerPage(cri);
-
-        Objects.requireNonNull(boardList);
-        boardList.forEach(log::info);
+//        List<NoticeBoardListVO> boardList = this.service.getListPerPage(cri);
+//
+//        Objects.requireNonNull(boardList);
+//        boardList.forEach(log::info);
 
     } // testGetListPerPage
 
@@ -122,8 +122,8 @@ public class NoticeServiceTests {
         String searchOption= "f.fsubject";
         String keyword="%T%";
         Criteria cri = new Criteria();
-        List<NoticeBoardSearchVO> list = this.service.search(searchOption, keyword, cri);
-        list.forEach(log::info);
+       // List<NoticeBoardSearchVO> list = this.service.search(searchOption, keyword, cri);
+        //list.forEach(log::info);
 
     }
 
@@ -131,9 +131,9 @@ public class NoticeServiceTests {
     public void testGetTotal() {
         log.debug("testGetTotal() invoked.");
 
-        int totalCount = this.service.getTotal();
-
-        log.info("\t + totalCount : {}", totalCount);
+//        int totalCount = this.service.getTotal();
+//
+//        log.info("\t + totalCount : {}", totalCount);
     }
 
 }

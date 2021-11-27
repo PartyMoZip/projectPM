@@ -1,0 +1,219 @@
+@import "global.css";
+@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
+
+
+/* 감싸는 전체 div 너비, 중앙 정렬 */
+.all-wrap {
+    margin: 20px auto;
+    width: 80%;
+}
+
+.inner-container {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--divider-color);
+}
+
+/*자유게시판 탭 메뉴 css*/
+.nav.nav-pills {
+    margin-top: 50px;
+    margin-bottom : 30px;
+    justify-content: left;
+}
+
+.nav-pills .nav-item {
+    margin-right: 5px;
+}
+
+.nav-pills .nav-link.active {
+    background-color: var(--primary-color) !important;
+    padding: 3px 6px;
+    font-size: 25px;
+}
+
+.nav-pills .nav-link {
+    padding: 3px 6px;
+    background-color: lightgrey;
+    color: #212529;
+}
+
+.nav-pills .nav-link:hover {
+    background-color: #669900;
+    color: #fff;
+}
+
+
+/* 버튼 디자인 */
+.btn.btn-primary {
+    width: 70px;
+    height: 34px;
+    padding: 3px;
+    font-size: 12px;
+    font-weight: 600;
+    background: none;
+    color: black;
+    border: 2px solid #669900;
+}
+
+.btn.btn-primary:hover {
+    color: #fff;
+    background-color: #669900;
+}
+
+.bottom-menu {
+    display: flex;
+}
+
+.d-grid.gap-2.d-md-block {
+    float: right;
+    margin-top: 2px;
+}
+
+.title_text {
+    font-family: 'Do Hyeon', sans-serif;
+    font-weight: 400;
+    font-size: 60px;
+    word-wrap: break-word;
+    word-break: break-word;
+    /*margin-top: 15px;*/
+    margin-bottom: 10px;
+}
+
+.title_area {
+    font-weight: 400;
+    font-size: 60px;
+    word-wrap: break-word;
+    word-break: break-word;
+    /*margin-top: 15px;*/
+    margin-bottom: 10px;
+    border: 0px solid black;
+}
+
+.content {
+    min-height:25rem;
+    font-size: 1.2rem;
+    margin-top: 30px;
+    margin-bottom: 50px;
+    border: 1px solid lightgray;
+    padding: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.05), 0 6px 20px 0 rgba(0, 0, 0, 0.05);
+}
+
+.photo_content {
+    min-height: 8rem;
+    font-size: 1.2rem;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    border: 1px solid lightgray;
+    padding: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.05), 0 6px 20px 0 rgba(0, 0, 0, 0.05);
+}
+
+.content_area {
+    margin-top : 30px;
+
+    padding : 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.05), 0 6px 20px 0 rgba(0, 0, 0, 0.05);
+}
+
+hr{
+    margin: 1.5rem !important;
+}
+
+.write_info {
+    margin-bottom : 20px;
+}
+
+.img_thumb {
+    border-radius: 50%;
+}
+
+.covuer_info {
+    margin: 20px 0px 20px 0px;
+}
+
+.profile_thumb {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    float: left;
+    margin-right: 10px;
+    display: block;
+}
+
+.profile_thumb:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: block;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+}
+
+.comment_area {
+    margin-top: 15px;
+    border: 1px solid lightgray;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.05), 0 6px 20px 0 rgba(0, 0, 0, 0.05);
+}
+
+.comment_text {
+    margin-top: 60px;
+    margin-bottom: 15px;
+}
+
+.confirm_button {
+    float: right;
+}
+
+#commentContent {
+    border: 0px solid;
+    width:100%;
+    padding:0 20px;
+    margin-top: 20px;
+    margin-left : 0;
+    resize:none;
+}
+
+#commentContent:focus {
+    outline: none;
+}
+
+.commentWrite_Wrap {
+    border: 1px solid #e4e4e4;
+    border-radius: 2px;
+    max-width: 85vw;
+    text-align: center;
+    margin: 10px 10px 10px 10px;
+}
+
+textarea {
+    resize: none;
+}
+
+.button_area {
+    float: right;
+    height: 30px;
+    margin: 0 -28px;
+    padding: 20px 29px 0;
+    border-top: 1px solid #f8f8f8;
+}
+
+.button_container {
+    height: 20px;
+    margin: 20px 0;
+    float: right;
+    width: 220px;
+}
+
+.btn-outline-warning {
+    margin: 10px 0px 10px 0px;
+}
+
+.container-btnGroup {
+    margin-top: 20px;
+    text-align: end;
+}

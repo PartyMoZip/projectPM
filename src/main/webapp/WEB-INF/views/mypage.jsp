@@ -39,7 +39,7 @@
                         <div class="d-grid gap-2 d-md-flex justify-content-end">
                             <div class="btn-wrapper">
                                 <button type="button" class="btn mypage-btn btn-primary px-4 me-md-2">
-                                    <a href="#" class="enter-btn">파티입장</a>
+                                    <a href="/party/showmain?partyCode=${party.partyCode}" class="enter-btn">파티입장</a>
                                 </button>
                                 <input type="hidden" class="input-partycode" value="${party.partyCode}">
                             </div>
