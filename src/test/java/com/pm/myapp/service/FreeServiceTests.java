@@ -61,9 +61,9 @@ public class FreeServiceTests {
 	public void testModify() {
 		log.debug("testModify() invoked.");
 
-		FreeBoardListVO board = new FreeBoardListVO(1, "Test", null, "test", null);
-		Objects.requireNonNull(board);
-		log.info("\t + board : {}", board);
+		//FreeBoardListVO board = new FreeBoardListVO(1, "Test", null, "test", null);
+		//Objects.requireNonNull(board);
+	//	log.info("\t + board : {}", board);
 	} // testModify
 
 	@Test
@@ -95,10 +95,10 @@ public class FreeServiceTests {
 		cri.setCurrPage(1);
 		cri.setAmount(10);
 
-		List<FreeBoardListVO> boardList = this.service.getListPerPage(cri);
+		//List<FreeBoardListVO> boardList = this.service.getListPerPage(cri);
 
-		Objects.requireNonNull(boardList);
-		boardList.forEach(log::info);
+	//	Objects.requireNonNull(boardList);
+	//	boardList.forEach(log::info);
 
 	} // testGetListPerPage
 
@@ -109,16 +109,16 @@ public class FreeServiceTests {
 		String searchOption= "f.fsubject";
 		String keyword="%1%";
 		Criteria cri = new Criteria();
-		List<FreeBoardSearchVO> list = this.service.search(searchOption, keyword, cri);
-		list.forEach(log::info);
+	//	List<FreeBoardSearchVO> list = this.service.search(searchOption, keyword, cri);
+	//	list.forEach(log::info);
 
 	}
 
 	@Test
 	public void testGetTotal() {
 		log.debug("testGetTotal() invoked.");
-		int totalCount = this.service.getTotal();
-		log.info("\t + totalCount : {}", totalCount);
+	//	int totalCount = this.service.getTotal();
+	//	log.info("\t + totalCount : {}", totalCount);
 	}
 
 	@Test
