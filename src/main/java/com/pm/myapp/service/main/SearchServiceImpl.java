@@ -29,6 +29,13 @@ public class SearchServiceImpl implements SearchService {
     } // getPartyList
 
     @Override
+    public List<PartyVO> getContainsWord(SearchWordDTO searchWord) {
+        log.debug("Serivce getContainsWord() invoked.");
+
+        return this.mapper.getContainsWord(searchWord);
+    }
+
+    @Override
     public List<PartyVO> getPartyListBySearch(
             Criteria cri,
             SearchWordDTO searchWord

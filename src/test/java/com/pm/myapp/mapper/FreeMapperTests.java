@@ -47,8 +47,8 @@ public class FreeMapperTests {
         cri.setAmount(1);
         cri.setAmount(10);
 
-        List<FreeBoardListVO> list = this.mapper.getListWithPaging(cri);
-        list.forEach(log::info); // 람다식과
+       // List<FreeBoardListVO> list = this.mapper.getListWithPaging(searchWord, option, cri);
+        //list.forEach(log::info); // 람다식과
 
     } // testGetlistWithPaging
 
@@ -62,7 +62,7 @@ public class FreeMapperTests {
 
     } // testRead
 
-    @Test
+   /* @Test
     public void testRegisterFreeBoard() { // 자유 게시판 등록 - 테스트 완료
         log.debug("testRegisterFreeBoard() invoked.");
 
@@ -75,14 +75,14 @@ public class FreeMapperTests {
         int affectedLines = this.mapper.registerFreeBoard(dto);
         log.info("\t + affectedLines : {}", affectedLines);
 
-    } // testRegisterFreeBoard
+    } // testRegisterFreeBoard*/
 
     @Test
     public void testGetTotalCount() { // 자유 게시판 총 게시물 개수 - 테스트완료
         log.debug("testGetTotalCount() invoked.");
 
-        Integer totalCount = this.mapper.getTotalCount();
-        log.info("\t + totalCount : {}", totalCount);
+       // Integer totalCount = this.mapper.getTotalCount();
+        //log.info("\t + totalCount : {}", totalCount);
 
     } // testGetTotalCount
 
@@ -102,7 +102,6 @@ public class FreeMapperTests {
         log.debug("testUpdate() invoked.");
 
         FreeBoardDTO newBoard = new FreeBoardDTO();
-        newBoard.setEmail("test2@test.com");
         newBoard.setFRefer(5);
         newBoard.setFSubject("TEST_TEST");
         newBoard.setFContent("TEST_TEST");

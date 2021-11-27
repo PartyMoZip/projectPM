@@ -35,6 +35,18 @@ public class SearchMapperTests {
         log.info("\t+ type: {}", this.mapper.getClass().getName());
     } // setup
 
+    // 검색어 자동완성
+    @Test
+    public void testGetContainsWord() {
+        log.info("testGetContainsWord() invoked.");
+
+        SearchWordDTO searchWord = new SearchWordDTO();
+        searchWord.setWord("행복");
+
+        List<PartyVO> list = this.mapper.getContainsWord(searchWord);
+        list.forEach(log::info);
+    } // testGetContainsWord
+
     // 페이징 파티 목록 조회
     @Test
     public void testGetPartyList() {

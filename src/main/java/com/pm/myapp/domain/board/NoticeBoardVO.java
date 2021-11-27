@@ -13,7 +13,7 @@ public class NoticeBoardVO {
     private String nContent;
     private Date nDate;
     private String nickname;
-    private String email; //안받아도될거같은데
+    private String email;
     private Integer readnum;
 
 

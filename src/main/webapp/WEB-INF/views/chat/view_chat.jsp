@@ -25,26 +25,32 @@
 				this._initSocket();
 			},
 			sendChat: function() {
-				this._sendMessage('${param.bang_id}', 'CMD_MSG_SEND', $('#message').val());
+				this._sendMessage('${param.partyCode}', 'CMD_MSG_SEND', $('#message').val());
 				$('#message').val('');
 			},
 			sendEnter: function() {
 				// 4) 입장 함수 시작
-				this._sendMessage('${param.bang_id}', 'CMD_ENTER', $('#message').val());
+				this._sendMessage('${param.partyCode}', 'CMD_ENTER', $('#message').val());
 				$('#message').val('');
 			},
 			receiveMessage: function(msgData) {
 
 				// 정의된 CMD 코드에 따라서 분기 처리
-				if(msgData.cmd == 'CMD_MSG_SEND') {					
+				if(msgData.cmd == 'CMD_MSG_SEND') {		
+					$('#divChatData').append('<div>' + '<img src="' + msgData.userpic + '" border="0" width="50" height="50"/>' + '</div>');						
+					$('#divChatData').append('<div>' + '[' + msgData.user + ']' + '</div>');			
 					$('#divChatData').append('<div>' + msgData.msg + '</div>');
 				}
 				// 입장
-				else if(msgData.cmd == 'CMD_ENTER') {
+				else if(msgData.cmd == 'CMD_ENTER') {		
+					$('#divChatData').append('<div>' + '<img src="' + msgData.userpic + '" border="0" width="50" height="50"/>' + '</div>');		
+					$('#divChatData').append('<div>' + '[' + msgData.user + ']' + '</div>');	
 					$('#divChatData').append('<div>' + msgData.msg + '</div>');
 				}
 				// 퇴장
-				else if(msgData.cmd == 'CMD_EXIT') {					
+				else if(msgData.cmd == 'CMD_EXIT') {		
+					$('#divChatData').append('<div>' + '<img src="' + msgData.userpic + '" border="0" width="50" height="50"/>' + '</div>');			
+					$('#divChatData').append('<div>' + '[' + msgData.user + ']' + '</div>');				
 					$('#divChatData').append('<div>' + msgData.msg + '</div>');
 				}
 			},
@@ -73,16 +79,16 @@
 					webSocket.closeMessage(JSON.parse(evt.data));
 				}
 			},
-			_sendMessage: function(bang_id, cmd, msg) {
+			_sendMessage: function(partyCode, cmd, msg) {
 				// 5) 방 아이디 , 커맨드(명령), 메세지 가져옴
-				console.log("bang_id : "+ bang_id);
+				console.log("partyCode : "+ partyCode);
 				// 방 아이디 aa
 				console.log("cmd : "+ cmd);
 				// 커맨드 CMD_ENTER
 				console.log("msg : "+ msg);
 				// msg 공백
 				var msgData = {
-						bang_id : bang_id,
+						partyCode : partyCode,
 						cmd : cmd,
 						msg : msg
 				};

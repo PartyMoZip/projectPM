@@ -13,6 +13,8 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pm.myapp.controller.join.LoginController;
+import com.pm.myapp.domain.UserDTO;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -28,6 +30,11 @@ public class HandlerChat extends TextWebSocketHandler {
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 
+		Map<String,Object> sessionmap = session.getAttributes();
+		UserDTO dto = (UserDTO) sessionmap.get(LoginController.authKey);
+		String nickname = dto.getNickname();
+		String userPic = dto.getUserPic();
+		
 		super.handleTextMessage(session, message);
         log.info("\t+ session : {}", session);
         // WebSocketServerSockJsSession[id=5bx2ikig]
@@ -38,6 +45,7 @@ public class HandlerChat extends TextWebSocketHandler {
 		// payload 로 {"partyCode":"aa","cmd":"CMD_ENTER","msg":""} 받음
 		Map<String, String> mapReceive = objectMapper.readValue(message.getPayload(), Map.class);
 		// 접속하거나, 말한 사람의 정보가 담기는 Map
+		log.info("\t+ message.getPayload() : {}", message.getPayload());
 		
 		switch (mapReceive.get("cmd")) {
 		
@@ -68,8 +76,9 @@ public class HandlerChat extends TextWebSocketHandler {
 					Map<String, String> mapToSend = new HashMap<String, String>();
 					mapToSend.put("partyCode", partyCode);
 					mapToSend.put("cmd", "CMD_ENTER");
-					mapToSend.put("user", "[ "+session.getId()+" ]");
-					mapToSend.put("msg", "님이 파티 채팅방에 입장하셨습니다.");
+					mapToSend.put("user", nickname);
+					mapToSend.put("msg", "[ " + nickname + " ] 님이 파티 채팅방에 [ 입장 ] 하셨습니다.");
+					mapToSend.put("userpic", userPic);
 					
 					String jsonStr = objectMapper.writeValueAsString(mapToSend);
 					System.out.println("jsonStr : " + jsonStr);
@@ -94,8 +103,9 @@ public class HandlerChat extends TextWebSocketHandler {
 					Map<String, String> mapToSend = new HashMap<String, String>();
 					mapToSend.put("partyCode", partyCode);
 					mapToSend.put("cmd", "CMD_MSG_SEND");
-					mapToSend.put("user", "[ "+session.getId()+" ]");
+					mapToSend.put("user", nickname);
 					mapToSend.put("msg",  mapReceive.get("msg"));
+					mapToSend.put("userpic", userPic);
 
 					String jsonStr = objectMapper.writeValueAsString(mapToSend);
 					ws.sendMessage(new TextMessage(jsonStr));
@@ -112,6 +122,11 @@ public class HandlerChat extends TextWebSocketHandler {
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 
+		Map<String,Object> sessionmap = session.getAttributes();
+		UserDTO dto = (UserDTO) sessionmap.get(LoginController.authKey);
+		String nickname = dto.getNickname();
+		String userPic = dto.getUserPic();
+		
 		super.afterConnectionClosed(session, status);
         
 		ObjectMapper objectMapper = new ObjectMapper();
@@ -142,9 +157,10 @@ public class HandlerChat extends TextWebSocketHandler {
 				Map<String, String> mapToSend = new HashMap<String, String>();
 				mapToSend.put("partyCode", partyCode);
 				mapToSend.put("cmd", "CMD_EXIT");
-				mapToSend.put("user", "[ "+session.getId()+" ]");
-				mapToSend.put("msg",  "님이 파티 채팅방에서 [ 퇴장 ]하셨습니다.");
-
+				mapToSend.put("user", nickname);
+				mapToSend.put("msg",  "[ " + nickname + " ] 님이 파티 채팅방에서 [ 퇴장 ]하셨습니다.");
+				mapToSend.put("userpic", userPic);
+				
 				String jsonStr = objectMapper.writeValueAsString(mapToSend);
 				ws.sendMessage(new TextMessage(jsonStr));
 			} // if
@@ -152,4 +168,5 @@ public class HandlerChat extends TextWebSocketHandler {
 		} // for
 		
 	} // afterConnectionClosed
-}
+	
+} // end class

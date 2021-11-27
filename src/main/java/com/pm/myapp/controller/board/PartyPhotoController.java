@@ -78,7 +78,7 @@ public class PartyPhotoController {
 		model.addAttribute("pageMaker", pageDTO);
 		
 		// 파티 코드 강제 주입
-	    model.addAttribute("partyCode", partyCode);
+		model.addAttribute("partyCode", partyCode);
 		
 	} // getPhotoBoardList  
 	

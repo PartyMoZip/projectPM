@@ -5,18 +5,36 @@
 <mapper namespace="com.pm.myapp.mapper.board.NoticeBoardMapper">
 
     <select id="getListWithPaging" resultType="com.pm.myapp.domain.board.NoticeBoardListVO">
-        <![CDATA[
-                SELECT
-                    N.nrefer, n.nsubject, n.ndate, u.nickname, n.readnum
-                FROM NOTICEBOARD N
-                JOIN USERINFO U ON N.EMAIL = U.EMAIL
-                OFFSET (#{currPage}-1) * #{amount} ROWS
-                FETCH NEXT #{amount} ROWS ONLY
-            ]]>
+
+        SELECT N.NREFER, N.NSUBJECT, N.NCONTENT, N.NDATE, U.EMAIL ,U.NICKNAME, N.READNUM
+        FROM NOTICEBOARD N
+        JOIN USERINFO U
+        ON N.EMAIL = U.EMAIL
+        <choose>
+            <when test="searchWord==null">
+            </when>
+            <when test="option==1">
+                WHERE N.NCONTENT like '%'||#{searchWord}||'%'
+                OR N.NSUBJECT like '%'||#{searchWord}||'%'
+                OR U.NICKNAME like '%'||#{searchWord}||'%'
+            </when>
+            <when test="option==2">
+                WHERE U.NICKNAME like '%'||#{searchWord}||'%'
+            </when>
+            <when test="option==3">
+                WHERE N.NSUBJECT like '%'||#{searchWord}||'%'
+            </when>
+            <when test="option==4">
+                WHERE N.NCONTENT like '%'||#{searchWord}||'%'
+            </when>
+        </choose>
+        OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
+        FETCH NEXT #{cri.amount} ROWS ONLY
+
     </select>
 
     <select id="readNoticeBoard" resultType="com.pm.myapp.domain.board.NoticeBoardVO">
-        SELECT n.nrefer, n.nsubject, n.ncontent, n.ndate, u.nickname, n.readnum
+        SELECT n.nrefer, n.nsubject, n.ncontent, n.ndate, u.nickname,u.email, n.readnum
         FROM NOTICEBOARD N
         JOIN USERINFO U ON N.email = U.email
         WHERE NREFER = #{nrefer}
@@ -27,40 +45,56 @@
     <insert id="writeNoticeBoard">
 
         INSERT INTO NOTICEBOARD(NREFER, NSUBJECT, NCONTENT, NDATE, NICKNAME, EMAIL, READNUM)
-        VALUES(SEQ_NOTICEBOARD.nextval, #{nsubject}, #{ncontent}, sysdate, 'admin', #{email}, 0)
+        VALUES(SEQ_NOTICEBOARD.nextval, #{nSubject}, #{nContent}, sysdate, 'admin', 'test1@test.com', 0)
 
     </insert>
 
-    <select id="getTotalCount" resultType="int">
-        <![CDATA[
-            SELECT COUNT(nrefer)
-            FROM NOTICEBOARD
-            WHERE nrefer > 0
+    <select id="getTotalCount" resultType="Integer">
 
-        ]]>
+        SELECT COUNT(N.NREFER)
+        FROM NOTICEBOARD N
+        JOIN USERINFO U
+        ON N.EMAIL = U.EMAIL
+        <choose>
+            <when test="searchWord==null">
+            </when>
+            <when test="option==1">
+                WHERE N.NCONTENT like '%'||#{searchWord}||'%'
+                OR N.NSUBJECT like '%'||#{searchWord}||'%'
+                OR U.NICKNAME like '%'||#{searchWord}||'%'
+            </when>
+            <when test="option==2">
+                WHERE U.NICKNAME like '%'||#{searchWord}||'%'
+            </when>
+            <when test="option==3">
+                WHERE N.NSUBJECT like '%'||#{searchWord}||'%'
+            </when>
+            <when test="option==4">
+                WHERE N.NCONTENT like '%'||#{searchWord}||'%'
+            </when>
+        </choose>
 
     </select>
 
     <select id = "searchNoticeBoard" resultType="com.pm.myapp.domain.board.NoticeBoardSearchVO">
 
-        SELECT N.NREFER, N.NSUBJECT, N.NCONTENT, N.NDATE, U.EMAIL ,U.NICKNAME
+        SELECT N.NREFER, N.NSUBJECT, N.NCONTENT, N.NDATE, U.EMAIL ,U.NICKNAME, N.READNUM
         FROM NOTICEBOARD N
         JOIN USERINFO U ON N.EMAIL = U.EMAIL
-        WHERE
         <choose>
         <when test = "option == '1'">
-            U.NICKNAME LIKE CONCAT('%', #{keyword}, '%')
+            WHERE U.NICKNAME LIKE CONCAT('%', #{keyword}, '%')
             OR N.NCONTENT LIKE CONCAT('%', #{keyword}, '%')
             OR N.NSUBJECT LIKE CONCAT('%', #{keyword}, '%')
         </when>
         <when test = "option == '2">
-            U.NICKNAME LIKE CONCAT('%', #{keyword}, '%')
+            WHERE U.NICKNAME LIKE CONCAT('%', #{keyword}, '%')
         </when>
         <when test = "option == '3'">
-            N.NSUBJECT LIKE CONCAT('%', #{keyword}, '%')
+            WHERE N.NSUBJECT LIKE CONCAT('%', #{keyword}, '%')
         </when>
         <when test = "option == '4'">
-            N.NCONTENT LIKE CONCAT('%', #{keyword}, '%')
+            WHERE N.NCONTENT LIKE CONCAT('%', #{keyword}, '%')
         </when>
         </choose>
         OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
@@ -78,8 +112,8 @@
         <choose>
             <when test = "option == '1'">
                 U.NICKNAME LIKE CONCAT('%', #{keyword}, '%')
-                OR F.FCONTENT LIKE CONCAT('%', #{keyword}, '%')
-                OR F.FSUBJECT LIKE CONCAT('%', #{keyword}, '%')
+                OR N.NCONTENT LIKE CONCAT('%', #{keyword}, '%')
+                OR N.NSUBJECT LIKE CONCAT('%', #{keyword}, '%')
             </when>
             <when test = "option == '2">
                 U.NICKNAME LIKE CONCAT('%', #{keyword}, '%')
@@ -94,18 +128,18 @@
 
     </select>
 
-    <update id="editNoticeBoard">
+    <update id="editNoticeBoard" parameterType="com.pm.myapp.domain.board.NoticeBoardDTO">
         UPDATE NOTICEBOARD
         SET
-            NSUBJECT = #{nSubject},
-            NCONTENT = #{nContent}
-        WHERE NREFER = #{nRefer}
+            nsubject = #{nSubject},
+            ncontent = #{nContent}
+        WHERE nrefer = #{nRefer}
     </update>
 
     <delete id="deleteNoticeBoard">
         DELETE
         FROM NOTICEBOARD
-        WHERE NREFER=#{nrefer}
+        WHERE NREFER=#{nRefer}
     </delete>
 
 
