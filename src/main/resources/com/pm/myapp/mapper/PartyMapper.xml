@@ -15,15 +15,25 @@
     </select>
     
     <select id="getInfo" resultType="com.pm.myapp.domain.PartyVO">
-    
-    SELECT P.PARTYCODE, P.PARTYNAME, P.PARTYSCORE, P.CREATEDATE, P.LOGOPIC,
-    	   P.COVERPIC, P.PARTYPROFILE, P.PARTYBANNED, L.LOCALNAME, H.HOBBYNAME
-    FROM PARTY P
-    JOIN HOBBY H
-    ON P.HOBBYCODE = H.HOBBYCODE
-    JOIN LOCALINFO L
-    ON P.LOCALCODE = L.LOCALCODE
-    WHERE P.PARTYCODE =  #{PARTYCODE}
+
+        SELECT COUNT(*) count,
+               P.PARTYCODE,
+               P.PARTYNAME,
+               P.PARTYSCORE,
+               P.CREATEDATE,
+               P.LOGOPIC,
+               P.COVERPIC,
+               P.PARTYPROFILE,
+               P.PARTYBANNED,
+               L.LOCALNAME,
+               H.HOBBYNAME
+        FROM PARTYUSER u
+                 JOIN PARTY p ON u.PARTYCODE = p.partycode
+                 JOIN HOBBY h ON p.HOBBYCODE = h.HOBBYCODE
+                 JOIN LOCALINFO l ON l.LOCALCODE = p.LOCALCODE
+        WHERE P.PARTYCODE = #{partyCode}
+        GROUP BY P.PARTYCODE, P.PARTYNAME, P.PARTYSCORE, P.CREATEDATE, P.LOGOPIC, P.COVERPIC, P.PARTYPROFILE, P.PARTYBANNED,
+                 L.LOCALNAME, H.HOBBYNAME
 
     </select>
 

@@ -62,6 +62,7 @@ public class PartyServiceImpl implements PartyService,InitializingBean, Disposab
 		log.debug("getParty({}) invoked.",partyCode);
 		
 		PartyVO party = this.mapper.getInfo(partyCode);
+
 		log.info("\t + party : {}", party);
 		
 		return party;

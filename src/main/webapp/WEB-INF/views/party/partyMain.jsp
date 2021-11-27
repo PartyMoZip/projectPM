@@ -39,7 +39,7 @@
                     <div class="partyInfo-content-title">
                         <h5>${__PARTY__.partyName}</h5>
                         <p>개설 날짜 : ${__PARTY__.createDate}</p>
-                        <p>파티인원 수:&nbsp;20명</p>
+                        <p>파티인원 :&nbsp;${__PARTY__.count}명</p>
                         <p>${__PARTY__.partyProfile}</p>
                         <p>우리는 새로운 사람을 만나는 파티입니다.</p>
                     </div>

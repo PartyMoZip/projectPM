@@ -1,12 +1,13 @@
 package com.pm.myapp.domain;
 
-import java.util.Date;
+import java.sql.Date;
 import lombok.Value;
 
 
 @Value
 public class PartyVO {
-	
+
+	private Integer count;
 	private Integer partyCode;
 	private String partyName;
 	private Integer partyScore;
