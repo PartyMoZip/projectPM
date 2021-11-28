@@ -1,7 +1,10 @@
 package com.pm.myapp.controller.partyfm;
 
 import com.pm.myapp.aws.AwsUpload;
-import com.pm.myapp.domain.*;
+import com.pm.myapp.domain.Criteria;
+import com.pm.myapp.domain.PageDTO;
+import com.pm.myapp.domain.PartyUserVO;
+import com.pm.myapp.domain.PartyVO;
 import com.pm.myapp.service.partyfm.PartyService;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -34,14 +37,25 @@ public class PartyController {
     private AwsUpload awsUpload;
 
     // 파티 상세 보기 [작동]
-    @GetMapping("/showdetail")
-    public void showPartyDetail(Integer partyCode, Model model) {
+    @GetMapping("/detail")
+    @ResponseBody
+    public PartyVO showPartyDetail(Integer partyCode) {
         log.debug("showPartyDetail({}) invoked.", partyCode);
         PartyVO party = this.service.getParty(partyCode);
         log.info("\t + party : {}", party);
 
-        model.addAttribute("__PARTY__", party);
+  /*      Map<String, Object> data = new HashMap<>();
+        data.put("party", party);
+        *//*data.put("count", party.getCount());
+        data.put("partyCode", party.getPartyCode());
+        data.put("partyName", party.getPartyName());
+        data.put("partyScore", party.getPartyScore());
+        data.put("createDate", party.getCreateDate());
+        data.put("coverPic", party.getCoverPic());
+        data.put("localName", party.getLocalName());
+        data.put("hobbyName", party.getHobbyName());*/
 
+        return party;
     } // showPartyDetail
 
     // 파티 가입 신청 [작동]

@@ -68,9 +68,22 @@
 <img src="${__PARTY__.coverPic}" alt=""/>--%>
 
 <!-- 파티 관리페이지 상단 탭 -->
-<jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/include/partynav.jsp"/>
-<main>
 
+<main>
+    <ul class="nav nav-pills">
+        <li class="nav-item"><a class="nav-link" aria-current="page"
+                                href="/party/showmain?partyCode=${__PARTY__.partyCode}">메인</a></li>
+        <li class="nav-item"><a class="nav-link active"
+                                href="/party/leaderpage?partyCode=${__PARTY__.partyCode}">파티관리</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">일정</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">파티원</a></li>
+        <li class="nav-item"><a class="nav-link"
+                                href="/partyfree/getPFreeBoardList">자유게시판</a></li>
+        <li class="nav-item"><a class="nav-link"
+                                href="/partyphoto/list?partyCode=${__PARTY__.partyCode}">포토갤러리</a></li>
+        <li class="nav-item"><a class="nav-link"
+                                href="/partyfunc/partychat?partyCode=${__PARTY__.partyCode}">채팅</a></li>
+    </ul>
     <!-- 파티프로필 설정 -->
     <%--<div class="container mt-5 px-5 profile-box shadow-sm">
         <div class="header">
