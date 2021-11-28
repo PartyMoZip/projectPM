@@ -12,6 +12,7 @@
 
 <head>
 <!-- 부트스트랩 css -->
+<link rel="icon" href="${pageContext.request.contextPath}/resources/images/favicon.ico"/>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -154,7 +155,7 @@
 							<li class="page-item"><a class="page-link" href="#"
 								aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
 							</a></li>
-							<li class="page-item"><a class="page-link" href="#">1</a></li>
+							<li class="page-item"><a class="page-link active" href="#">1</a></li>
 							<li class="page-item"><a class="page-link" href="#">2</a></li>
 							<li class="page-item"><a class="page-link" href="#">3</a></li>
 							<li class="page-item"><a class="page-link" href="#"

@@ -43,7 +43,7 @@ public class UserServiceTests {
     public void testGetMyPartyList(){
         log.debug("testGetMyPartyList() invoked.");
 
-        String email = "test5@test.com";
+        String email = "chicori3@gmail.com";
 
         List<PartyVO> list = this.service.getMyPartyList(email);
 
