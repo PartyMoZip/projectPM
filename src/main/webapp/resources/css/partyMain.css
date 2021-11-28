@@ -235,6 +235,11 @@ input::-webkit-search-cancel-button {
 	border-bottom: 1px solid var(--divider-color);
 }
 
+
+.page-item .page-link:hover {
+  color: var(--primary-color-text);
+  background-color: var(--primary-color);
+
 .inner-container.container-title {
 	font-size: 20px;
 	font-weight: 600;

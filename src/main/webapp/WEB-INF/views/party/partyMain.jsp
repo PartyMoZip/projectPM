@@ -58,13 +58,16 @@
 						</div>
 					</div>
 				</div>
+
 			</div>			
+
 		</div>
+
+
 	</main>
 
-	<%--FOOTER--%>
-	<jsp:include
-		page="${pageContext.request.contextPath}/WEB-INF/views/include/footer.jsp" />
+
+
 
 	<!-- 부트스트랩 js -->
 	<script
@@ -77,5 +80,16 @@
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<script
 		src="${pageContext.request.contextPath}/resources/js/partyMain.js"></script>
+
+
+	<%-- fullcalendar --%>
+	<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/locales-all.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/fullcalendar.js"></script>
+
+
+	<%--FOOTER--%>
+	<jsp:include
+			page="${pageContext.request.contextPath}/WEB-INF/views/include/footer.jsp" />
 </body>
 </html>
