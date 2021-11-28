@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
+import java.util.List;
+
 @Log4j2
 @NoArgsConstructor
 
@@ -19,8 +21,21 @@ public class PartyFuncServiceImpl implements PartyFuncService{
     private PartyFuncMapper mapper;
 
     @Override
+    public List<CalendarDTO> calendarList() {
+        return mapper.calendarList();
+    }
+
+
+    @Override
     public Integer insertCal(CalendarDTO calendarDto) {
         return mapper.insertCal(calendarDto);
     } //insertCal
 
+
+    @Override
+    public Integer deleteCalendar(int id) {
+        return mapper.deleteCalendar(id);
+    }
 } //end class
+
+
