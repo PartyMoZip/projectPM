@@ -1,0 +1,48 @@
+@import "global.css";
+
+.px-5 {
+	height: 80vh;
+	width: 75vw;
+	position: relative;
+	border-radius: 20px;
+	overflow: auto;
+}
+
+.container-lg > div {
+	padding-top: 10px;
+}
+
+.container-md.chatReply {
+	display: flex;
+	justify-content: center;
+	bottom: 0px;
+	width: auto;
+	margin-bottom: 10px;
+}
+
+.chatReplyBtn {
+	margin-left: 5px;
+}
+
+.chatReplyBtn .btn.btn-outline-primary {
+	color: var(- -primary-color);
+	border-color: var(- -primary-color);
+}
+
+.chatReplyBtn .btn.btn-outline-primary:hover {
+	color: var(- -primary-color-text);
+	border-color: var(- -primary-color);
+	background-color: var(- -primary-color);
+}
+
+#divChatData > .chatInfo {
+	
+	display: inline-block;
+	border: 1px solid black;
+	border-radius: 20px;
+	padding: 5px;
+}
+
+.chatImg  > img {
+	margin-top: 20px;
+}
