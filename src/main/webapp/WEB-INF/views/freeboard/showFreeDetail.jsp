@@ -27,7 +27,6 @@
 <body>
 <%--HEADER--%>
 <jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp"/>
-
 <div class="board_main">
     <main>
         <div class="container-sm">

@@ -61,6 +61,13 @@ public class NoticeBoardController {
     public void showNoticeDetail(@ModelAttribute("cri")Criteria cri, Integer nrefer, Model model) {
         log.debug("get({}, {}) invoked.", cri, nrefer);
 
+        // 게시판 조회수 증가
+        boolean readOk = this.service.readNoticeBoard(nrefer);
+        if(readOk) {
+            log.info("공지 게시판 {}번 글 읽기 성공", nrefer);
+        }
+
+        // 공지 게시판 글 상세보기
         NoticeBoardVO board = this.service.getBoardDetail(nrefer);
         log.info("\t + board : {}", board);
 

@@ -46,7 +46,7 @@
     <insert id="writeNoticeBoard">
 
         INSERT INTO NOTICEBOARD(NREFER, NSUBJECT, NCONTENT, NDATE, NICKNAME, EMAIL, READNUM)
-        VALUES(SEQ_NOTICEBOARD.nextval, #{nSubject}, #{nContent}, sysdate, '관리자', ${email}, 0)
+        VALUES(SEQ_NOTICEBOARD.nextval, #{nSubject}, #{nContent}, sysdate, '관리자', 'test2@test.com', 0)
 
     </insert>
 
@@ -135,6 +135,12 @@
             nsubject = #{nSubject},
             ncontent = #{nContent}
         WHERE nrefer = #{nRefer}
+    </update>
+
+    <update id="readIt">
+        UPDATE NOTICEBOARD
+        SET READNUM = READNUM + 1
+        WHERE NREFER = #{nrefer}
     </update>
 
     <delete id="deleteNoticeBoard">
