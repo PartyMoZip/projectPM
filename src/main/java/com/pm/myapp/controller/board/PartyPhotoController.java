@@ -20,8 +20,8 @@ import com.pm.myapp.aws.AwsUpload;
 import com.pm.myapp.domain.Criteria;
 import com.pm.myapp.domain.PageDTO;
 import com.pm.myapp.domain.ReplyCriteria;
+import com.pm.myapp.domain.board.BoardSearchListDTO;
 import com.pm.myapp.domain.board.HeartDTO;
-import com.pm.myapp.domain.board.PartyPhotoBoardListDTO;
 import com.pm.myapp.domain.board.PartyPhotoDTO;
 import com.pm.myapp.domain.board.PartyPhotoReDTO;
 import com.pm.myapp.service.board.PartyPhotoService;
@@ -47,7 +47,7 @@ public class PartyPhotoController {
 	// 포토 갤러리 목록 - 검색 포함
 	@GetMapping("/list")
 	public void getPhotoBoardList(
-			@ModelAttribute("ldto") PartyPhotoBoardListDTO ldto,
+			@ModelAttribute("ldto") BoardSearchListDTO ldto,
 			@ModelAttribute("cri") Criteria cri,
 			Model model) {
 		Integer partyCode = ldto.getPartyCode();
@@ -58,11 +58,6 @@ public class PartyPhotoController {
 		
 		// 포토 갤러리는 페이지당 글이 9개
 		cri.setAmount(9);
-		
-		// 처음으로 조회할 시에는 option 값이 함께 들어올 수 없음. 따라서 기본으로 1로 들어가는 것이 필요
-		if(option == null || option == 0) {
-			option = 1;
-		} // if
 		
 		// 글 목록 불러오기
 		List<PartyPhotoDTO> list = this.service.getPartyPhotoList(partyCode, searchWord, option, cri);
@@ -85,7 +80,7 @@ public class PartyPhotoController {
 	// 포토 갤러리 상세보기
 	@GetMapping("/detail")
 	public void getPhotoBoardDetail(
-			@ModelAttribute("ldto") PartyPhotoBoardListDTO ldto,
+			@ModelAttribute("ldto") BoardSearchListDTO ldto,
 			@ModelAttribute("prefer") Integer prefer,
 			String email,
 			@ModelAttribute("cri") Criteria cri,
@@ -145,7 +140,7 @@ public class PartyPhotoController {
 	// 포토 갤러리 작성 - view
 	@GetMapping("/writeview")
 	public void writePhotoBoardView(
-			@ModelAttribute("ldto") PartyPhotoBoardListDTO ldto,
+			@ModelAttribute("ldto") BoardSearchListDTO ldto,
 			@ModelAttribute("cri") Criteria cri
 			) {
 		log.debug("writePhotoBoardView() invoked.");
@@ -211,7 +206,7 @@ public class PartyPhotoController {
 	// 포토 갤러리 수정 - view
 	@GetMapping("/editview")
 	public void editPhotoBoardView(
-			@ModelAttribute("ldto") PartyPhotoBoardListDTO ldto,
+			@ModelAttribute("ldto") BoardSearchListDTO ldto,
 			@ModelAttribute("prefer") Integer prefer,
 			@ModelAttribute("cri") Criteria cri,
 			Model model

@@ -41,7 +41,7 @@
 					</td>
 					<td><c:out value="${list.prefer}" /></td>
 					<td><a
-						href="/partyphoto/detail?prefer=${list.prefer}&partyCode=${list.partycode}&currPage=${pageMaker.cri.currPage}&amount=${pageMaker.cri.amount}&pagesPerPage=${pageMaker.cri.pagesPerPage}">${list.psubject}</a>
+						href="/partyphoto/detail?prefer=${list.prefer}&partyCode=${list.partycode}&currPage=${pageMaker.cri.currPage}">${list.psubject}</a>
 					</td>
 					<td><c:out value="${list.nickname}" /></td>
 					<td><fmt:formatDate pattern="yyyy.MM.dd" value="${list.pdate}" /></td>
@@ -63,25 +63,23 @@
 		<c:when test="${not empty __LIST__}">
 			<div id="pagination">
 				<form id="paginationForm">
-					<input type="hidden" name="currPage"> <input type="hidden"
-						name="amount"> <input type="hidden" name="pagesPerPage">
 					<ul class="pagination justify-content-center">
 						<c:if test="${pageMaker.prev}">
 							<li class="prev page-item"><a class="prev page-link"
-								href="/partyphoto/list?currPage=${pageMaker.startPage-1}&searchWord=${searchWord}&option=${option}">◀</a>
+								href="/partyphoto/list?currPage=${pageMaker.startPage-1}&searchWord=${ldto.searchWord}&option=${ldto.option}">◀</a>
 							</li>
 						</c:if>
 
 						<c:forEach begin="${pageMaker.startPage}"
 							end="${pageMaker.endPage}" var="pageNum">
 							<li class="page-item"><a id="page-curr" class="page-link"
-								href="/partyphoto/list?currPage=${pageNum}&searchWord=${searchWord}&option=${option}">
+								href="/partyphoto/list?currPage=${pageNum}&searchWord=${ldto.searchWord}&option=${ldto.option}">
 									${pageNum} </a></li>
 						</c:forEach>
 
 						<c:if test="${pageMaker.next}">
 							<li class="next page-item"><a class="next page-link"
-								href="/partyphoto/list?currPage=${pageMaker.endPage+1}&searchWord=${searchWord}&option=${option}">▶</a>
+								href="/partyphoto/list?currPage=${pageMaker.endPage+1}&searchWord=${ldto.searchWord}&option=${ldto.option}">▶</a>
 							</li>
 						</c:if>
 					</ul>
@@ -94,17 +92,17 @@
 		<main>
 			<ul class="nav nav-pills">
 				<li class="nav-item"><a class="nav-link" aria-current="page"
-					href="/party/showmain?partyCode=${partyCode}">메인</a></li>
+					href="/party/showmain?partyCode=${ldto.partyCode}">메인</a></li>
 				<li class="nav-item"><a class="nav-link"
-					href="/party/leaderpage?partyCode=${partyCode}">파티관리</a></li>
+					href="/party/leaderpage?partyCode=${ldto.partyCode}">파티관리</a></li>
 				<li class="nav-item"><a class="nav-link" href="#">일정</a></li>
-				<li class="nav-item"><a class="nav-link" href="#">파티원</a></li>
+				<li class="nav-item"><a class="nav-link" href="/party/memberlist?partyCode=${ldto.partyCode}">파티원</a></li>
 				<li class="nav-item"><a class="nav-link"
-					href="/partyFree/boardList?partyCode=${partyCode}">자유게시판</a></li>
+					href="/partyfree/getPFreeBoardList?partyCode=${ldto.partyCode}">자유게시판</a></li>
 				<li class="nav-item"><a class="nav-link active"
-					href="/partyphoto/list?partyCode=${partyCode}">포토갤러리</a></li>
+					href="/partyphoto/list?partyCode=${ldto.partyCode}">포토갤러리</a></li>
 				<li class="nav-item"><a class="nav-link"
-					href="/partyfunc/partychat?partyCode=${partyCode}">채팅</a></li>
+					href="/partyfunc/partychat?partyCode=${ldto.partyCode}">채팅</a></li>
 			</ul>
 
 			<div class="inner-container container-title">파티 포토갤러리</div>
@@ -129,7 +127,7 @@
 								<div class="d-flex justify-content-between align-items-center">
 									<div class="btn-group">
 										<button type="button" class="btn btn-sm btn-outline-secondary"
-											onClick="location.href='/partyphoto/detail?partyCode=${ldto.partyCode}&currPage=${cri.currPage}';">View</button>
+											onClick="location.href='/partyPhoto/detail?partyCode=${ldto.partyCode}&searchWord=${ldto.searchWord}&option=${ldto.option}&currPage=${cri.currPage}';">View</button>
 									</div>
 									<small class="text-muted"><c:out
 											value="게시날짜 넣어줘 형. 좋아요 카운트 넣으실?" /></small>
@@ -266,7 +264,7 @@
 
 				</div>
 				<button type="submit" class="btn btn-primary mt-4 save-btn"
-					onClick="location.href='/partyphoto/writeview?partyCode=${partyCode}&currPage=${pageMaker.cri.currPage}';">글쓰기</button>
+					onClick="location.href='/partyphoto/writeview?partyCode=${ldto.partyCode}&searchWord=${ldto.searchWord}&option=${ldto.option}&currPage=${pageMaker.cri.currPage}';">글쓰기</button>
 			</div>
 		</main>
 
