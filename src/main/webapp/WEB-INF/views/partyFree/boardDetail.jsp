@@ -134,27 +134,25 @@
                     </form>
 
                 </div>
-                <div class="container">
-                    <div class="container-btnGroup">
-                        <%--                                        <c:set value="${sessionScope.id}" var="id"/>--%>
-                        <%-- <c:if test="${boardDetail.nickname eq nickname}">--%>
-                        <button type="button" class="btn btn-primary btn-sm"
-                                onclick="location.href='/partyfree/editPFBoardView?pfrefer=${boardDetail.pfrefer}'">
-                            <i class="fas fa-pen"></i>
-                            <span>수정</span>
-                        </button>
-                        <button type="button" class="btn btn-primary btn-sm"
-                                onclick="location.href='/partyfree/deletePFreeBoard?pfrefer=${boardDetail.pfrefer}'">
-                            <i class="fas fa-trash-alt"></i>
-                            <span>삭제</span>
-                        </button>
-                        <%--  </c:if>--%>
-                        <button type="button" class="btn btn-primary btn-sm"
-                                onclick="location.href='/partyfree/getPFreeBoardList?currPage=${cri.currPage}'">
-                            <i class="fas fa-list-ul"></i>
-                            <span>목록</span>
-                        </button>
-                    </div>
+                <div class="container-btnGroup">
+                    <%--                                        <c:set value="${sessionScope.id}" var="id"/>--%>
+                    <%-- <c:if test="${boardDetail.nickname eq nickname}">--%>
+                    <button type="button" class="btn btn-primary btn-sm"
+                            onclick="location.href='/partyfree/editPFBoardView?pfrefer=${boardDetail.pfrefer}'">
+                        <i class="fas fa-pen"></i>
+                        <span>수정</span>
+                    </button>
+                    <button type="button" class="btn btn-primary btn-sm"
+                            onclick="location.href='/partyfree/deletePFreeBoard?pfrefer=${boardDetail.pfrefer}'">
+                        <i class="fas fa-trash-alt"></i>
+                        <span>삭제</span>
+                    </button>
+                    <%--  </c:if>--%>
+                    <button type="button" class="btn btn-primary btn-sm"
+                            onclick="location.href='/partyfree/getPFreeBoardList?currPage=${cri.currPage}'">
+                        <i class="fas fa-list-ul"></i>
+                        <span>목록</span>
+                    </button>
                 </div>
             </div>
         </div>

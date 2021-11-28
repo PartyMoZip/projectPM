@@ -78,23 +78,20 @@
                         <span><textarea name="fContent" rows="10"
                                         cols="137">${__boardDetail__.FContent}"</textarea>
                         </span>
+                        <div class="container-btnGroup">
+                            <%--                                        <c:set value="${sessionScope.id}" var="id"/>--%>
+                            <%-- <c:if test="${boardDetail.nickname eq nickname}">--%>
 
-                        <div class="container">
-                            <div class="container-btnGroup">
-                                <%--                                        <c:set value="${sessionScope.id}" var="id"/>--%>
-                                <%-- <c:if test="${boardDetail.nickname eq nickname}">--%>
-
-                                <button type="submit" class="btn btn-primary btn-sm">
-                                    <i class="fas fa-pen"></i>
-                                    <span>등록</span>
-                                </button>
-                                <%--  </c:if>--%>
-                                <button type="button" class="btn btn-primary btn-sm"
-                                        onclick="location.href='/freeboard/getFreeBoardList?currPage=${cri.currPage}'">
-                                    <i class="fas fa-list-ul"></i>
-                                    <span>취소</span>
-                                </button>
-                            </div>
+                            <button type="submit" class="btn btn-primary btn-sm">
+                                <i class="fas fa-pen"></i>
+                                <span>등록</span>
+                            </button>
+                            <%--  </c:if>--%>
+                            <button type="button" class="btn btn-primary btn-sm"
+                                    onclick="location.href='/freeboard/getFreeBoardList?currPage=${cri.currPage}'">
+                                <i class="fas fa-list-ul"></i>
+                                <span>취소</span>
+                            </button>
                         </div>
                     </div>
                 </div>

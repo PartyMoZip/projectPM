@@ -117,10 +117,6 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.05), 0 6px 20px 0 rgba(0, 0, 0, 0.05);
 }
 
-hr{
-    margin: 1.5rem !important;
-}
-
 h6 {
     margin : 10px 10px;
 }
@@ -169,8 +165,7 @@ form {
 }
 
 .comment_text {
-    margin-top: 60px;
-    margin-bottom: 15px;
+    margin : 5px 0px 5px 12px;
 }
 
 .confirm_button {
@@ -180,8 +175,7 @@ form {
 #commentContent {
     border: 0px solid;
     width:100%;
-    padding:0 20px;
-    margin-top: 20px;
+    margin-top: 4px;
     margin-left : 0;
     resize:none;
 }
@@ -198,8 +192,17 @@ form {
     margin: 10px 10px 10px 10px;
 }
 
+.commentList {
+    margin-left : 10px;
+}
+
+.text_area {
+    margin-top : 20px;
+}
+
 textarea {
-    resize: none;
+    resize: none ! important;
+    padding : 10px 10px;
 }
 
 .button_area {

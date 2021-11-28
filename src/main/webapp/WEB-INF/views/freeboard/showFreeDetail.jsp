@@ -56,75 +56,78 @@
                     <span style="text-align : left;">${boardDetail.FContent}</span>
                 </div>
                 <!--댓글-->
-                <div class="comment_text">
-                    <i class="far fa-comment-dots"></i>
-                    <span>댓글</span>
-                </div>
-                <!--댓글 리스트-->
-                <div class="commentList_wrap">
-                    <div class="commentList">
-                        <table>
-                            <tbody>
-                            <c:choose>
-                                <c:when test="${not empty reply}">
-                                    <c:forEach items="${reply}" var="reply">
-                                        <tr>
-                                            <td><c:out value="${reply.nickname}"/></td>
-                                            <td><fmt:formatDate pattern="yyyy.MM.dd HH:mm:ss" value="${reply.fredate}"/></td>
-                                        </tr>
-                                        <tr>
-                                            <td><c:out value="${reply.frecontent}"/></td>
-                                        </tr>
-                                    </c:forEach>
-                                </c:when>
-                                <c:otherwise>
-                                    <td>등록된 글이 없습니다</td>
-                                </c:otherwise>
-                            </c:choose>
-                            </tbody>
-                        </table>
-                        <div id="pagination">
-                            <form id="paginationForm">
-                                <ul class="pagination justify-content-center">
-                                    <c:if test="${replyPageMaker.prev}">4
-                                        <li class="prev page-item">
-                                            <a class="prev page-link"
-                                               href="/freeboard/showFreeDetail?frefer=${boardDetail.FRefer}&currPage=${cri.currPage}&reCurrPage=${replyPageMaker.startPage-1}">◀</a>
-                                        </li>
-                                    </c:if>
-                                    <c:forEach begin="${replyPageMaker.startPage}"
-                                               end="${replyPageMaker.endPage}" var="pageNum">
-                                        <li class="page-item">
-                                            <a id="page-curr" class="page-link"
-                                               href="/freeboard/showFreeDetail?frefer=${boardDetail.FRefer}&currPage=${cri.currPage}&reCurrPage=${pageNum}">
-                                                    ${pageNum}
-                                            </a>
-                                        </li>
-                                    </c:forEach>
+                <div class="comment_area">
+                    <div class="comment_text">
+                        <i class="far fa-comment-dots"></i>
+                        <span>댓글</span>
+                    </div>
+                    <!--댓글 리스트-->
+                    <div class="commentList_wrap">
+                        <div class="commentList">
+                            <table>
+                                <tbody>
+                                <c:choose>
+                                    <c:when test="${not empty reply}">
+                                        <c:forEach items="${reply}" var="reply">
+                                            <tr>
+                                                <td><c:out value="${reply.nickname}"/></td>
+                                                <td><fmt:formatDate pattern="yyyy.MM.dd HH:mm:ss"
+                                                                    value="${reply.fredate}"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td><c:out value="${reply.frecontent}"/></td>
+                                            </tr>
+                                        </c:forEach>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <td>등록된 글이 없습니다</td>
+                                    </c:otherwise>
+                                </c:choose>
+                                </tbody>
+                            </table>
+                            <div id="pagination">
+                                <form id="paginationForm">
+                                    <ul class="pagination justify-content-center">
+                                        <c:if test="${replyPageMaker.prev}">4
+                                            <li class="prev page-item">
+                                                <a class="prev page-link"
+                                                   href="/freeboard/showFreeDetail?frefer=${boardDetail.FRefer}&currPage=${cri.currPage}&reCurrPage=${replyPageMaker.startPage-1}">◀</a>
+                                            </li>
+                                        </c:if>
+                                        <c:forEach begin="${replyPageMaker.startPage}"
+                                                   end="${replyPageMaker.endPage}" var="pageNum">
+                                            <li class="page-item">
+                                                <a id="page-curr" class="page-link"
+                                                   href="/freeboard/showFreeDetail?frefer=${boardDetail.FRefer}&currPage=${cri.currPage}&reCurrPage=${pageNum}">
+                                                        ${pageNum}
+                                                </a>
+                                            </li>
+                                        </c:forEach>
 
-                                    <c:if test="${replyPageMaker.next}">
-                                        <li class="next page-item">
-                                            <a class="next page-link"
-                                               href="/freeboard/showFreeDetail?frefer=${boardDetail.FRefer}&currPage=${cri.currPage}&reCurrPage=${replyPageMaker.endPage+1}">▶</a>
-                                        </li>
-                                    </c:if>
-                                </ul>
-                            </form>
+                                        <c:if test="${replyPageMaker.next}">
+                                            <li class="next page-item">
+                                                <a class="next page-link"
+                                                   href="/freeboard/showFreeDetail?frefer=${boardDetail.FRefer}&currPage=${cri.currPage}&reCurrPage=${replyPageMaker.endPage+1}">▶</a>
+                                            </li>
+                                        </c:if>
+                                    </ul>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <!-- replylist_wrap END -->
-                <!--reply write-->
-                <div class="comment_area">
+                    <!-- replylist_wrap END -->
+                    <!--reply write-->
+
                     <!--댓글내용-->
                     <form action="/freeboard/writeComment" method="POST">
                         <input type="hidden" name="currPage" value="${cri.currPage}">
                         <input type="hidden" name="reCurrPage" value="${recri.reCurrPage}">
                         <input type="hidden" name="frefer" value="${boardDetail.FRefer}">
-                        <h6>${boardDetail.nickname}</h6>
+                        <%--<h6>${boardDetail.nickname}</h6>--%>
                         <input type="hidden" name="email" value="${boardDetail.email}">
                         <div class="commentWrite_Wrap">
-                        <textarea name="frecontent" id="commentContent" placeholder=" 댓글을 남겨보세요"
+                        <textarea name="frecontent" id="commentContent"
+                                  placeholder=" [${boardDetail.nickname}] 님,  댓글을 남겨보세요"
                                   class="comment_inbox" rows="4"
                                   cols="140"></textarea>
                             <button type="submit" class="btn btn-outline-warning">등록</button>
@@ -132,31 +135,28 @@
                     </form>
                 </div>
 
+                <div class="container-btnGroup">
+                    <%--                                        <c:set value="${sessionScope.id}" var="id"/>--%>
+                    <%-- <c:if test="${boardDetail.nickname eq nickname}">--%>
 
-                <div class="container">
-                    <div class="container-btnGroup">
-                        <%--                                        <c:set value="${sessionScope.id}" var="id"/>--%>
-                        <%-- <c:if test="${boardDetail.nickname eq nickname}">--%>
-
-                        <button type="button" class="btn btn-primary btn-sm"
-                                onclick="location.href='/freeboard/editFreeBoardView?frefer=${boardDetail.FRefer}'">
-                            <i class="fas fa-pen"></i>
-                            <span>수정</span>
-                        </button>
-                        <button type="submit" class="btn btn-primary btn-sm">
-                            <form action="/freeboard/deleteFreeBoard" method="post">
-                                <input type="hidden" name="fRefer" value="${boardDetail.FRefer}">
-                                <i class="fas fa-trash-alt"></i>
-                                <span>삭제</span>
-                            </form>
-                        </button>
-                        <%--  </c:if>--%>
-                        <button type="button" class="btn btn-primary btn-sm"
-                                onclick="location.href='/freeboard/getFreeBoardList?currPage=${cri.currPage}'">
-                            <i class="fas fa-list-ul"></i>
-                            <span>목록</span>
-                        </button>
-                    </div>
+                    <button type="button" class="btn btn-primary btn-sm"
+                            onclick="location.href='/freeboard/editFreeBoardView?frefer=${boardDetail.FRefer}'">
+                        <i class="fas fa-pen"></i>
+                        <span>수정</span>
+                    </button>
+                    <button type="submit" class="btn btn-primary btn-sm">
+                        <form action="/freeboard/deleteFreeBoard" method="post">
+                            <input type="hidden" name="fRefer" value="${boardDetail.FRefer}">
+                            <i class="fas fa-trash-alt"></i>
+                            <span>삭제</span>
+                        </form>
+                    </button>
+                    <%--  </c:if>--%>
+                    <button type="button" class="btn btn-primary btn-sm"
+                            onclick="location.href='/freeboard/getFreeBoardList?currPage=${cri.currPage}'">
+                        <i class="fas fa-list-ul"></i>
+                        <span>목록</span>
+                    </button>
                 </div>
             </div>
         </div>

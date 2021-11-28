@@ -95,6 +95,7 @@
     line-height : 17px;
     outline : none;
     margin-top : 20px;
+    margin-bottom : 20px;
 }
 
 .content {
@@ -135,8 +136,13 @@
     float: right;
 }
 
+.text_area {
+    margin-top : 20px;
+}
+
 textarea {
-    resize: none;
+    resize : none ! important;
+    padding : 10px 10px;
 }
 
 .button_area {
