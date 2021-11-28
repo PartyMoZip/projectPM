@@ -55,7 +55,6 @@
                         </div>
                     </th>
                     <!-- 자유게시판 체크박스 전체선택 끝 -->
-
                     <th scope="col">NO</th>
                     <th scope="col">제목</th>
                     <th scope="col">작성자</th>
