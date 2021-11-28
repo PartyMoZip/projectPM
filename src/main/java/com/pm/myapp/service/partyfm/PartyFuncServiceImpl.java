@@ -1,7 +1,6 @@
 package com.pm.myapp.service.partyfm;
 import com.pm.myapp.domain.CalendarDTO;
 import com.pm.myapp.mapper.PartyFuncMapper;
-import com.pm.myapp.mapper.PartyMapper;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,9 +20,9 @@ public class PartyFuncServiceImpl implements PartyFuncService{
     private PartyFuncMapper mapper;
 
     @Override
-    public List<CalendarDTO> calendarList() {
-        return mapper.calendarList();
-    }
+    public List<CalendarDTO> calendarList(Integer partyCode) {
+        return mapper.calendarList(partyCode);
+    }//calendarList
 
 
     @Override
