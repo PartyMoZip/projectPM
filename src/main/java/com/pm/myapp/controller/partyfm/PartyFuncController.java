@@ -39,7 +39,7 @@ public class PartyFuncController {
 	Calendar cal = Calendar.getInstance();
 
 	@GetMapping("/calendar")
-	public String list() {
+	public String list(@ModelAttribute("partyCode") Integer partyCode) {
 		return "fullcalendar/fullcalendar";
 	}//list
 
