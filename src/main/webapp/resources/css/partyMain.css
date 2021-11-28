@@ -164,9 +164,8 @@ h4 {
 	height: 90%;
 }
 
-.align-self-baseline.label-partyname {
-	font-size: 20px;
-	font-weight: 600;
+.align-self-baseline .label-name {
+	font-weight: bold;
 }
 
 .btn.btn-primary.mt-4.save-btn {

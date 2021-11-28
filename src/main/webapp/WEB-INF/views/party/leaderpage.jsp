@@ -17,7 +17,7 @@
           crossorigin="anonymous"/>
 
     <link rel="stylesheet"
-          href="${pageContext.request.contextPath}/resources/css/partyMain.css"/>
+          href="${pageContext.request.contextPath}/resources/css/partyMain.css?after"/>
     <title>파티모집 - ${__PARTY__.partyName}</title>
     <link rel="icon" href="${pageContext.request.contextPath}/resources/images/favicon.ico"/>
 </head>
@@ -118,12 +118,18 @@
                         <button type="button" class="btn btn-outline-primary select-btn">
                             이미지 업로드
                         </button>
-                        <input type="file" class="form-control input-file visually-hidden" name="fileLocation" accept="image/*">
+                        <input type="file" class="form-control input-file visually-hidden" name="fileLocation"
+                               accept="image/*">
                     </div>
                     <div class="d-flex flex-column justify-content-center align-items-center w-100 col-3 mt-4">
-                        <span class="align-self-baseline label-partyname">파티 이름</span>
+                        <span class="align-self-baseline label-name" style="font-weight: bold">파티 이름</span>
                         <input type="text" class="form-control input-partyname mt-2" name="partyName"
                                value="${__PARTY__.partyName}">
+                    </div>
+                    <div class="d-flex flex-column justify-content-center align-items-center w-100 col-3 mt-4">
+                        <span class="align-self-baseline label-name" style="font-weight: bold">파티 소개글</span>
+                        <textarea class="form-control input-partyprofile mt-2" name="partyProfile"
+                        >${__PARTY__.partyProfile}</textarea>
                     </div>
 
                     <button type="submit" class="btn btn-primary mt-4 save-btn">저장하기</button>

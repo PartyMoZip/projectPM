@@ -9,7 +9,7 @@
 <html>
 <body>
 <ul class="nav nav-pills">
-    <li class="nav-item"><a class="nav-link active"
+    <li class="nav-item"><a class="nav-link"
                             aria-current="page"
                             href="/party/showmain?partyCode=${__PARTY__.partyCode}">메인</a></li>
     <li class="nav-item"><a class="nav-link"

@@ -2,17 +2,20 @@ const inputPartyCode = document.querySelector(".input-partycode");
 const inputPartyName = document.querySelector(".input-partyname");
 const inputFile = document.querySelector(".input-file");
 const profileImg = document.querySelector(".img-profile img");
+const inputProfile = document.querySelector(".input-partyprofile");
 const selectBtn = document.querySelector(".select-btn");
 const saveBtn = document.querySelector(".save-btn");
 const inputWithdrawal = document.querySelector('.input-withdrawal')
 const withdrawalBtn = document.querySelector('.withdrawal-btn');
 const formData = new FormData();
 
+
 // 프로필 수정 이벤트
 const handleProfileSubmit = (e) => {
     e.preventDefault();
 
     formData.append("partyCode", inputPartyCode.value);
+    formData.append("partyProfile", inputProfile.value);
 
     if (inputPartyName.value.includes(",")) {
         let value = inputPartyName.value.split(',');
@@ -24,6 +27,7 @@ const handleProfileSubmit = (e) => {
     if (inputFile.files[0] !== undefined) {
         formData.append("fileLocation", inputFile.files[0]);
     } // if
+
 
     for (let pair of formData.entries()) {
         console.log(pair[0] + ', ' + pair[1]);
@@ -40,12 +44,12 @@ const handleProfileSubmit = (e) => {
         .then((data) => {
             console.log(data);
 
-/*            if (!data.fileLocation === undefined) {
+            if (!data.fileLocation === undefined) {
                 profileImg.setAttribute("src", data.fileLocation);
             }
 
             inputPartyName.value = data.name;
-            Swal.fire("수정 성공", "수정이 완료되었습니다.", "success")*/
+            Swal.fire("수정 성공", "수정이 완료되었습니다.", "success")
         })
         .catch((err) => {
             console.log(err);
