@@ -11,8 +11,8 @@
             FROM QNABOARD Q
             JOIN USERINFO U ON Q.email = U.email
             ORDER BY qrefer desc
-            OFFSET (#{currPage}-1) * #{amount} ROWS
-            FETCH NEXT #{amount} ROWS ONLY
+            OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
+            FETCH NEXT #{cri.amount} ROWS ONLY
         ]]>
 
     </select>

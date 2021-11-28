@@ -9,7 +9,7 @@ import java.util.List;
 public interface PartyFreeMapper {
 
     // 파티 자유 게시판 목록 - 페이징 처리
-    public abstract List<PartyFreeListVO> getListWithPaging(Criteria cri);
+    public abstract List<PartyFreeListVO> getListWithPaging(@Param("searchWord") String searchWord, @Param("option") Integer option, @Param("cri") Criteria cri);
 
     // 파티 자유 게시판 상세조회
     public abstract PartyFreeVO readPFreeBoard(@Param("pfrefer")Integer pfrefer, @Param("partycode")Integer partycode);
@@ -24,13 +24,13 @@ public interface PartyFreeMapper {
     public abstract int deletePFreeBoard(Integer pfrefer);
 
     // 파티 자유 게시물 검색
-    public abstract List<PartyFreeSearchVO> searchPartyFree(@Param("searchOption") String searchOption, @Param("keyword")String keyword, @Param("cri")Criteria cri);
+    public abstract List<PartyFreeSearchVO> searchPartyFree(@Param("searchWord") String searchWord, @Param("keyword_mod") Integer keyword_mod, @Param("cri")Criteria cri);
 
     // 파티 내 자유 게시판  개수 반환
-    public abstract Integer getTotalCount();
+    public abstract Integer getTotalCount(@Param("searchWord") String searchWord, @Param("option") Integer option);
 
     // 파티 내 자유 게시판 검색 게시물 개수
-    public abstract  Integer getTotalSearchCount(String option, String keyword);
+    public abstract  Integer getTotalSearchCount(String option, Integer keyword);
 
     // 8. 댓글 목록
     public abstract List<PartyFreeReplyVO> getCommentListPaging(@Param("pfrefer")Integer pfrefer, @Param("partycode") Integer partycode, @Param("cri") Criteria cri);

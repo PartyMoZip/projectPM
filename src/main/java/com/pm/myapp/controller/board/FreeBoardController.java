@@ -29,15 +29,23 @@ public class FreeBoardController {
 	// 자유 게시판 목록 - 페이징 처리
 	@GetMapping("/getFreeBoardList")
 	public String getFreeBoardList(
+            @ModelAttribute("sdto") BoardSearchListDTO sdto,
 			@ModelAttribute("cri") Criteria cri, Model model) {
+        String searchWord = sdto.getSearchWord();
+        Integer option = sdto.getOption();
+
+        // 처음으로 조회할 시에는 option 값이 함께 들어올 수 없음. 따라서 기본으로 1로 들어가는 것이 필요
+        if(option == null || option == 0) {
+            option = 1;
+        } // if
 		log.debug("getFreeBoardList({}) invoked.", cri);
-		List<FreeBoardListVO> list = this.service.getListPerPage(cri);
+		List<FreeBoardListVO> list = this.service.getListPerPage(searchWord, option, cri);
 
 		log.info("\t + list size : {}", list.size());
 		model.addAttribute("list", list);
 
 		// 페이징 처리
-		Integer totalAmount = this.service.getTotal();
+		Integer totalAmount = this.service.getTotal(searchWord, option);
 		PageDTO pageDTO = new PageDTO(cri, totalAmount);
 		model.addAttribute("pageMaker", pageDTO);
 
@@ -113,14 +121,14 @@ public class FreeBoardController {
 
 	// 자유 게시판 검색
 	@GetMapping("/searchFreeBoard")
-	public String searchFreeBoard(@ModelAttribute("cri") Criteria cri, String option, String keyword, Model model) {
+	public String searchFreeBoard(@ModelAttribute("cri") Criteria cri, String searchWord, Integer option, Model model) {
 		log.debug("searchFreeBoard() invoked.");
 
-		List<FreeBoardSearchVO> searchList = this.service.search(option, keyword, cri);
+		List<FreeBoardSearchVO> searchList = this.service.search(searchWord,option, cri);
 		model.addAttribute("__list__", searchList);
 
 		// 페이징 처리
-		Integer totalAmount = this.service.getTotalSearch(option, keyword);
+		Integer totalAmount = this.service.getTotalSearch(searchWord, option);
 		PageDTO pageDTO = new PageDTO(cri, totalAmount);
 		model.addAttribute("pageMaker", pageDTO);
 

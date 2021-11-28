@@ -26,12 +26,12 @@ public interface NoticeBoardService {
     public abstract  boolean deleteBoard(Integer nrefer);
 
     // 공지 게시판 검색
-    public abstract List<NoticeBoardSearchVO> search(String searchOption, String keyword, Criteria cri);
+    public abstract List<NoticeBoardSearchVO> search(String searchWord, Integer option, Criteria cri);
 
     // 8. 총 게시물 개수 반환
     public abstract Integer getTotal(String searchWord, Integer option);
 
     // 검색 결과 게시물 개수 반환
-    public abstract Integer getTotalSearch(String option, String keyword);
+    public abstract Integer getTotalSearch(String searchWord, Integer option);
 
 } //end interface

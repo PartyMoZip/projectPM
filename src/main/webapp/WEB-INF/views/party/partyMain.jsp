@@ -28,19 +28,23 @@
 	<main>
 		<ul class="nav nav-pills">
 			<li class="nav-item"><a class="nav-link active"
-				aria-current="page" href="/party/partyMain">메인</a></li>
+				aria-current="page"
+				href="/party/showmain?partyCode=${__PARTY__.partyCode}">메인</a></li>
 			<li class="nav-item"><a class="nav-link"
 				href="/party/leaderpage?partyCode=${__PARTY__.partyCode}">파티관리</a></li>
+			<li class="nav-item"><a class="nav-link" href="#">일정</a></li>
 			<li class="nav-item"><a class="nav-link" href="#">파티원</a></li>
-			<li class="nav-item"><a class="nav-link" href="/partyfree/getPFreeBoardList">자유게시판</a></li>
-			<li class="nav-item"><a class="nav-link" href="/partyphoto/list?partyCode=${__PARTY__.partyCode}">포토갤러리</a></li>
-			<li class="nav-item"><a class="nav-link" href="/partyfunc/partychat?partyCode=${__PARTY__.partyCode}">채팅</a></li>
+			<li class="nav-item"><a class="nav-link"
+				href="/partyfree/getPFreeBoardList">자유게시판</a></li>
+			<li class="nav-item"><a class="nav-link"
+				href="/partyphoto/list?partyCode=${__PARTY__.partyCode}">포토갤러리</a></li>
+			<li class="nav-item"><a class="nav-link"
+				href="/partyfunc/partychat?partyCode=${__PARTY__.partyCode}">채팅</a></li>
 		</ul>
 		<div class="container">
 			<div class="container-party">
 				<div class="partyImage">
-					<img alt="파티메인이미지" class="img-fluid"
-						src="${__PARTY__.coverPic}">
+					<img alt="파티메인이미지" class="img-fluid" src="${__PARTY__.coverPic}">
 				</div>
 
 				<div class="partyInfo">

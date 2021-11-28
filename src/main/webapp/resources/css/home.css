@@ -1,4 +1,5 @@
 @import "global.css";
+@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
 
 /*캐러셀*/
 .carousel-indicators .active {
@@ -13,8 +14,93 @@
 /*검색창*/
 .search-wrapper {
     margin-top: 40px;
-    max-width: 500px;
+    max-width: 800px;
     position: relative;
+}
+
+#search-bar {
+    min-width: 500px;
+    transition: all ease-in-out .2s;
+    border-radius: 0 !important;
+}
+
+.search-active {
+    border-bottom-left-radius: unset;
+    border-bottom-right-radius: unset;
+    border-bottom: 1px solid #fff;
+}
+
+#search-bar:active {
+    border-bottom-left-radius: unset;
+    border-bottom-right-radius: unset;
+    border-bottom: 1px solid #fff;
+}
+
+#search-bar:focus {
+
+}
+
+.hide {
+    display: none !important;
+}
+
+.search-ul {
+    position: absolute;
+    top: 53px;
+    z-index: 3;
+    background-color: #fff;
+    width: 100%;
+    border: 1px solid #dedede;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, .2);
+    padding-bottom: 16px;
+}
+
+.search-ul li {
+    list-style: none;
+    padding: 14px 24px;
+}
+
+.search-ul a {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.search-ul li:last-child {
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.search-ul li:hover {
+    background-color: #DEFDBE;
+}
+
+.search-ul .left-box {
+    display: flex;
+    align-items: center;
+}
+
+.search-ul .thumb-box {
+    width: 52px;
+    height: 34px;
+}
+
+.thumb-box img {
+    width: 100%;
+    display: block;
+    height: 100%;
+}
+
+.left-box span {
+    text-decoration: none;
+    color: var(--primary-text-color) !important;
+}
+
+.right-box span:first-child {
+    margin-right: 5px;
 }
 
 .search-btn {
@@ -33,9 +119,16 @@
 }
 
 .search-wrapper input {
-    border-radius: 10rem;
+    /*border-radius: 10rem;*/
     border: 1px solid var(--primary-color);
-    padding: 14px 20px;
+    padding: 14px 24px;
+}
+
+.search-wrapper input:focus {
+    outline: unset;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, .2);
+    border: 1px solid #dedede;
+    background-color: #fff;
 }
 
 /* 나의 파티 */
@@ -92,4 +185,14 @@
     width: 100%;
     /*height: 100%;*/
     object-fit: cover;
+}
+
+.swiper-item{
+    cursor:pointer;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, .2);
+}
+
+.swiper-item span {
+    font-family: 'Do Hyeon', sans-serif;
+    font-size: 2.5rem;
 }

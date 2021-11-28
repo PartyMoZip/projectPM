@@ -40,10 +40,9 @@ public class MyPageController {
         List<PartyVO> list = this.service.getMyPartyList(dto.getEmail());
         log.info("list.size() :{}", list.size());
 
-        if (list.size() != 0) {
-            model.addAttribute("list", list);
-        } // if
 
+        model.addAttribute("list", list);
+        
         return "/mypage";
     } // showMyPage
 

@@ -235,11 +235,6 @@ input::-webkit-search-cancel-button {
 	border-bottom: 1px solid var(--divider-color);
 }
 
-
-.page-item .page-link:hover {
-  color: var(--primary-color-text);
-  background-color: var(--primary-color);
-
 .inner-container.container-title {
 	font-size: 20px;
 	font-weight: 600;
@@ -256,23 +251,29 @@ input::-webkit-search-cancel-button {
 /* 파티메인 포토갤러리 끝 */
 
 /* 파티메인 포토갤러리 글쓰기 시작 */
-.container-sm>.nav.nav-pills {
-	justify-content: flex-start;
+.fileUploadBtn {
+	margin-top: 20px;
 }
 
-.container-lg.d-flex.justify-content-center {
-	width: 100vw;
+.fileUploadBtn .form-group {
+	margin-bottom: 10px;
 }
 
-.container-partyProfileImg {
-	width: 25vw;
+.container-btnGroup {
+  margin-top: 20px;
+  text-align: center;
 }
 
-textarea {
-	width: 20vw;
-	height: 45vh;
-	border: 1px solid black;
-	resize: none;
+.container-btnGroup .btn-primary {
+	border: 1px solid var(--primary-color);
+	color: var(--primary-color);
+	background-color: var(--primary-color-text);
+	font-weight: 500;
+}
+
+.container-btnGroup .btn-primary:hover {
+	color: var(--primary-color-text);
+	background-color: var(--primary-color);
 }
 
 /* 파티메인 포토갤러리 글쓰기 끝 */

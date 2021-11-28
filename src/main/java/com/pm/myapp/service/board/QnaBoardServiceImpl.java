@@ -22,9 +22,9 @@ public class QnaBoardServiceImpl implements QnaBoardService {
 
     // 문의 게시판 목록 - 페이징 처리
     @Override
-    public List<QnaBoardListVO> getListPerPage(Criteria cri) {
+    public List<QnaBoardListVO> getListPerPage(String searchWord, Integer option, Criteria cri) {
         log.debug("getListPerPage({}) invoked.", cri);
-        List<QnaBoardListVO> qnaBoard = this.mapper.getListWithPaging(cri);
+        List<QnaBoardListVO> qnaBoard = this.mapper.getListWithPaging(searchWord, option, cri);
         log.info("\t + allBoards : {}", qnaBoard);
 
         return qnaBoard;
@@ -72,10 +72,10 @@ public class QnaBoardServiceImpl implements QnaBoardService {
 
     // 문의 게시판 검색
     @Override
-    public List<QnaBoardSearchVO> search(String option, String keyword, Criteria cri) {
+    public List<QnaBoardSearchVO> search(String searchWord, Integer option, Criteria cri) {
 
-        String searchOption_mod = "f." + option;
-        String keyword_mod = "%"+keyword+"%";
+        String searchOption_mod = "f." + searchWord;
+        String keyword_mod = "%"+option+"%";
         List<QnaBoardSearchVO> searchList = this.mapper.searchQnaBoard(searchOption_mod, keyword_mod, cri);
 
         return searchList;
@@ -83,17 +83,17 @@ public class QnaBoardServiceImpl implements QnaBoardService {
 
     // 총 게시물 개수 반환
     @Override
-    public Integer getTotal() {
+    public Integer getTotal(String searchWord, Integer option) {
         log.debug("getTotal({}) invoked.");
-        return this.mapper.getTotalCount();
+        return this.mapper.getTotalCount(searchWord, option);
     }
 
     // 검색 결과 게시물 개수 반환
     @Override
-    public Integer getTotalSearch(String option, String keyword) {
+    public Integer getTotalSearch(String searchWord, Integer option) {
         log.debug("getTotalSearch() invoked.");
 
-        return this.mapper.getTotalSearchCount(option, keyword);
+        return this.mapper.getTotalSearchCount(searchWord, option);
     }
 
     // 댓글등록

@@ -9,16 +9,16 @@ import java.util.List;
 public interface QnaBoardMapper {
 
     // 문의 게시판 목록 - 페이징 처리
-    public abstract List<QnaBoardListVO> getListWithPaging(Criteria criteria);
+    public abstract List<QnaBoardListVO> getListWithPaging(@Param("searchWord") String searchWord, @Param("option") Integer option, @Param("cri") Criteria cri);
 
     // 문의 게시물 상세보기
     public abstract QnaBoardVO readQnaBoard(Integer qrefer);
 
     // 총 게시물 개수
-    public abstract Integer getTotalCount();
+    public abstract Integer getTotalCount(@Param("searchWord") String searchWord, @Param("option") Integer option);
 
     // 문의 게시판 검색 게시물 개수
-    public abstract Integer getTotalSearchCount(String option, String keyword);
+    public abstract Integer getTotalSearchCount(@Param("searchWord") String searchWord, @Param("option") Integer option);
 
     // 문의 게시물 글쓰기
     public abstract Integer writeQnaBoard(QnaBoardDTO qnaBoard);

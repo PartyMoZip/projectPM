@@ -91,10 +91,10 @@ public class QnaServiceTests {
         cri.setCurrPage(1);
         cri.setAmount(10);
 
-        List<QnaBoardListVO> boardList = this.service.getListPerPage(cri);
+        //List<QnaBoardListVO> boardList = this.service.getListPerPage(cri);
 
-        Objects.requireNonNull(boardList);
-        boardList.forEach(log::info);
+        //Objects.requireNonNull(boardList);
+        //boardList.forEach(log::info);
     }
 
     @Test
@@ -104,15 +104,15 @@ public class QnaServiceTests {
         String searchOption = "q.qsubject";
         String keyword = "%T%";
         Criteria cri = new Criteria();
-        List<QnaBoardSearchVO> list = this.service.search(searchOption, keyword, cri);
-        list.forEach(log::info);
+       // List<QnaBoardSearchVO> list = this.service.search(searchOption, keyword, cri);
+        //list.forEach(log::info);
     }
 
     @Test
     public void testGetTotal() {
         log.debug("testGetTotal() invoked.");
-        int totalCount = this.service.getTotal();
-        log.info("\t + totalCount : {}", totalCount);
+       // int totalCount = this.service.getTotal();
+       // log.info("\t + totalCount : {}", totalCount);
     }
 
     @Test
