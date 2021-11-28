@@ -16,8 +16,10 @@
         <img src="${photo}">
     </c:forEach>
     <hr>
+    <div>내가 누른 좋아요</div>
     ${__MYHEART__}
     <hr>
+    <div>총 좋아요 개수</div>
     ${__TOTALHEART__}
     <hr>
 
@@ -28,8 +30,9 @@
         <input type="hidden" name="prefer" value="${__DETAIL__.prefer}">
         <div>댓글 내용</div>
         <input type="text" name="precontent">
-        <div>이메일</div>
-        <input type="text" name="email">
+        <div>닉네임</div>
+        <div>${sessionScope.__AUTH__.nickname}</div>
+        <input type="hidden" name="email" value="${sessionScope.__AUTH__.email}">
         <input type="submit" value="댓글 작성">
     </form>
 

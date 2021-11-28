@@ -10,6 +10,7 @@ import com.pm.myapp.domain.PartyDTO;
 import com.pm.myapp.domain.PartyMemberCheckVO;
 import com.pm.myapp.domain.PartyUserVO;
 import com.pm.myapp.domain.PartyVO;
+import com.pm.myapp.domain.UserDTO;
 
 public interface PartyMapper {
 	
@@ -37,5 +38,8 @@ public interface PartyMapper {
 	
 	public abstract Integer getPartyMN(Integer partyCode);
 	
+	public abstract UserDTO getMakingList(@Param("partyCode") Integer partyCode,@Param("cri") Criteria cri);
+	
+	public abstract Integer getTotalMakingList(Integer partyCode);
 	
 } // end interface

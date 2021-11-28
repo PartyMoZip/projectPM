@@ -1,8 +1,8 @@
 package com.pm.myapp.domain.board;
 
-import lombok.Data;
+import java.sql.Date;
 
-import java.util.Date;
+import lombok.Data;
 
 @Data
 public class PartyPhotoDTO {
