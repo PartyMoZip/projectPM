@@ -57,7 +57,7 @@
                     <!--product details-->
                     <div class="content">
                         <div class="title_area">
-                            <span><input type="text" name="fsubject" value="${__boardDetail__.FSubject}"></span>
+                            <span><input type="text" name="fSubject" value="${__boardDetail__.FSubject}"></span>
                         </div>
                         <hr>
                         <div class="info_desc">
@@ -76,13 +76,13 @@
 
                         <div class="photo_content">
                             <div class="product-photo" id="${__boardDetail__.freePhoto}">
-                                <input type="file" id="file" name="file" accept="image/jpeg, image/png, image/jpg">
+                                <input type="file" id="file" name="freePhoto" accept="image/jpeg, image/png, image/jpg">
                             </div>
                             <c:if test="${not empty __boardDetail__.freePhoto}">
                                 <button id="delete" class="del-btn">삭제</button>
                             </c:if>
                         </div>
-                        <span><textarea name="fcontent" rows="10"
+                        <span><textarea name="fContent" rows="10"
                                         cols="137">${__boardDetail__.FContent}"</textarea>
                         </span>
 

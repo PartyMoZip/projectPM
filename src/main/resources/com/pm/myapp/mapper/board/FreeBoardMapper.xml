@@ -7,7 +7,7 @@
     <select id="getListWithPaging" resultType="com.pm.myapp.domain.board.FreeBoardListVO">
 
             SELECT
-                F.fRefer, F.fSubject, F.fContent, F.fDate, U.nickname, F.email, F.readnum
+                F.fRefer, F.fSubject, F.fContent, F.fDate, F.email, U.nickname, F.readnum
             FROM FREEBOARD F
             JOIN USERINFO U
             ON F.email = U.email
@@ -37,17 +37,25 @@
 
     <select id="readFreeBoard" resultType="com.pm.myapp.domain.board.FreeBoardVO">
         SELECT
-            F.frefer, F.fsubject,F.fcontent, F.fdate, U.nickname, F.freephoto, F.readnum
+            F.frefer, F.fsubject,F.fcontent, F.fdate, U.nickname, F.email, F.freephoto, F.readnum
         FROM FREEBOARD F
         JOIN USERINFO U ON F.email = U.email
         WHERE F.frefer = #{frefer}
 
     </select>
 
+    <select id="getPhoto" resultType="String">
+        SELECT FREEPHOTO
+        FROM FREEBOARD
+        WHERE FREFER = #{fRefer}
+    </select>
+
+
+
     <insert id="registerFreeBoard">
 
-        INSERT INTO FREEBOARD(FREFER, FSUBJECT, FCONTENT, fdate, EMAIL, FREEPHOTO, READNUM)
-        VALUES(SEQ_FREEBOARD.nextval, #{fSubject}, #{fContent}, sysdate, #{email}, #{freePhoto}, 0)
+        INSERT INTO FREEBOARD(FREFER, FSUBJECT, FCONTENT, fdate, EMAIL, freephoto, READNUM)
+        VALUES(SEQ_FREEBOARD.nextval, #{fSubject}, #{fContent}, sysdate, #{email}, '-', 0)
 
     </insert>
 
@@ -87,6 +95,12 @@
             FCONTENT = #{fContent},
             FREEPHOTO = #{freePhoto}
         WHERE FREFER = #{fRefer}
+    </update>
+
+    <update id="readIt">
+        UPDATE FREEBOARD
+        SET READNUM = READNUM + 1
+        WHERE FREFER = #{frefer}
     </update>
 
     <!-- 페이징 처리된 목록 조회 -->
@@ -150,34 +164,31 @@
         WHERE FREFER=#{frefer}
     </delete>
 
-    <select id="getCommentListPaging" resultType="com.pm.myapp.domain.board.FreeBoardReplyVO">
+    <select id="getCommentListPaging" resultType="com.pm.myapp.domain.board.FreeBoardReplyDTO">
         <![CDATA[
             SELECT
-                FRE.frerefer, FRE.frecontent, FRE.fredate, FRE.frefer, U.nickname
+                FRE.frerefer, FRE.frecontent, FRE.fredate, FRE.frefer, U.nickname, FRE.email
             FROM FREEBOARDRE FRE
             JOIN USERINFO U ON FRE.email = U.email
             WHERE frefer = #{frefer}
             ORDER BY frerefer desc
-            OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
-            FETCH NEXT #{cri.amount} ROWS ONLY
+            OFFSET (#{recri.reCurrPage}-1) * #{recri.reAmount} ROWS
+            FETCH NEXT #{recri.reAmount} ROWS ONLY
         ]]>
 
      </select>
 
     <insert id="writeComment">
-
         INSERT INTO FREEBOARDRE(frerefer, frecontent, fredate, frefer, email)
         VALUES(SEQ_FREEBOARDRE.nextval, #{frecontent}, sysdate, #{frefer}, #{email})
-
-
     </insert>
 
 
-    <select id="getTotalReply" resultType="int">
+    <select id="getTotalFreeReply" resultType="int">
         <![CDATA[
             SELECT COUNT(frerefer)
             FROM FREEBOARDRE
-            WHERE frerefer > 0
+            WHERE frefer = #{frefer}
         ]]>
     </select>
 
@@ -185,14 +196,14 @@
         UPDATE FREEBOARDRE
         SET
             FRECONTENT = #{frecontent}
-        WHERE FREREFER = #{frerefer}
+        WHERE FREFER = #{frefer}
     </update>
 
 
     <delete id="deleteComment">
         DELETE
         FROM FREEBOARDRE
-        WHERE FREREFER=#{frerefer}
+        WHERE FREFER=#{frefer}
     </delete>
 
 </mapper>

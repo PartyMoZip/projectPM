@@ -31,5 +31,4 @@ public interface PartyMapper {
 
     public abstract Integer getPartyMN(Integer partyCode);
 
-
 } // end interface

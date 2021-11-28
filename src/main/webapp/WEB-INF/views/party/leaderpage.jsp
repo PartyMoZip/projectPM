@@ -18,7 +18,9 @@
 
     <link rel="stylesheet"
           href="${pageContext.request.contextPath}/resources/css/partyMain.css?after"/>
-    <title>파티모집 - ${__PARTY__.partyName}</title>
+    <link rel="stylesheet"
+          href="${pageContext.request.contextPath}/resources/css/admin.css?after"/>
+    <title>파티모집 - 파티관리</title>
     <link rel="icon" href="${pageContext.request.contextPath}/resources/images/favicon.ico"/>
 </head>
 <body>
@@ -26,48 +28,6 @@
 <%--HEADER--%>
 <jsp:include
         page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp"/>
-
-<%--<h1>/WEB-INF/views/party/showLeaderPage.jsp</h1>
-<hr>
-<h3>${__PARTY__}</h3>
-<form action="/party/editparty" method="post">
-    <input type="hidden" name="partyCode" value="${__PARTY__.partyCode}">
-    <input type="text" name="partyName" value="${__PARTY__.partyName}">
-    <input type="text" name="partyProfile" value="${__PARTY__.partyProfile}">
-    <input type="text" name="localCode" value="${__PARTY__.localName}">
-    <input type="text" name="hobbyCode" value="${__PARTY__.hobbyName}">
-    <input type="submit" value="파티정보수정">
-</form>
-<hr>
-<form action="/party/dobreak" method="post">
-    <input type="hidden" name="partyCode" value="${__PARTY__.partyCode}">
-    <input type="submit" value="파티해체신청">
-</form>
-<hr>
-<form action="/party/editleader" method="post">
-    <input type="hidden" name="leaderEmail" value="test1@test.com">
-    <input type="hidden" name="memberEmail" value="test24@test.com">
-    <input type="hidden" name="partyCode" value="${__PARTY__.partyCode}">
-    <input type="submit" value="파티장 위임">
-</form>
-<hr>
-<form action="/party/editpl" method="post" enctype="multipart/form-data">
-    <input type="hidden" name="partyCode" value=10>
-    <input type="file" multiple="multiple" name="image"/>
-    <button type="submit">전송</button>
-</form>
-<h1>${logoresult}</h1>
-<img src="${__PARTY__.logoPic}" alt=""/>
-<hr>
-<form action="/party/editpi" method="post" enctype="multipart/form-data">
-    <input type="hidden" name="partyCode" value=10>
-    <input type="file" multiple="multiple" name="image"/>
-    <button type="submit">전송</button>
-</form>
-<h1>${mainresult}</h1>
-<img src="${__PARTY__.coverPic}" alt=""/>--%>
-
-<!-- 파티 관리페이지 상단 탭 -->
 
 <main>
     <ul class="nav nav-pills">
@@ -84,36 +44,7 @@
         <li class="nav-item"><a class="nav-link"
                                 href="/partyfunc/partychat?partyCode=${__PARTY__.partyCode}">채팅</a></li>
     </ul>
-    <!-- 파티프로필 설정 -->
-    <%--<div class="container mt-5 px-5 profile-box shadow-sm">
-        <div class="header">
-            <h4>파티프로필 설정</h4>
-        </div>
-        <div class="container-sm d-flex justify-content-center flex-column">
-            <div
-                    class="d-flex flex-column justify-content-center align-items-center">
-                <div class="container-partyProfileImg">
-                    <svg class="bd-placeholder-img bd-placeholder-img-lg img-fluid"
-                         width="100%" height="250" xmlns="http://www.w3.org/2000/svg"
-                         role="img" aria-label="Placeholder: Responsive image"
-                         preserveAspectRatio="xMidYMid slice" focusable="false">
-                        <rect width="100%" height="100%" fill="#868e96"></rect>
-                        <text x="45%" y="50%" fill="#dee2e6" dy=".3em">파티메인이미지</text>
-                    </svg>
-                </div>
-                <button type="button" class="btn btn-outline-primary">업로드</button>
-            </div>
 
-            <div class="d-flex flex-column justify-content-center align-items-center mt-4">
-                <div class="container-partyProfileName">
-                    <span class="align-self-baseline label-partyname">파티이름</span> <input
-                        type="text" class="form-control input-partyname mt-2"
-                        name="partyname" value="진건이와 아이들">
-                </div>
-                <button type="submit" class="btn btn-primary mt-4 save-btn">저장</button>
-            </div>
-        </div>
-    </div>--%>
     <div class="container mt-5 px-5 profile-box shadow-sm">
         <div class="header">
             <h4>파티 프로필 설정</h4>
@@ -170,6 +101,7 @@
                                 <button class="search-btn">
 										<span> <i class="fas fa-search"></i>
 										</span>
+                                    <<<<<<< HEAD
                                 </button>
                             </form>
                         </div>
@@ -220,6 +152,7 @@
 <!-- 스윗알러트 -->
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script
-        src="${pageContext.request.contextPath}/resources/js/partyedit.js"></script>
+        src="${pageContext.request.contextPath}/resources/js/partyedit.js?after"></script>
+
 </body>
 </html>

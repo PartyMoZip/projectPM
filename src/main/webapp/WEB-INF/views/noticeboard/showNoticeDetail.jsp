@@ -67,8 +67,7 @@
                             <span>수정</span>
                         </button>
 
-                        <button type="submit" id="deleteButton" class="btn btn-primary btn-sm"
-                              <%--  onclick="location.href='/noticeboard/deleteNoticeBoard?'"--%>>
+                        <button type="submit" id="deleteButton" class="btn btn-primary btn-sm">
                             <form action="/noticeboard/deleteNoticeBoard" name="deleteButton" method="post">
                             <input type="hidden" id="nRefer" name="nrefer" value="${board.NRefer}">
                             <i class="fas fa-trash-alt"></i>

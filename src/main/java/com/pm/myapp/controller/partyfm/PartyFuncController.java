@@ -34,44 +34,42 @@ public class PartyFuncController {
 	@Setter(onMethod_= {@Autowired})
 	private PartyFuncService service;
 
-
 	SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
 	Calendar cal = Calendar.getInstance();
 
 	@GetMapping("/calendar")
-	public String list() {
+	public String view(Integer partyCode , Model model) {
+		model.addAttribute("partyCode", partyCode);
 		return "fullcalendar/fullcalendar";
-	}//list
+	}//view
 
+	@GetMapping("/calendar/data")
+	@ResponseBody
+	public List<CalendarDTO> list(Integer partyCode) {
+		List<CalendarDTO> list = service.calendarList(partyCode); //잭슨바이딩이 List만들때 get이라는 키워드를 json 형태로 만들어줌
+		return list;
+	} //list
+
+	@DeleteMapping("/calendar/data")
+	@ResponseBody
+	public Boolean delete(@RequestBody CalendarDTO calendarDto) {
+		int result = service.deleteCalendar(calendarDto.getId());
+		return result == 1;
+	} //delete
 
 	@ResponseBody
 	@PostMapping("/calendar/post")
 	public Map<String, String> insertCal(
 			@RequestBody List<CalendarDTO> calendarDtoList) throws ParseException {
-		System.out.println(calendarDtoList.size());
-
+		System.out.println("calendarDtoList.size()");
 		for (CalendarDTO calendarDto : calendarDtoList) {
 			System.out.println(calendarDto);
-			Date startDate = formatDate(calendarDto.getStart());
-			Date endDate = formatDate(calendarDto.getEnd());
-			calendarDto.setStart(startDate);
-			calendarDto.setEnd(endDate);
-
 			service.insertCal(calendarDto);
 		} //for
 		return null;
 	} //insertCal
 
-	//GMT 9시간 빼기 메소드
-	public Date formatDate(Date date) throws ParseException {
-		cal.setTime(date);
-		cal.add(Calendar.HOUR, -9);
-		String format = timeFormat.format(cal.getTime());
-		Date newFormat = timeFormat.parse(format);
-		return newFormat;
-	} //formatDate
-
-  // 채팅방 입장
+	// 채팅방 입장
 	@GetMapping("/partychat")
 	public String view_chat(
 			HttpServletRequest request,
@@ -79,8 +77,9 @@ public class PartyFuncController {
 			Integer partyCode,
 			Model model) throws Exception {
 
+		System.out.println("들어옴");
 		return "/chat/view_chat";
-		
+
 	} // view_chat
 
 

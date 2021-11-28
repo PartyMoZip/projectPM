@@ -8,12 +8,17 @@ import com.pm.myapp.domain.PartyDTO;
 import com.pm.myapp.domain.PartyMemberCheckVO;
 import com.pm.myapp.domain.PartyUserVO;
 import com.pm.myapp.domain.PartyVO;
+import com.pm.myapp.domain.UserDTO;
 
 public interface PartyService {
 	
 	public abstract List<PartyMemberCheckVO> checkPartyMember(String email);
 
 	public abstract PartyVO getParty(Integer partyCode);
+	
+	public abstract UserDTO getJoinMakingList(Integer partyCode, Criteria cri);
+	
+	public abstract Integer getTotalJoinMakeMember(Integer partyCode);
 	
 	public abstract boolean doJoin(String email, Integer partyCode);
 	

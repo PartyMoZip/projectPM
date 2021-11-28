@@ -1,5 +1,6 @@
 package com.pm.myapp.service.board;
 import com.pm.myapp.domain.Criteria;
+import com.pm.myapp.domain.ReplyCriteria;
 import com.pm.myapp.domain.board.*;
 import com.pm.myapp.mapper.board.QnaBoardMapper;
 import lombok.Setter;
@@ -42,12 +43,11 @@ public class QnaBoardServiceImpl implements QnaBoardService {
 
     // 글수정
     @Override
-    public boolean editBoard(QnaBoardDTO qnaBoard) {
-        log.debug("modify({}) invoked.", qnaBoard);
+    public void editBoard(QnaBoardDTO qnaBoard) {
+        log.debug("editBoard({}) invoked.", qnaBoard);
 
-        int affectedRows = this.mapper.editQnaBoard(qnaBoard);
-        log.info("\t + affectedRows : {}", affectedRows);
-        return (affectedRows == 1);
+        mapper.editQnaBoard(qnaBoard);
+
     }
 
     // 글삭제
@@ -118,12 +118,23 @@ public class QnaBoardServiceImpl implements QnaBoardService {
         return (affectedRows == 1);
     }
 
+    @Override
+    public Integer getTotalQnaReplyList(Integer qrefer) {
+        Integer totalNum = this.mapper.getTotalQnaReply(qrefer);
+        return totalNum;
+    }
+
+    @Override
+    public boolean readQnaBoard(Integer qrefer) {
+        return false;
+    }
+
     // 댓글 목록
     @Override
-    public List<QnaBoardReplyVO> getReply(Integer qrefer, Criteria cri) {
+    public List<QnaBoardReplyVO> getReply(Integer qrefer, ReplyCriteria recri) {
         log.debug("getReply() invoked.");
 
-        List<QnaBoardReplyVO> qnaReply = this.mapper.getCommentListPaging(qrefer, cri);
+        List<QnaBoardReplyVO> qnaReply = this.mapper.getCommentListPaging(qrefer, recri);
         log.info("\t + qnaReply : {}", qnaReply);
 
         return qnaReply;
@@ -140,12 +151,6 @@ public class QnaBoardServiceImpl implements QnaBoardService {
         return (affectedRows == 1);
     }
 
-    @Override
-    public Integer getTotalReply() {
-        log.debug("getTotalReply() invoked.");
-
-        return this.mapper.getTotalComment();
-    }
 
 
 }

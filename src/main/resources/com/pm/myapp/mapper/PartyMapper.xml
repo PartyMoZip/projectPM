@@ -122,5 +122,26 @@
     
     </select>
 
+    <select id="getMakingList" resultType="com.pm.myapp.domain.UserDTO">
+
+        SELECT ROWNUM, U.NICKNAME, P.EMAIL
+        FROM PARTYUSER P
+                 JOIN USERINFO U
+                      ON P.EMAIL = U.EMAIL
+        WHERE P.PARTYCODE = #{partyCode}
+          AND P.AUTHCODE = -1
+        OFFSET (#{cri.currPage} - 1) * #{cri.amount} ROWS FETCH NEXT #{cri.amount} ROWS ONLY
+
+    </select>
+
+    <select id="getTotalMakingList" resultType="Integer">
+
+        SELECT COUNT(NICKNAME)
+        FROM PARTYUSER
+        WHERE PARTYCODE = #{partyCode}
+          AND AUTHCODE = -1
+
+    </select>
+
 
 </mapper>

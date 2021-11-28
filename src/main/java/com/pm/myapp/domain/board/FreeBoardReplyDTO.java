@@ -12,5 +12,6 @@ public class FreeBoardReplyDTO {
     private Date fredate;
     private Integer frefer;
     private String email;
+    private String nickname;
 
 }

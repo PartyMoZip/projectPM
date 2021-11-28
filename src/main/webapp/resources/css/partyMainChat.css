@@ -1,0 +1,41 @@
+@import "global.css";
+
+.px-5 {
+	height: 80vh;
+	width: 75vw;
+	position: relative;
+	border-radius: 20px;
+	overflow: scroll;
+}
+
+.container-lg > div {
+	padding-top: 10px;
+}
+
+.container-chatReply {
+	display: flex;
+	justify-content: center;
+    margin-top: 20px;
+}
+
+.container-chatReply .btn.btn-outline-primary {
+	color: var(--primary-color);
+	border-color: var(--primary-color);
+}
+
+.container-chatReply .btn.btn-outline-primary:hover {
+	color: var(--primary-color-text);
+	border-color: var(--primary-color);
+	background-color: var(--primary-color);
+}
+
+#divChatData > .chatInfo {
+	display: inline-block;
+	border: 1px solid black;
+	border-radius: 20px;
+	padding: 5px;
+}
+
+.chatImg  > img {
+	margin-top: 20px;
+}

@@ -31,7 +31,9 @@ public class PartyFreeController {
 	@GetMapping("/getPFreeBoardList")
 	public String getPFreeBoardList(
             @ModelAttribute("sdto") BoardSearchListDTO sdto,
-			@ModelAttribute("cri")Criteria cri, Model model) {
+			@ModelAttribute("cri")Criteria cri,
+			Model model) {
+		Integer partyCode = sdto.getPartyCode();
         String searchWord = sdto.getSearchWord();
         Integer option = sdto.getOption();
 
@@ -50,6 +52,9 @@ public class PartyFreeController {
 		Integer totalAmount = this.service.getTotal(searchWord, option);
 		PageDTO pageDTO = new PageDTO(cri, totalAmount);
 		model.addAttribute("pageMaker", pageDTO);
+		
+		// 파티 코드 강제 주입
+		model.addAttribute("partyCode", partyCode);
 
 		return "/partyFree/boardList";
 		
@@ -57,12 +62,14 @@ public class PartyFreeController {
 
 	// 파티 자유 게시판 상세보기
 	@GetMapping("/showPartyFDetail")
-	public String showPartyFDetail(@ModelAttribute("cri") Criteria cri, Integer pfrefer, Integer partycode, Model model) {
+	public String showPartyFDetail(
+			@ModelAttribute("cri") Criteria cri, Integer pfrefer, Integer partycode, Model model)
+		{
 		log.debug("get({}, {}, {}) invoked.", cri, pfrefer, partycode);
 		PartyFreeVO partyFDetail = this.service.getBoardDetail(pfrefer, partycode);
 		log.info("\t + partyFree : {}", partyFDetail);
 		List<PartyFreeReplyVO> reply = this.service.getReply(pfrefer,partycode, cri);
-		model.addAttribute("partyFree", partyFDetail);
+		model.addAttribute("boardDetail", partyFDetail);
 		model.addAttribute("reply", reply);
 
 		return "/partyFree/boardDetail";

@@ -6,24 +6,32 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+	pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <head>
 
-    <!-- 부트스트랩 css -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"/>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
-          integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/home.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/boardList.css"/>
+<!-- 부트스트랩 css -->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+	crossorigin="anonymous" />
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+	integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
+	crossorigin="anonymous" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/home.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/boardList.css" />
 
-
-    <title>파티모집 -  파티 자유</title>
+<title>파티메인페이지 - 자유게시판</title>
 </head>
+
 <body>
+
 <%--HEADER--%>
 <jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp"/>
 
@@ -47,8 +55,7 @@
                         </div>
                     </th>
                     <!-- 자유게시판 체크박스 전체선택 끝 -->
-
-                    <th scope="col">번호</th>
+                    <th scope="col">NO</th>
                     <th scope="col">제목</th>
                     <th scope="col">작성자</th>
                     <th scope="col">작성일</th>
@@ -69,10 +76,10 @@
                                 </td>
                                 <td><c:out value="${list}"/></td>
                                 <td>
-                                    <a href="/freeboard/showFreeDetail?frefer=${list.FRefer}&currPage=${pageMaker.cri.currPage}&amount=${pageMaker.cri.amount}&pagesPerPage=${pageMaker.cri.pagesPerPage}">${list.FSubject}</a>
+                                    <a href="/partyfree/showPartyFDetail?pfrefer=${list.pfRefer}&currPage=${pageMaker.cri.currPage}&amount=${pageMaker.cri.amount}&pagesPerPage=${pageMaker.cri.pagesPerPage}">${list.pfSubject}</a>
                                 </td>
-                                <td><c:out value="${list.nickname}"/></td>
-                                <td><fmt:formatDate pattern="yyyy.MM.dd" value="${list.FDate}"/></td>
+                                <td><c:out value="${list.email}"/></td>
+                                <td><fmt:formatDate pattern="yyyy.MM.dd" value="${list.pfDate}"/></td>
                                 <td><c:out value="${list.readnum}"/></td>
                             </tr>
                         </c:forEach>
@@ -106,14 +113,14 @@
                     <c:if test="${pageMaker.prev}">
                         <li class="prev page-item">
                             <a class="prev page-link"
-                               href="/freeboard/getFreeBoardList?currPage=${pageMaker.startPage-1}">◀</a>
+                               href="/partyfree/getPFreeBoardList?currPage=${pageMaker.startPage-1}">◀</a>
                         </li>
                     </c:if>
 
                     <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="pageNum">
                         <li class="page-item">
                             <a id="page-curr" class="page-link"
-                               href="/freeboard/getFreeBoardList?currPage=${pageNum}">
+                               href="/partyfree/getPFreeBoardList?currPage=${pageNum}">
                                     ${pageNum}
                             </a>
                         </li>
@@ -122,7 +129,7 @@
                     <c:if test="${pageMaker.next}">
                         <li class="next page-item">
                             <a class="next page-link"
-                               href="/freeboard/getFreeBoardList?currPage=${pageMaker.endPage+1}">▶</a>
+                               href="/partyfree/getPFreeBoardList?currPage=${pageMaker.endPage+1}">▶</a>
                         </li>
                     </c:if>
                 </ul>
@@ -176,6 +183,7 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
 <script src="${pageContext.request.contextPath}/resources/js/board.js"></script>
+
 </body>
 
 </html>

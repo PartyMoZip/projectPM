@@ -25,57 +25,39 @@
 </head>
 <body>
 	<%--HEADER--%>
-	<jsp:include
-		page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp" />
-
-	<%-- <form action="/partyphoto/write" method="post"
-		enctype="multipart/form-data">
-		<input type="text" name="partycode" value="${ldto.partyCode}" readonly>
-		<input type="text" name="pcontent"> <input type="text"
-			name="psubject"> <input type="text" name="email"> <input
-			type="file" multiple="multiple" name="images" />
-
-		<button type="submit">글쓰기</button>
-	</form>
-	<hr>
-	<a
-		href="/partyphoto/list?partyCode=${ldto.partyCode}&currPage=${cri.currPage}&searchWord=${ldto.searchWord}&option=${ldto.option}"></option>목록</a>
- --%>
+	<jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp" />
 
 	<div class="container mt-5 px-5 profile-box shadow-sm">
-		<form enctype="multipart/form-data" action="" method="post">
+		<form enctype="multipart/form-data" action="/partyphoto/write" method="post">
 			<div class="container">
 				<div class="col-md-6">
 					<div class="form-group">
-						<label for="writer">작성자</label> <input type="text"
-							class="form-control" name="writer" id="writer" value="" readonly>
+						<label for="writer">작성자</label>
+						<div class="form-control" id="writer">${sessionScope.__AUTH__.nickname}</div>
 					</div>
 				</div>
-				<input type="hidden" id="id" name="id" value="">
-
+				<input type="hidden" id="id" name="email" value="${sessionScope.__AUTH__.email}">
+				<input type="hidden" name="partycode" value="${ldto.partyCode}">
 
 				<div class="form-group" style="margin-right: 70px">
-					<label for="title">글제목</label> <input type="text"
-						class="form-control" name="title" id="title" value=""
-						required="required">
+					<label for="title">글제목</label>
+					<input type="text" class="form-control" name="psubject" id="title" value="" required="required">
 				</div>
 
 				<div class="form-group" style="margin-right: 70px">
 					<label for="content">글내용</label>
-					<textarea class="form-control" rows="10" name="content"
-						id="content" required="required"></textarea>
+					<textarea class="form-control" rows="10" name="pcontent" id="content" required="required"></textarea>
 				</div>
-
 
 				<div class="fileUploadBtn">
 					<div class="form-group">
-						<label for="File">첨부파일 1</label> <input type="file" name="file[0]">
+						<label for="File">첨부파일 1</label> <input type="file" name="images">
 					</div>
 					<div class="form-group">
-						<label for="File">첨부파일 2</label> <input type="file" name="file[1]">
+						<label for="File">첨부파일 2</label> <input type="file" name="images">
 					</div>
 					<div class="form-group">
-						<label for="File">첨부파일 3</label> <input type="file" name="file[2]">
+						<label for="File">첨부파일 3</label> <input type="file" name="images">
 					</div>
 				</div>
 
@@ -83,7 +65,7 @@
 					<button type="submit" class="btn btn-primary btn-sm">
 						<i class="fas fa-pen"></i> <span>등록</span>
 					</button>
-					<button type="button" class="btn btn-primary btn-sm" onclick="location.href='/partyphoto/list?partyCode=${ldto.partyCode}&currPage=${cri.currPage}';">
+					<button type="button" class="btn btn-primary btn-sm" onclick="location.href='/partyphoto/list?partyCode=${ldto.partyCode}&currPage=${cri.currPage}&searchWord=${ldto.searchWord}&option=${ldto.option}';">
 						<i class="fas fa-list-ul"></i> <span>목록</span>
 					</button>
 				</div>

@@ -1227,5 +1227,6 @@
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script
         src="${pageContext.request.contextPath}/resources/js/party.js"></script>
+
 </body>
 </html>

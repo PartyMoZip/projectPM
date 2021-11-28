@@ -39,6 +39,8 @@ public class FreeBoardController {
             option = 1;
         } // if
 		log.debug("getFreeBoardList({}) invoked.", cri);
+
+        // 목록 불러오기
 		List<FreeBoardListVO> list = this.service.getListPerPage(searchWord, option, cri);
 
 		log.info("\t + list size : {}", list.size());
@@ -55,25 +57,44 @@ public class FreeBoardController {
 
 	// 자유 게시판 상세보기
 	@GetMapping("/showFreeDetail")
-	public void showFreeDetail(@ModelAttribute("cri") Criteria cri, Integer frefer, Model model) {
+	public void showFreeDetail(
+            @ModelAttribute("sdto") BoardSearchListDTO sdto,
+            @ModelAttribute("cri") Criteria cri,
+            @ModelAttribute("recri") ReplyCriteria recri,
+            Integer frefer, Model model) {
 		log.debug("showFreeDetail({}, {}) invoked.", cri, frefer);
 
+        boolean readOk = this.service.readFreeBoard(frefer);
+        if(readOk) {
+            log.info("자유 게시판 {}번 글 읽기 성공", frefer);
+        }
+
+        // 자유 게시판 글 상세보기
 		FreeBoardVO boardDetail = this.service.getBoardDetail(frefer);
 		log.info("\t + board : {}", boardDetail);
-		List<FreeBoardReplyVO> reply = this.service.getReply(frefer, cri);
         model.addAttribute("boardDetail", boardDetail);
+
+        // 댓글 목록 불러오기
+        List<FreeBoardReplyDTO> reply = this.service.getReply(frefer, recri);
         model.addAttribute("reply", reply);
+
+        // 댓글 총 개수 구하기
+        Integer totalAmount = this.service.getTotalFreeReplyList(frefer);
+
+        // 댓글 페이지네이션 처리
+        PageDTO pageDTO = new PageDTO(recri, totalAmount);
+        model.addAttribute("replyPageMaker", pageDTO);
 
 	} // showFreeDetail
 
 	// 자유 게시판 글쓰기 완료
 	@PostMapping("/writeFreeBoardOk")
-	public String writeFreeBoard(FreeBoardDTO writeFB, RedirectAttributes rttrs) {
-		log.debug("writeFreeBoard({}) invoked.", writeFB);
-		boolean result = this.service.writeBoard(writeFB);
+	public String writeFreeBoard(FreeBoardDTO freeBoard, RedirectAttributes rttrs) {
+		log.debug("writeFreeBoard({}) invoked.", freeBoard);
+		boolean result = this.service.writeBoard(freeBoard);
 		rttrs.addAttribute("result", result);
 
-		return "redirect:/freeboard/boardList";
+		return "redirect:/freeboard/getFreeBoardList";
 	} // writeFreeBoard
 
     // 자유 게시판 글 쓰기 화면
@@ -110,11 +131,17 @@ public class FreeBoardController {
 
 	// 자유 게시판 삭제
 	@PostMapping("/deleteFreeBoard")
-	public String deleteFreeBoard(@RequestParam("frefer") Integer frefer, RedirectAttributes rttrs) {
+	public String deleteFreeBoard(
+            Integer frefer,
+            @ModelAttribute("cri") Criteria cri,
+            RedirectAttributes rttrs) {
 		log.debug("deleteFreeBoard({}) invoked.", frefer);
+
 		boolean result = this.service.deleteBoard(frefer);
 		rttrs.addAttribute("result", result);
 
+        boolean resultReply = this.service.deleteFreeBoardReply(frefer);
+        rttrs.addAttribute("resultRe", resultReply);
 		return "redirect:/freeboard/boardList";
 
 	} // deleteFreeBoard
@@ -134,37 +161,47 @@ public class FreeBoardController {
 
 		return "/freeboard/searchList";
 	} // searchFreeBoard
-	
-	// 자유 게시판  - 댓글 목록
+
+	/*// 자유 게시판  - 댓글 목록
 	@GetMapping("/getComment")
-	public String getComment(Model model, Integer frefer, Criteria cri) {
+	public String getComment(Model model, Integer frefer, ReplyCriteria recri) {
 		log.debug("getComment() invoked.");
-		List<FreeBoardReplyVO> list = this.service.getReply(frefer, cri);
+		List<FreeBoardReplyVO> list = this.service.getReply(frefer, recri);
 
 		log.info("\t + list size : {}", list.size());
 		model.addAttribute("list", list);
 
         return "redirect:/freeboard/showFreeDetail";
 	} // commentList
-	
+	*/
 	// 자유 게시판  - 댓글 작성
 	@PostMapping("/writeComment")
-	public String writeComment(FreeBoardReplyDTO freeReply, RedirectAttributes rttrs) {
-		log.debug("writeComment({}) invoked.", freeReply);
+	public String writeComment(
+            Integer frefer,
+            FreeBoardReplyDTO freeReply,
+            @ModelAttribute("cri") Criteria cri,
+            @ModelAttribute("recri") ReplyCriteria recri,
+            RedirectAttributes rttrs) {
+		log.debug("writeComment({},{}) invoked.", frefer, freeReply);
 
 		boolean result = this.service.writeReply(freeReply);
-		rttrs.addAttribute("resultWriteComment", result);
+        rttrs.addAttribute("result", result);
 
         return "redirect:/freeboard/showFreeDetail";
 	} // writeComment
 	
 	// 자유 게시판  - 댓글 수정
 	@PostMapping("/editComment")
-	public String editComment(FreeBoardReplyDTO freeReply, RedirectAttributes rttrs) {
+	public String editComment(
+            FreeBoardReplyDTO freeReply,
+            @ModelAttribute("cri") Criteria cri,
+            @ModelAttribute("recri") ReplyCriteria recri,
+            RedirectAttributes rttrs) {
 		log.debug("editComment({}) invoked.", freeReply);
 
 		boolean result = this.service.editReply(freeReply);
-		rttrs.addAttribute("resultEditComment", result);
+		rttrs.addAttribute("result", result);
+        rttrs.addAttribute("frefer", freeReply.getFrefer());
 
 
         return "redirect:/freeboard/showFreeDetail";
@@ -172,11 +209,15 @@ public class FreeBoardController {
 	
 	// 자유 게시판  - 댓글 삭제
 	@PostMapping("/deleteComment")
-	public String deleteComment(@RequestParam("frerefer") Integer frerefer, RedirectAttributes rttrs) {
-		log.debug("deleteComment({}) invoked.", frerefer);
+	public String deleteComment(
+            Integer frefer,
+            @ModelAttribute("cri") Criteria cri,
+            @ModelAttribute("recri") ReplyCriteria recri,
+            RedirectAttributes rttrs) {
+		log.debug("deleteComment({}) invoked.", frefer);
 
-		boolean result = this.service.deleteReply(frerefer);
-		rttrs.addAttribute("resultDeleteComment", result);
+		boolean result = this.service.deleteFreeBoardReply(frefer);
+		rttrs.addAttribute("result", result);
 
         return "redirect:/freeboard/showFreeDetail";
 	} // deleteComment

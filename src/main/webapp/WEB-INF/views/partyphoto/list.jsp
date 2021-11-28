@@ -6,7 +6,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>파티모집 - ${__PARTY__.partyName}</title>
+    <title>파티포토갤러리</title>
     <link rel="icon"
           href="${pageContext.request.contextPath}/resources/images/favicon.ico"/>
     <link rel="stylesheet"
@@ -29,293 +29,167 @@
         page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp"/>
 
 <%-- <c:choose>
-    <c:when test="${not empty __LIST__}">
-        <c:forEach items="${__LIST__}" var="list">
-            <tr>
-                <td>
-                    <div class="checkbox-group">
-                        <div class="partyCheckboxGroup">
-                            <input type="checkbox" class="bigCheck" name="fbc">
-                        </div>
-                    </div>
-                </td>
-                <td><c:out value="${list.prefer}" /></td>
-                <td><a
-                    href="/partyphoto/detail?prefer=${list.prefer}&partyCode=${list.partycode}&currPage=${pageMaker.cri.currPage}&amount=${pageMaker.cri.amount}&pagesPerPage=${pageMaker.cri.pagesPerPage}">${list.psubject}</a>
-                </td>
-                <td><c:out value="${list.nickname}" /></td>
-                <td><fmt:formatDate pattern="yyyy.MM.dd" value="${list.pdate}" /></td>
-                <td><c:out value="${list.readnum}" /></td>
-            </tr>
-        </c:forEach>
-    </c:when>
-    <c:otherwise>
-        <td>등록된 글이 없습니다</td>
-    </c:otherwise>
+   <c:when test="${not empty __LIST__}">
+      <c:forEach items="${__LIST__}" var="list">
+         <tr>
+            <td>
+               <div class="checkbox-group">
+                  <div class="partyCheckboxGroup">
+                     <input type="checkbox" class="bigCheck" name="fbc">
+                  </div>
+               </div>
+            </td>
+            <td><c:out value="${list.prefer}" /></td>
+            <td><a
+               href="/partyphoto/detail?prefer=${list.prefer}&partyCode=${list.partycode}&currPage=${pageMaker.cri.currPage}">${list.psubject}</a>
+            </td>
+            <td><c:out value="${list.nickname}" /></td>
+            <td><fmt:formatDate pattern="yyyy.MM.dd" value="${list.pdate}" /></td>
+            <td><c:out value="${list.readnum}" /></td>
+         </tr>
+      </c:forEach>
+   </c:when>
+   <c:otherwise>
+      <td>등록된 글이 없습니다</td>
+   </c:otherwise>
 </c:choose>
 <hr>
 <a
-    href="/partyphoto/writeview?partyCode=${partyCode}&currPage=${pageMaker.cri.currPage}">글쓰기</a>
+   href="/partyphoto/writeview?partyCode=${partyCode}&currPage=${pageMaker.cri.currPage}">글쓰기</a>
 <hr>
 
 <hr>
 <c:choose>
-    <c:when test="${not empty __LIST__}">
-        <div id="pagination">
-            <form id="paginationForm">
-                <input type="hidden" name="currPage"> <input type="hidden"
-                    name="amount"> <input type="hidden" name="pagesPerPage">
-                <ul class="pagination justify-content-center">
-                    <c:if test="${pageMaker.prev}">
-                        <li class="prev page-item"><a class="prev page-link"
-                            href="/partyphoto/list?currPage=${pageMaker.startPage-1}&searchWord=${searchWord}&option=${option}">◀</a>
-                        </li>
-                    </c:if>
+   <c:when test="${not empty __LIST__}">
+      <div id="pagination">
+         <form id="paginationForm">
+            <ul class="pagination justify-content-center">
+               <c:if test="${pageMaker.prev}">
+                  <li class="prev page-item"><a class="prev page-link"
+                     href="/partyphoto/list?currPage=${pageMaker.startPage-1}&searchWord=${ldto.searchWord}&option=${ldto.option}">◀</a>
+                  </li>
+               </c:if>
 
-                    <c:forEach begin="${pageMaker.startPage}"
-                        end="${pageMaker.endPage}" var="pageNum">
-                        <li class="page-item"><a id="page-curr" class="page-link"
-                            href="/partyphoto/list?currPage=${pageNum}&searchWord=${searchWord}&option=${option}">
-                                ${pageNum} </a></li>
-                    </c:forEach>
+               <c:forEach begin="${pageMaker.startPage}"
+                  end="${pageMaker.endPage}" var="pageNum">
+                  <li class="page-item"><a id="page-curr" class="page-link"
+                     href="/partyphoto/list?currPage=${pageNum}&searchWord=${ldto.searchWord}&option=${ldto.option}">
+                        ${pageNum} </a></li>
+               </c:forEach>
 
-                    <c:if test="${pageMaker.next}">
-                        <li class="next page-item"><a class="next page-link"
-                            href="/partyphoto/list?currPage=${pageMaker.endPage+1}&searchWord=${searchWord}&option=${option}">▶</a>
-                        </li>
-                    </c:if>
-                </ul>
-            </form>
-        </div>
-    </c:when>
+               <c:if test="${pageMaker.next}">
+                  <li class="next page-item"><a class="next page-link"
+                     href="/partyphoto/list?currPage=${pageMaker.endPage+1}&searchWord=${ldto.searchWord}&option=${ldto.option}">▶</a>
+                  </li>
+               </c:if>
+            </ul>
+         </form>
+      </div>
+   </c:when>
 </c:choose> --%>
 
 <div class="container mt-5">
     <main>
-		<ul class="nav nav-pills">
-			<li class="nav-item"><a class="nav-link" aria-current="page"
-									href="/party/showmain?partyCode=${partyCode}">메인</a></li>
-			<li class="nav-item"><a class="nav-link"
-									href="/party/leaderpage?partyCode=${partyCode}">파티관리</a></li>
-			<li class="nav-item"><a class="nav-link" href="#">일정</a></li>
-			<li class="nav-item"><a class="nav-link" href="#">파티원</a></li>
-			<li class="nav-item"><a class="nav-link"
-									href="/partyfree/getPFreeBoardList">자유게시판</a></li>
-			<li class="nav-item"><a class="nav-link active"
-									href="/partyphoto/list?partyCode=${partyCode}">포토갤러리</a></li>
-			<li class="nav-item"><a class="nav-link"
-									href="/partyfunc/partychat?partyCode=${partyCode}">채팅</a></li>
-		</ul>
+        <ul class="nav nav-pills">
+            <li class="nav-item"><a class="nav-link" aria-current="page"
+                                    href="/party/showmain?partyCode=${ldto.partyCode}">메인</a></li>
+            <li class="nav-item"><a class="nav-link"
+                                    href="/party/leaderpage?partyCode=${ldto.partyCode}">파티관리</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">일정</a></li>
+            <li class="nav-item"><a class="nav-link" href="/party/memberlist?partyCode=${ldto.partyCode}">파티원</a></li>
+            <li class="nav-item"><a class="nav-link"
+                                    href="/partyfree/getPFreeBoardList?partyCode=${ldto.partyCode}">자유게시판</a></li>
+            <li class="nav-item"><a class="nav-link active"
+                                    href="/partyphoto/list?partyCode=${ldto.partyCode}">포토갤러리</a></li>
+            <li class="nav-item"><a class="nav-link"
+                                    href="/partyfunc/partychat?partyCode=${ldto.partyCode}">채팅</a></li>
+        </ul>
 
-        <div class="inner-container container-title">포토갤러리</div>
+        <div class="inner-container container-title">파티 포토갤러리</div>
 
         <div class="album py-5">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                <div class="col">
-                    <div class="card shadow-sm">
-                        <svg class="bd-placeholder-img card-img-top" width="100%"
-                             height="225" xmlns="http://www.w3.org/2000/svg" role="img"
-                             aria-label="Placeholder: Thumbnail"
-                             preserveAspectRatio="xMidYMid slice" focusable="false">
-                            <title>Placeholder</title>
-                            <rect width="100%" height="100%"
-                                  fill="#55595c"></rect>
-                            <text x="50%" y="50%" fill="#eceeef"
-                                  dy=".3em">Thumbnail
-                            </text>
-                        </svg>
+                <c:choose>
+                    <c:when test="${not empty __LIST__}">
+                        <c:forEach items="${__LIST__}" var="list">
+                            <div class="col">
+                                <div class="card shadow-sm">
+                                    <svg class="bd-placeholder-img card-img-top" width="100%"
+                                         height="225" xmlns="http://www.w3.org/2000/svg" role="img"
+                                         aria-label="Placeholder: Thumbnail"
+                                         preserveAspectRatio="xMidYMid slice" focusable="false">
+                                        <title>Placeholder</title>
+                                        <rect width="100%" height="100%"
+                                              fill="#55595c"></rect>
+                                        <text x="50%" y="50%" fill="#eceeef"
+                                              dy=".3em">Thumbnail
+                                        </text>
+                                    </svg>
 
-                        <div class="card-body">
-                            <p class="card-text">행복한 진거뉘</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary"
-                                            onClick="location.href='./detail';">View
-                                    </button>
+                                    <div class="card-body">
+                                        <p class="card-text"><c:out value="${list.psubject}"/></p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-sm btn-outline-secondary"
+                                                        onClick="location.href='/partyphoto/detail?prefer=${list.prefer}&partyCode=${list.partycode}&currPage=${pageMaker.cri.currPage}&searchWord=${ldto.searchWord}&option=${ldto.option}';">
+                                                    View
+                                                </button>
+                                            </div>
+                                            <small class="text-muted"><c:out
+                                                    value="${list.pdate}"/></small>
+                                        </div>
+                                    </div>
                                 </div>
-                                <small class="text-muted"><c:out
-                                        value="게시날짜 넣어줘 형. 좋아요 카운트 넣으실?"/></small>
                             </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="card shadow-sm">
-                        <svg class="bd-placeholder-img card-img-top" width="100%"
-                             height="225" xmlns="http://www.w3.org/2000/svg" role="img"
-                             aria-label="Placeholder: Thumbnail"
-                             preserveAspectRatio="xMidYMid slice" focusable="false">
-                            <title>Placeholder</title>
-                            <rect width="100%" height="100%"
-                                  fill="#55595c"></rect>
-                            <text x="50%" y="50%" fill="#eceeef"
-                                  dy=".3em">Thumbnail
-                            </text>
-                        </svg>
-
-                        <div class="card-body">
-                            <p class="card-text">행복한 진거뉘</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                </div>
-                                <small class="text-muted"><c:out value="게시날짜 넣어줘 형"/></small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="card shadow-sm">
-                        <svg class="bd-placeholder-img card-img-top" width="100%"
-                             height="225" xmlns="http://www.w3.org/2000/svg" role="img"
-                             aria-label="Placeholder: Thumbnail"
-                             preserveAspectRatio="xMidYMid slice" focusable="false">
-                            <title>Placeholder</title>
-                            <rect width="100%" height="100%"
-                                  fill="#55595c"></rect>
-                            <text x="50%" y="50%" fill="#eceeef"
-                                  dy=".3em">Thumbnail
-                            </text>
-                        </svg>
-
-                        <div class="card-body">
-                            <p class="card-text">행복한 진거뉘</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                </div>
-                                <small class="text-muted"><c:out value="게시날짜 넣어줘 형"/></small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="card shadow-sm">
-                        <svg class="bd-placeholder-img card-img-top" width="100%"
-                             height="225" xmlns="http://www.w3.org/2000/svg" role="img"
-                             aria-label="Placeholder: Thumbnail"
-                             preserveAspectRatio="xMidYMid slice" focusable="false">
-                            <title>Placeholder</title>
-                            <rect width="100%" height="100%"
-                                  fill="#55595c"></rect>
-                            <text x="50%" y="50%" fill="#eceeef"
-                                  dy=".3em">Thumbnail
-                            </text>
-                        </svg>
-
-                        <div class="card-body">
-                            <p class="card-text">행복한 진거뉘</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                </div>
-                                <small class="text-muted"><c:out value="게시날짜 넣어줘 형"/></small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="card shadow-sm">
-                        <svg class="bd-placeholder-img card-img-top" width="100%"
-                             height="225" xmlns="http://www.w3.org/2000/svg" role="img"
-                             aria-label="Placeholder: Thumbnail"
-                             preserveAspectRatio="xMidYMid slice" focusable="false">
-                            <title>Placeholder</title>
-                            <rect width="100%" height="100%"
-                                  fill="#55595c"></rect>
-                            <text x="50%" y="50%" fill="#eceeef"
-                                  dy=".3em">Thumbnail
-                            </text>
-                        </svg>
-
-                        <div class="card-body">
-                            <p class="card-text">행복한 진거뉘</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                </div>
-                                <small class="text-muted"><c:out value="게시날짜 넣어줘 형"/></small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="card shadow-sm">
-                        <svg class="bd-placeholder-img card-img-top" width="100%"
-                             height="225" xmlns="http://www.w3.org/2000/svg" role="img"
-                             aria-label="Placeholder: Thumbnail"
-                             preserveAspectRatio="xMidYMid slice" focusable="false">
-                            <title>Placeholder</title>
-                            <rect width="100%" height="100%"
-                                  fill="#55595c"></rect>
-                            <text x="50%" y="50%" fill="#eceeef"
-                                  dy=".3em">Thumbnail
-                            </text>
-                        </svg>
-
-                        <div class="card-body">
-                            <p class="card-text">행복한 진거뉘</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                </div>
-                                <small class="text-muted"><c:out
-                                        value="게시날짜 넣어줘 형. 좋아요 카운트 넣으실?"/></small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+                        </c:forEach>
+                    </c:when>
+                    <c:otherwise>
+                        <td>등록된 글이 없습니다</td>
+                    </c:otherwise>
+                </c:choose>
             </div>
             <button type="submit" class="btn btn-primary mt-4 save-btn"
-                    onClick="location.href='/partyphoto/writeview?partyCode=${partyCode}&currPage=${pageMaker.cri.currPage}';">
+                    onClick="location.href='/partyphoto/writeview?partyCode=${ldto.partyCode}&searchWord=${ldto.searchWord}&option=${ldto.option}&currPage=${pageMaker.cri.currPage}';">
                 글쓰기
             </button>
-        </div>
-
-        <div id="pagination">
-            <form id="paginationForm">
-                <input type="hidden" name="currPage">
-                <input type="hidden" name="amount">
-                <input type="hidden" name="pagesPerPage">
-                <input type="hidden" name="word" value="${searchWord}">
-                <input type="hidden" name="hobby" value="${hobby}">
-                <input type="hidden" name="local" value="${local}">
-                <ul class="pagination justify-content-center" style="width:100%">
-                    <c:if test="${pageMaker.prev}">
-                        <li class="prev page-item">
-                            <a class="prev page-link"
-                               href="/search/list?currPage=${pageMaker.startPage-1}&word=${searchWord}&hobby=${hobby}&local=${local}">◀</a>
-                        </li>
-                    </c:if>
-
-                    <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="pageNum">
-                        <li class="page-item">
-                            <a id="page-curr" class="page-link"
-                               href="/search/list?currPage=${pageNum}&word=${searchWord}&hobby=${hobby}&local=${local}">
-                                    ${pageNum}
-                            </a>
-                        </li>
-                    </c:forEach>
-
-                    <c:if test="${pageMaker.next}">
-                        <li class="next page-item">
-                            <a class="next page-link"
-                               href="/search/list?currPage=${pageMaker.endPage+1}&word=${searchWord}&hobby=${hobby}&local=${local}">▶</a>
-                        </li>
-                    </c:if>
-                </ul>
-            </form>
         </div>
     </main>
 
 </div>
+<div class="bottom-menu-page">
+    <div class="changePage">
+        <nav aria-label="Page navigation example">
+            <c:choose>
+                <c:when test="${not empty __LIST__}">
+                    <div id="pagination">
+                        <form id="paginationForm">
+                            <ul class="pagination justify-content-center">
+                                <c:if test="${pageMaker.prev}">
+                                    <li class="prev page-item"><a class="prev page-link"
+                                                                  href="/partyphoto/list?partyCode=${ldto.partyCode}&currPage=${pageMaker.startPage-1}&searchWord=${ldto.searchWord}&option=${ldto.option}">◀</a>
+                                    </li>
+                                </c:if>
 
+                                <c:forEach begin="${pageMaker.startPage}"
+                                           end="${pageMaker.endPage}" var="pageNum">
+                                    <li class="page-item"><a id="page-curr" class="page-link"
+                                                             href="/partyphoto/list?partyCode=${ldto.partyCode}&currPage=${pageNum}&searchWord=${ldto.searchWord}&option=${ldto.option}">
+                                            ${pageNum} </a></li>
+                                </c:forEach>
+
+                                <c:if test="${pageMaker.next}">
+                                    <li class="next page-item"><a class="next page-link"
+                                                                  href="/partyphoto/list?partyCode=${ldto.partyCode}&currPage=${pageMaker.endPage+1}&searchWord=${ldto.searchWord}&option=${ldto.option}">▶</a>
+                                    </li>
+                                </c:if>
+                            </ul>
+                        </form>
+                    </div>
+                </c:when>
+            </c:choose>
+        </nav>
+    </div>
+</div>
 
 <div class="container">
     <%--FOOTER--%>
@@ -333,7 +207,7 @@
 <!-- 스윗알러트 -->
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script
-        src="${pageContext.request.contextPath}/resources/js/partyedit.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/search.js"></script>
+        src="${pageContext.request.contextPath}/resources/js/partyMain.js"></script>
+
 </body>
 </html>

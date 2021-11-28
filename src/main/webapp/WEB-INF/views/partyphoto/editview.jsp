@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="icon" href="${pageContext.request.contextPath}/resources/images/favicon.ico"/>
-<title>Insert title here</title>
+<title>파티모집 - 게시글수정</title>
 </head>
 <body>
     <form action = "/partyphoto/edit" method="post" enctype="multipart/form-data">

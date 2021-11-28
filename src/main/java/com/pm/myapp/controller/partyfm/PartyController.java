@@ -7,6 +7,7 @@ import com.pm.myapp.domain.Criteria;
 import com.pm.myapp.domain.PageDTO;
 import com.pm.myapp.domain.PartyUserVO;
 import com.pm.myapp.domain.PartyVO;
+import com.pm.myapp.domain.UserDTO;
 import com.pm.myapp.service.partyfm.PartyService;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -169,66 +170,6 @@ public class PartyController {
         return data;
 
     } // editPartyLogo
-
-    // 파티 이미지 등록/변경 [작동]
-   /* @PostMapping("/editpi")
-    public String editPartyMainImage(MultipartFile image, Integer partyCode, RedirectAttributes rttrs) throws IllegalStateException, IOException {
-        log.debug("editPartyImage({}, {}) invoked.", image, partyCode);
-
-        // 파티별, 날짜별 폴더를 생성 후 그림 파일 업로드
-        // 날짜 GET
-        Calendar cal = Calendar.getInstance();
-        String year = cal.get(cal.YEAR) + "";
-        String month = (cal.get(cal.MONTH) + 1) + "";
-        String date = cal.get(cal.DATE) + "";
-
-        // 파티코드와 날짜 합쳐서 새로운 폴더 준비
-        String imagePath = "image/cover/" + partyCode + "/" + year + "/" + month + "/" + date;
-        log.debug("\t+ imagePath : {}", imagePath);
-
-        // 랜덤값 형성 및 aws에 파일 업로드
-        UUID uuid = UUID.randomUUID(); // 랜덤값
-        String imageUrl = awsUpload.fileUpload(image, imagePath, uuid);
-        log.info("\t+ imageUrl : {}", imageUrl);
-
-        String originalName = image.getOriginalFilename(); // 파일의 원래 이름
-        String newName = uuid + "_" + image.getOriginalFilename();
-
-        // DB에 이미지 정보 저장하기
-        // HashMap을 이용하여 DTO 처럼 사용할 예정
-        // Mapper.xml 에 갔을 때 key를 입력하면 value 값이 들어감
-        // value의 타입이 object인건 value의 타입이 모두 같은것이 아니기 때문
-        Map<String, Object> imageInfo = new HashMap<String, Object>();
-        imageInfo.put("oldFilename", originalName); // 기존 파일 이름
-        imageInfo.put("newFilename", newName); // 새로운 파일 이름
-        imageInfo.put("fileLocation", imageUrl); // 파일 이름 주소
-        imageInfo.put("partyCode", partyCode);
-
-        boolean result = this.service.editPartyMainImage(imageInfo);
-        log.info("\t + result : {}", result);
-
-        // 나중에 비동기로 실패,확인 메세지 처리 할 예정
-        rttrs.addAttribute("partyCode", partyCode);
-
-        return "redirect:/party/leaderpage";
-
-    } // editPartyImage
-
-    // 파티 정보 변경 [작동]
-    @PostMapping("/editparty")
-    public String editParty(PartyDTO dto, RedirectAttributes rttrs) {
-        log.debug("editParty({}, {}) invoked.", dto);
-
-        boolean result = this.service.editInfo(dto);
-        log.info("\t + result : {}", result);
-
-        int partyCode = dto.getPartyCode();
-
-        rttrs.addAttribute("partyCode", partyCode);
-
-        return "redirect:/party/leaderpage";
-
-    } // editParty*/
 
     // 파티 해체 [작동]
     @PostMapping("/dobreak")
