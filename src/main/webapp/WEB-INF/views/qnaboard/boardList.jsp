@@ -41,7 +41,7 @@
                 <thead>
                 <tr>
 
-                    <th scope="col">번호</th>
+                    <th scope="col">NO</th>
                     <th scope="col">제목</th>
                     <th scope="col">작성자</th>
                     <th scope="col">작성일</th>
@@ -92,14 +92,14 @@
                     <c:if test="${pageMaker.prev}">
                         <li class="prev page-item">
                             <a class="prev page-link"
-                               href="/qnaboard/getQuestionBoardList?currPage=${pageMaker.startPage-1}">◀</a>
+                               href="/qnaboard/getQnaBoardList?currPage=${pageMaker.startPage-1}">◀</a>
                         </li>
                     </c:if>
 
                     <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="pageNum">
                         <li class="page-item">
                             <a id="page-curr" class="page-link"
-                               href="/qnaboard/getQuestionBoardList?currPage=${pageNum}">
+                               href="/qnaboard/getQnaBoardList?currPage=${pageNum}">
                                     ${pageNum}
                             </a>
                         </li>
@@ -108,7 +108,7 @@
                     <c:if test="${pageMaker.next}">
                         <li class="next page-item">
                             <a class="next page-link"
-                               href="/qnaboard/getQuestionBoardList?currPage=${pageMaker.endPage+1}">▶</a>
+                               href="/qnaboard/getQnaBoardList?currPage=${pageMaker.endPage+1}">▶</a>
                         </li>
                     </c:if>
                 </ul>
@@ -118,7 +118,7 @@
 
         <!-- 검색창 -->
         <!-- 검색창 -->
-        <form action="검색URL" method="get">
+        <form action="/qnaboard/getQnaBoardList" method="get">
             <div class="container-sm search-wrapper">
                 <div class="input-group mb-3">
                     <div class="selectBox">
@@ -135,7 +135,7 @@
                                 alt=""></span>
                     </div>
                     <!-- 검색창 -->
-                    <input type="text" name="keyword" class="form-control" placeholder="   검색어를 입력해주세요."
+                    <input type="text" name="searchWord" class="form-control" placeholder="   검색어를 입력해주세요."
                            aria-label="Text input with dropdown button">
                     <div id="searchIcon" class="search-btn-icon">
                         <button class="search-btn" type="submit">

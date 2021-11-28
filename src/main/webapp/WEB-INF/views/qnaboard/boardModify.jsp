@@ -44,12 +44,12 @@
                                     aria-current="page" href="#">문의게시판</a></li>
         </ul>
 
-        <form action="/noticeboard/editNoticeBoard?frefer=${__boardDetail__.qrefer}" method="post">
-            <%--<input hidden id="boardName" value="lost">--%>
+        <form action="/qnaboard/editQnaBoard" method="post">
+            <input hidden id="qrefer" name="qrefer" value="${__boardDetail__.qrefer}">
             <div class="table-Detail">
                 <div class="content">
                     <div class="title_area">
-                        <span><input type="text" name="fsubject" value="${__boardDetail__.qsubject}"></span>
+                        <span><input type="text" name="qsubject" value="${__boardDetail__.qsubject}"></span>
                     </div>
                     <hr>
                     <div class="info_desc">
@@ -65,7 +65,7 @@
                         </div>
                     </div>
 
-                    <span><textarea name="fcontent" rows="10"
+                    <span><textarea name="qcontent" rows="10"
                                     cols="137">${__boardDetail__.qcontent}"</textarea>
                     </span>
 

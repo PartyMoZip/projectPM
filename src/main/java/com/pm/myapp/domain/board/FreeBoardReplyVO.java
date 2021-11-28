@@ -11,6 +11,7 @@ public class FreeBoardReplyVO {
     private String frecontent;
     private Date fredate;
     private Integer frefer;
+    private String nickname;
     private String email;
 
 }

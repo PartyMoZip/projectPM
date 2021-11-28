@@ -11,6 +11,5 @@ public class FreeBoardDTO {
     private String fSubject;
     private String fContent;
     private String email;
-    private String freePhoto;
 
 } // end class

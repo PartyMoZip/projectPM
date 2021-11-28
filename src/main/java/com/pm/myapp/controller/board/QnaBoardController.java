@@ -2,6 +2,7 @@ package com.pm.myapp.controller.board;
 
 import com.pm.myapp.domain.Criteria;
 import com.pm.myapp.domain.PageDTO;
+import com.pm.myapp.domain.ReplyCriteria;
 import com.pm.myapp.domain.board.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -41,7 +42,10 @@ public class QnaBoardController {
             option = 1;
         } // if
 		log.debug("getQuestionBoardList({}) invoked.", cri);
+
+        // 목록 불러오기
 		List<QnaBoardListVO> list = this.service.getListPerPage(searchWord, option, cri);
+
 		log.info("\t + list size : {}", list.size());
 		model.addAttribute("list", list);
 
@@ -56,15 +60,31 @@ public class QnaBoardController {
 
 	// 문의 게시판 상세보기
 	@GetMapping("/showQnaDetail")
-	public void showQnaDetail(@ModelAttribute("cri") Criteria cri, Integer qrefer, Model model) {
+	public void showQnaDetail(
+            @ModelAttribute("sdto") BoardSearchListDTO sdto,
+            @ModelAttribute("cri") Criteria cri,
+            @ModelAttribute("recri") ReplyCriteria recri,
+            Integer qrefer, Model model) {
 		log.debug("showQnaDetail({}, {}) invoked.", cri, qrefer);
 
+        boolean readOk = this.service.readQnaBoard(qrefer);
+        if(readOk) {
+            log.info("문의 게시판 {}번 글 읽기 성공", qrefer);
+        }
+
+        // 문의 게시판 글 상세보기
 		QnaBoardVO boardDetail = this.service.getBoardDetail(qrefer);
 		log.info("\t + boardDetail : {}", boardDetail);
+        model.addAttribute("boardDetail", boardDetail);
 
-		List<QnaBoardReplyVO> reply = this.service.getReply(qrefer, cri);
-		model.addAttribute("reply", reply);
-		model.addAttribute("boardDetail", boardDetail);
+        List<QnaBoardReplyVO> reply = this.service.getReply(qrefer, recri);
+        model.addAttribute("reply", reply);
+
+        Integer totalAmount = this.service.getTotalQnaReplyList(qrefer);
+
+        // 댓글 페이지네이션
+        PageDTO pageDTO = new PageDTO(recri, totalAmount);
+        model.addAttribute("replyPageMaker", pageDTO);
 
 	} // showQnaDetail
 
@@ -75,7 +95,7 @@ public class QnaBoardController {
 		boolean result = this.service.writeBoard(writeQB);
 		rttrs.addAttribute("result", result);
 
-		return "redirect:/qnaboard/boardList";
+		return "redirect:/qnaboard/getQnaBoardList";
 
 	} // writeQuestionBoard
 
@@ -103,12 +123,13 @@ public class QnaBoardController {
 
 	// 문의 게시판  수정
 	@PostMapping("/editQnaBoard")
-	public String editQnaBoard(QnaBoardDTO QnaBoard, RedirectAttributes rttrs) {
+	public String editQnaBoard(QnaBoardDTO QnaBoard) {
 		log.debug("editQnaBoard({}) invoked.", QnaBoard);
-		boolean result = this.service.editBoard(QnaBoard);
-		rttrs.addAttribute("resultmod", result);
 
-		return "redirect:/qnaboard/boardList";
+		service.editBoard(QnaBoard);
+
+
+		return "redirect:/qnaboard/getQnaBoardList";
 
 	} // editQuestionBoard
 
@@ -119,7 +140,7 @@ public class QnaBoardController {
 		boolean result = this.service.deleteBoard(qrefer);
 		rttrs.addAttribute("resultdel", result);
 
-		return "redirect:/qnaboard/boardList";
+		return "redirect:/qnaboard/getQnaBoardList";
 
 	} // deleteQuestionBoard
 
@@ -140,26 +161,18 @@ public class QnaBoardController {
 
 	} // searchQuestionBoard
 
-	// 문의 게시판  - 댓글 목록
-	@GetMapping("/getComment")
-	public String getComment(Model model, Integer qrefer, Criteria cri) {
-		log.debug("getComment() invoked.");
-		List<QnaBoardReplyVO> list = this.service.getReply(qrefer, cri);
-
-		log.info("\t + list size : {}", list.size());
-		model.addAttribute("list", list);
-
-        return "redirect:/qnaboard/showQnaDetail";
-		
-	} // commentList
-	
 	// 문의 게시판  - 댓글 작성
 	@PostMapping("/writeComment")
-	public String writeComment(QnaBoardReplyDTO qnaReply, RedirectAttributes rttrs) {
-		log.debug("writeComment({}) invoked.", qnaReply);
+	public String writeComment(
+            Integer qrefer,
+            QnaBoardReplyDTO qnaReply,
+            @ModelAttribute("cri") Criteria cri,
+            @ModelAttribute("recri") ReplyCriteria recri,
+            RedirectAttributes rttrs) {
+		log.debug("writeComment({},{}) invoked.", qrefer, qnaReply);
 
 		boolean result = this.service.writeReply(qnaReply);
-		rttrs.addAttribute("resultWriteComm", result);
+		rttrs.addAttribute("qrefer", qrefer);
 
 		return "redirect:/qnaboard/showQnaDetail";
 
@@ -167,18 +180,27 @@ public class QnaBoardController {
 	
 	// 문의 게시판  - 댓글 수정
 	@PostMapping("/editComment")
-	public String editComment(QnaBoardReplyDTO qnaReply, RedirectAttributes rttrs) {
+	public String editComment(
+            QnaBoardReplyDTO qnaReply,
+            @ModelAttribute("cri") Criteria cri,
+            @ModelAttribute("recri") ReplyCriteria recri,
+            RedirectAttributes rttrs) {
 		log.debug("editComment({}) invoked.", qnaReply);
 
 		boolean result = this.service.editReply(qnaReply);
 		rttrs.addAttribute("resultEdit", result);
+        rttrs.addAttribute("qrefer", qnaReply.getQrefer());
 
         return "redirect:/qnaboard/showQnaDetail";
 	} // editComment
 	
 	// 문의 게시판  - 댓글 삭제
 	@PostMapping("/deleteComment")
-	public String deleteComment(@RequestParam("qrerefer") Integer qrerefer, RedirectAttributes rttrs) {
+	public String deleteComment(
+            @RequestParam("qrerefer") Integer qrerefer,
+            @ModelAttribute("cri") Criteria cri,
+            @ModelAttribute("recri") ReplyCriteria recri,
+            RedirectAttributes rttrs) {
 		log.debug("deleteComment({}) invoked.", qrerefer);
 
 		boolean result = this.service.deleteReply(qrerefer);

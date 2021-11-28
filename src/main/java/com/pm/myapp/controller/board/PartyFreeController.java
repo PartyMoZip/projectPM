@@ -69,7 +69,7 @@ public class PartyFreeController {
 		PartyFreeVO partyFDetail = this.service.getBoardDetail(pfrefer, partycode);
 		log.info("\t + partyFree : {}", partyFDetail);
 		List<PartyFreeReplyVO> reply = this.service.getReply(pfrefer,partycode, cri);
-		model.addAttribute("partyFree", partyFDetail);
+		model.addAttribute("boardDetail", partyFDetail);
 		model.addAttribute("reply", reply);
 
 		return "/partyFree/boardDetail";
