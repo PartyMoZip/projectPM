@@ -33,7 +33,7 @@ public interface PartyMapper {
 
     public abstract Integer getPartyMN(Integer partyCode);
     
-    public abstract UserDTO getMakingList(@Param("partyCode") Integer partyCode, @Param("cri") Criteria cri);
+    public abstract List<UserDTO> getMakingList(@Param("partyCode") Integer partyCode, @Param("cri") Criteria cri);
     
     public abstract Integer getTotalMakingList(Integer partyCode);
 

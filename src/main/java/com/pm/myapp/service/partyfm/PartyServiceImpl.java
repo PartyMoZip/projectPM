@@ -185,11 +185,11 @@ public class PartyServiceImpl implements PartyService,InitializingBean, Disposab
 	} // kickMember
 
 	@Override
-	public UserDTO getJoinMakingList(Integer partyCode, Criteria cri) {
+	public List<UserDTO> getJoinMakingList(Integer partyCode, Criteria cri) {
 		log.debug("getJoinMakingList({}, {}) invoked.",partyCode, cri);
 		
-		UserDTO dto = this.mapper.getMakingList(partyCode, cri);
-		log.info("\t+ dto : ", dto);
+		List<UserDTO> dto = this.mapper.getMakingList(partyCode, cri);
+		log.info("\t+ dto : ", dto.toString());
 		
 		return dto;
 		

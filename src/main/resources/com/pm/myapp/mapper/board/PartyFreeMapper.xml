@@ -6,7 +6,7 @@
 
     <select id="getListWithPaging" resultType = "com.pm.myapp.domain.board.PartyFreeListVO">
 
-            SELECT PF.PFREFER, PF.PFDATE, PF.PFCONTENT , PF.PFSUBJECT, U.EMAIL, PF.READNUM
+            SELECT PF.PFREFER, PF.PFDATE, PF.PFCONTENT , PF.PFSUBJECT, U.EMAIL, U.NICKNAME , PF.READNUM
             FROM PARTYFREEBOARD PF
             JOIN USERINFO U
             ON PF.EMAIL = U.EMAIL
@@ -34,7 +34,7 @@
     </select>
 
     <select id="readPFreeBoard" resultType="com.pm.myapp.domain.board.PartyFreeVO">
-        SELECT PF.PFREFER, PF.PFDATE, PF.PFCONTENT, PF.PARTYCODE, PF.PFSUBJECT, PF.EMAIL, PF.READNUM
+        SELECT PF.PFREFER, PF.PFDATE, PF.PFCONTENT, PF.PARTYCODE, PF.PFSUBJECT, PF.EMAIL, U.NICKNAME, PF.READNUM
         FROM PARTYFREEBOARD PF
         JOIN USERINFO U ON PF.EMAIL = U.EMAIL
         WHERE PF.PFREFER = #{pfrefer} AND PF.PARTYCODE = #{partycode}

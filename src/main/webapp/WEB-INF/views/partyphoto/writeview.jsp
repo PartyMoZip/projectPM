@@ -25,7 +25,10 @@
 </head>
 <body>
 	<%--HEADER--%>
-	<jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp" />
+	<jsp:include
+			page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp"/>
+	<jsp:include
+			page="${pageContext.request.contextPath}/WEB-INF/views/include/partyMainTab.jsp" />
 
 	<div class="container mt-5 px-5 profile-box shadow-sm">
 		<form enctype="multipart/form-data" action="/partyphoto/write" method="post">

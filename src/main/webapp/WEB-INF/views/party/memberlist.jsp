@@ -7,6 +7,12 @@
 <title>showMemberList.jsp</title>
 </head>
 <body>
+
+    <%--HEADER--%>
+<jsp:include
+        page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp"/>
+<jsp:include
+		page="${pageContext.request.contextPath}/WEB-INF/views/include/partyMainTab.jsp" />
     <h1>/WEB-INF/views/party/showMemberList.jsp</h1>
     <hr>
     <h3>${__USER__}</h3>

@@ -32,8 +32,11 @@
 
 <body>
 
-<%--HEADER--%>
-<jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp"/>
+    <%--HEADER--%>
+    <jsp:include
+            page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp"/>
+    <jsp:include
+            page="${pageContext.request.contextPath}/WEB-INF/views/include/partyMainTab.jsp" />
 
 <main>
     <div class="all-wrap">
@@ -74,11 +77,11 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td><c:out value="${list}"/></td>
+                                <td><c:out value="${list.pfRefer}"/></td>
                                 <td>
                                     <a href="/partyfree/showPartyFDetail?pfrefer=${list.pfRefer}&currPage=${pageMaker.cri.currPage}&amount=${pageMaker.cri.amount}&pagesPerPage=${pageMaker.cri.pagesPerPage}">${list.pfSubject}</a>
                                 </td>
-                                <td><c:out value="${list.email}"/></td>
+                                <td><c:out value="${list.nickname}"/></td>
                                 <td><fmt:formatDate pattern="yyyy.MM.dd" value="${list.pfDate}"/></td>
                                 <td><c:out value="${list.readnum}"/></td>
                             </tr>
