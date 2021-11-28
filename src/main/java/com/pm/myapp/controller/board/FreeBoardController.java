@@ -64,6 +64,7 @@ public class FreeBoardController {
             Integer frefer, Model model) {
 		log.debug("showFreeDetail({}, {}) invoked.", cri, frefer);
 
+        // 게시판 조회수 증가
         boolean readOk = this.service.readFreeBoard(frefer);
         if(readOk) {
             log.info("자유 게시판 {}번 글 읽기 성공", frefer);
@@ -177,7 +178,7 @@ public class FreeBoardController {
 	// 자유 게시판  - 댓글 작성
 	@PostMapping("/writeComment")
 	public String writeComment(
-            Integer frefer,
+            @ModelAttribute("frefer") Integer frefer,
             FreeBoardReplyDTO freeReply,
             @ModelAttribute("cri") Criteria cri,
             @ModelAttribute("recri") ReplyCriteria recri,
@@ -185,7 +186,9 @@ public class FreeBoardController {
 		log.debug("writeComment({},{}) invoked.", frefer, freeReply);
 
 		boolean result = this.service.writeReply(freeReply);
-        rttrs.addAttribute("result", result);
+        rttrs.addAttribute("frefer", frefer);
+        rttrs.addAttribute("currPage", cri.getCurrPage());
+        rttrs.addAttribute("reCurrPage",recri.getReCurrPage());
 
         return "redirect:/freeboard/showFreeDetail";
 	} // writeComment

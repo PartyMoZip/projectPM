@@ -17,8 +17,6 @@ public interface FreeBoardService {
     // 2. 자유 게시판 상세보기 //
     // 자유 게시판 상세보기
     public abstract FreeBoardVO getBoardDetail(Integer frefer);
-    // 자유 게시판 사진보기
-    public abstract String getFreePhoto(Integer frefer);
     // 자유 게시판 댓글 목록
     public abstract List<FreeBoardReplyDTO> getReply(Integer frefer, ReplyCriteria recri);
     // 자유 게시판 댓글 등록
@@ -34,14 +32,10 @@ public interface FreeBoardService {
     // 3. 자유 게시판 등록 //
     // 자유 게시판 글쓰기
     public abstract boolean writeBoard(FreeBoardDTO writeFB);
-    // 자유 게시판 사진등록
-    public abstract boolean registerPhoto(String freePhoto);
 
     // 4. 자유 게시판 수정 //
     // 자유 게시판 글수정
     public abstract boolean editBoard(FreeBoardDTO freeBoard);
-    // 자유 게시판 사진 지우기
-    public abstract boolean deletePhoto(String file);
 
     // 5. 자유 게시판 삭제 //
     // 자유 게시판 글 삭제

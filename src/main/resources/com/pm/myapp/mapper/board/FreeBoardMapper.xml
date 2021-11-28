@@ -44,14 +44,6 @@
 
     </select>
 
-    <select id="getPhoto" resultType="String">
-        SELECT FREEPHOTO
-        FROM FREEBOARD
-        WHERE FREFER = #{fRefer}
-    </select>
-
-
-
     <insert id="registerFreeBoard">
 
         INSERT INTO FREEBOARD(FREFER, FSUBJECT, FCONTENT, fdate, EMAIL, freephoto, READNUM)
@@ -92,8 +84,7 @@
         UPDATE FREEBOARD
         SET
             FSUBJECT = #{fSubject},
-            FCONTENT = #{fContent},
-            FREEPHOTO = #{freePhoto}
+            FCONTENT = #{fContent}
         WHERE FREFER = #{fRefer}
     </update>
 

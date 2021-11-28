@@ -46,13 +46,6 @@ public class FreeBoardServiceImpl implements FreeBoardService, InitializingBean,
         return boardDetail;
     } // getBoardDetail
 
-    @Override
-    public String getFreePhoto(Integer frefer) {
-
-        String photo = this.mapper.getPhoto(frefer);
-        return photo;
-    } // getFreePhoto
-
     // 자유 게시판 글쓰기
     @Override
     public boolean writeBoard(FreeBoardDTO writeFB) {
@@ -64,15 +57,6 @@ public class FreeBoardServiceImpl implements FreeBoardService, InitializingBean,
         return (affectedRows == 1);
     } // writeBoard
 
-    // 자유 게시판 사진 등록
-    @Override
-    public boolean registerPhoto(String freePhoto) {
-
-        int affectedLine =  this.mapper.registerPhoto(freePhoto);
-
-        return (affectedLine == 1);
-    }
-
     // 자유 게시판 글수정
     @Override
     public boolean editBoard(FreeBoardDTO freeBoard) {
@@ -83,14 +67,6 @@ public class FreeBoardServiceImpl implements FreeBoardService, InitializingBean,
 
         return (affectedRows == 1);
     } // modify
-
-    // 게시판 사진 삭제
-    @Override
-    public boolean deletePhoto(String file) {
-        Integer affectedLine = this.mapper.deletePhoto(file);
-
-        return (affectedLine == 1);
-    } // deletePhoto
 
     // 자유 게시판 글삭제
     @Override
@@ -179,6 +155,7 @@ public class FreeBoardServiceImpl implements FreeBoardService, InitializingBean,
         return (affectedRows == 1);
     } // editComment
 
+    // 자유 게시판 조회수 증가
     @Override
     public boolean readFreeBoard(Integer frefer) {
 
