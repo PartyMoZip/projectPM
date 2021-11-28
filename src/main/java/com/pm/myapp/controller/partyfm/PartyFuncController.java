@@ -34,33 +34,28 @@ public class PartyFuncController {
 	@Setter(onMethod_= {@Autowired})
 	private PartyFuncService service;
 
-
 	SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
 	Calendar cal = Calendar.getInstance();
 
 	@GetMapping("/calendar")
 	public String view(Integer partyCode , Model model) {
-		System.out.println("partyCode = " + partyCode);
 		model.addAttribute("partyCode", partyCode);
-
 		return "fullcalendar/fullcalendar";
-	}
+	}//view
 
 	@GetMapping("/calendar/data")
 	@ResponseBody
-	public List<CalendarDTO> list() {
-		List<CalendarDTO> list = service.calendarList(); //잭슨바이딩이 List만들때 get이라는 키워드를 json 형태로 만들어줌
-		System.out.println("list.size() = " + list.size());
+	public List<CalendarDTO> list(Integer partyCode) {
+		List<CalendarDTO> list = service.calendarList(partyCode); //잭슨바이딩이 List만들때 get이라는 키워드를 json 형태로 만들어줌
 		return list;
-	}
+	} //list
 
 	@DeleteMapping("/calendar/data")
 	@ResponseBody
 	public Boolean delete(@RequestBody CalendarDTO calendarDto) {
-		System.out.println(calendarDto);
 		int result = service.deleteCalendar(calendarDto.getId());
 		return result == 1;
-	}
+	} //delete
 
 	@ResponseBody
 	@PostMapping("/calendar/post")
@@ -70,9 +65,9 @@ public class PartyFuncController {
 		for (CalendarDTO calendarDto : calendarDtoList) {
 			System.out.println(calendarDto);
 			service.insertCal(calendarDto);
-		}
+		} //for
 		return null;
-	}
+	} //insertCal
 
 	// 채팅방 입장
 	@GetMapping("/partychat")

@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface PartyFuncService {
 
-    public abstract List<CalendarDTO> calendarList();
+    public abstract List<CalendarDTO> calendarList(Integer partyCode);
 
     public abstract Integer insertCal(CalendarDTO calendarDto);
 
