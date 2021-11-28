@@ -74,6 +74,10 @@ a {
 	cursor: pointer;
 }
 
-th.fc-col-header-cell.fc-day.fc-day-sun > a {
+.fc-col-header-cell.fc-day.fc-day-sun .fc-scrollgrid-sync-inner > a {
+	color: red;
+}
+
+.fc-col-header-cell.fc-day.fc-day-sat .fc-scrollgrid-sync-inner > a {
 	color: red;
 }
