@@ -65,14 +65,6 @@
 
     </update>
 
-    <update id="modifyMainImage" parameterType="hashMap">
-
-        UPDATE PARTY
-        SET COVERPIC = #{fileLocation}
-        WHERE PARTYCODE = #{partyCode}
-
-    </update>
-
     <update id="makeDesPartyReq">
 
         UPDATE PARTY

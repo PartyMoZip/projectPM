@@ -72,6 +72,7 @@
 			<mvc:mapping path="/partyfree/**"/>
 			<mvc:exclude-mapping path="/party/edit-profile" />
 			<mvc:exclude-mapping path="/party/detail" />
+			<mvc:exclude-mapping path="/party/join" />
 			<beans:ref bean="PartyInterceptor" />
 		</mvc:interceptor>
 

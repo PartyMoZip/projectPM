@@ -1,5 +1,7 @@
 package com.pm.myapp.controller.partyfm;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.pm.myapp.aws.AwsUpload;
 import com.pm.myapp.domain.Criteria;
 import com.pm.myapp.domain.PageDTO;
@@ -44,31 +46,31 @@ public class PartyController {
         PartyVO party = this.service.getParty(partyCode);
         log.info("\t + party : {}", party);
 
-  /*      Map<String, Object> data = new HashMap<>();
-        data.put("party", party);
-        *//*data.put("count", party.getCount());
-        data.put("partyCode", party.getPartyCode());
-        data.put("partyName", party.getPartyName());
-        data.put("partyScore", party.getPartyScore());
-        data.put("createDate", party.getCreateDate());
-        data.put("coverPic", party.getCoverPic());
-        data.put("localName", party.getLocalName());
-        data.put("hobbyName", party.getHobbyName());*/
-
         return party;
     } // showPartyDetail
 
     // 파티 가입 신청 [작동]
-    @PostMapping("/do-party-join")
-    public String doPartyJoin(String email, Integer partyCode, RedirectAttributes rttrs) {
-        log.debug("doPartyJoin({}, {}) invoked.", email, partyCode);
+    @PostMapping("/join")
+    @ResponseBody
+    public Map<String, Boolean> doPartyJoin(
+            @RequestBody String json
+    ) {
+        log.debug("doPartyJoin() invoked.");
 
-        boolean result = this.service.doJoin(email, partyCode);
+        log.info("json: {}", json);
+
+        JsonElement element = JsonParser.parseString(json);
+
+        String email = element.getAsJsonObject().get("email").getAsString();
+        Integer partyCode = element.getAsJsonObject().get("partyCode").getAsInt();
+
+        Boolean result = this.service.doJoin(email, partyCode);
         log.info("\t + result : {}", result);
 
-        rttrs.addAttribute("partyCode", partyCode);
+        Map<String, Boolean> data = new HashMap<>();
+        data.put("result", result);
 
-        return "redirect:/party/leaderpage";
+        return data;
 
     } // doPartyJoin
 

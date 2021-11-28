@@ -179,6 +179,7 @@
                     </div>
                     <!-- 모달 하단부 -->
                     <div class="modal-footer">
+                        <input type="hidden" class="user-email" value="${sessionScope.__AUTH__.email}">
                         <button type="submit" class="btn btn-secondary" id="partyRequestBtn"
                                 data-bs-toggle="button">
                             파티신청
