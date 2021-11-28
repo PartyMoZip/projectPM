@@ -12,16 +12,20 @@
 
 </head>
 <body>
-${__DETAIL__}
-<hr>
-<c:forEach items="${__PHOTO__}" var="photo">
-    <img src="${photo}">
-</c:forEach>
-<hr>
-${__MYHEART__}
-<hr>
-${__TOTALHEART__}
-<hr>
+
+    ${__DETAIL__}
+    <hr>
+    <c:forEach items="${__PHOTO__}" var="photo">
+        <img src="${photo}">
+    </c:forEach>
+    <hr>
+    <div>내가 누른 좋아요</div>
+    ${__MYHEART__}
+    <hr>
+    <div>총 좋아요 개수</div>
+    ${__TOTALHEART__}
+    <hr>
+
 
 <form action="/partyphoto/writecomment" method="post">
     <input type="hidden" name="currPage" value="${cri.currPage}">
@@ -40,10 +44,15 @@ ${__TOTALHEART__}
     <form action="/partyphoto/editcommit" method="post">
         <input type="hidden" name="currPage" value="${cri.currPage}">
         <input type="hidden" name="reCurrPage" value="${recri.reCurrPage}">
-        <input type="hidden" name="prerefer" value="${comment.prerefer}">
-        <input type="hidden" name="prefer" value="${comment.prefer}">
-        <input type="hidden" name="partyCode" value="${comment.partyCode}">
-        <input type="text" name="precontent" value="${comment.precontent}" readonly>
+        <input type="hidden" name="partyCode" value="${__DETAIL__.partycode}">
+        <input type="hidden" name="prefer" value="${__DETAIL__.prefer}">
+        <div>댓글 내용</div>
+        <input type="text" name="precontent">
+        <div>닉네임</div>
+        <div>${sessionScope.__AUTH__.nickname}</div>
+        <input type="hidden" name="email" value="${sessionScope.__AUTH__.email}">
+        <input type="submit" value="댓글 작성">
+
     </form>
 </c:forEach>
 

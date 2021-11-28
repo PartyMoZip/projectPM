@@ -163,39 +163,41 @@ public class PartyPhotoController {
 		
 		int partyCode = dto.getPartycode();
 		
-		if(images != null) {
 		// 사진 업로드
 		// 파티코드와 날짜 합쳐서 새로운 폴더 준비
 		String imagePath = "image/photogallery/" + partyCode + "/" + newRefer + "/";
 		log.debug("\t+ imagePath : {}",imagePath);
 		
-			for(MultipartFile image : images) {
-				
-				// 랜덤값 형성 및 aws에 파일 업로드
+		for(MultipartFile image : images) {
+		
+			String originalName = image.getOriginalFilename(); // 파일의 원래 이름
+			if(originalName != "" && originalName != null) {
+					
+					// 랜덤값 형성 및 aws에 파일 업로드
 				UUID uuid = UUID.randomUUID(); // 랜덤값
 				String imageUrl = awsUpload.fileUpload(image, imagePath, uuid);
 				log.info("\t+ imageUrl : {}",imageUrl);
-			        
-				String originalName = image.getOriginalFilename(); // 파일의 원래 이름
+				        
+
 				String newName = uuid + "_" +image.getOriginalFilename();
-					
-				// DB에 이미지 정보 저장하기
-				// HashMap을 이용하여 DTO 처럼 사용할 예정
+						
+				// DB에 이미지 정보 저장하기					// HashMap을 이용하여 DTO 처럼 사용할 예정
 				// Mapper.xml 에 갔을 때 key를 입력하면 value 값이 들어감
 				// value의 타입이 object인건 value의 타입이 모두 같은것이 아니기 때문
 				Map<String, Object> imageInfo = new HashMap<String, Object>();
 				imageInfo.put("oldFilename", originalName); // 기존 파일 이름
 				imageInfo.put("newFilename", newName); // 새로운 파일 이름
-				imageInfo.put("fileLocation", imageUrl); // 파일 이름 주소
-				imageInfo.put("partyCode", partyCode);
+				imageInfo.put("fileLocation", imageUrl); // 파일 이름 주소					imageInfo.put("partyCode", partyCode);
 				imageInfo.put("prefer", newRefer);
-					
+				imageInfo.put("partyCode", partyCode);
+						
 				boolean result = this.service.registerImages(imageInfo);
 				log.info("\t + result : {}",result);
+				
+			} // if
 			
-			} // for
-			
-		} // if
+		} // for
+
 		
 		rtts.addAttribute("partyCode", partyCode);
 		
@@ -235,7 +237,7 @@ public class PartyPhotoController {
 			String[] deleteFileLocations,
 			RedirectAttributes rttrs
 			) throws IOException {
-		log.debug("editPhotoBoard() invoked.");
+		log.debug("editPhotoBoard({}) invoked.",images.toString());
 
 		// 글 내용 업로드
 		boolean resultNum = this.service.modifyPartyPhoto(dto);
@@ -275,22 +277,23 @@ public class PartyPhotoController {
 		} // if
 		
 		// 새로운 이미지 등록
-		if(images != null) {
 		// 사진 업로드
 		// 파티코드와 날짜 합쳐서 새로운 폴더 준비
 		String imagePath = "image/photogallery/" + partyCode + "/" + dto.getPrefer() + "/";
 		log.debug("\t+ imagePath : {}",imagePath);
 		
-			for(MultipartFile image : images) {
-				
+		for(MultipartFile image : images) {
+			String originalName = image.getOriginalFilename(); // 파일의 원래 이름
+			
+			if(originalName != "" && originalName != null) {
+					
 				// 랜덤값 형성 및 aws에 파일 업로드
 				UUID uuid = UUID.randomUUID(); // 랜덤값
 				String imageUrl = awsUpload.fileUpload(image, imagePath, uuid);
 				log.info("\t+ imageUrl : {}",imageUrl);
-			        
-				String originalName = image.getOriginalFilename(); // 파일의 원래 이름
+				        
 				String newName = uuid + "_" + image.getOriginalFilename();
-					
+						
 				// DB에 이미지 정보 저장하기
 				// HashMap을 이용하여 DTO 처럼 사용할 예정
 				// Mapper.xml 에 갔을 때 key를 입력하면 value 값이 들어감
@@ -304,10 +307,11 @@ public class PartyPhotoController {
 				
 				boolean result = this.service.registerImages(imageInfo);
 				log.info("\t + result : {}",result);
+					
+			} // if
 			
-			} // for
-			
-		} // if
+		} // for
+
 		
 		rttrs.addAttribute("partyCode", partyCode);
 		rttrs.addAttribute("prefer", dto.getPrefer());

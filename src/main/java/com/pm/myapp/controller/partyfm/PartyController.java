@@ -25,6 +25,7 @@ import com.pm.myapp.domain.PageDTO;
 import com.pm.myapp.domain.PartyDTO;
 import com.pm.myapp.domain.PartyUserVO;
 import com.pm.myapp.domain.PartyVO;
+import com.pm.myapp.domain.UserDTO;
 import com.pm.myapp.service.partyfm.PartyService;
 
 import lombok.NoArgsConstructor;
@@ -101,12 +102,21 @@ public class PartyController {
 	
 	// 파티 관리 페이지 [작동]
 	@GetMapping("/leaderpage")
-	public void showLeaderPage(Integer partyCode, Model model) {
+	public void showLeaderPage(Integer partyCode, Model model, Criteria cri) {
 		log.debug("showLeaderPage({}) invoked.",partyCode);
+		
 		PartyVO party = this.service.getParty(partyCode);
 		log.info("\t + party : {}", party);
 		
+		UserDTO member = this.service.getJoinMakingList(partyCode, cri);
+		log.info("\t + member : {}", member);
+		
+	    Integer totalMember = this.service.getTotalJoinMakeMember(partyCode);
+	    PageDTO pageDTO = new PageDTO(cri, totalMember);
+			
+	    model.addAttribute("pageMaker", pageDTO);		
 		model.addAttribute("__PARTY__",party);
+		model.addAttribute("__MEMBER__",member);
 		
 	} // showLeaderPage
 	

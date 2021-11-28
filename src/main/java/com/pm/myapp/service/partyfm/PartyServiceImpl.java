@@ -13,6 +13,7 @@ import com.pm.myapp.domain.PartyDTO;
 import com.pm.myapp.domain.PartyMemberCheckVO;
 import com.pm.myapp.domain.PartyUserVO;
 import com.pm.myapp.domain.PartyVO;
+import com.pm.myapp.domain.UserDTO;
 import com.pm.myapp.mapper.PartyMapper;
 
 import lombok.NoArgsConstructor;
@@ -202,6 +203,28 @@ public class PartyServiceImpl implements PartyService,InitializingBean, Disposab
 		return (affectedLine==1);
 		
 	} // kickMember
+
+	@Override
+	public UserDTO getJoinMakingList(Integer partyCode, Criteria cri) {
+		log.debug("getJoinMakingList({}, {}) invoked.",partyCode, cri);
+		
+		UserDTO dto = this.mapper.getMakingList(partyCode, cri);
+		log.info("\t+ dto : ", dto);
+		
+		return dto;
+		
+	} // getJoinMakingList
+
+	@Override
+	public Integer getTotalJoinMakeMember(Integer partyCode) {
+		log.debug("getTotalJoinMakeMember({}) invoked.", partyCode);
+		
+		Integer memberlist = this.mapper.getTotalMakingList(partyCode);
+		log.info("\t+ memberlist : ", memberlist);
+		
+		return memberlist;
+		
+	} // getTotalJoinMakeMember
 
 	
 
