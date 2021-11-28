@@ -10,6 +10,12 @@
 <title>파티모집 - 게시글수정</title>
 </head>
 <body>
+    <%--HEADER--%>
+    <jsp:include
+            page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp"/>
+    <jsp:include
+            page="${pageContext.request.contextPath}/WEB-INF/views/include/partyMainTab.jsp" />
+
     <form action = "/partyphoto/edit" method="post" enctype="multipart/form-data">
         <input type="hidden" name="prefer" value="${__DETAIL__.prefer}">
         <input type="text" name="partycode" value="${__DETAIL__.partycode}" readonly>

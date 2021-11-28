@@ -136,7 +136,7 @@
 
     <select id="getTotalMakingList" resultType="Integer">
 
-        SELECT COUNT(NICKNAME)
+        SELECT COUNT(EMAIL)
         FROM PARTYUSER
         WHERE PARTYCODE = #{partyCode}
           AND AUTHCODE = -1

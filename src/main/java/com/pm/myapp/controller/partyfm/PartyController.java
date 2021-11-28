@@ -104,13 +104,24 @@ public class PartyController {
 
     // 파티 관리 페이지 [작동]
     @GetMapping("/leaderpage")
-    public void showLeaderPage(Integer partyCode, Model model) {
+    public void showLeaderPage(Integer partyCode, Model model, @ModelAttribute("cri") Criteria cri) {
         log.debug("showLeaderPage({}) invoked.", partyCode);
+        
         PartyVO party = this.service.getParty(partyCode);
         log.info("\t + party : {}", party);
 
-        model.addAttribute("__PARTY__", party);
+        List<UserDTO> member = this.service.getJoinMakingList(partyCode, cri);
+        log.info("\t + member : {}", member);
+        
+        Integer totalNum = this.service.getTotalJoinMakeMember(partyCode);
+        log.info("\t + totalNum : {}", totalNum);
+        
+	    PageDTO pageDTO = new PageDTO(cri, totalNum);		
 
+        model.addAttribute("__PARTY__", party);
+        model.addAttribute("__MEMBER__", member);
+	    model.addAttribute("pageMaker", pageDTO);
+        
     } // showLeaderPage
 
     // 파티 로고 등록/변경 [작동]

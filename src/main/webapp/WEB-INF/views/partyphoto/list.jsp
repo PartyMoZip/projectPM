@@ -27,6 +27,8 @@
 <%--HEADER--%>
 <jsp:include
         page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp"/>
+<jsp:include
+		page="${pageContext.request.contextPath}/WEB-INF/views/include/partyMainTab.jsp" />
 
 <%-- <c:choose>
    <c:when test="${not empty __LIST__}">

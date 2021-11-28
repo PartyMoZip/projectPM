@@ -16,7 +16,7 @@ public interface PartyService {
 
 	public abstract PartyVO getParty(Integer partyCode);
 	
-	public abstract UserDTO getJoinMakingList(Integer partyCode, Criteria cri);
+	public abstract List<UserDTO> getJoinMakingList(Integer partyCode, Criteria cri);
 	
 	public abstract Integer getTotalJoinMakeMember(Integer partyCode);
 	

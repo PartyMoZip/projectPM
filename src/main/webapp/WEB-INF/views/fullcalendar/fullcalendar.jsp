@@ -36,22 +36,8 @@
 	<%--HEADER--%>
 	<jsp:include
 		page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp" />
-
-	<ul class="nav nav-pills">
-		<li class="nav-item"><a class="nav-link" aria-current="page"
-			href="/party/showmain?partyCode=${partyCode}">메인</a></li>
-		<li class="nav-item"><a class="nav-link"
-			href="/party/leaderpage?partyCode=${partyCode}">파티관리</a></li>
-		<li class="nav-item"><a class="nav-link active"
-			href="/partyfunc/calendar?partyCode=${partyCode}">일정</a></li>
-		<li class="nav-item"><a class="nav-link" href="#">파티원</a></li>
-		<li class="nav-item"><a class="nav-link"
-			href="/partyfree/getPFreeBoardList">자유게시판</a></li>
-		<li class="nav-item"><a class="nav-link"
-			href="/partyphoto/list?partyCode=${partyCode}">포토갤러리</a></li>
-		<li class="nav-item"><a class="nav-link"
-			href="/partyfunc/partychat?partyCode=${partyCode}">채팅</a></li>
-	</ul>
+	<jsp:include
+		page="${pageContext.request.contextPath}/WEB-INF/views/include/partyMainTab.jsp" />
 
 	<div id="calendar-container">
 		<div id="calendar"></div>
@@ -212,8 +198,8 @@
 		src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/locales-all.min.js"></script>
-<%--	<script--%>
-<%--		src="${pageContext.request.contextPath}/resources/js/fullcalendar.js"></script>--%>
+	<script--%>
+		src="${pageContext.request.contextPath}/resources/js/fullcalendar.js"></script>
 
 	<%--FOOTER--%>
 	<jsp:include

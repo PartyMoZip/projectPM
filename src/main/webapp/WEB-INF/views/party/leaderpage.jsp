@@ -28,18 +28,10 @@
 	<%--HEADER--%>
 	<jsp:include
 		page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp" />
+	<jsp:include
+		page="${pageContext.request.contextPath}/WEB-INF/views/include/partyMainTab.jsp" />
 
 	<%-- <h1>/WEB-INF/views/party/showLeaderPage.jsp</h1>
-    <hr>
-    <h3>${__PARTY__}</h3>
-    <form action="/party/editparty" method="post">
-        <input type="hidden" name="partyCode" value="${__PARTY__.partyCode}">
-        <input type="text" name="partyName" value="${__PARTY__.partyName}">
-        <input type="text" name="partyProfile" value="${__PARTY__.partyProfile}">
-        <input type="text" name="localCode" value="${__PARTY__.localName}">
-        <input type="text" name="hobbyCode" value="${__PARTY__.hobbyName}">
-        <input type="submit" value="파티정보수정">
-      </form>
       <hr>
       <form action="/party/dobreak" method="post">
         <input type="hidden" name="partyCode" value="${__PARTY__.partyCode}">
@@ -51,39 +43,8 @@
         <input type="hidden" name="memberEmail" value="test24@test.com">
         <input type="hidden" name="partyCode" value="${__PARTY__.partyCode}">
         <input type="submit" value="파티장 위임">
-      </form>
-      <hr>
-      <form action="/party/editpl" method="post" enctype="multipart/form-data">
-        <input type="hidden" name="partyCode" value=10>
-        <input type="file" multiple="multiple" name="image"/>
-        <button type="submit">전송</button>
-      </form>
-      <h1>${logoresult}</h1>
-      <img src="${__PARTY__.logoPic}" alt="" />
-      <hr>
-      <form action="/party/editpi" method="post" enctype="multipart/form-data">
-        <input type="hidden" name="partyCode" value=10>
-        <input type="file" multiple="multiple" name="image"/>
-        <button type="submit">전송</button>
-      </form>
-      <h1>${mainresult}</h1>
-      <img src="${__PARTY__.coverPic}" alt="" /> --%>
+      </form>--%>
 
-	<!-- 파티 관리페이지 상단 탭 -->
-	<ul class="nav nav-pills">
-		<li class="nav-item"><a class="nav-link" aria-current="page"
-			href="/party/showmain?partyCode=${__PARTY__.partyCode}">메인</a></li>
-		<li class="nav-item"><a class="nav-link active"
-			href="/party/leaderpage?partyCode=${__PARTY__.partyCode}">파티관리</a></li>
-		<li class="nav-item"><a class="nav-link" href="#">일정</a></li>
-		<li class="nav-item"><a class="nav-link" href="#">파티원</a></li>
-		<li class="nav-item"><a class="nav-link"
-			href="/partyfree/getPFreeBoardList">자유게시판</a></li>
-		<li class="nav-item"><a class="nav-link"
-			href="/partyphoto/list?partyCode=${__PARTY__.partyCode}">포토갤러리</a></li>
-		<li class="nav-item"><a class="nav-link"
-			href="/partyfunc/partychat?partyCode=${__PARTY__.partyCode}">채팅</a></li>
-	</ul>
 	<main>
 
 		<!-- 파티프로필 설정 -->
@@ -91,31 +52,37 @@
 			<div class="header">
 				<h4>파티프로필 설정</h4>
 			</div>
-			<div class="container-lg d-flex justify-content-center">
-				<div
-					class="d-flex flex-column justify-content-center align-items-center">
-					<div class="container-partyProfileImg">
-						<svg class="bd-placeholder-img bd-placeholder-img-lg img-fluid"
-							width="100%" height="250" xmlns="http://www.w3.org/2000/svg"
-							role="img" aria-label="Placeholder: Responsive image"
-							preserveAspectRatio="xMidYMid slice" focusable="false">
-              <rect width="100%" height="100%" fill="#868e96"></rect>
-              <text x="45%" y="50%" fill="#dee2e6" dy=".3em">파티메인이미지</text>
-            </svg>
-					</div>
-					<button type="button" class="btn btn-outline-primary">업로드</button>
-				</div>
 
-				<div
-					class="d-flex flex-column justify-content-center align-items-center">
-					<div class="container-partyProfileName">
-						<span class="align-self-baseline label-partyname">파티이름</span> <input
-							type="text" class="form-control input-partyname mt-2"
-							name="partyname" value="진건이와 아이들">
+			<form class="form-data" enctype="multipart/form-data">
+				<input type="hidden" class="input-partycode" name="partyCode" value="${__PARTY__.partyCode}"/>
+
+				<div class="container-lg d-flex justify-content-center align-items-center">
+					<div class="d-flex flex-column justify-content-center align-items-center">
+						<div class="img-profile justify-content-center align-items-center">
+							<img src="${__PARTY__.coverPic}" alt="파티 프로필 사진" width="700px" height="auto">
+						</div>
+						<div class="mt-2">
+							<button type="button" class="btn btn-outline-primary select-btn">
+								이미지 업로드
+							</button>
+							<input type="file" class="form-control input-file visually-hidden" name="fileLocation"
+							accept="image/*">
+						</div>
+						<div class="d-flex flex-column justify-content-center align-items-center w-100 col-3 mt-4">
+							<span class="align-self-baseline label-name" style="font-weight: bold">파티 이름</span>
+							<input type="text" class="form-control input-partyname mt-2" name="partyName"
+							value="${__PARTY__.partyName}">
+						</div>
+						<div class="d-flex flex-column justify-content-center align-items-center w-100 col-3 mt-4">
+							<span class="align-self-baseline label-name" style="font-weight: bold">파티 소개글</span>
+							<textarea class="form-control input-partyprofile mt-2" name="partyProfile"
+							>${__PARTY__.partyProfile}</textarea>
+						</div>
+
+						<button type="submit" class="btn btn-primary mt-4 save-btn">저장하기</button>
 					</div>
-					<button type="submit" class="btn btn-primary mt-4 save-btn">저장</button>
 				</div>
-			</div>
+			</form>
 		</div>
 
 		<div class="container mt-5 px-5 profile-box shadow-sm">
@@ -145,7 +112,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach items="__MEMBER__" var="member">
+								<c:forEach items="${__MEMBER__}" var="member">
 									<tr>
 										<td>
 											<!-- 파티승인요청 체크박스 개별선택 -->
@@ -184,7 +151,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach items="__MEMBER__" var="member">
+								<c:forEach items="${__MEMBER__}" var="member">
 									<tr>
 										<td>
 											<!-- 파티승인요청 체크박스 개별선택 -->
@@ -249,7 +216,7 @@
 	<!-- 스윗알러트 -->
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<script
-		src="${pageContext.request.contextPath}/resources/js/partyMain.js"></script>
+	src="${pageContext.request.contextPath}/resources/js/partyedit.js?after"></script>
 
 </body>
 </html>

@@ -1,10 +1,10 @@
 package com.pm.myapp.domain.board;
 
-import lombok.Value;
+import lombok.Data;
 
 import java.util.Date;
 
-@Value
+@Data
 public class PartyFreeListVO {
 
     private Integer pfRefer;
@@ -14,5 +14,6 @@ public class PartyFreeListVO {
     private String pfSubject;
     private String email;
     private Integer readnum;
+    private String nickname;
 
-}
+} // end class

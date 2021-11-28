@@ -34,8 +34,11 @@
     <script src="https://cdn.ckeditor.com/ckeditor5/11.0.1/classic/ckeditor.js"></script>
 </head>
 <body>
-<%--HEADER--%>
-<jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp"/>
+    <%--HEADER--%>
+    <jsp:include
+            page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp"/>
+    <jsp:include
+            page="${pageContext.request.contextPath}/WEB-INF/views/include/partyMainTab.jsp" />
 
 <div class="board_main">
     <main>
