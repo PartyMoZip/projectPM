@@ -8,7 +8,7 @@
 	overflow: auto;
 }
 
-.container-lg>div {
+.container-lg > div {
 	padding-top: 10px;
 }
 
@@ -17,7 +17,7 @@
 	justify-content: center;
 	bottom: 0px;
 	width: auto;
-	margin-bottom: 20px;
+	margin-bottom: 10px;
 }
 
 .chatReplyBtn {
@@ -35,13 +35,14 @@
 	background-color: var(- -primary-color);
 }
 
-#divChatData>#chatInfo {
+#divChatData > .chatInfo {
+	
 	display: inline-block;
 	border: 1px solid black;
 	border-radius: 20px;
 	padding: 5px;
 }
 
-#chatImg {
-	margin-top: 10px;
+.chatImg  > img {
+	margin-top: 20px;
 }
