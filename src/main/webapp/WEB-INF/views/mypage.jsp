@@ -145,6 +145,7 @@
 <script src="${pageContext.request.contextPath}/resources/js/modal.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/swiper.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/mypage.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/search.js"></script>
 
 
 </body>
