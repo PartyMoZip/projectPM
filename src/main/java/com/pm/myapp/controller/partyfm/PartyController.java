@@ -271,7 +271,7 @@ public class PartyController {
 	} // doRejectJoin
 	
 	// 파티원 목록 조회 [작동] -- 스위치 스크롤
-	@PostMapping("/memberlist")
+	@GetMapping("/memberlist")
 	public void showMemberList(@ModelAttribute("cri") Criteria cri,Integer partyCode, Model model) {
 		log.debug("showMemberList() invoked.");
 		// 해당 파티코드인지, 권한코드 1이상 인지 : 이메일 JOIN 으로 부르기

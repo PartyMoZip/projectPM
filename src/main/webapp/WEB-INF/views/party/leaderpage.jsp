@@ -192,19 +192,6 @@
 								<!-- 파티승인요청 체크박스 전체선택 끝 -->
 								<th scope="col">번호</th>
 								<th scope="col">닉네임</th>
-								<th scope="col">
-									<div class="nav-item dropdown">
-										<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
-											href="#" role="button" aria-expanded="false">활동점수 정렬</a>
-										<div class="dropdown-menu">
-											<li><a class="dropdown-item" href="#">활동점수 최소 순</a></li>
-											<li>
-												<hr class="dropdown-divider">
-											</li>
-											<li><a class="dropdown-item" href="#">활동점수 최대 순</a></li>
-										</div>
-									</div>
-								</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -217,8 +204,8 @@
 										</div>
 									</div> <!-- 파티승인요청 체크박스 개별선택 끝 -->
 								</td>
-								<th scope="row">1</th>		
-								<td>sexyjingun</td>		
+								<th scope="row">1</th>
+								<td>sexyjingun</td>
 							</tr>
 							<tr>
 								<td>
@@ -230,7 +217,7 @@
 									</div> <!-- 파티관리 체크박스 개별선택 끝 -->
 								</td>
 								<th scope="row">2</th>
-								<td>sexyjingun</td>	
+								<td>sexyjingun</td>
 							</tr>
 							<tr>
 								<td>
@@ -274,20 +261,6 @@
 							</ul>
 						</nav>
 					</div>
-				</div>
-
-				<!-- 검색창 -->
-
-				<div class="container-sm partyMain-search-wrapper">
-					<form action="/search" method="get"
-						class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-						<input type="search" name="searchWord" class="form-control"
-							placeholder="검색어를 입력해주세요." aria-label="Search">
-						<button class="search-btn">
-							<span> <i class="fas fa-search"></i>
-							</span>
-						</button>
-					</form>
 				</div>
 			</div>
 		</div>
