@@ -21,11 +21,8 @@ public interface PartyMapper {
 	
 	public abstract Integer deleteJoin(String email, Integer partyCode);
 	
-	public abstract Integer modifyLogo(Map<String, Object> imageInfo);
-	
-	public abstract Integer modifyMainImage(Map<String, Object> imageInfo);
-	
-	public abstract Integer modifyInfo(PartyDTO dto);
+	public abstract Integer modifyInfo(Map<String, Object> partyInfo);
+
 	
 	public abstract Integer makeDesPartyReq(Integer partyCode);
 	

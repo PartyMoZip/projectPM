@@ -44,11 +44,12 @@ const handleProfileSubmit = (e) => {
         .then((data) => {
             console.log(data);
 
-            if (!data.fileLocation === undefined) {
+            if (!data.fileLocation === undefined || data.fileLocation != null) {
                 profileImg.setAttribute("src", data.fileLocation);
             }
 
-            inputPartyName.value = data.name;
+            inputPartyName.value = data.partyName;
+            inputProfile.innerHTML = data.partyProfile;
             Swal.fire("수정 성공", "수정이 완료되었습니다.", "success")
         })
         .catch((err) => {

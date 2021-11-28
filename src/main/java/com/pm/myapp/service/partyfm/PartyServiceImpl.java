@@ -88,40 +88,19 @@ public class PartyServiceImpl implements PartyService,InitializingBean, Disposab
 		return (affectedLine==1);
 		
 	} // undoJoin
-	
+
 	@Override
-	public boolean editPartyProfile(Map<String, Object> imageInfo) {
-		log.debug("editPartyProfile({}) invoked.",imageInfo);
-		
-		int affectedLine = this.mapper.modifyLogo(imageInfo);
-		
+	public boolean editInfo(Map<String, Object> partyInfo) {
+		log.debug("editPartyProfile({}) invoked.",partyInfo);
+
+		int affectedLine = this.mapper.modifyInfo(partyInfo);
+
 		log.info("\t + affectedLine : {}",affectedLine);
-		
+
 		return (affectedLine==1);
-		
+
 	} // editPartyProfile
-	
 
-	@Override
-	public boolean editPartyMainImage(Map<String, Object> partyInfo) {
-		log.debug("editPartyMainImage({}) invoked.",partyInfo);
-
-		int affectedLine = this.mapper.modifyMainImage(partyInfo);
-		
-		return (affectedLine==1);
-	} // editPartyMainImage
-
-	
-	@Override
-	public boolean editInfo(PartyDTO dto) {
-		log.debug("editInfo({}, {}) invoked.",dto);
-		
-		int affectedLine = this.mapper.modifyInfo(dto);
-		
-		log.info("\t + affectedLine : {}",affectedLine);
-		
-		return (affectedLine==1);
-	} // editInfo
 
 	@Override
 	public boolean breakParty(Integer partyCode) {

@@ -55,11 +55,11 @@
 
     </delete>
 
-    <update id="modifyLogo" parameterType="hashMap">
-
+    <update id="modifyInfo" parameterType="map">
 
         UPDATE party
-        SET PARTYNAME = #{partyName}
+        SET PARTYNAME = #{partyName},
+        PARTYPROFILE = #{partyProfile}
         <if test="!fileLocation.equals('')">
             , COVERPIC = #{fileLocation}
         </if>
@@ -71,17 +71,6 @@
 
         UPDATE PARTY
         SET COVERPIC = #{fileLocation}
-        WHERE PARTYCODE = #{partyCode}
-
-    </update>
-
-    <update id="modifyInfo">
-
-        UPDATE PARTY
-        SET PARTYNAME    = #{partyName},
-            PARTYPROFILE = #{partyProfile},
-            LOCALCODE    = #{localCode},
-            HOBBYCODE    = #{hobbyCode}
         WHERE PARTYCODE = #{partyCode}
 
     </update>

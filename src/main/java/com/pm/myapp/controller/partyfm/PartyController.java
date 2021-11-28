@@ -102,13 +102,15 @@ public class PartyController {
     public Map<String, Object> editPartyProfile(
             @RequestParam(value = "partyName", required = false) String partyName,
             @RequestParam(value = "partyCode", required = false) String partyCode,
+            @RequestParam(value = "partyProfile", required = false) String partyProfile,
             @RequestParam(value = "fileLocation", required = false) MultipartFile fileLocation
     ) throws IllegalStateException, IOException {
 
-        log.debug("editPartyLogo() invoked.");
+        log.debug("edit-profile() invoked.");
 
         log.info("partyName: {}", partyName);
         log.info("partyCode: {}", partyCode);
+        log.info("partyProfile: {}", partyProfile);
         log.info("fileLocation: {}", fileLocation);
 
         // 파티별, 날짜별 폴더를 생성 후 그림 파일 업로드
@@ -135,15 +137,17 @@ public class PartyController {
         // value의 타입이 object인건 value의 타입이 모두 같은것이 아니기 때문
         Map<String, Object> partyInfo = new HashMap<String, Object>();
         partyInfo.put("partyName", partyName);
+        partyInfo.put("partyProfile", partyProfile);
         partyInfo.put("fileLocation", imageUrl); // 파일 이름 주소
         partyInfo.put("partyCode", partyCode);
 
-        boolean result = this.service.editPartyProfile(partyInfo);
+        boolean result = this.service.editInfo(partyInfo);
         log.info("\t + result : {}", result);
 
         Map<String, Object> data = new HashMap<>();
 
         data.put("partyName", partyName);
+        data.put("partyProfile", partyProfile);
         data.put("fileLocation", fileLocation);
 
         return data;
@@ -151,7 +155,7 @@ public class PartyController {
     } // editPartyLogo
 
     // 파티 이미지 등록/변경 [작동]
-    @PostMapping("/editpi")
+   /* @PostMapping("/editpi")
     public String editPartyMainImage(MultipartFile image, Integer partyCode, RedirectAttributes rttrs) throws IllegalStateException, IOException {
         log.debug("editPartyImage({}, {}) invoked.", image, partyCode);
 
@@ -208,7 +212,7 @@ public class PartyController {
 
         return "redirect:/party/leaderpage";
 
-    } // editParty
+    } // editParty*/
 
     // 파티 해체 [작동]
     @PostMapping("/dobreak")

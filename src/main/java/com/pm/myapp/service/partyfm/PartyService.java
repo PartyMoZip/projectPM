@@ -19,11 +19,7 @@ public interface PartyService {
 	
 	public abstract boolean undoJoin(String email, Integer partyCode);
 	
-	public abstract boolean editPartyProfile(Map<String, Object> imageInfo);
-	
-	public abstract boolean editPartyMainImage(Map<String, Object> partyInfo);
-	
-	public abstract boolean editInfo(PartyDTO dto);
+	public abstract boolean editInfo(Map<String, Object> partyInfo);
 	
 	public abstract boolean breakParty(Integer partyCode);
 	
