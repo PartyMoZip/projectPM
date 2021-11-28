@@ -17,7 +17,9 @@
 
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/partyMain.css" />
-<title>파티메인페이지 - 파티관리</title>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/admin.css" />
+<title>파티모집 - 파티관리</title>
 </head>
 <body>
 
@@ -167,6 +169,144 @@
 			</div>
 		</div>
 
+		<div class="container mt-5 px-5 profile-box shadow-sm">
+			<div class="header">
+				<h4>파티승인 요청</h4>
+			</div>
+			<div class="all-wrap">
+				<!-- 파티승인요청 테이블 시작 -->
+				<div class="table-responsive">
+					<table class="table">
+						<thead>
+							<tr>
+							<tr>
+								<!-- 파티승인요청 체크박스 전체선택 -->
+								<th scope="col">
+									<div class="checkbox-group">
+										<div class="checkbox-groupParty">
+											<input type="checkbox" id="check-allPartyAccept"
+												name="check-allPartyAccept" class="bigCheck">
+										</div>
+									</div>
+								</th>
+								<!-- 파티관리 체크박스 전체선택 끝 -->
+								<th scope="col">번호</th>
+								<th scope="col">파티 이름</th>
+								<th scope="col">파티장</th>
+								<th scope="col">파티인원 수</th>
+								<th scope="col">창설일자</th>
+								<th scope="col">
+									<div class="nav-item dropdown">
+										<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
+											href="#" role="button" aria-expanded="false">활동점수 정렬</a>
+										<div class="dropdown-menu">
+											<li><a class="dropdown-item" href="#">활동점수 최소 순</a></li>
+											<li>
+												<hr class="dropdown-divider">
+											</li>
+											<li><a class="dropdown-item" href="#">활동점수 최대 순</a></li>
+										</div>
+									</div>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									<!-- 파티관리 체크박스 개별선택 -->
+									<div class="checkbox-group">
+										<div class="partyCheckboxGroup">
+											<input type="checkbox" class="bigCheck" name="apa">
+										</div>
+									</div> <!-- 파티관리 체크박스 개별선택 끝 -->
+								</td>
+								<th scope="row">1</th>
+								<td>sexypeople</td>
+								<td>sexyjingun</td>
+								<td>10</td>
+								<td>2021.11.10</td>
+								<td>50</td>
+							</tr>
+							<tr>
+								<td>
+									<!-- 파티관리 체크박스 개별선택 -->
+									<div class="checkbox-group">
+										<div class="partyCheckboxGroup">
+											<input type="checkbox" class="bigCheck" name="apa">
+										</div>
+									</div> <!-- 파티관리 체크박스 개별선택 끝 -->
+								</td>
+								<th scope="row">2</th>
+								<td>sexypeople</td>
+								<td>sexyjingun</td>
+								<td>10</td>
+								<td>2021.11.10</td>
+								<td>50</td>
+							</tr>
+							<tr>
+								<td>
+									<!-- 파티관리 체크박스 개별선택 -->
+									<div class="checkbox-group">
+										<div class="partyCheckboxGroup">
+											<input type="checkbox" class="bigCheck" name="apa">
+										</div>
+									</div> <!-- 파티관리 체크박스 개별선택 끝 -->
+								</td>
+								<th scope="row">3</th>
+								<td>sexypeople</td>
+								<td>sexyjingun</td>
+								<td>10</td>
+								<td>2021.11.10</td>
+								<td>50</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<!-- 파티관리 테이블 끝-->
+
+				<!-- 하단메뉴 -->
+				<!-- 버튼 -->
+				<div class="bottom-menu-btn">
+
+					<div class="d-grid gap-2 d-md-block">
+						<button class="btn btn-primary" type="button">파티 해체</button>
+					</div>
+				</div>
+
+				<div class="bottom-menu-page">
+					<div class="changePage">
+						<nav aria-label="Page navigation example">
+							<ul class="pagination justify-content-center">
+								<li class="page-item"><a class="page-link" href="#"
+									aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+								</a></li>
+								<li class="page-item"><a class="page-link active" href="#">1</a></li>
+								<li class="page-item"><a class="page-link" href="#">2</a></li>
+								<li class="page-item"><a class="page-link" href="#">3</a></li>
+								<li class="page-item"><a class="page-link" href="#"
+									aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+								</a></li>
+							</ul>
+						</nav>
+					</div>
+				</div>
+
+				<!-- 검색창 -->
+
+				<div class="container-sm partyMain-search-wrapper">
+					<form action="/search" method="get"
+						class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+						<input type="search" name="searchWord" class="form-control"
+							placeholder="검색어를 입력해주세요." aria-label="Search">
+						<button class="search-btn">
+							<span> <i class="fas fa-search"></i>
+							</span>
+						</button>
+					</form>
+				</div>
+			</div>
+		</div>
+
 	</main>
 
 	<%--FOOTER--%>
@@ -184,5 +324,6 @@
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<script
 		src="${pageContext.request.contextPath}/resources/js/partyMain.js"></script>
+
 </body>
 </html>
