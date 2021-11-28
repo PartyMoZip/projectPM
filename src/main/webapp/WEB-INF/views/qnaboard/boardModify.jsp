@@ -38,53 +38,38 @@
 <%--HEADER--%>
 <jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp"/>
 <div class="board_main">
-<main>
-    <div class="container-sm">
-        <ul class="nav nav-pills">
-            <li class="nav-item"><a class="nav-link active"
-                                    aria-current="page" href="#">문의게시판</a></li>
-        </ul>
+    <main>
+        <div class="container-sm">
+            <ul class="nav nav-pills">
+                <li class="nav-item"><a class="nav-link active"
+                                        aria-current="page" href="#">문의게시판</a></li>
+            </ul>
 
-        <form action="/qnaboard/editQnaBoard" method="post">
-            <input hidden id="qrefer" name="qrefer" value="${__boardDetail__.qrefer}">
-            <div class="table-Detail">
-                <div class="content">
-                    <div class="title_area">
-                        <span><input type="text" name="qsubject" value="${__boardDetail__.qsubject}"></span>
-                    </div>
-                    <hr>
-                    <div class="info_desc">
-                        <div class="profile_thumb">
-                            <img src="${pageContext.request.contextPath}/resources/images/profile.jpg" alt width="50"
-                                 height="50" class="img_thumb">
+            <form action="/qnaboard/editQnaBoard" method="post">
+                <input hidden id="qrefer" name="qrefer" value="${__boardDetail__.qrefer}">
+                <div class="table-Detail">
+                    <div class="content">
+                        <div class="title_area">
+                            <span><input type="text" name="qsubject" value="${__boardDetail__.qsubject}"></span>
                         </div>
-                        <div class="write_info">
-                            <div>${__boardDetail__.nickname}<br>
-                                <span>${__boardDetail__.qdate}</span>
-                                <span>조회 ${__boardDetail__.readnum}</span>
+                        <hr>
+                        <div class="info_desc">
+                            <div class="profile_thumb">
+                                <img src="${pageContext.request.contextPath}/resources/images/profile.jpg" alt
+                                     width="50"
+                                     height="50" class="img_thumb">
+                            </div>
+                            <div class="write_info">
+                                <div>${__boardDetail__.nickname}<br>
+                                    <span>${__boardDetail__.qdate}</span>
+                                    <span>조회 ${__boardDetail__.readnum}</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <span><textarea name="qcontent" rows="10"
-                                    cols="137">${__boardDetail__.qcontent}"</textarea>
+                        <span><textarea name="qcontent" rows="10"
+                                        cols="137">${__boardDetail__.qcontent}"</textarea>
                     </span>
-
-                    <%-- <script>
-                         //CKEditor5를 생성할 textarea 지정
-                         ClassicEditor
-                             .create(document.querySelector('#editor'), {
-                                 placeholder: '500자 내로 입력해주세요',
-                                 removePlugins: ['ImageUpload']
-                             })
-                             .then(newEditor => {
-                                 editor = newEditor;
-                             })
-                             .catch(error => {
-                                 console.error(error);
-                             });
-                     </script>--%>
-                    <div class="container">
                         <div class="container-btnGroup">
                             <button type="submit" class="btn btn-primary btn-sm">
                                 <i class="fas fa-pen"></i>
@@ -98,10 +83,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </form>
-    </div>
-</main>
+            </form>
+        </div>
+    </main>
 </div>
 
 

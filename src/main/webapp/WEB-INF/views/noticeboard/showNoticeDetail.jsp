@@ -57,31 +57,27 @@
                     <hr>
                     <span style="text-align : left;">${board.NContent}</span>
                 </div>
-                <div class="container">
-                    <div class="container-btnGroup">
 
-                        <%--                                        <c:set value="${sessionScope.id}" var="id"/>--%>
-                        <%-- <c:if test="${boardDetail.nickname eq nickname}">--%>
-                        <button type="button" class="btn btn-primary btn-sm"
-                                onclick="location.href='/noticeboard/editNoticeBoardView?nrefer=${board.NRefer}'">
-                            <i class="fas fa-pen"></i>
-                            <span>수정</span>
-                        </button>
+                <div class="container-btnGroup">
+                    <button type="button" class="btn btn-primary btn-sm"
+                            onclick="location.href='/noticeboard/editNoticeBoardView?nrefer=${board.NRefer}'">
+                        <i class="fas fa-pen"></i>
+                        <span>수정</span>
+                    </button>
 
-                        <button type="submit" id="deleteButton" class="btn btn-primary btn-sm">
-                            <form action="/noticeboard/deleteNoticeBoard" name="deleteButton" method="post">
+                    <button type="submit" id="deleteButton" class="btn btn-primary btn-sm">
+                        <form action="/noticeboard/deleteNoticeBoard" name="deleteButton" method="post">
                             <input type="hidden" id="nRefer" name="nrefer" value="${board.NRefer}">
                             <i class="fas fa-trash-alt"></i>
                             <span>삭제</span>
-                            </form>
-                        </button>
-                        <%--  </c:if>--%>
-                        <button type="button" class="btn btn-primary btn-sm"
-                                onclick="location.href='/noticeboard/getNoticeBoardList?currPage=${cri.currPage}'">
-                            <i class="fas fa-list-ul"></i>
-                            <span>목록</span>
-                        </button>
-                    </div>
+                        </form>
+                    </button>
+                    <%--  </c:if>--%>
+                    <button type="button" class="btn btn-primary btn-sm"
+                            onclick="location.href='/noticeboard/getNoticeBoardList?currPage=${cri.currPage}'">
+                        <i class="fas fa-list-ul"></i>
+                        <span>목록</span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -104,17 +100,16 @@
 
 
     $(document).ready(function () {
-        $('#deleteButton').click(function() {
+        $('#deleteButton').click(function () {
 
 
-            var formObj=$('form');
-            formObj.attr('method','post');
-            formObj.attr('action','/noticeboard/deleteNoticeBoard');
+            var formObj = $('form');
+            formObj.attr('method', 'post');
+            formObj.attr('action', '/noticeboard/deleteNoticeBoard');
 
             formObj.submit();
 
         }) // click #modifyBtn
-
 
 
         /*  var msg =

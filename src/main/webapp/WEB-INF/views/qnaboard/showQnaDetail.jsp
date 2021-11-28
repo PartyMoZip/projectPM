@@ -18,7 +18,8 @@
           integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/home.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/boardDetail.css"/>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
 
     <title>파티모집 - 문의</title>
@@ -136,30 +137,25 @@
                     </form>
 
                 </div>
-                <div class="container">
-                    <div class="container-btnGroup">
-                        <%--                                        <c:set value="${sessionScope.id}" var="id"/>--%>
-                        <%-- <c:if test="${boardDetail.nickname eq nickname}">--%>
-
-                        <button type="button" class="btn btn-primary btn-sm"
-                                onclick="location.href='/qnaboard/editQnaBoardView?qrefer=${boardDetail.qrefer}'">
-                            <i class="fas fa-pen"></i>
-                            <span>수정</span>
-                        </button>
-                        <button type="submit" id="deleteButton" class="btn btn-primary btn-sm">
-                            <form action="/qnaboard/deleteQnaBoard" name="deleteButton" method="post">
+                <div class="container-btnGroup">
+                    <button type="button" class="btn btn-primary btn-sm"
+                            onclick="location.href='/qnaboard/editQnaBoardView?qrefer=${boardDetail.qrefer}'">
+                        <i class="fas fa-pen"></i>
+                        <span>수정</span>
+                    </button>
+                    <button type="submit" id="deleteButton" class="btn btn-primary btn-sm">
+                        <form action="/qnaboard/deleteQnaBoard" name="deleteButton" method="post">
                             <input type="hidden" id="qrefer" name="qrefer" value="${boardDetail.qrefer}">
                             <i class="fas fa-trash-alt"></i>
                             <span>삭제</span>
-                            </form>
-                        </button>
-                        <%--  </c:if>--%>
-                        <button type="button" class="btn btn-primary btn-sm"
-                                onclick="location.href='/qnaboard/getQnaBoardList?currPage=${cri.currPage}'">
-                            <i class="fas fa-list-ul"></i>
-                            <span>목록</span>
-                        </button>
-                    </div>
+                        </form>
+                    </button>
+                    <%--  </c:if>--%>
+                    <button type="button" class="btn btn-primary btn-sm"
+                            onclick="location.href='/qnaboard/getQnaBoardList?currPage=${cri.currPage}'">
+                        <i class="fas fa-list-ul"></i>
+                        <span>목록</span>
+                    </button>
                 </div>
             </div>
         </div>

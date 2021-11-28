@@ -49,28 +49,24 @@
                 <div class="table-Detail">
                     <input type="hidden" name="email" value="${sessionScope.__AUTH__.email}">
                     <div class="title" id="article-title">
-                        <input type="text" name="nSubject" placeholder="제목을 입력하세요." class="titlearea_input"
-                               value="${__boardDetail__.NSubject}">
+                        <input type="text" name="nSubject" placeholder="제목을 입력하세요." class="titlearea_input">
                     </div>
                     <!--product details-->
 
                     <div class="text_area">
-                        <span><textarea name="nContent" rows="10" cols="171" placeholder="내용을 입력하세요"
-                                        value="${__boardDetail__.NContent}"></textarea></span>
+                        <span><textarea name="nContent" rows="10" class="textarea" placeholder="내용을 입력하세요"></textarea></span>
 
                     </div>
-                    <div class="container">
-                        <div class="container-btnGroup">
-                            <button type="submit" class="btn btn-primary btn-sm">
-                                <i class="fas fa-pen"></i>
-                                <span>등록</span>
-                            </button>
-                            <button type="button" class="btn btn-primary btn-sm"
-                                    onclick="location.href='/noticeboard/getNoticeBoardList?currPage=${cri.currPage}&amount=${cri.amount}&pagesPerPage=${cri.pagesPerPage}'">
-                                <i class="fas fa-list-ul"></i>
-                                <span>목록</span>
-                            </button>
-                        </div>
+                    <div class="container-btnGroup">
+                        <button type="submit" class="btn btn-primary btn-sm">
+                            <i class="fas fa-pen"></i>
+                            <span>등록</span>
+                        </button>
+                        <button type="button" class="btn btn-primary btn-sm"
+                                onclick="location.href='/noticeboard/getNoticeBoardList?currPage=${cri.currPage}&amount=${cri.amount}&pagesPerPage=${cri.pagesPerPage}'">
+                            <i class="fas fa-list-ul"></i>
+                            <span>목록</span>
+                        </button>
                     </div>
                 </div>
             </form>

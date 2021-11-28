@@ -49,39 +49,23 @@
                 <div class="table-Detail">
                     <input type="hidden" name="email" value="${sessionScope.__AUTH__.email}">
                     <div class="title" id="article-title">
-                        <input type="text" name="qsubject" placeholder="제목을 입력하세요." class="titlearea_input" value="${__boardDetail__.qsubject}">
+                        <input type="text" name="qsubject" placeholder="제목을 입력하세요." class="titlearea_input">
                     </div>
                     <!--product details-->
 
                     <div class="text_area">
-                        <span><textarea name="qcontent" rows="10" cols="171" placeholder="내용을 입력하세요" value="${__boardDetail__.qcontent}"></textarea></span>
-                        <%--<script>
-                            //CKEditor5를 생성할 textarea 지정
-                            ClassicEditor
-                                .create(document.querySelector('#editor'), {
-                                    placeholder: '500자 내로 입력해주세요',
-                                    removePlugins: ['ImageUpload']
-                                })
-                                .then(newEditor => {
-                                    editor = newEditor;
-                                })
-                                .catch(error => {
-                                    console.error(error);
-                                });
-                        </script>
---%>                </div>
-                    <div class="container">
-                        <div class="container-btnGroup">
-                            <button type="submit" class="btn btn-primary btn-sm">
-                                <i class="fas fa-pen"></i>
-                                <span>등록</span>
-                            </button>
-                            <button type="button" class="btn btn-primary btn-sm"
-                                    onclick="location.href='/freeboard/getFreeBoardList?currPage=${cri.currPage}&amount=${cri.amount}&pagesPerPage=${cri.pagesPerPage}'">
-                                <i class="fas fa-list-ul"></i>
-                                <span>목록</span>
-                            </button>
-                        </div>
+                        <span><textarea name="qcontent" rows="10" class="textarea" placeholder="내용을 입력하세요"></textarea></span>
+                    </div>
+                    <div class="container-btnGroup">
+                        <button type="submit" class="btn btn-primary btn-sm">
+                            <i class="fas fa-pen"></i>
+                            <span>등록</span>
+                        </button>
+                        <button type="button" class="btn btn-primary btn-sm"
+                                onclick="location.href='/qnaboard/getQnaBoardList?currPage=${cri.currPage}&amount=${cri.amount}&pagesPerPage=${cri.pagesPerPage}'">
+                            <i class="fas fa-list-ul"></i>
+                            <span>목록</span>
+                        </button>
                     </div>
                 </div>
             </form>

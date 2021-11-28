@@ -58,7 +58,8 @@
                         <hr>
                         <div class="info_desc">
                             <div class="profile_thumb">
-                                <img src="${pageContext.request.contextPath}/resources/images/profile.jpg" alt width="50"
+                                <img src="${pageContext.request.contextPath}/resources/images/profile.jpg" alt
+                                     width="50"
                                      height="50" class="img_thumb">
                             </div>
                             <div class="write_info">
@@ -72,33 +73,16 @@
                         <span><textarea name="pfcontent" rows="10"
                                         cols="137">${__boardDetail__.pfcontent}"</textarea>
                     </span>
-
-                        <%-- <script>
-                             //CKEditor5를 생성할 textarea 지정
-                             ClassicEditor
-                                 .create(document.querySelector('#editor'), {
-                                     placeholder: '500자 내로 입력해주세요',
-                                     removePlugins: ['ImageUpload']
-                                 })
-                                 .then(newEditor => {
-                                     editor = newEditor;
-                                 })
-                                 .catch(error => {
-                                     console.error(error);
-                                 });
-                         </script>--%>
-                        <div class="container">
-                            <div class="container-btnGroup">
-                                <button type="submit" class="btn btn-primary btn-sm">
-                                    <i class="fas fa-pen"></i>
-                                    <span>등록</span>
-                                </button>
-                                <button type="button" class="btn btn-primary btn-sm"
-                                        onclick="location.href='/partyfree/getPFreeBoardList?currPage=${cri.currPage}'">
-                                    <i class="fas fa-list-ul"></i>
-                                    <span>취소</span>
-                                </button>
-                            </div>
+                        <div class="container-btnGroup">
+                            <button type="submit" class="btn btn-primary btn-sm">
+                                <i class="fas fa-pen"></i>
+                                <span>등록</span>
+                            </button>
+                            <button type="button" class="btn btn-primary btn-sm"
+                                    onclick="location.href='/partyfree/getPFreeBoardList?currPage=${cri.currPage}'">
+                                <i class="fas fa-list-ul"></i>
+                                <span>취소</span>
+                            </button>
                         </div>
                     </div>
                 </div>
