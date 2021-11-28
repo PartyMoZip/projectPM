@@ -117,122 +117,88 @@
 		</div>
 
 		<div class="container mt-5 px-5 profile-box shadow-sm">
-
-			<div class="header">
-				<h4>파티정보 변경</h4>
-			</div>
-
-			<div class="container-lg d-flex justify-content-center">
-				<div
-					class="d-flex flex-column justify-content-center align-items-center">
-					<div class="container-partyInfoChange">
-						<div class="container-partyInfoHobby">
-							<div class="container-sm search-wrapper">
-								<form action="/search" method="get"
-									class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-									<input type="search" name="searchWord" class="form-control"
-										placeholder="취미 카테고리를 검색해 주세요." aria-label="Search">
-									<button class="search-btn">
-										<span> <i class="fas fa-search"></i>
-										</span>
-									</button>
-								</form>
-							</div>
-						</div>
-
-						<div class="container-partyInfoCategory">
-							<div class="container-partyInfoMember">
-								<select class="form-select" aria-label="Default select example">
-									<option selected>인원</option>
-									<option value="1">10명</option>
-									<option value="2">30명</option>
-									<option value="3">50명</option>
-									<option value="4">100명</option>
-								</select>
-							</div>
-
-							<div class="container-partyInfoLocation">
-
-								<select class="form-select" aria-label="Default select example">
-									<option selected>지역</option>
-									<option value="1">강남</option>
-									<option value="2">강동</option>
-									<option value="3">강북</option>
-									<option value="4">강서</option>
-								</select>
-							</div>
-						</div>
-
-					</div>
-					<button type="submit" class="btn btn-primary mt-4 save-btn">설정</button>
-				</div>
-			</div>
-		</div>
-
-		<div class="container mt-5 px-5 profile-box shadow-sm">
 			<div class="header">
 				<h4>파티승인 요청</h4>
 			</div>
 			<div class="all-wrap">
 				<!-- 파티승인요청 테이블 시작 -->
 				<div class="table-responsive">
-					<table class="table">
-						<thead>
-							<tr>
-							<tr>
-								<!-- 파티승인요청 체크박스 전체선택 -->
-								<th scope="col">
-									<div class="checkbox-group">
-										<div class="checkbox-groupParty">
-											<input type="checkbox" id="check-allPartyAccept"
-												name="check-allPartyAccept" class="bigCheck">
+					<form action="/party/do-accept-join" method="post">
+						<input type="hidden" name="partyCode" value="${__PARTY__.partyCode}">
+						<table class="table">
+							<thead>
+								<tr>
+								<tr>
+									<!-- 파티승인요청 체크박스 전체선택 -->
+									<th scope="col">
+										<div class="checkbox-group">
+											<div class="checkbox-groupParty">
+												<input type="checkbox" id="check-allPartyAccept" name="check-allPartyAccept" class="bigCheck">
+											</div>
 										</div>
-									</div>
-								</th>
-								<!-- 파티승인요청 체크박스 전체선택 끝 -->
-								<th scope="col">번호</th>
-								<th scope="col">닉네임</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>
-									<!-- 파티승인요청 체크박스 개별선택 -->
-									<div class="checkbox-group">
-										<div class="partyCheckboxGroup">
-											<input type="checkbox" class="bigCheck" name="apa">
+									</th>
+									<!-- 파티승인요청 체크박스 전체선택 끝 -->
+									<th scope="col">번호</th>
+									<th scope="col">닉네임</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach items="__MEMBER__" var="member">
+									<tr>
+										<td>
+											<!-- 파티승인요청 체크박스 개별선택 -->
+											<div class="checkbox-group">
+												<div class="partyCheckboxGroup">
+													<input type="checkbox" class="bigCheck" name="email" value="${member.email}">
+												</div>
+											</div> <!-- 파티승인요청 체크박스 개별선택 끝 -->
+										</td>
+										<th scope="row">${member.rownum}</th>
+										<td>${member.nickname}</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+					</form>
+				</div>
+				<div class="table-responsive">
+					<form action="/party/do-reject-join" method="post">
+						<input type="hidden" name="partyCode" value="${__PARTY__.partyCode}">
+						<table class="table">
+							<thead>
+								<tr>
+								<tr>
+									<!-- 파티승인요청 체크박스 전체선택 -->
+									<th scope="col">
+										<div class="checkbox-group">
+											<div class="checkbox-groupParty">
+												<input type="checkbox" id="check-allPartyAccept" name="check-allPartyAccept" class="bigCheck">
+											</div>
 										</div>
-									</div> <!-- 파티승인요청 체크박스 개별선택 끝 -->
-								</td>
-								<th scope="row">1</th>
-								<td>sexyjingun</td>
-							</tr>
-							<tr>
-								<td>
-									<!-- 파티관리 체크박스 개별선택 -->
-									<div class="checkbox-group">
-										<div class="partyCheckboxGroup">
-											<input type="checkbox" class="bigCheck" name="apa">
-										</div>
-									</div> <!-- 파티관리 체크박스 개별선택 끝 -->
-								</td>
-								<th scope="row">2</th>
-								<td>sexyjingun</td>
-							</tr>
-							<tr>
-								<td>
-									<!-- 파티승인요청 체크박스 개별선택 -->
-									<div class="checkbox-group">
-										<div class="partyCheckboxGroup">
-											<input type="checkbox" class="bigCheck" name="apa">
-										</div>
-									</div> <!-- 파티승인요청 체크박스 개별선택 끝 -->
-								</td>
-								<th scope="row">3</th>
-								<td>sexyjingun</td>
-							</tr>
-						</tbody>
-					</table>
+									</th>
+									<!-- 파티승인요청 체크박스 전체선택 끝 -->
+									<th scope="col">번호</th>
+									<th scope="col">닉네임</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach items="__MEMBER__" var="member">
+									<tr>
+										<td>
+											<!-- 파티승인요청 체크박스 개별선택 -->
+											<div class="checkbox-group">
+												<div class="partyCheckboxGroup">
+													<input type="checkbox" class="bigCheck" name="email" value="${member.email}">
+												</div>
+											</div> <!-- 파티승인요청 체크박스 개별선택 끝 -->
+										</td>
+										<th scope="row">${member.rownum}</th>
+										<td>${member.nickname}</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+					</form>
 				</div>
 				<!-- 파티승인요청 테이블 끝-->
 

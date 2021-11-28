@@ -4,9 +4,10 @@ import lombok.*;
 
 @Data
 public class UserDTO {
-
-    private String email;
+	
+	private Integer rownum;
     private String nickname;
+    private String email;
     private String userPic;
     private Integer userBanned;
 

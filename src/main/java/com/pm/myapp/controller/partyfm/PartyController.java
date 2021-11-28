@@ -260,23 +260,37 @@ public class PartyController {
 	
 	// 파티 가입 승인 [작동]
 	@PostMapping("/do-accept-join")
-	public void doAcceptJoin(String email, Integer partyCode) {
-		log.debug("doAcceptJoin({}, {}) invoked.",email,partyCode);
+	public String doAcceptJoin(String[] email, Integer partyCode, RedirectAttributes rttrs, Criteria cri) {
+		log.debug("doAcceptJoin({}, {}) invoked.",email.toString(),partyCode);
 		// 권한코드 -1 인지 확인 : 권한코드 1로 변경
-		
-		boolean result = this.service.acceptJoin(email, partyCode);
-		log.info("\t + result : {}",result);
+					
+		for(String emaillist : email) {
+			boolean result = this.service.acceptJoin(emaillist, partyCode);
+			log.info("\t + result : {}",result);
+		} // advanced-for
 
+		rttrs.addAttribute("partyCode",partyCode);
+		rttrs.addAttribute("currPage",cri.getCurrPage());
+		
+		return "redirect:/party/leaderpage";
+		
 	} // doAcceptJoin
 	
 	// 파티 가입 거절 [작동]
 	@PostMapping("/do-reject-join")
-	public void doRejectJoin(String email, Integer partyCode) {
-		log.debug("doRejectJoin({}, {}) invoked.",email,partyCode);
+	public String doRejectJoin(String[] email, Integer partyCode, RedirectAttributes rttrs, Criteria cri) {
+		log.debug("doRejectJoin({}, {}) invoked.",email.toString(),partyCode);
 		// 해당 이메일인지 : 해당 컬럼 삭제
 		
-		boolean result = this.service.rejectJoin(email, partyCode);
-		log.info("\t + result : {}",result);
+		for(String emaillist : email) {
+			boolean result = this.service.rejectJoin(emaillist, partyCode);
+			log.info("\t + result : {}",result);
+		} // advanced-for
+		
+		rttrs.addAttribute("partyCode",partyCode);
+		rttrs.addAttribute("currPage",cri.getCurrPage());
+		
+		return "redirect:/party/leaderpage";
 		
 	} // doRejectJoin
 	
@@ -299,13 +313,14 @@ public class PartyController {
 	
 	// 파티원 추방 [작동]
 	@PostMapping("/dokick")
-	public String doKickMember(String email, Integer partyCode, RedirectAttributes rttrs) {
+	public String doKickMember(String email[], Integer partyCode, RedirectAttributes rttrs) {
 		log.debug("doKickMember() invoked.");
 		// 해당 이메일인지 : 해당 컬럼 삭제
 		
-		boolean result = this.service.kickMember(email, partyCode);
-		log.info("\t + result : {}",result);
-
+		for(String emaillist : email) {
+			boolean result = this.service.kickMember(emaillist, partyCode);
+			log.info("\t + result : {}",result);
+		} // advanced-for
 		rttrs.addAttribute("partyCode", partyCode);
 		
 		return "redirect:/party/leaderpage";
