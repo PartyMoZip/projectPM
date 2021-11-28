@@ -9,13 +9,13 @@ import java.util.Date;
 @Data
 public class CalendarDTO {
 
-    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-    private Integer partyCode;
+    private Integer id;
     private String title;
     @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Date start;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date end;
     private boolean allDay;
+    private Integer partyCode;
 
 } //end class
