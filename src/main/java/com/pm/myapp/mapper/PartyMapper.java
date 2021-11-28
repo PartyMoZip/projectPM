@@ -4,6 +4,8 @@ import com.pm.myapp.domain.Criteria;
 import com.pm.myapp.domain.PartyMemberCheckVO;
 import com.pm.myapp.domain.PartyUserVO;
 import com.pm.myapp.domain.PartyVO;
+import com.pm.myapp.domain.UserDTO;
+
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -30,5 +32,9 @@ public interface PartyMapper {
     public abstract List<PartyUserVO> getMember(Integer partyCode, @Param("cri") Criteria cri);
 
     public abstract Integer getPartyMN(Integer partyCode);
+    
+    public abstract UserDTO getMakingList(@Param("partyCode") Integer partyCode, @Param("cri") Criteria cri);
+    
+    public abstract Integer getTotalMakingList(Integer partyCode);
 
 } // end interface
