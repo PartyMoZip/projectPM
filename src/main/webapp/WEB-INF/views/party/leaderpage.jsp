@@ -189,12 +189,9 @@
 										</div>
 									</div>
 								</th>
-								<!-- 파티관리 체크박스 전체선택 끝 -->
+								<!-- 파티승인요청 체크박스 전체선택 끝 -->
 								<th scope="col">번호</th>
-								<th scope="col">파티 이름</th>
-								<th scope="col">파티장</th>
-								<th scope="col">파티인원 수</th>
-								<th scope="col">창설일자</th>
+								<th scope="col">닉네임</th>
 								<th scope="col">
 									<div class="nav-item dropdown">
 										<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
@@ -213,19 +210,15 @@
 						<tbody>
 							<tr>
 								<td>
-									<!-- 파티관리 체크박스 개별선택 -->
+									<!-- 파티승인요청 체크박스 개별선택 -->
 									<div class="checkbox-group">
 										<div class="partyCheckboxGroup">
 											<input type="checkbox" class="bigCheck" name="apa">
 										</div>
-									</div> <!-- 파티관리 체크박스 개별선택 끝 -->
+									</div> <!-- 파티승인요청 체크박스 개별선택 끝 -->
 								</td>
-								<th scope="row">1</th>
-								<td>sexypeople</td>
-								<td>sexyjingun</td>
-								<td>10</td>
-								<td>2021.11.10</td>
-								<td>50</td>
+								<th scope="row">1</th>		
+								<td>sexyjingun</td>		
 							</tr>
 							<tr>
 								<td>
@@ -237,39 +230,31 @@
 									</div> <!-- 파티관리 체크박스 개별선택 끝 -->
 								</td>
 								<th scope="row">2</th>
-								<td>sexypeople</td>
-								<td>sexyjingun</td>
-								<td>10</td>
-								<td>2021.11.10</td>
-								<td>50</td>
+								<td>sexyjingun</td>	
 							</tr>
 							<tr>
 								<td>
-									<!-- 파티관리 체크박스 개별선택 -->
+									<!-- 파티승인요청 체크박스 개별선택 -->
 									<div class="checkbox-group">
 										<div class="partyCheckboxGroup">
 											<input type="checkbox" class="bigCheck" name="apa">
 										</div>
-									</div> <!-- 파티관리 체크박스 개별선택 끝 -->
+									</div> <!-- 파티승인요청 체크박스 개별선택 끝 -->
 								</td>
 								<th scope="row">3</th>
-								<td>sexypeople</td>
 								<td>sexyjingun</td>
-								<td>10</td>
-								<td>2021.11.10</td>
-								<td>50</td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
-				<!-- 파티관리 테이블 끝-->
+				<!-- 파티승인요청 테이블 끝-->
 
 				<!-- 하단메뉴 -->
 				<!-- 버튼 -->
 				<div class="bottom-menu-btn">
 
 					<div class="d-grid gap-2 d-md-block">
-						<button class="btn btn-primary" type="button">파티 해체</button>
+						<button class="btn btn-primary" type="button">승인</button>
 					</div>
 				</div>
 
