@@ -170,21 +170,21 @@ public class PartyController {
 
     } // editPartyProfile
    
-	// 파티 정보 변경 [작동]
-	@PostMapping("/editparty")
-	public String editParty(PartyDTO dto, RedirectAttributes rttrs) {
-		log.debug("editParty({}, {}) invoked.",dto);
-		
-		boolean result = this.service.editInfo(dto);
-		log.info("\t + result : {}", result);
-		
-		int partyCode = dto.getPartyCode();
-
-		rttrs.addAttribute("partyCode",partyCode);
-		
-		return "redirect:/party/leaderpage";
-		
-	} // editParty
+//	// 파티 정보 변경 [작동]
+//	@PostMapping("/editparty")
+//	public String editParty(PartyDTO dto, RedirectAttributes rttrs) {
+//		log.debug("editParty({}, {}) invoked.",dto);
+//		
+//		boolean result = this.service.editInfo(dto);
+//		log.info("\t + result : {}", result);
+//		
+//		int partyCode = dto.getPartyCode();
+//
+//		rttrs.addAttribute("partyCode",partyCode);
+//		
+//		return "redirect:/party/leaderpage";
+//		
+//	} // editParty
 	
 	// 파티 해체 [작동]
 	@PostMapping("/dobreak")
