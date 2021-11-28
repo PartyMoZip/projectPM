@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>파티포토갤러리 - 파티채팅</title>
+<title>파티모집 - 파티채팅</title>
 
 <link rel="icon"
 	href="${pageContext.request.contextPath}/resources/images/favicon.ico" />
@@ -20,11 +20,18 @@
 	crossorigin="anonymous" />
 
 <link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/partyMain.css" />
+<link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/partyMainChat.css" />
 
 </head>
 
 <body>
+	<%-- partyMainTab --%>
+	<jsp:include
+		page="${pageContext.request.contextPath}/WEB-INF/views/include/partyMainTab.jsp" />
+		<span class="d-none">${pageMaker.cri.currPage}</span>
+
 	<main>
 		<div class="container mt-5 px-5 profile-box shadow-lg">
 			<img
@@ -93,12 +100,12 @@
 				if (msgData.cmd == 'CMD_MSG_SEND') {	
 					$('#divChatData')
 							.append(
-									'<div id="chatImg">'
+									'<div class="chatImg">'
 											+ '<img src="' + msgData.userpic + '" border="0" width="50" height="50"/>'
 											+ '</div>');
 					$('#divChatData').append(
-							'<div id="chatUser">' + '[' + msgData.user + ']' + '</div>');
-					$('#divChatData').append('<div id="chatInfo">' + msgData.msg + '</div>');			
+							'<div class="chatUser">' + '[' + msgData.user + ']' + '</div>');
+					$('#divChatData').append('<div class="chatInfo">' + msgData.msg + '</div>');			
 
 				}
 				// 입장
