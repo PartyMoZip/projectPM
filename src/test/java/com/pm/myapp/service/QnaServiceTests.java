@@ -136,9 +136,9 @@ public class QnaServiceTests {
         Criteria cri = new Criteria();
         cri.setCurrPage(1);
         cri.setAmount(10);
-        List<QnaBoardReplyVO> replyList = this.service.getReply(1, cri);
-        Objects.requireNonNull(replyList);
-        replyList.forEach(log::info);
+       // List<QnaBoardReplyVO> replyList = this.service.getReply(1, cri);
+       // Objects.requireNonNull(replyList);
+       // replyList.forEach(log::info);
     }
 
     @Test
@@ -153,8 +153,8 @@ public class QnaServiceTests {
     public void testGetTotalReply() {
         log.debug("testGetTotalReply() invoked.");
 
-        int totalCount = this.service.getTotalReply();
-        log.info("\t + totalCount : {}", totalCount);
+       /// int totalCount = this.service.getTotalReply();
+      //  log.info("\t + totalCount : {}", totalCount);
     }
 
     @After

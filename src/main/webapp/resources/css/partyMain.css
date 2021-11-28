@@ -190,10 +190,11 @@ input::-webkit-search-cancel-button {
 	display: none;
 }
 
-.search-wrapper {
+.container-sm.partyMain-search-wrapper {
+	dispaly: block;
 	max-width: 500px;
 	position: relative;
-	margin-right: 100px;
+	margin: 0 auto;
 }
 
 .search-btn {
@@ -207,11 +208,11 @@ input::-webkit-search-cancel-button {
 	outline: none;
 }
 
-.search-wrapper form {
+.container-sm.partyMain-search-wrapper form {
 	width: 100%;
 }
 
-.search-wrapper input {
+.container-sm.partyMain-search-wrapper input {
 	border-radius: 10rem;
 	border: 1px solid var(--primary-color);
 	padding: 14px 20px;

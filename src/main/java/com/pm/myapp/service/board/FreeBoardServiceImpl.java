@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
 import java.util.List;
+import java.util.Map;
 
 @Log4j2
 @NoArgsConstructor
@@ -45,6 +46,13 @@ public class FreeBoardServiceImpl implements FreeBoardService, InitializingBean,
         return boardDetail;
     } // getBoardDetail
 
+    @Override
+    public String getFreePhoto(Integer frefer) {
+
+        String photo = this.mapper.getPhoto(frefer);
+        return photo;
+    } // getFreePhoto
+
     // 자유 게시판 글쓰기
     @Override
     public boolean writeBoard(FreeBoardDTO writeFB) {
@@ -56,6 +64,15 @@ public class FreeBoardServiceImpl implements FreeBoardService, InitializingBean,
         return (affectedRows == 1);
     } // writeBoard
 
+    // 자유 게시판 사진 등록
+    @Override
+    public boolean registerPhoto(String freePhoto) {
+
+        int affectedLine =  this.mapper.registerPhoto(freePhoto);
+
+        return (affectedLine == 1);
+    }
+
     // 자유 게시판 글수정
     @Override
     public boolean editBoard(FreeBoardDTO freeBoard) {
@@ -66,7 +83,15 @@ public class FreeBoardServiceImpl implements FreeBoardService, InitializingBean,
 
         return (affectedRows == 1);
     } // modify
-    
+
+    // 게시판 사진 삭제
+    @Override
+    public boolean deletePhoto(String file) {
+        Integer affectedLine = this.mapper.deletePhoto(file);
+
+        return (affectedLine == 1);
+    } // deletePhoto
+
     // 자유 게시판 글삭제
     @Override
     public boolean deleteBoard(Integer frefer) {
@@ -77,6 +102,14 @@ public class FreeBoardServiceImpl implements FreeBoardService, InitializingBean,
 
         return (affectedRows == 1);
     } // remove
+
+    // 댓글 삭제
+    @Override
+    public boolean deleteFreeBoardReply(Integer frefer) {
+
+        int affectedRows = this.mapper.deleteFreeBoardReply(frefer);
+        return (affectedRows != 0);
+    }
 
     // 자유 게시글 검색
     @Override
@@ -108,15 +141,23 @@ public class FreeBoardServiceImpl implements FreeBoardService, InitializingBean,
 
     // 댓글 목록
     @Override
-    public List<FreeBoardReplyVO> getReply(Integer frefer, Criteria cri) {
+    public List<FreeBoardReplyDTO> getReply(Integer frefer, ReplyCriteria recri) {
         log.debug("getListReply() invoked.");
 
 
-        List<FreeBoardReplyVO> allReply = this.mapper.getCommentListPaging(frefer, cri);
+        List<FreeBoardReplyDTO> allReply = this.mapper.getCommentListPaging(frefer, recri);
         log.info("\t + allReply : {}", allReply);
 
         return allReply;
     } // getListReply
+
+    // 댓글 총 개수
+    @Override
+    public Integer getTotalFreeReplyList(Integer frefer) {
+
+        Integer totalNum = this.mapper.getTotalFreeReply(frefer);
+        return totalNum;
+    }
 
     // 댓글 등록
     public boolean writeReply(FreeBoardReplyDTO freeReply) {
@@ -138,25 +179,13 @@ public class FreeBoardServiceImpl implements FreeBoardService, InitializingBean,
         return (affectedRows == 1);
     } // editComment
 
-
-    // 댓글 삭제
-    public boolean deleteReply(Integer frerefer) {
-        log.debug("deleteReply({}) invoked.", frerefer);
-
-        int affectedRows = this.mapper.deleteComment(frerefer);
-        log.info("\t + affectedRows : {}", affectedRows);
-
-        return (affectedRows==1);
-    } // deleteReply
-
-    // 댓글 개수
     @Override
-    public Integer getTotalReply() {
-        log.debug("getTotalReply({}) invoked.");
+    public boolean readFreeBoard(Integer frefer) {
 
-        return this.mapper.getTotalReply();
+        Integer affectedLine = this.mapper.readIt(frefer);
+        log.info("\t + affectedLine : {}" , affectedLine);
 
-
+        return (affectedLine==1);
     }
 
 

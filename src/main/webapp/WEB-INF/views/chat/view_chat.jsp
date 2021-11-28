@@ -20,35 +20,28 @@
 	crossorigin="anonymous" />
 
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/partyMain.css" />
-<link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/partyMainChat.css" />
 
 </head>
 
 <body>
-	<%-- partyMainTab --%>
-	<jsp:include
-		page="${pageContext.request.contextPath}/WEB-INF/views/include/partyMainTab.jsp" />
-		<span class="d-none">${pageMaker.cri.currPage}</span>
 
 	<main>
 		<div class="container mt-5 px-5 profile-box shadow-lg">
 			<img
 				src="${pageContext.request.contextPath}/resources/images/logo.svg"
 				alt="logo" width=150; height=50;
-				style="float: right; position: sticky">
+				style="float: right">
 			<div class="container-lg chatData">
 				<div id="divChatData"></div>
-				<div class="container-md chatReply">
-					<input type="text" id="message" size="60"
-						onkeypress="if(event.keyCode==13){webSocket.sendChat();}" />
-					<div class="chatReplyBtn">
-						<input class="btn btn-outline-primary" type="submit" id="btnSend"
-							value="채팅 전송" onclick="webSocket.sendChat()" />
-					</div>
-				</div>
+
 			</div>
+		</div>
+		<div class="container-chatReply">
+				<input type="text" id="message" size="60"
+					onkeypress="if(event.keyCode==13){webSocket.sendChat();}" />
+				<input class="btn btn-outline-primary" type="submit" id="btnSend"
+					value="채팅 전송" onclick="webSocket.sendChat()" />
 		</div>
 	</main>
 
@@ -65,6 +58,16 @@
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js"></script>
+	<script type="text/javascript">
+		$(window).on('load', function() {
+			webSocket.init({
+				url : '<c:url value="/chat" />'
+			});
+		});
+
+		// 1) 페이지 로딩 전에 웹소켓 초기 세팅 시작
+	</script>
+
 	<script type="text/javascript">
 		var webSocket = {
 			init : function(param) {
@@ -86,7 +89,6 @@
 				this._sendMessage('${param.partyCode}', 'CMD_MSG_SEND', $(
 						'#message').val());
 				$('#message').val('');
-				$('#divChatData').scrollTop($('#divChatData')[0].scrollHeight);
 			},
 			sendEnter : function() {
 				// 4) 입장 함수 시작
@@ -95,17 +97,19 @@
 				$('#message').val('');
 			},
 			receiveMessage : function(msgData) {
-
+				
 				// 정의된 CMD 코드에 따라서 분기 처리
-				if (msgData.cmd == 'CMD_MSG_SEND') {	
+				if (msgData.cmd == 'CMD_MSG_SEND') {
 					$('#divChatData')
 							.append(
 									'<div class="chatImg">'
 											+ '<img src="' + msgData.userpic + '" border="0" width="50" height="50"/>'
 											+ '</div>');
 					$('#divChatData').append(
-							'<div class="chatUser">' + '[' + msgData.user + ']' + '</div>');
-					$('#divChatData').append('<div class="chatInfo">' + msgData.msg + '</div>');			
+							'<div class="chatUser">' + '[' + msgData.user + ']'
+									+ '</div>');
+					$('#divChatData').append(
+							'<div class="chatInfo">' + msgData.msg + '</div>');
 
 				}
 				// 입장
@@ -179,17 +183,9 @@
 
 				// 6) chatHandler에서 세션과 비교하며 전달메세지를 뿌릴 작업을 함
 			}
-
 		};
+		
 	</script>
-	<script type="text/javascript">
-		$(window).on('load', function() {
-			webSocket.init({
-				url : '<c:url value="/chat" />'
-			});
-		});
 
-		// 1) 페이지 로딩 전에 웹소켓 초기 세팅 시작
-	</script>
 </body>
 </html>

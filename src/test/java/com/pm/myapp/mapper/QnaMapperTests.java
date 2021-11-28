@@ -121,8 +121,8 @@ public class QnaMapperTests {
         Criteria cri = new Criteria();
         cri.setAmount(1);
         cri.setAmount(10);
-        List<QnaBoardReplyVO> list = this.mapper.getCommentListPaging(2, cri);
-        list.forEach(log::info);
+        //List<QnaBoardReplyVO> list = this.mapper.getCommentListPaging(2, cri);
+        //list.forEach(log::info);
     }
 
     @Test

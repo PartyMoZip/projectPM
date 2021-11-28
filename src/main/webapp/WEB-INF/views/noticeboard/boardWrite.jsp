@@ -46,29 +46,18 @@
 
             <form action="/noticeboard/writeNoticeBoardOk" method="post">
                 <div class="table-Detail">
-
+                    <input type="hidden" name="email" value="${sessionScope.__AUTH__.email}">
                     <div class="title" id="article-title">
-                        <input type="text" name="nSubject" placeholder="제목을 입력하세요." class="titlearea_input" value="${__boardDetail__.NSubject}">
+                        <input type="text" name="nSubject" placeholder="제목을 입력하세요." class="titlearea_input"
+                               value="${__boardDetail__.NSubject}">
                     </div>
                     <!--product details-->
 
                     <div class="text_area">
-                        <span><textarea name="nContent" rows="10" cols="171" placeholder="내용을 입력하세요" value="${__boardDetail__.NContent}"></textarea></span>
-                        <%--<script>
-                            //CKEditor5를 생성할 textarea 지정
-                            ClassicEditor
-                                .create(document.querySelector('#editor'), {
-                                    placeholder: '500자 내로 입력해주세요',
-                                    removePlugins: ['ImageUpload']
-                                })
-                                .then(newEditor => {
-                                    editor = newEditor;
-                                })
-                                .catch(error => {
-                                    console.error(error);
-                                });
-                        </script>
---%>                </div>
+                        <span><textarea name="nContent" rows="10" cols="171" placeholder="내용을 입력하세요"
+                                        value="${__boardDetail__.NContent}"></textarea></span>
+
+                    </div>
                     <div class="container">
                         <div class="container-btnGroup">
                             <button type="submit" class="btn btn-primary btn-sm">

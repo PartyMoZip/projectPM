@@ -46,19 +46,14 @@
 
             <form action="/freeboard/writeFreeBoardOk" method="post">
                 <div class="table-Detail">
-
+                    <input type="hidden" name="email" value="${sessionScope.__AUTH__.email}">
                     <div class="title" id="article-title">
-                        <input type="text" name="fsubject" placeholder="제목을 입력하세요." class="titlearea_input">
+                        <input type="text" name="fSubject" placeholder="제목을 입력하세요." class="titlearea_input">
                     </div>
                     <!--product details-->
-                    <div class="content">
-                        <div class="product-photo">
-                            <input type="file" id="file" name="freephoto" accept="image/jpeg, image/png, image/jpg">
-                        </div>
-                        <input type="hidden" name="originalfile" value="freephoto">
-                    </div>
+
                     <div class="text_area">
-                        <span><textarea name="fcontent" rows="10" cols="171" placeholder="내용을 입력하세요"></textarea></span>
+                        <span><textarea name="fContent" rows="10" cols="171" placeholder="내용을 입력하세요"></textarea></span>
                         <%--<script>
                             //CKEditor5를 생성할 textarea 지정
                             ClassicEditor
