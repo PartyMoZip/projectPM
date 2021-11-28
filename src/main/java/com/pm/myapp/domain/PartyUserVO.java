@@ -7,5 +7,6 @@ public class PartyUserVO {
 
 	private String nickname;
 	private String userpic;
+	private String email;
 	
 } // end class
