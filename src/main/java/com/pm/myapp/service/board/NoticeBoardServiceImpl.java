@@ -45,6 +45,16 @@ public class NoticeBoardServiceImpl implements NoticeBoardService{
         return noticeBoard;
     }
 
+    // 공지 게시판 조회수 증가
+    @Override
+    public boolean readNoticeBoard(Integer nrefer) {
+
+        Integer affectedLine = this.mapper.readIt(nrefer);
+        log.info("\t + affectedLine : {}", affectedLine);
+
+        return (affectedLine==1);
+    }
+
     // 공지 게시판 글쓰기
     @Override
     public boolean writeBoard(NoticeBoardDTO writeNB) {

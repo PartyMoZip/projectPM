@@ -1,6 +1,8 @@
 package com.pm.myapp.mapper;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.After;
 import org.junit.Before;
@@ -92,15 +94,14 @@ public class PartyMapperTests {
 	@Test
 	public void testModifyInfo() { // 성공
 		log.debug("testModifyInfo() invoked.");
+
+		Map<String, Object> partyInfo = new HashMap<>();
+		partyInfo.put("partyName", "테스트");
+		partyInfo.put("partyProfile", "테스트");
+		partyInfo.put("fileLocation", "");
+		partyInfo.put("partyCode", 1);
 		
-		PartyDTO dto = new PartyDTO();
-		dto.setPartyName("행복하다 행복풀");
-		dto.setPartyProfile("제라드 형님.. 하늘에서 지켜봐주세요..");
-		dto.setLocalCode(1);
-		dto.setHobbyCode(1);
-		dto.setPartyCode(10);
-		
-		int result = this.mapper.modifyInfo(dto);
+		int result = this.mapper.modifyInfo(partyInfo);
 		log.info("\t+ result : {}",result);
 
 	} // testModifyInfo

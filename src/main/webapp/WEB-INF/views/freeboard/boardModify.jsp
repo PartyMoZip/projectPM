@@ -18,6 +18,7 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
+    <link rel="icon" href="${pageContext.request.contextPath}/resources/images/favicon.ico"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
@@ -74,14 +75,6 @@
                             </div>
                         </div>
 
-                        <div class="photo_content">
-                            <div class="product-photo" id="${__boardDetail__.freePhoto}">
-                                <input type="file" id="file" name="freePhoto" accept="image/jpeg, image/png, image/jpg">
-                            </div>
-                            <c:if test="${not empty __boardDetail__.freePhoto}">
-                                <button id="delete" class="del-btn">삭제</button>
-                            </c:if>
-                        </div>
                         <span><textarea name="fContent" rows="10"
                                         cols="137">${__boardDetail__.FContent}"</textarea>
                         </span>

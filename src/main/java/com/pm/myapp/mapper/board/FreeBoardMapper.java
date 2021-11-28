@@ -21,14 +21,12 @@ public interface FreeBoardMapper {
     public abstract Integer readIt(@Param("frefer") Integer frefer);
     // 자유 게시판 상세보기
     public abstract FreeBoardVO readFreeBoard(Integer frefer);
-    // 자유 게시판 사진 가져오기
-    public abstract String getPhoto(Integer frefer);
     // 자유 게시판 댓글 목록
     public abstract List<FreeBoardReplyDTO> getCommentListPaging(@Param("frefer")Integer frefer, @Param("recri") ReplyCriteria recri);
     // 자유 게시판 댓글 등록
     public abstract Integer writeComment(FreeBoardReplyDTO freeReply);
     // 자유 게시판 댓글 수정
-    public abstract  int editComment(FreeBoardReplyDTO freeReply);
+    public abstract  Integer editComment(FreeBoardReplyDTO freeReply);
     // 자유 게시판 총 댓글 개수
     public abstract Integer getTotalFreeReply(Integer frefer);
 
@@ -40,14 +38,10 @@ public interface FreeBoardMapper {
     // 3. 게시판 글쓰기 //
     // 자유 게시판 글쓰기
     public abstract Integer registerFreeBoard(FreeBoardDTO writeFB);
-    // 자유 게시판 사진 등록
-    public abstract Integer registerPhoto(String freePhoto);
 
     // 4. 게시물 수정 //
     // 자유 게시판 수정
     public abstract Integer updateFreeBoard(FreeBoardDTO freeBoard);
-    // 자유 게시판 사진 삭제 처리 후 등록
-    public abstract Integer deletePhoto(String file);
 
     // 5. 게시물 삭제 //
     // 자유 게시판 삭제

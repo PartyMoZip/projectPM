@@ -18,6 +18,9 @@ public interface NoticeBoardMapper {
     // 공지 게시판 상세보기
     public abstract NoticeBoardVO readNoticeBoard(Integer nrefer);
 
+    // 공지 게시판 조회수 증가
+    public abstract Integer readIt(@Param("nrefer") Integer nrefer);
+
     // 공지 게시판 총 게시물 개수 반환
     public abstract Integer getTotalCount(@Param("searchWord") String searchWord, @Param("option") Integer option);
 
@@ -28,13 +31,13 @@ public interface NoticeBoardMapper {
     public abstract Integer writeNoticeBoard(NoticeBoardDTO noticeBoard);
 
     // 공지 게시판 수정
-    public abstract int editNoticeBoard(NoticeBoardDTO noticeBoard);
+    public abstract Integer editNoticeBoard(NoticeBoardDTO noticeBoard);
 
     // 공지 게시판 검색
     public abstract List<NoticeBoardSearchVO> searchNoticeBoard(String searchWord, Integer keyword_mod, Criteria cri);
 
     // 공지 게시판 삭제
-    public abstract int deleteNoticeBoard(Integer nrefer);
+    public abstract Integer deleteNoticeBoard(Integer nrefer);
 
     //
 }

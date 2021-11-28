@@ -1,36 +1,27 @@
 package com.pm.myapp.controller.partyfm;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.pm.myapp.aws.AwsUpload;
 import com.pm.myapp.domain.Criteria;
 import com.pm.myapp.domain.PageDTO;
-import com.pm.myapp.domain.PartyDTO;
 import com.pm.myapp.domain.PartyUserVO;
 import com.pm.myapp.domain.PartyVO;
 import com.pm.myapp.domain.UserDTO;
 import com.pm.myapp.service.partyfm.PartyService;
-
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.io.IOException;
+import java.util.*;
 
 
 @Log4j2
@@ -39,175 +30,146 @@ import lombok.extern.log4j.Log4j2;
 @RequestMapping("/party")
 @Controller
 public class PartyController {
-	
-	private String basePath;
-	
-	@Setter(onMethod_= {@Autowired})
-	private PartyService service;
-	
-	@Setter(onMethod_= {@Autowired})
-	private AwsUpload awsUpload;
-	
-	// 파티 상세 보기 [작동]
-	@GetMapping("/showdetail")
-	public void showPartyDetail(Integer partyCode, Model model) {
-		log.debug("showPartyDetail({}) invoked.",partyCode);
-		PartyVO party = this.service.getParty(partyCode);
-		log.info("\t + party : {}", party);
-		
-		model.addAttribute("__PARTY__",party);
-		
-	} // showPartyDetail
-	
-	// 파티 가입 신청 [작동]
-	@PostMapping("/do-party-join")
-	public String doPartyJoin(String email, Integer partyCode, RedirectAttributes rttrs) {
-		log.debug("doPartyJoin({}, {}) invoked.",email,partyCode);
-		
-		boolean result = this.service.doJoin(email, partyCode);
-		log.info("\t + result : {}",result);
 
-		rttrs.addAttribute("partyCode",partyCode);
-		
-		return "redirect:/party/leaderpage";
-		
-	} // doPartyJoin
-	
-	// 파티 가입 취소 [작동]
-	@PostMapping("/undo-party-join")
-	public String undoPartyJoin(String email, Integer partyCode, RedirectAttributes rttrs) {
-		log.debug("undoPartyJoin({}, {}) invoked.",email,partyCode);
-		
-		boolean result = this.service.undoJoin(email, partyCode);
-		log.info("\t + result : {}",result);
-		
-		rttrs.addAttribute("partyCode",partyCode);
-		
-		return "redirect:/party/leaderpage";
+    private String basePath;
 
-	} // undoPartyJoin
-	
-	// 파티 메인 보기 [작동]
-	@GetMapping("/showmain")
-	public String showPartyMain(Integer partyCode, Model model) {
-		log.debug("showPartyMain({}) invoked.",partyCode);
-		PartyVO party = this.service.getParty(partyCode);
-		log.info("\t + party : {}", party);
-		
-		model.addAttribute("__PARTY__",party);
-		
-		return "/party/partyMain";
+    @Setter(onMethod_ = {@Autowired})
+    private PartyService service;
 
-	} // showPartyMain
-	
-	// 파티 관리 페이지 [작동]
-	@GetMapping("/leaderpage")
-	public void showLeaderPage(Integer partyCode, Model model, Criteria cri) {
-		log.debug("showLeaderPage({}) invoked.",partyCode);
-		
-		PartyVO party = this.service.getParty(partyCode);
-		log.info("\t + party : {}", party);
-		
-		UserDTO member = this.service.getJoinMakingList(partyCode, cri);
-		log.info("\t + member : {}", member);
-		
-	    Integer totalMember = this.service.getTotalJoinMakeMember(partyCode);
-	    PageDTO pageDTO = new PageDTO(cri, totalMember);
-			
-	    model.addAttribute("pageMaker", pageDTO);		
-		model.addAttribute("__PARTY__",party);
-		model.addAttribute("__MEMBER__",member);
-		
-	} // showLeaderPage
-	
-	// 파티 로고 등록/변경 [작동]
-	@PostMapping("/editpl")
-	public String editPartyLogo(MultipartFile image, Integer partyCode, RedirectAttributes rttrs) throws IllegalStateException, IOException {
-		
-		log.debug("editPartyLogo({}, {}) invoked.",image, partyCode);
-		
-		// 파티별, 날짜별 폴더를 생성 후 그림 파일 업로드
-		// 날짜 GET
-		Calendar cal = Calendar.getInstance();
-		String year = cal.get(cal.YEAR) + "";
-		String month = (cal.get(cal.MONTH)+1) + "";
-		String date = cal.get(cal.DATE) + "";
-		
-		// 파티코드와 날짜 합쳐서 새로운 폴더 준비
-		String imagePath = "image/logo/" + partyCode + "/" + year + "/" + month + "/" + date;
-		log.debug("\t+ imagePath : {}",imagePath);
-		
-		// 랜덤값 형성 및 aws에 파일 업로드
+    @Setter(onMethod_ = {@Autowired})
+    private AwsUpload awsUpload;
+
+    // 파티 상세 보기 [작동]
+    @GetMapping("/detail")
+    @ResponseBody
+    public PartyVO showPartyDetail(Integer partyCode) {
+        log.debug("showPartyDetail({}) invoked.", partyCode);
+        PartyVO party = this.service.getParty(partyCode);
+        log.info("\t + party : {}", party);
+
+        return party;
+    } // showPartyDetail
+
+    // 파티 가입 신청 [작동]
+    @PostMapping("/join")
+    @ResponseBody
+    public Map<String, Boolean> doPartyJoin(
+            @RequestBody String json
+    ) {
+        log.debug("doPartyJoin() invoked.");
+
+        log.info("json: {}", json);
+
+        JsonElement element = JsonParser.parseString(json);
+
+        String email = element.getAsJsonObject().get("email").getAsString();
+        Integer partyCode = element.getAsJsonObject().get("partyCode").getAsInt();
+
+        Boolean result = this.service.doJoin(email, partyCode);
+        log.info("\t + result : {}", result);
+
+        Map<String, Boolean> data = new HashMap<>();
+        data.put("result", result);
+
+        return data;
+
+    } // doPartyJoin
+
+    // 파티 가입 취소 [작동]
+    @PostMapping("/undo-party-join")
+    public String undoPartyJoin(String email, Integer partyCode, RedirectAttributes rttrs) {
+        log.debug("undoPartyJoin({}, {}) invoked.", email, partyCode);
+
+        boolean result = this.service.undoJoin(email, partyCode);
+        log.info("\t + result : {}", result);
+
+        rttrs.addAttribute("partyCode", partyCode);
+
+        return "redirect:/party/leaderpage";
+
+    } // undoPartyJoin
+
+    // 파티 메인 보기 [작동]
+    @GetMapping("/showmain")
+    public String showPartyMain(Integer partyCode, Model model) {
+        log.debug("showPartyMain({}) invoked.", partyCode);
+        PartyVO party = this.service.getParty(partyCode);
+        log.info("\t + party : {}", party);
+
+        model.addAttribute("__PARTY__", party);
+
+        return "/party/partyMain";
+
+    } // showPartyMain
+
+    // 파티 관리 페이지 [작동]
+    @GetMapping("/leaderpage")
+    public void showLeaderPage(Integer partyCode, Model model) {
+        log.debug("showLeaderPage({}) invoked.", partyCode);
+        PartyVO party = this.service.getParty(partyCode);
+        log.info("\t + party : {}", party);
+
+        model.addAttribute("__PARTY__", party);
+
+    } // showLeaderPage
+
+    // 파티 로고 등록/변경 [작동]
+    @PostMapping("/edit-profile")
+    @ResponseBody
+    public Map<String, Object> editPartyProfile(
+            @RequestParam(value = "partyName", required = false) String partyName,
+            @RequestParam(value = "partyCode", required = false) String partyCode,
+            @RequestParam(value = "partyProfile", required = false) String partyProfile,
+            @RequestParam(value = "fileLocation", required = false) MultipartFile fileLocation
+    ) throws IllegalStateException, IOException {
+
+        log.debug("editPartyProfile() invoked.");
+
+        log.info("partyName: {}", partyName);
+        log.info("partyCode: {}", partyCode);
+        log.info("partyProfile: {}", partyProfile);
+        log.info("fileLocation: {}", fileLocation);
+
+        // 파티별, 날짜별 폴더를 생성 후 그림 파일 업로드
+        // 날짜 GET
+        Calendar cal = Calendar.getInstance();
+        String year = cal.get(cal.YEAR) + "";
+        String month = (cal.get(cal.MONTH) + 1) + "";
+        String date = cal.get(cal.DATE) + "";
+
+        // 파티코드와 날짜 합쳐서 새로운 폴더 준비
+        String imagePath = "image/logo/" + partyCode + "/" + year + "/" + month + "/" + date;
+        String imageUrl = "";
+
+        // 랜덤값 형성 및 aws에 파일 업로드
         UUID uuid = UUID.randomUUID(); // 랜덤값
-        String imageUrl = awsUpload.fileUpload(image, imagePath, uuid);
-		log.info("\t+ imageUrl : {}",imageUrl);
-        
-		String originalName = image.getOriginalFilename(); // 파일의 원래 이름
-		String newName = uuid + "_" +image.getOriginalFilename();
-		
-		// DB에 이미지 정보 저장하기
-		// HashMap을 이용하여 DTO 처럼 사용할 예정
-		// Mapper.xml 에 갔을 때 key를 입력하면 value 값이 들어감
-		// value의 타입이 object인건 value의 타입이 모두 같은것이 아니기 때문
-		Map<String, Object> imageInfo = new HashMap<String, Object>();
-		imageInfo.put("oldFilename", originalName); // 기존 파일 이름
-		imageInfo.put("newFilename", newName); // 새로운 파일 이름
-		imageInfo.put("fileLocation", imageUrl); // 파일 이름 주소
-		imageInfo.put("partyCode", partyCode);
-		
-		boolean result = this.service.editLogo(imageInfo);
-		log.info("\t + result : {}",result);
-		
-		rttrs.addAttribute("partyCode", partyCode);
-		
-		return "redirect:/party/leaderpage";
+        if (fileLocation != null) {
+            imageUrl = awsUpload.fileUpload(fileLocation, imagePath, uuid);
+        } // if
 
-	} // editPartyLogo
-	
-	// 파티 이미지 등록/변경 [작동]
-	@PostMapping("/editpi")
-	public String editPartyMainImage(MultipartFile image, Integer partyCode, RedirectAttributes rttrs) throws IllegalStateException, IOException{
-		log.debug("editPartyImage({}, {}) invoked.",image,partyCode);
-		
-		// 파티별, 날짜별 폴더를 생성 후 그림 파일 업로드
-		// 날짜 GET
-		Calendar cal = Calendar.getInstance();
-		String year = cal.get(cal.YEAR) + "";
-		String month = (cal.get(cal.MONTH)+1) + "";
-		String date = cal.get(cal.DATE) + "";
-		
-		// 파티코드와 날짜 합쳐서 새로운 폴더 준비
-		String imagePath = "image/cover/" + partyCode + "/" + year + "/" + month + "/" + date;
-		log.debug("\t+ imagePath : {}",imagePath);
-		
-		// 랜덤값 형성 및 aws에 파일 업로드
-        UUID uuid = UUID.randomUUID(); // 랜덤값
-        String imageUrl = awsUpload.fileUpload(image, imagePath, uuid);
-		log.info("\t+ imageUrl : {}",imageUrl);
-        
-		String originalName = image.getOriginalFilename(); // 파일의 원래 이름
-		String newName = uuid + "_" +image.getOriginalFilename();
-		
-		// DB에 이미지 정보 저장하기
-		// HashMap을 이용하여 DTO 처럼 사용할 예정
-		// Mapper.xml 에 갔을 때 key를 입력하면 value 값이 들어감
-		// value의 타입이 object인건 value의 타입이 모두 같은것이 아니기 때문
-		Map<String, Object> imageInfo = new HashMap<String, Object>();
-		imageInfo.put("oldFilename", originalName); // 기존 파일 이름
-		imageInfo.put("newFilename", newName); // 새로운 파일 이름
-		imageInfo.put("fileLocation", imageUrl); // 파일 이름 주소
-		imageInfo.put("partyCode", partyCode);
-		
-		boolean result = this.service.editPartyMainImage(imageInfo);
-		log.info("\t + result : {}",result);
-		
-		// 나중에 비동기로 실패,확인 메세지 처리 할 예정
-		rttrs.addAttribute("partyCode", partyCode);
-		
-		return "redirect:/party/leaderpage";
-		
-	} // editPartyImage
-	
+        // DB에 이미지 정보 저장하기
+        // HashMap을 이용하여 DTO 처럼 사용할 예정
+        // Mapper.xml 에 갔을 때 key를 입력하면 value 값이 들어감
+        // value의 타입이 object인건 value의 타입이 모두 같은것이 아니기 때문
+        Map<String, Object> partyInfo = new HashMap<String, Object>();
+        partyInfo.put("partyName", partyName);
+        partyInfo.put("partyProfile", partyProfile);
+        partyInfo.put("fileLocation", imageUrl); // 파일 이름 주소
+        partyInfo.put("partyCode", partyCode);
+
+        boolean result = this.service.editInfo(partyInfo);
+        log.info("\t + result : {}", result);
+
+        Map<String, Object> data = new HashMap<>();
+
+        data.put("partyName", partyName);
+        data.put("partyProfile", partyProfile);
+        data.put("fileLocation", fileLocation);
+
+        return data;
+
+    } // editPartyProfile
+   
 	// 파티 정보 변경 [작동]
 	@PostMapping("/editparty")
 	public String editParty(PartyDTO dto, RedirectAttributes rttrs) {

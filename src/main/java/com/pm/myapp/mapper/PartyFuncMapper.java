@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface PartyFuncMapper {
 
-    public abstract List<CalendarDTO> calendarList();
+    public abstract List<CalendarDTO> calendarList(Integer partyCode);
 
     //풀캘린더 insert
     public abstract int insertCal(CalendarDTO calendarDTO);

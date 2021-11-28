@@ -12,7 +12,6 @@ window.onload = () => {
             numArr.push(num);
 
     }
-    console.log(numArr);
 
     /*  for (let num in numArr) {
           console.log(num);

@@ -124,9 +124,14 @@ public class QnaBoardServiceImpl implements QnaBoardService {
         return totalNum;
     }
 
+    // 공지 게시판 조회수 증가
     @Override
     public boolean readQnaBoard(Integer qrefer) {
-        return false;
+
+        Integer affectedLine = this.mapper.readIt(qrefer);
+        log.info("\t + affectedLine : {}", affectedLine);
+
+        return (affectedLine==1);
     }
 
     // 댓글 목록

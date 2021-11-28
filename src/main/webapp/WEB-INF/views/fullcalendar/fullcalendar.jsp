@@ -39,18 +39,18 @@
 
 	<ul class="nav nav-pills">
 		<li class="nav-item"><a class="nav-link" aria-current="page"
-			href="/party/showmain?partyCode=${__PARTY__.partyCode}">메인</a></li>
+			href="/party/showmain?partyCode=${partyCode}">메인</a></li>
 		<li class="nav-item"><a class="nav-link"
-			href="/party/leaderpage?partyCode=${__PARTY__.partyCode}">파티관리</a></li>
+			href="/party/leaderpage?partyCode=${partyCode}">파티관리</a></li>
 		<li class="nav-item"><a class="nav-link active"
-			href="/partyfunc/calendar?partyCode=${__PARTY__.partyCode}">일정</a></li>
+			href="/partyfunc/calendar?partyCode=${partyCode}">일정</a></li>
 		<li class="nav-item"><a class="nav-link" href="#">파티원</a></li>
 		<li class="nav-item"><a class="nav-link"
 			href="/partyfree/getPFreeBoardList">자유게시판</a></li>
 		<li class="nav-item"><a class="nav-link"
-			href="/partyphoto/list?partyCode=${__PARTY__.partyCode}">포토갤러리</a></li>
+			href="/partyphoto/list?partyCode=${partyCode}">포토갤러리</a></li>
 		<li class="nav-item"><a class="nav-link"
-			href="/partyfunc/partychat?partyCode=${__PARTY__.partyCode}">채팅</a></li>
+			href="/partyfunc/partychat?partyCode=${partyCode}">채팅</a></li>
 	</ul>
 
 	<div id="calendar-container">
@@ -168,7 +168,7 @@
 				},
 				body: JSON.stringify(events)
 			})
-					.then((res) => console.log(""))
+					.then((res) => window.location.reload())
 					// .then((data) => console.log(data))
 					.catch((err) => console.log(err))
 		}

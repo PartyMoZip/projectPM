@@ -124,7 +124,13 @@
                                 <p class="card-text"><c:out value="${party.partyName}"/></p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                                        <form action="/party/detail" method="GET">
+                                            <button type="button" class="btn btn-outline-success" id="showPartyBtn"
+                                                    data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                                    data-bs-whatever="">View
+                                            </button>
+                                            <input type="hidden" class="input-partycode" value="${party.partyCode}">
+                                        </form>
                                     </div>
                                     <small class="text-muted"><c:out value="${party.hobbyName}"/></small>
                                     <small class="text-muted"><c:out value="${party.localName}"/></small>
@@ -134,6 +140,55 @@
                         </div>
                     </div>
                 </c:forEach>
+            </div>
+        </div>
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <!-- 모달 헤더 -->
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenteredScrollableTitle">
+                            지금 바로 가입해보세요!
+                        </h5>
+                        <button type="button" class="btn-close" id="closeBtnIcon"
+                                data-bs-dismiss="modal"></button>
+                    </div>
+                    <!-- 모달 중단부 -->
+                    <div class="modal-body">
+                        <div>
+                            <img class="modal-img" alt="파티메인이미지">
+                        </div>
+                        <div class="partyContents">
+                            <div class="partyName">
+                                <div class="modal-partyName"></div>
+                            </div>
+                            <div class="partyInfo">
+                                <span class="modal-count"></span>
+                                <span class="modal-localName">
+                                </span>
+                                <span class="modal-hobbyName">
+                                </span>
+                                <div class="modal-partyScore">
+                                </div>
+                            </div>
+                            <p class="modal-profile">
+                            </p>
+                        </div>
+                    </div>
+                    <!-- 모달 하단부 -->
+                    <div class="modal-footer">
+                        <input type="hidden" class="user-email" value="${sessionScope.__AUTH__.email}">
+                        <button type="submit" class="btn btn-secondary" id="partyRequestBtn"
+                                data-bs-toggle="button">
+                            파티신청
+                        </button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            닫기
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -186,5 +241,6 @@
 
 <script src="${pageContext.request.contextPath}/resources/js/search.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/pagination.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/partyinfo.js"></script>
 </body>
 </html>

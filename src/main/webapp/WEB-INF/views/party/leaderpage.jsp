@@ -1,25 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+         pageEncoding="UTF-8" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<!-- 부트스트랩 css -->
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-	integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-	crossorigin="anonymous" />
-<!-- 폰트어썸 -->
-<link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
-	integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
-	crossorigin="anonymous" />
+    <meta charset="UTF-8">
+    <!-- 부트스트랩 css -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+          crossorigin="anonymous"/>
+    <!-- 폰트어썸 -->
+    <link rel="stylesheet"
+          href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+          integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
+          crossorigin="anonymous"/>
 
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/partyMain.css" />
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/admin.css" />
-<title>파티모집 - 파티관리</title>
+    <link rel="stylesheet"
+          href="${pageContext.request.contextPath}/resources/css/partyMain.css?after"/>
+    <link rel="stylesheet"
+          href="${pageContext.request.contextPath}/resources/css/admin.css?after"/>
+    <title>파티모집 - 파티관리</title>
+    <link rel="icon" href="${pageContext.request.contextPath}/resources/images/favicon.ico"/>
 </head>
 <body>
 
