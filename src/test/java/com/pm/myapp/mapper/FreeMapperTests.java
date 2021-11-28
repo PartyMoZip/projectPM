@@ -105,7 +105,6 @@ public class FreeMapperTests {
         newBoard.setFRefer(5);
         newBoard.setFSubject("TEST_TEST");
         newBoard.setFContent("TEST_TEST");
-        newBoard.setFreePhoto("");
         int affectedLines = this.mapper.updateFreeBoard(newBoard);
         log.info("\t + affectedLines : {}", affectedLines);
 
@@ -133,8 +132,8 @@ public class FreeMapperTests {
         Criteria cri = new Criteria();
         cri.setAmount(1);
         cri.setAmount(10);
-        List<FreeBoardReplyVO> list = this.mapper.getCommentListPaging(1, cri);
-        list.forEach(log::info);
+        //List<FreeBoardReplyVO> list = this.mapper.getCommentListPaging(1, cri);
+        //list.forEach(log::info);
     }
 
     @Test
@@ -166,8 +165,8 @@ public class FreeMapperTests {
     public void testDeleteComment() { // 자유 게시판 댓글 삭제 - 테스트 완료
         log.debug("testDeleteComment() invoked.");
 
-        int affectedLines=this.mapper.deleteComment(6);
-        log.info("\t + affectedLines : {}", affectedLines);
+     //   int affectedLines=this.mapper.deleteComment(6);
+       // log.info("\t + affectedLines : {}", affectedLines);
     }
 
     @After

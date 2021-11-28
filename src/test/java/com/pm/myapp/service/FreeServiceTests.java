@@ -49,7 +49,6 @@ public class FreeServiceTests {
 		dto.setFSubject("TEST1");
 		dto.setFContent("TEST1");
 		dto.setEmail("test11@test.com");
-		dto.setFreePhoto(null);
 
 		boolean affectedLine = this.service.writeBoard(dto);
 
@@ -125,17 +124,17 @@ public class FreeServiceTests {
 	public void testWriteComment() {
 		log.debug("testRegister() invoked.");
 
-		FreeBoardReplyVO boardReply = new FreeBoardReplyVO(7,"TestTitle",null,1, "test2@test.com");
-		log.info("\t + new Comment : {}", boardReply.getFrerefer());
+	//	FreeBoardReplyVO boardReply = new FreeBoardReplyVO(7,"TestTitle",null,1, "test2@test.com");
+	//	log.info("\t + new Comment : {}", boardReply.getFrerefer());
 	}
 
 	@Test
 	public void testEditComment() {
 		log.debug("testEditComment() invoked.");
 
-		FreeBoardReplyVO boardReply = new FreeBoardReplyVO(1, "TEST",  null, 1, "test2@test.com");
-		Objects.requireNonNull(boardReply);
-		log.info("\t + boardReply : {}", boardReply);
+	//	FreeBoardReplyVO boardReply = new FreeBoardReplyVO(1, "TEST",  null, 1, "test2@test.com");
+	//	Objects.requireNonNull(boardReply);
+//		log.info("\t + boardReply : {}", boardReply);
 	}
 
 	@Test
@@ -144,9 +143,9 @@ public class FreeServiceTests {
 		Criteria cri = new Criteria();
 		cri.setCurrPage(1);
 		cri.setAmount(10);
-		List<FreeBoardReplyVO> replyList = this.service.getReply(1, cri);
-		Objects.requireNonNull(replyList);
-		replyList.forEach(log::info);
+	//	List<FreeBoardReplyVO> replyList = this.service.getReply(1, cri);
+	//	Objects.requireNonNull(replyList);
+	//	replyList.forEach(log::info);
 	}
 
 	@Test
@@ -154,16 +153,16 @@ public class FreeServiceTests {
 		log.debug("testDeleteReply() invoked.");
 
 		int frerefer = 2;
-		boolean isSuccess = this.service.deleteReply(frerefer);
-		log.info("\t + isSuccess : {}", isSuccess);
+//		boolean isSuccess = this.service.deleteReply(frerefer);
+//		log.info("\t + isSuccess : {}", isSuccess);
 	}
 
 	@Test
 	public void testGetTotalReply() {
 		log.debug("testTotalReply");
 
-		int totalCount = this.service.getTotalReply();
-		log.info("\t + totalCount : {}", totalCount);
+//		int totalCount = this.service.getTotalReply();
+//		log.info("\t + totalCount : {}", totalCount);
 	}
 		
 	@After

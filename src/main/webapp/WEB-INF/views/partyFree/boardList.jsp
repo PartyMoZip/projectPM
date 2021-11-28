@@ -48,7 +48,7 @@
                     </th>
                     <!-- 자유게시판 체크박스 전체선택 끝 -->
 
-                    <th scope="col">번호</th>
+                    <th scope="col">NO</th>
                     <th scope="col">제목</th>
                     <th scope="col">작성자</th>
                     <th scope="col">작성일</th>
@@ -69,10 +69,10 @@
                                 </td>
                                 <td><c:out value="${list}"/></td>
                                 <td>
-                                    <a href="/freeboard/showFreeDetail?frefer=${list.FRefer}&currPage=${pageMaker.cri.currPage}&amount=${pageMaker.cri.amount}&pagesPerPage=${pageMaker.cri.pagesPerPage}">${list.FSubject}</a>
+                                    <a href="/partyfree/showPartyFDetail?pfrefer=${list.pfRefer}&currPage=${pageMaker.cri.currPage}&amount=${pageMaker.cri.amount}&pagesPerPage=${pageMaker.cri.pagesPerPage}">${list.pfSubject}</a>
                                 </td>
-                                <td><c:out value="${list.nickname}"/></td>
-                                <td><fmt:formatDate pattern="yyyy.MM.dd" value="${list.FDate}"/></td>
+                                <td><c:out value="${list.email}"/></td>
+                                <td><fmt:formatDate pattern="yyyy.MM.dd" value="${list.pfDate}"/></td>
                                 <td><c:out value="${list.readnum}"/></td>
                             </tr>
                         </c:forEach>
@@ -106,14 +106,14 @@
                     <c:if test="${pageMaker.prev}">
                         <li class="prev page-item">
                             <a class="prev page-link"
-                               href="/freeboard/getFreeBoardList?currPage=${pageMaker.startPage-1}">◀</a>
+                               href="/partyfree/getPFreeBoardList?currPage=${pageMaker.startPage-1}">◀</a>
                         </li>
                     </c:if>
 
                     <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="pageNum">
                         <li class="page-item">
                             <a id="page-curr" class="page-link"
-                               href="/freeboard/getFreeBoardList?currPage=${pageNum}">
+                               href="/partyfree/getPFreeBoardList?currPage=${pageNum}">
                                     ${pageNum}
                             </a>
                         </li>
@@ -122,7 +122,7 @@
                     <c:if test="${pageMaker.next}">
                         <li class="next page-item">
                             <a class="next page-link"
-                               href="/freeboard/getFreeBoardList?currPage=${pageMaker.endPage+1}">▶</a>
+                               href="/partyfree/getPFreeBoardList?currPage=${pageMaker.endPage+1}">▶</a>
                         </li>
                     </c:if>
                 </ul>

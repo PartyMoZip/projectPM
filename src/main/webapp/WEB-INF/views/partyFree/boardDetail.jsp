@@ -48,12 +48,90 @@
                                  height="50" class="img_thumb">
                         </div>
                         <div class="cover_info">
-                                <span>${boardDetail.pfdate}</span>
-                                <span>조회 ${boardDetail.readnum}</span>
+                            <span>${boardDetail.pfdate}</span>
+                            <span>조회 ${boardDetail.readnum}</span>
                         </div>
                     </div>
                     <hr>
                     <span style="text-align : left;">${boardDetail.pfcontent}</span>
+                </div>
+                <!--댓글-->
+                <div class="comment_text">
+                    <i class="far fa-comment-dots"></i>
+                    <span>댓글</span>
+                </div>
+                <!--댓글 리스트-->
+                <div class="commentList_wrap">
+                    <div class="commentList">
+                        <table>
+                            <tbody>
+                            <c:choose>
+                                <c:when test="${not empty reply}">
+                                    <c:forEach items="${reply}" var="reply">
+                                        <tr>
+                                            <td><c:out value="${reply.nickname}"/></td>
+                                            <td><fmt:formatDate pattern="yyyy.MM.dd HH:mm:ss"
+                                                                value="${reply.pfredate}"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td><c:out value="${reply.pfrecontent}"/></td>
+                                        </tr>
+                                    </c:forEach>
+                                </c:when>
+                                <c:otherwise>
+                                    <td>등록된 글이 없습니다</td>
+                                </c:otherwise>
+                            </c:choose>
+                            </tbody>
+                        </table>
+                        <div id="pagination">
+                            <form id="paginationForm">
+                                <ul class="pagination justify-content-center">
+                                    <c:if test="${replyPageMaker.prev}">
+                                        <li class="prev page-item">
+                                            <a class="prev page-link"
+                                               href="/freeboard/showFreeDetail?frefer=${boardDetail.frefer}&currPage=${cri.currPage}&reCurrPage=${replyPageMaker.startPage-1}">◀</a>
+                                        </li>
+                                    </c:if>
+                                    <c:forEach begin="${replyPageMaker.startPage}"
+                                               end="${replyPageMaker.endPage}" var="pageNum">
+                                        <li class="page-item">
+                                            <a id="page-curr" class="page-link"
+                                               href="/partyphoto/detail?prefer=${__DETAIL__.prefer}&partyCode=${__DETAIL__.partycode}&currPage=${cri.currPage}&reCurrPage=${pageNum}">
+                                                    ${pageNum}
+                                            </a>
+                                        </li>
+                                    </c:forEach>
+
+                                    <c:if test="${replyPageMaker.next}">
+                                        <li class="next page-item">
+                                            <a class="next page-link"
+                                               href="/partyphoto/detail?prefer=${__DETAIL__.prefer}&partyCode=${__DETAIL__.partycode}&currPage=${cri.currPage}&reCurrPage=${replyPageMaker.endPage+1}">▶</a>
+                                        </li>
+                                    </c:if>
+                                </ul>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- replylist_wrap END -->
+                <!--reply write-->
+                <div class="comment_area">
+                    <!--댓글내용-->
+                    <form action="/partyfree/writeComment" method="POST">
+                        <input type="hidden" name="currPage" value="${cri.currPage}">
+                        <input type="hidden" name="reCurrPage" value="${recri.reCurrPage}">
+                        <input type="hidden" name="pfrefer" value="${boardDetail.pfrefer}">
+                        <h6>${boardDetail.nickname}</h6>
+                        <input type="hidden" name="email" value="${boardDetail.email}">
+                        <div class="commentWrite_Wrap">
+                        <textarea name="pfrecontent" id="commentContent" placeholder=" 댓글을 남겨보세요"
+                                  class="comment_inbox" rows="4"
+                                  cols="140"></textarea>
+                            <button type="submit" class="btn btn-outline-warning">등록</button>
+                        </div>
+                    </form>
+
                 </div>
                 <div class="container">
                     <div class="container-btnGroup">

@@ -27,6 +27,7 @@
                 WHERE Q.QCONTENT like '%'||#{searchWord}||'%'
             </when>
         </choose>
+        ORDER BY QREFER DESC
         OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
         FETCH NEXT #{cri.amount} ROWS ONLY
 
@@ -44,7 +45,7 @@
     <insert id="writeQnaBoard">
 
         INSERT INTO QNABOARD(QREFER, QSUBJECT, QCONTENT, QDATE, NICKNAME, EMAIL, READNUM)
-        VALUES(SEQ_QNABOARD.nextval, #{qsubject}, #{qcontent}, sysdate, #{nickname}, #{email}, 0)
+        VALUES(SEQ_QNABOARD.nextval, #{qsubject}, #{qcontent}, sysdate, 'YEONI', ${email}, 0)
 
     </insert>
 
@@ -76,11 +77,17 @@
 
     </select>
 
-    <update id="editQnaBoard">
+    <update id="editQnaBoard" parameterType="com.pm.myapp.domain.board.QnaBoardDTO">
         UPDATE QNABOARD
         SET
             QSUBJECT = #{qsubject},
             QCONTENT = #{qcontent}
+        WHERE QREFER = #{qrefer}
+    </update>
+
+    <update id="readIt">
+        UPDATE QNABOARD
+        SET READNUM = READNUM + 1
         WHERE QREFER = #{qrefer}
     </update>
 
@@ -89,7 +96,6 @@
             SELECT Q.QREFER, Q.QSUBJECT, Q.QCONTENT, Q.QDATE, U.EMAIL, U.NICKNAME, Q.READNUM
             FROM QNABOARD Q
             JOIN USERINFO U ON Q.EMAIL = U.EMAIL
-            WHERE
             <choose>
                 <when test = "option == '1'">
                     WHERE U.NICKNAME LIKE CONCAT('%', #{keyword}, '%')
@@ -148,8 +154,8 @@
             FROM QNABOARDRE
             WHERE QREFER = #{qrefer}
             ORDER BY qrerefer desc
-            OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
-                FETCH NEXT #{cri.amount} ROWS ONLY
+            OFFSET (#{recri.reCurrPage}-1) * #{recri.reAmount} ROWS
+                FETCH NEXT #{recri.reAmount} ROWS ONLY
         ]]>
     </select>
 
@@ -160,11 +166,11 @@
 
     </insert>
 
-    <select id="getTotalComment" resultType="int">
+    <select id="getTotalQnaReply" resultType="int">
         <![CDATA[
             SELECT COUNT(qrerefer)
             FROM QNABOARDRE
-            WHERE qrerefer > 0
+            WHERE qrefer = #{qrefer}
         ]]>
     </select>
 
@@ -179,7 +185,7 @@
     <delete id="deleteComment">
         DELETE
         FROM QNABOARDRE
-        WHERE QREREFER=#{qrerefer}
+        WHERE QREFER=#{qrefer}
     </delete>
 
 

@@ -40,7 +40,7 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th scope="col">번호</th>
+                        <th scope="col">NO</th>
                         <th scope="col">제목</th>
                         <th scope="col">작성자</th>
                         <th scope="col">작성일</th>

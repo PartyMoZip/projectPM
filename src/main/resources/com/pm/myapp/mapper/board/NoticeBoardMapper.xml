@@ -28,6 +28,7 @@
                 WHERE N.NCONTENT like '%'||#{searchWord}||'%'
             </when>
         </choose>
+        ORDER BY NREFER DESC
         OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
         FETCH NEXT #{cri.amount} ROWS ONLY
 
@@ -45,7 +46,7 @@
     <insert id="writeNoticeBoard">
 
         INSERT INTO NOTICEBOARD(NREFER, NSUBJECT, NCONTENT, NDATE, NICKNAME, EMAIL, READNUM)
-        VALUES(SEQ_NOTICEBOARD.nextval, #{nSubject}, #{nContent}, sysdate, 'admin', 'test1@test.com', 0)
+        VALUES(SEQ_NOTICEBOARD.nextval, #{nSubject}, #{nContent}, sysdate, '관리자', ${email}, 0)
 
     </insert>
 

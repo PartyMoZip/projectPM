@@ -64,45 +64,74 @@
                     <span>댓글</span>
                 </div>
                 <!--댓글 리스트-->
-                <%-- <div class="commentList_wrap">
-                     <div class="commentList">
-                         <table>
-                             <tbody>
-                             <c:choose>
-                                 <c:when test="${not empty reply}">
-                                     <c:forEach items="${reply}" var="reply">
-                                         <tr>
-                                             <td>
-                                             <td><c:out value="${reply.rerefer}"/></td>
-                                             <td><c:out value="${reply.nickname}"/></td>
-                                             </td>
-                                         </tr>
-                                     </c:forEach>
-                                 </c:when>
-                                 <c:otherwise>
-                                     <td>등록된 글이 없습니다</td>
-                                 </c:otherwise>
-                             </c:choose>
-                             </tbody>
-                         </table>
-                     </div>
-                 </div>--%>
-                <!-- replylist_wrap END -->
+                <div class="commentList_wrap">
+                    <div class="commentList">
+                        <table>
+                            <tbody>
+                            <c:choose>
+                                <c:when test="${not empty reply}">
+                                    <c:forEach items="${reply}" var="reply">
+                                        <tr>
+                                            <td><c:out value="${reply.email}"/></td>
+                                            <td><fmt:formatDate pattern="yyyy.MM.dd HH:mm:ss"
+                                                                value="${reply.qredate}"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td><c:out value="${reply.qrecontent}"/></td>
+                                        </tr>
+                                    </c:forEach>
+                                </c:when>
+                                <c:otherwise>
+                                    <td>등록된 글이 없습니다</td>
+                                </c:otherwise>
+                            </c:choose>
+                            </tbody>
+                        </table>
+                        <div id="pagination">
+                            <form id="paginationForm">
+                                <ul class="pagination justify-content-center">
+                                    <c:if test="${replyPageMaker.prev}">
+                                        <li class="prev page-item">
+                                            <a class="prev page-link"
+                                               href="/freeboard/showFreeDetail?frefer=${boardDetail.frefer}&currPage=${cri.currPage}&reCurrPage=${replyPageMaker.startPage-1}">◀</a>
+                                        </li>
+                                    </c:if>
+                                    <c:forEach begin="${replyPageMaker.startPage}"
+                                               end="${replyPageMaker.endPage}" var="pageNum">
+                                        <li class="page-item">
+                                            <a id="page-curr" class="page-link"
+                                               href="/partyphoto/detail?prefer=${__DETAIL__.prefer}&partyCode=${__DETAIL__.partycode}&currPage=${cri.currPage}&reCurrPage=${pageNum}">
+                                                    ${pageNum}
+                                            </a>
+                                        </li>
+                                    </c:forEach>
 
+                                    <c:if test="${replyPageMaker.next}">
+                                        <li class="next page-item">
+                                            <a class="next page-link"
+                                               href="/partyphoto/detail?prefer=${__DETAIL__.prefer}&partyCode=${__DETAIL__.partycode}&currPage=${cri.currPage}&reCurrPage=${replyPageMaker.endPage+1}">▶</a>
+                                        </li>
+                                    </c:if>
+                                </ul>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- replylist_wrap END -->
                 <!--reply write-->
                 <div class="comment_area">
                     <!--댓글내용-->
-                    <form name="lostComment" method="POST" id="lostComment">
-                        <input type="hidden" name="idx" id="idx" value="${boardDetail.nickname}">
-                        <input type="hidden" name="writerid" id="writerId" value="${boardDetail.nickname}">
-                        <input type="hidden" value="${nickname}" id="loginId">
-                        <h2>${nickname}</h2>
-                        <input type="hidden" name="commentid" id="commentId" value="${nickname}">
+                    <form action="/qnaboard/writeComment" method="POST">
+                        <input type="hidden" name="currPage" value="${cri.currPage}">
+                        <input type="hidden" name="reCurrPage" value="${recri.reCurrPage}">
+                        <input type="hidden" name="qrefer" value="${boardDetail.qrefer}">
+                        <h6>${boardDetail.nickname}</h6>
+                        <input type="hidden" name="email" value="${boardDetail.email}">
                         <div class="commentWrite_Wrap">
-                        <textarea name="content" id="commentContent" placeholder=" 댓글을 남겨보세요"
+                        <textarea name="qrecontent" id="commentContent" placeholder=" 댓글을 남겨보세요"
                                   class="comment_inbox" rows="4"
                                   cols="140"></textarea>
-                            <button type="button" class="btn btn-outline-warning">등록</button>
+                            <button type="submit" class="btn btn-outline-warning">등록</button>
                         </div>
                     </form>
 
@@ -117,10 +146,12 @@
                             <i class="fas fa-pen"></i>
                             <span>수정</span>
                         </button>
-                        <button type="button" class="btn btn-primary btn-sm"
-                                onclick="location.href='/qnaboard/deleteQnaBoard?qrefer=${boardDetail.qrefer}'">
+                        <button type="submit" id="deleteButton" class="btn btn-primary btn-sm">
+                            <form action="/qnaboard/deleteQnaBoard" name="deleteButton" method="post">
+                            <input type="hidden" id="qrefer" name="qrefer" value="${boardDetail.qrefer}">
                             <i class="fas fa-trash-alt"></i>
                             <span>삭제</span>
+                            </form>
                         </button>
                         <%--  </c:if>--%>
                         <button type="button" class="btn btn-primary btn-sm"
