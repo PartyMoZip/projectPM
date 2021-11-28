@@ -1,104 +1,100 @@
-/* 파티보기 버튼 css */
-#showPartyBtn {
-  background-color: #669900;
-  border: 1px solid #669900;
-}
-
-/* 파티신청 버튼 css */
+/*
+!* 파티신청 버튼 css *!
 .btn.btn-secondary {
-  background-color: #669900;
+    background-color: #669900;
 }
 
 .btn.btn-secondary.active {
-  background-color: red;
+    background-color: red;
 }
 
-/* 파티 제목 css */
+!* 파티 제목 css *!
 #exampleModalCenteredScrollableTitle {
-  color: black;
-  font-weight: 600;
-  margin: 0 auto;
+    color: black;
+    font-weight: 600;
+    margin: 0 auto;
 }
 
-/* 닫기 아이콘 마진, 패딩 값 초기화 */
+!* 닫기 아이콘 마진, 패딩 값 초기화 *!
 #closeBtnIcon {
-  padding: 0;
-  margin: 0;
+    padding: 0;
+    margin: 0;
 }
 
-/* 모달 창 전체 크기 조정 */
+!* 모달 창 전체 크기 조정 *!
 .modal-dialog {
-  max-width: 1100px;
+    max-width: 1100px;
 }
 
-/* 모달 바디 크기 조정 */
+!* 모달 바디 크기 조정 *!
 .modal-body {
-  display: flex;
-  max-width: 1100px;
+    display: flex;
+    max-width: 1100px;
 }
 
-/* 모달 바디 이미지 크기 조정 */
+!* 모달 바디 이미지 크기 조정 *!
 .partyMainImg {
-  width: 550px;
-  margin: 0 auto;
+    width: 550px;
+    margin: 0 auto;
 }
 
-/* 모달 바디 컨텐츠 크기 조정 */
+!* 모달 바디 컨텐츠 크기 조정 *!
 .partyContents {
-  width: 550px;
-  display: grid;
+    width: 550px;
+    display: grid;
 }
 
-/* 파티컨텐츠 css */
+!* 파티컨텐츠 css *!
 .partyName {
-  display: flex;
-  justify-content: center;
-  vertical-align: middle;
-  margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    vertical-align: middle;
+    margin-top: 20px;
 }
 
 .partyLogo {
-  height: 44.67px;
-  margin-right: 10px;
+    height: 44.67px;
+    margin-right: 10px;
 }
 
 .partyHeader {
-  font-size: 30px;
-  font-weight: 600;
+    font-size: 30px;
+    font-weight: 600;
 }
 
 .partyInfo {
-  margin-top: 20px;
-  margin-left: 20px;
-  max-height: 132px;
-  display: block;
-  text-align: center;
-  font-weight: 600;
-  font-size: 20px;
-  padding: 20px;
-  border-radius: 20px;
-  background-color: rgba(255, 255, 191, 0.6);
+    margin-top: 20px;
+    margin-left: 20px;
+    max-height: 132px;
+    display: block;
+    text-align: center;
+    font-weight: 600;
+    font-size: 20px;
+    padding: 20px;
+    border-radius: 20px;
+    background-color: rgba(255, 255, 191, 0.6);
 }
 
 .partyInfo > .partyLocation > .partyLocationContent {
-  display: inline-flex;
+    display: inline-flex;
 }
 
 .partyInfo > .partyCategory > .partyCategoryContent {
-  display: inline-flex;
+    display: inline-flex;
 }
 
 .partyInfo > .partyMemberPoint > .partyMemberPointContent {
-  display: inline-flex;
+    display: inline-flex;
 }
 
 .partyIntro {
-  margin-top: 20px;
-  margin-left: 20px;
-  display: block;
-  text-align: center;
-  font-weight: 500;
-  padding: 20px;
-  border-radius: 20px;
-  background-color: rgba(255, 255, 191, 0.6);
+    margin-top: 20px;
+    margin-left: 20px;
+    display: block;
+    text-align: center;
+    font-weight: 500;
+    padding: 20px;
+    border-radius: 20px;
+    background-color: rgba(255, 255, 191, 0.6);
 }
+*/

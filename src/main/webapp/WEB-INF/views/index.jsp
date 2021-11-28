@@ -14,6 +14,7 @@
           integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/home.css?after">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/modal.css?after">
 
 </head>
 
@@ -129,70 +130,56 @@
                             </div>
                         </div>
                     </div>
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                         aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                            <div class="modal-content">
-                                <!-- 모달 헤더 -->
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalCenteredScrollableTitle">
-                                        지금 바로 가입해보세요!
-                                    </h5>
-                                    <button type="button" class="btn-close" id="closeBtnIcon"
-                                            data-bs-dismiss="modal"></button>
-                                </div>
-                                <!-- 모달 중단부 -->
-                                <div class="modal-body">
-                                    <div class="partyMainImg">
-                                        <img src="./파티모집_파비콘.png" alt="파티메인이미지">
-                                    </div>
-                                    <div class="partyContents">
-                                        <div class="partyName">
-                                            <img src="./파티모집_파비콘.png" alt="파티로고" class="partyLogo">
-                                            <div class="partyHeader">파티 제목</div>
-                                        </div>
-                                        <div class="partyInfo">
-                                            <div class="partyLocation">
-                                                파티 지역:&nbsp;
-                                                <div class="partyLocationContent">
-                                                    서울
-                                                </div>
-                                            </div>
-                                            <div class="partyCategory">
-                                                파티 카테고리:&nbsp;
-                                                <div class="partyCategoryContent">
-                                                    김진건 멘탈 치유
-                                                </div>
-                                            </div>
-                                            <div class="partyMemberPoint">
-                                                파티 활동 점수:&nbsp;
-                                                <div class="partyMemberPointContent">
-                                                    30점
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="partyIntro">
-                                            <p>우리 파티는 김진건 멘탈 치유 파티입니다.<br>
-                                                진건이형의 멘탈 치유를 위해 다방면으로 노력하고 있으며, 진건의형의 재활을 위해 야외활동을 적극 권유하고 있습니다.<br>
-                                                진건이형의 멘탈 회복을 위해 다들 힘을 모아주세요.<br>에이멘
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- 모달 하단부 -->
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-secondary" id="partyRequestBtn"
-                                            data-bs-toggle="button">
-                                        파티신청
-                                    </button>
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                        닫기
-                                    </button>
+
+                </c:forEach>
+            </div>
+        </div>
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <!-- 모달 헤더 -->
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenteredScrollableTitle">
+                            지금 바로 가입해보세요!
+                        </h5>
+                        <button type="button" class="btn-close" id="closeBtnIcon"
+                                data-bs-dismiss="modal"></button>
+                    </div>
+                    <!-- 모달 중단부 -->
+                    <div class="modal-body">
+                        <div>
+                            <img class="modal-img" alt="파티메인이미지">
+                        </div>
+                        <div class="partyContents">
+                            <div class="partyName">
+                                <div class="modal-partyName"></div>
+                            </div>
+                            <div class="partyInfo">
+                                <span class="modal-count"></span>
+                                <span class="modal-localName">
+                                </span>
+                                <span class="modal-hobbyName">
+                                </span>
+                                <div class="modal-partyScore">
                                 </div>
                             </div>
+                            <p class="modal-profile">
+                            </p>
                         </div>
                     </div>
-                </c:forEach>
+                    <!-- 모달 하단부 -->
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-secondary" id="partyRequestBtn"
+                                data-bs-toggle="button">
+                            파티신청
+                        </button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            닫기
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
 
