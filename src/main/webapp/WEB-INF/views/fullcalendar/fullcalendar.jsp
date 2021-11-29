@@ -198,8 +198,6 @@
 		src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/locales-all.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/js/fullcalendar.js"></script>
 
 	<%--FOOTER--%>
 	<jsp:include
