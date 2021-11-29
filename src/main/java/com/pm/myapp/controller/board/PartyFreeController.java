@@ -77,7 +77,9 @@ public class PartyFreeController {
 
 	// 파티 자유 게시판 글쓰기 완료
 	@PostMapping("/writePFreeBoardOk")
-	public String writePFreeBoard(PartyFreeDTO partyFB, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttrs) {
+
+	public String writePFreeBoard(PartyFreeDTO partyFB, @ModelAttribute("cri") Criteria cri,RedirectAttributes rttrs) {
+
 		log.debug("writePFreeBoard({}) invoked.", partyFB);
         // 글 내용 업로드
         boolean result = this.service.writeFBoard(partyFB);

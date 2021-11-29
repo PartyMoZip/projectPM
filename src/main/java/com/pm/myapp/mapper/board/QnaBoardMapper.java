@@ -20,7 +20,7 @@ public interface QnaBoardMapper {
     // 문의 게시물 상세보기
     public abstract QnaBoardVO readQnaBoard(Integer qrefer);
     // 문의 게시판 댓글 목록
-    public abstract List<QnaBoardReplyVO> getCommentListPaging(@Param("qrefer") Integer qrefer, @Param("recri") ReplyCriteria recri);
+    public abstract List<QnaBoardReplyDTO> getCommentListPaging(@Param("qrefer") Integer qrefer, @Param("recri") ReplyCriteria recri);
     // 문의 게시판 댓글 등록
     public abstract Integer writeComment(QnaBoardReplyDTO qnaReply);
     // 문의 게시판 댓글 수정

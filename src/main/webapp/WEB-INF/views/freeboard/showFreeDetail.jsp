@@ -70,12 +70,14 @@
                                     <c:when test="${not empty reply}">
                                         <c:forEach items="${reply}" var="reply">
                                             <tr>
-                                                <td><c:out value="${reply.nickname}"/></td>
-                                                <td><fmt:formatDate pattern="yyyy.MM.dd HH:mm:ss"
-                                                                    value="${reply.fredate}"/></td>
+                                                <td><c:out value="${sessionScope.__AUTH__.nickname}"/></td>
                                             </tr>
                                             <tr>
                                                 <td><c:out value="${reply.frecontent}"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td><fmt:formatDate pattern="yyyy.MM.dd HH:mm:ss"
+                                                                          value="${reply.fredate}"/></td>
                                             </tr>
                                         </c:forEach>
                                     </c:when>
@@ -136,6 +138,8 @@
                 </div>
 
                 <div class="container-btnGroup d-flex justify-content-end">
+                <c:set value="${sessionScope.__AUTH__.nickname}" var="nickname"/>
+                <c:if test="${boardDetail.nickname eq nickname}">
                     <button type="button" class="btn btn-primary btn-sm"
                             onclick="location.href='/freeboard/editFreeBoardView?frefer=${boardDetail.FRefer}'">
                         <i class="fas fa-pen"></i>
@@ -148,7 +152,7 @@
                                     <span>삭제</span>
                             </button>
                         </form>
-                    <%--  </c:if>--%>
+                    </c:if>
                     <button type="button" class="btn btn-primary btn-sm"
                             onclick="location.href='/freeboard/getFreeBoardList?currPage=${cri.currPage}'">
                         <i class="fas fa-list-ul"></i>

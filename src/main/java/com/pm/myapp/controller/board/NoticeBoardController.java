@@ -112,9 +112,7 @@ public class NoticeBoardController {
     public String editNoticeBoard(NoticeBoardDTO noticeBoard/*, RedirectAttributes rttrs*/) {
         log.debug("editNoticeBoard({}) invoked.", noticeBoard);
 
-        /*boolean result =*/
-                service.editBoard(noticeBoard);
-       /* rttrs.addAttribute("result", result);*/
+        service.editBoard(noticeBoard);
 
         return "redirect:/noticeboard/getNoticeBoardList";
 

@@ -136,10 +136,10 @@ public class QnaBoardServiceImpl implements QnaBoardService {
 
     // 댓글 목록
     @Override
-    public List<QnaBoardReplyVO> getReply(Integer qrefer, ReplyCriteria recri) {
+    public List<QnaBoardReplyDTO> getReply(Integer qrefer, ReplyCriteria recri) {
         log.debug("getReply() invoked.");
 
-        List<QnaBoardReplyVO> qnaReply = this.mapper.getCommentListPaging(qrefer, recri);
+        List<QnaBoardReplyDTO> qnaReply = this.mapper.getCommentListPaging(qrefer, recri);
         log.info("\t + qnaReply : {}", qnaReply);
 
         return qnaReply;
@@ -147,10 +147,10 @@ public class QnaBoardServiceImpl implements QnaBoardService {
 
     // 댓글삭제
     @Override
-    public boolean deleteReply(Integer qrerefer) {
-        log.debug("deleteReply({}) invoked.", qrerefer);
+    public boolean deleteReply(Integer qrefer) {
+        log.debug("deleteReply({}) invoked.", qrefer);
 
-        int affectedRows = this.mapper.deleteComment(qrerefer);
+        int affectedRows = this.mapper.deleteComment(qrefer);
         log.info("\t + affectedRows : {}", affectedRows);
 
         return (affectedRows == 1);
