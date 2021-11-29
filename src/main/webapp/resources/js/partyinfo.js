@@ -41,15 +41,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 res.json().then((data) => {
                     spinner.classList.add("hide");
                     Swal.fire(
-                        '파티가입 신청 완료',
-                        '해당 파티장이 승인하면 파티원이 될 수 있어요!',
+                        '성공',
+                        '파티 가입이 신청되었습니다!',
                         'success'
                     )
                 }).catch((err) => {
                     spinner.classList.add("hide");
                     console.log(err);
                     Swal.fire(
-                        '에러',
+                        '실패',
                         '이미 가입했거나 신청한 파티에요!',
                         'warning'
                     )

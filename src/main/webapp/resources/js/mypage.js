@@ -32,23 +32,28 @@ document.addEventListener("DOMContentLoaded", () => {
             },
             body: JSON.stringify(data),
         })
-            .then((res) => res.json())
-            .then((data) => {
-                console.log(data);
+            .then((res) => {
+                spinner.classList.remove('hide');
 
-                if (data.result) {
-                    Swal.fire('성공', '파티 탈퇴가 완료되었습니다.', 'success');
-                    setTimeout(function () {
-                        location.href = "http://localhost:8090/my/profile";
-                    }, 2000)
+                res.json().then((data) => {
+                    spinner.classList.add('hide');
+                    console.log(data);
 
-                } else {
-                    Swal.fire('실패', '에러가 발생했습니다.', 'error')
-                } // if
+                    if (data.result) {
+                        Swal.fire('성공', '파티 탈퇴가 완료되었습니다.', 'success');
+                        setTimeout(function () {
+                            location.href = "http://localhost:8090/my/profile";
+                        }, 2000)
+
+                    } else {
+                        Swal.fire('실패', '에러가 발생했습니다.', 'error')
+                    } // if
+                })
+                    .catch((err) => {
+                        console.log(err);
+                    });
             })
-            .catch((err) => {
-                console.log(err);
-            });
+
     } // handleLeaveParty
 
     // 프로필 수정 이벤트
