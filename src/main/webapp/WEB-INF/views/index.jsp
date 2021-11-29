@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/home.css?after">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/modal.css?after">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/spinner.css?after">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/partyCreateBanner.css?after">
 
 </head>
 
@@ -210,6 +211,12 @@
         </div>
     </div>
 
+	<!-- 사이드 슬라이드 배너 -->
+	<div class="sideBanner">
+    	<img src="https://cdn-icons-png.flaticon.com/512/2057/2057748.png" alt="가입이미지"
+    	href="">
+    	<span class="txt-label">파티생성</span>
+  	</div>
 
 </main>
 
@@ -229,6 +236,7 @@
 <script src="${pageContext.request.contextPath}/resources/js/autocomplete.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/mainpage.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/partyinfo.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/partyCreateBanner.js"></script>
 
 </body>
 </html>
