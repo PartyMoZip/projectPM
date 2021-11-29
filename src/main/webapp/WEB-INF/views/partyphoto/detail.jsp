@@ -25,6 +25,14 @@
         <img src="${photo}">
     </c:forEach>
     <hr>
+    <form action="/partyphoto/heart" method="post">
+        <input type="hidden" name="currPage" value="${cri.currPage}">
+        <input type="hidden" name="reCurrPage" value="${recri.reCurrPage}">
+        <input type="hidden" name="partyCode" value="${__DETAIL__.partycode}">
+        <input type="hidden" name="prefer" value="${__DETAIL__.prefer}">
+        <input type="hidden" name="email" value="${sessionScope.__AUTH__.email}">
+        <input type="submit" value="좋아요">
+    </form>
     <div>내가 누른 좋아요</div>
     ${__MYHEART__}
     <hr>
@@ -32,6 +40,13 @@
     ${__TOTALHEART__}
     <hr>
 
+    <form action="/partyphoto/delete" method="post">
+        <input type="hidden" name="currPage" value="${cri.currPage}">
+        <input type="hidden" name="reCurrPage" value="${recri.reCurrPage}">
+        <input type="hidden" name="partyCode" value="${__DETAIL__.partycode}">
+        <input type="hidden" name="prefer" value="${__DETAIL__.prefer}">
+        <input type="submit" value="삭제">
+    </form>
 
 <form action="/partyphoto/writecomment" method="post">
     <input type="hidden" name="currPage" value="${cri.currPage}">
@@ -40,8 +55,8 @@
     <input type="hidden" name="prefer" value="${__DETAIL__.prefer}">
     <div>댓글 내용</div>
     <input type="text" name="precontent">
-    <div>이메일</div>
-    <input type="text" name="email">
+    <div>닉네임 : ${sessionScope.__AUTH__.nickname}</div>
+    <input type="hidden" name="email" value="${sessionScope.__AUTH__.email}">
     <input type="submit" value="댓글 작성">
 </form>
 
@@ -55,7 +70,7 @@
         <div>댓글 내용</div>
         <input type="text" name="precontent">
         <div>닉네임</div>
-        <div>${sessionScope.__AUTH__.nickname}</div>
+        <div>${comment.nickname}</div>
         <input type="hidden" name="email" value="${sessionScope.__AUTH__.email}">
         <input type="submit" value="댓글 작성">
 

@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,9 +20,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.pm.myapp.aws.AwsUpload;
+import com.pm.myapp.controller.join.LoginController;
 import com.pm.myapp.domain.Criteria;
 import com.pm.myapp.domain.PageDTO;
 import com.pm.myapp.domain.ReplyCriteria;
+import com.pm.myapp.domain.UserDTO;
 import com.pm.myapp.domain.board.BoardSearchListDTO;
 import com.pm.myapp.domain.board.HeartDTO;
 import com.pm.myapp.domain.board.PartyPhotoDTO;
@@ -80,15 +85,15 @@ public class PartyPhotoController {
 	// 포토 갤러리 상세보기
 	@GetMapping("/detail")
 	public void getPhotoBoardDetail(
+			HttpServletRequest req,
 			@ModelAttribute("ldto") BoardSearchListDTO ldto,
 			@ModelAttribute("prefer") Integer prefer,
-			String email,
 			@ModelAttribute("cri") Criteria cri,
 			@ModelAttribute("recri") ReplyCriteria recri,
 			Model model) {
 		Integer partyCode = ldto.getPartyCode();
 		
-		log.debug("getPhotoBoardDetail({}, {}, {}, {}, {}) invoked.",partyCode, prefer, email, cri, recri);
+		log.debug("getPhotoBoardDetail({}, {}, {}, {}) invoked.",partyCode, prefer,  cri, recri);
 		
 		// 읽기번호 증가
 		boolean readOk = this.service.readPhotoBoard(prefer, partyCode);
@@ -119,6 +124,11 @@ public class PartyPhotoController {
 		PageDTO pageDTO = new PageDTO(recri, totalAmount);
 		model.addAttribute("replyPageMaker", pageDTO);
 		
+		// 로그인한 유저의 이메일 불러오기
+        HttpSession session = req.getSession();
+        UserDTO user = (UserDTO) session.getAttribute(LoginController.authKey);
+        String email = user.getEmail();
+        
 		// 내 좋아요 불러오기
 		// 로그인 중이라면 좋아요 눌렀는지 아닌지 표시
 		// 아니라면 아닌체로 표시
