@@ -73,7 +73,7 @@
                                 <c:when test="${not empty reply}">
                                     <c:forEach items="${reply}" var="reply">
                                         <tr>
-                                            <td><c:out value="${reply.email}"/></td>
+                                            <td><c:out value="${reply.nickname}"/></td>
                                             <td><fmt:formatDate pattern="yyyy.MM.dd HH:mm:ss"
                                                                 value="${reply.qredate}"/></td>
                                         </tr>
@@ -126,10 +126,10 @@
                         <input type="hidden" name="currPage" value="${cri.currPage}">
                         <input type="hidden" name="reCurrPage" value="${recri.reCurrPage}">
                         <input type="hidden" name="qrefer" value="${boardDetail.qrefer}">
-                        <h6>${boardDetail.nickname}</h6>
                         <input type="hidden" name="email" value="${boardDetail.email}">
                         <div class="commentWrite_Wrap">
-                        <textarea name="qrecontent" id="commentContent" placeholder=" 댓글을 남겨보세요"
+                        <textarea name="qrecontent" id="commentContent"
+                                  placeholder=" [${sessionScope.__AUTH__.nickname}] 님,  댓글을 남겨보세요"
                                   class="comment_inbox" rows="4"
                                   cols="140"></textarea>
                             <button type="submit" class="btn btn-outline-warning">등록</button>
@@ -137,19 +137,19 @@
                     </form>
 
                 </div>
-                <div class="container-btnGroup">
+                <div class="container-btnGroup d-flex justify-content-end">
                     <button type="button" class="btn btn-primary btn-sm"
                             onclick="location.href='/qnaboard/editQnaBoardView?qrefer=${boardDetail.qrefer}'">
                         <i class="fas fa-pen"></i>
                         <span>수정</span>
                     </button>
-                    <button type="submit" id="deleteButton" class="btn btn-primary btn-sm">
-                        <form action="/qnaboard/deleteQnaBoard" name="deleteButton" method="post">
+                    <form action="/qnaboard/deleteQnaBoard" name="deleteButton" method="post">
+                        <button type="submit" id="deleteButton" class="btn btn-primary btn-sm">
                             <input type="hidden" id="qrefer" name="qrefer" value="${boardDetail.qrefer}">
                             <i class="fas fa-trash-alt"></i>
                             <span>삭제</span>
-                        </form>
-                    </button>
+                        </button>
+                    </form>
                     <%--  </c:if>--%>
                     <button type="button" class="btn btn-primary btn-sm"
                             onclick="location.href='/qnaboard/getQnaBoardList?currPage=${cri.currPage}'">

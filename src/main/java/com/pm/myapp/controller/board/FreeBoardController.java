@@ -140,10 +140,10 @@ public class FreeBoardController {
 
 		boolean result = this.service.deleteBoard(frefer);
 		rttrs.addAttribute("result", result);
-
+/*
         boolean resultReply = this.service.deleteFreeBoardReply(frefer);
-        rttrs.addAttribute("resultRe", resultReply);
-		return "redirect:/freeboard/boardList";
+        rttrs.addAttribute("resultRe", resultReply);*/
+		return "redirect:/freeboard/getFreeBoardList";
 
 	} // deleteFreeBoard
 

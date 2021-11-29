@@ -25,11 +25,13 @@
     <title>파티모집 - 파티 자유</title>
 </head>
 <body>
+
     <%--HEADER--%>
     <jsp:include
             page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp"/>
     <jsp:include
             page="${pageContext.request.contextPath}/WEB-INF/views/include/partynav.jsp" />
+
 <div class="board-main">
     <main>
         <div class="container-sm">
@@ -137,7 +139,7 @@
                     </form>
 
                 </div>
-                <div class="container-btnGroup">
+                <div class="container-btnGroup d-flex justify-content-end">
                     <%--                                        <c:set value="${sessionScope.id}" var="id"/>--%>
                     <%-- <c:if test="${boardDetail.nickname eq nickname}">--%>
                     <button type="button" class="btn btn-primary btn-sm"
@@ -145,11 +147,13 @@
                         <i class="fas fa-pen"></i>
                         <span>수정</span>
                     </button>
-                    <button type="button" class="btn btn-primary btn-sm"
-                            onclick="location.href='/partyfree/deletePFreeBoard?pfrefer=${boardDetail.pfrefer}'">
-                        <i class="fas fa-trash-alt"></i>
-                        <span>삭제</span>
-                    </button>
+                    <form action="/partyfree/deletePFreeBoard" method="post">
+                        <button type="submit" class="btn btn-primary btn-sm">
+                            <input type="hidden" name="pfrefer" value="${boardDetail.pfrefer}">
+                            <i class="fas fa-trash-alt"></i>
+                            <span>삭제</span>
+                        </button>
+                    </form>
                     <%--  </c:if>--%>
                     <button type="button" class="btn btn-primary btn-sm"
                             onclick="location.href='/partyfree/getPFreeBoardList?currPage=${cri.currPage}'">

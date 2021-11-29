@@ -143,6 +143,7 @@
 textarea {
     resize : none ! important;
     padding : 10px 10px;
+    width : 100%;
 }
 
 .button_area {

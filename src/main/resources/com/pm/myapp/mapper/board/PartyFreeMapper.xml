@@ -66,8 +66,8 @@
     </select>
 
     <insert id="writePFreeBoard">
-        INSERT INTO PARTYFREEBOARD(PFREFER, PFDATE, PFCONTENT, PARTYCODE, PFSUBJECT, EMAIL, READNUM)
-        VALUES(SEQ_PFREEBOARD.nextval, sysdate, #{pfcontent}, #{partycode}, #{pfsubject}, #{email}, 0)
+        INSERT INTO PARTYFREEBOARD(PFREFER, PFDATE, PFCONTENT, PARTYCODE, PFSUBJECT, EMAIL, READNUM, nickname)
+        VALUES(SEQ_PFREEBOARD.nextval, sysdate, #{pfcontent}, #{partycode}, #{pfsubject}, #{email}, 0, #{nickname})
 
     </insert>
 
