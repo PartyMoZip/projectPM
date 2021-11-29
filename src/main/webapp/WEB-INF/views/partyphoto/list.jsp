@@ -30,82 +30,8 @@
 <jsp:include
 		page="${pageContext.request.contextPath}/WEB-INF/views/include/partyMainTab.jsp" />
 
-<%-- <c:choose>
-   <c:when test="${not empty __LIST__}">
-      <c:forEach items="${__LIST__}" var="list">
-         <tr>
-            <td>
-               <div class="checkbox-group">
-                  <div class="partyCheckboxGroup">
-                     <input type="checkbox" class="bigCheck" name="fbc">
-                  </div>
-               </div>
-            </td>
-            <td><c:out value="${list.prefer}" /></td>
-            <td><a
-               href="/partyphoto/detail?prefer=${list.prefer}&partyCode=${list.partycode}&currPage=${pageMaker.cri.currPage}">${list.psubject}</a>
-            </td>
-            <td><c:out value="${list.nickname}" /></td>
-            <td><fmt:formatDate pattern="yyyy.MM.dd" value="${list.pdate}" /></td>
-            <td><c:out value="${list.readnum}" /></td>
-         </tr>
-      </c:forEach>
-   </c:when>
-   <c:otherwise>
-      <td>등록된 글이 없습니다</td>
-   </c:otherwise>
-</c:choose>
-<hr>
-<a
-   href="/partyphoto/writeview?partyCode=${partyCode}&currPage=${pageMaker.cri.currPage}">글쓰기</a>
-<hr>
-
-<hr>
-<c:choose>
-   <c:when test="${not empty __LIST__}">
-      <div id="pagination">
-         <form id="paginationForm">
-            <ul class="pagination justify-content-center">
-               <c:if test="${pageMaker.prev}">
-                  <li class="prev page-item"><a class="prev page-link"
-                     href="/partyphoto/list?currPage=${pageMaker.startPage-1}&searchWord=${ldto.searchWord}&option=${ldto.option}">◀</a>
-                  </li>
-               </c:if>
-
-               <c:forEach begin="${pageMaker.startPage}"
-                  end="${pageMaker.endPage}" var="pageNum">
-                  <li class="page-item"><a id="page-curr" class="page-link"
-                     href="/partyphoto/list?currPage=${pageNum}&searchWord=${ldto.searchWord}&option=${ldto.option}">
-                        ${pageNum} </a></li>
-               </c:forEach>
-
-               <c:if test="${pageMaker.next}">
-                  <li class="next page-item"><a class="next page-link"
-                     href="/partyphoto/list?currPage=${pageMaker.endPage+1}&searchWord=${ldto.searchWord}&option=${ldto.option}">▶</a>
-                  </li>
-               </c:if>
-            </ul>
-         </form>
-      </div>
-   </c:when>
-</c:choose> --%>
-
 <div class="container mt-5">
     <main>
-        <ul class="nav nav-pills">
-            <li class="nav-item"><a class="nav-link" aria-current="page"
-                                    href="/party/showmain?partyCode=${ldto.partyCode}">메인</a></li>
-            <li class="nav-item"><a class="nav-link"
-                                    href="/party/leaderpage?partyCode=${ldto.partyCode}">파티관리</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">일정</a></li>
-            <li class="nav-item"><a class="nav-link" href="/party/memberlist?partyCode=${ldto.partyCode}">파티원</a></li>
-            <li class="nav-item"><a class="nav-link"
-                                    href="/partyfree/getPFreeBoardList?partyCode=${ldto.partyCode}">자유게시판</a></li>
-            <li class="nav-item"><a class="nav-link active"
-                                    href="/partyphoto/list?partyCode=${ldto.partyCode}">포토갤러리</a></li>
-            <li class="nav-item"><a class="nav-link"
-                                    href="/partyfunc/partychat?partyCode=${ldto.partyCode}">채팅</a></li>
-        </ul>
 
         <div class="inner-container container-title">파티 포토갤러리</div>
 
@@ -137,8 +63,7 @@
                                                     View
                                                 </button>
                                             </div>
-                                            <small class="text-muted"><c:out
-                                                    value="${list.pdate}"/></small>
+                                            <small class="text-muted"><c:out value="${list.pdate}"/></small>
                                         </div>
                                     </div>
                                 </div>

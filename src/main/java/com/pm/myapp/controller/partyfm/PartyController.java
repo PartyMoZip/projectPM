@@ -199,16 +199,14 @@ public class PartyController {
 	
 	// 파티 해체 [작동]
 	@PostMapping("/dobreak")
-	public String doBreakParty(Integer partyCode, RedirectAttributes rttrs) {
+	public String doBreakParty(Integer partyCode) {
 		log.debug("doBreakParty({}) invoked.",partyCode);
 		// 신고수 -1로 만들기
 		
 		boolean result = this.service.breakParty(partyCode);
 		log.info("\t + result : {}",result);
 		
-		rttrs.addAttribute("partyCode",partyCode);
-		
-		return "redirect:/party/leaderpage";
+		return "redirect:/";
 
 	} // doBreakParty
 		
@@ -267,7 +265,7 @@ public class PartyController {
 		
 	} // doRejectJoin
 	
-	// 파티원 목록 조회 [작동] -- 스위치 스크롤
+	// 파티원 목록 조회 [작동]
 	@GetMapping("/memberlist")
 	public void showMemberList(@ModelAttribute("cri") Criteria cri,Integer partyCode, Model model) {
 		log.debug("showMemberList() invoked.");

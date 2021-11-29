@@ -20,7 +20,7 @@
           href="${pageContext.request.contextPath}/resources/css/partyMain.css?after"/>
     <link rel="stylesheet"
           href="${pageContext.request.contextPath}/resources/css/admin.css?after"/>
-    <title>파티모집 - 파티관리</title>
+    <title> 파티모집 - 파티관리 </title>
     <link rel="icon" href="${pageContext.request.contextPath}/resources/images/favicon.ico"/>
 </head>
 <body>
@@ -33,10 +33,6 @@
 
 	<%-- <h1>/WEB-INF/views/party/showLeaderPage.jsp</h1>
       <hr>
-      <form action="/party/dobreak" method="post">
-        <input type="hidden" name="partyCode" value="${__PARTY__.partyCode}">
-        <input type="submit" value="파티해체신청">
-      </form>
       <hr>
       <form action="/party/editleader" method="post">
         <input type="hidden" name="leaderEmail" value="test1@test.com">
@@ -54,8 +50,8 @@
 			</div>
 
 			<form class="form-data" enctype="multipart/form-data">
-				<input type="hidden" class="input-partycode" name="partyCode" value="${__PARTY__.partyCode}"/>
-
+				<input type="hidden" class="input-partycode" name="partyCode" value="${__PARTY__.partyCode}">
+				<input type="hidden" class="input-partycode" name="currPage" value="${cri.currPage}">
 				<div class="container-lg d-flex justify-content-center align-items-center">
 					<div class="d-flex flex-column justify-content-center align-items-center">
 						<div class="img-profile justify-content-center align-items-center">
@@ -93,7 +89,8 @@
 				<!-- 파티승인요청 테이블 시작 -->
 				<div class="table-responsive">
 					<form action="/party/do-accept-join" method="post">
-						<input type="hidden" name="partyCode" value="${__PARTY__.partyCode}">
+						<input type="hidden" class="input-partycode" name="partyCode" value="${__PARTY__.partyCode}">
+						<input type="hidden" class="input-partycode" name="currPage" value="${cri.currPage}">
 						<table class="table">
 							<thead>
 								<tr>
@@ -128,6 +125,11 @@
 								</c:forEach>
 							</tbody>
 						</table>
+						<div class="bottom-menu-btn">
+							<div class="d-grid gap-2 d-md-block">
+								<button class="btn btn-primary" type="submit">승인</button>
+							</div>
+						</div>
 					</form>
 				</div>
 				<div class="table-responsive">
@@ -167,38 +169,56 @@
 								</c:forEach>
 							</tbody>
 						</table>
+						<div class="bottom-menu-btn">
+							<div class="d-grid gap-2 d-md-block">
+								<button class="btn btn-primary" type="submit">거절</button>
+							</div>
+						</div>
 					</form>
 				</div>
 				<!-- 파티승인요청 테이블 끝-->
 
-				<!-- 하단메뉴 -->
-				<!-- 버튼 -->
-				<div class="bottom-menu-btn">
-
-					<div class="d-grid gap-2 d-md-block">
-						<button class="btn btn-primary" type="button">승인</button>
-					</div>
-				</div>
-
 				<div class="bottom-menu-page">
 					<div class="changePage">
 						<nav aria-label="Page navigation example">
-							<ul class="pagination justify-content-center">
-								<li class="page-item"><a class="page-link" href="#"
-									aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-								</a></li>
-								<li class="page-item"><a class="page-link active" href="#">1</a></li>
-								<li class="page-item"><a class="page-link" href="#">2</a></li>
-								<li class="page-item"><a class="page-link" href="#">3</a></li>
-								<li class="page-item"><a class="page-link" href="#"
-									aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-								</a></li>
-							</ul>
+							<c:choose>
+								<c:when test="${not empty __MEMBER__}">
+									<div id="pagination">
+										<form id="paginationForm">
+											<ul class="pagination justify-content-center">
+												<c:if test="${pageMaker.prev}">
+													<li class="prev page-item"><a class="prev page-link"
+																				  href="/party/leaderpage?partyCode=${ldto.partyCode}&currPage=${pageMaker.startPage-1}">◀</a>
+													</li>
+												</c:if>
+				
+												<c:forEach begin="${pageMaker.startPage}"
+														   end="${pageMaker.endPage}" var="pageNum">
+													<li class="page-item"><a id="page-curr" class="page-link"
+																			 href="/party/leaderpage?partyCode=${ldto.partyCode}&currPage=${pageNum}">
+															${pageNum} </a></li>
+												</c:forEach>
+				
+												<c:if test="${pageMaker.next}">
+													<li class="next page-item"><a class="next page-link"
+																				  href="/party/leaderpage?partyCode=${ldto.partyCode}&currPage=${pageMaker.endPage+1}">▶</a>
+													</li>
+												</c:if>
+											</ul>
+										</form>
+									</div>
+								</c:when>
+							</c:choose>
 						</nav>
 					</div>
 				</div>
 			</div>
 		</div>
+
+		<form action="/party/dobreak" method="post">
+			<input type="hidden" name="partyCode" value="${__PARTY__.partyCode}">
+			<input type="submit" value="파티해체신청">
+		  </form>
 
 	</main>
 

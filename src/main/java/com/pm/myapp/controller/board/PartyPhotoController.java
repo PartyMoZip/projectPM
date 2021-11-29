@@ -134,6 +134,9 @@ public class PartyPhotoController {
 		Integer totalHeart = this.service.getTotalPartyPhotoHeart(prefer,partyCode);
 		log.info("\t+ totalHeart : {}",totalHeart);
 		model.addAttribute("__TOTALHEART__", totalHeart);
+		
+		// 파티 코드 강제 주입
+		model.addAttribute("partyCode", partyCode);
 				
 	} // getPhotoBoardDetail
 	
@@ -141,9 +144,13 @@ public class PartyPhotoController {
 	@GetMapping("/writeview")
 	public void writePhotoBoardView(
 			@ModelAttribute("ldto") BoardSearchListDTO ldto,
-			@ModelAttribute("cri") Criteria cri
+			@ModelAttribute("cri") Criteria cri,
+			Model model
 			) {
 		log.debug("writePhotoBoardView() invoked.");
+		Integer partyCode = ldto.getPartyCode();
+		// 파티 코드 강제 주입
+		model.addAttribute("partyCode", partyCode);
 
 	} // writePhotoBoardView
 	
@@ -225,6 +232,9 @@ public class PartyPhotoController {
 		List<String> photo = this.service.getPhotoAddress(prefer,partyCode);
 		log.info("\t+ photo : {}",photo);
 		model.addAttribute("__PHOTO__", photo);
+		
+		// 파티 코드 강제 주입
+		model.addAttribute("partyCode", partyCode);
 
 	} // editPhotoBoardView
 	
