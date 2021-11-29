@@ -71,54 +71,24 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>
-								<!-- 블랙회원리스트 체크박스 개별선택 -->
-								<div class="checkbox-group">
-									<div class="blackMemberCheckboxGroup">
-										<input type="checkbox" class="bigCheck" name="bmc">
-									</div>
-								</div> <!-- 블랙회원리스트 체크박스 개별선택 끝 -->
-							</td>
-							<th scope="row">1</th>
-							<td>sexyJingun@naver.com</td>
-							<td>sexyJingun</td>
-							<td>2</td>
-							<td>2021.11.09</td>
-							<td>2021.11.10</td>
-						</tr>
-						<tr>
-							<td>
-								<!-- 블랙회원리스트 체크박스 개별선택 -->
-								<div class="checkbox-group">
-									<div class="blackMemberCheckboxGroup">
-										<input type="checkbox" class="bigCheck" name="bmc">
-									</div>
-								</div> <!-- 블랙회원리스트 체크박스 개별선택 끝 -->
-							</td>
-							<th scope="row">2</th>
-							<td>sexyJingun@naver.com</td>
-							<td>sexyJingun</td>
-							<td>2</td>
-							<td>2021.11.09</td>
-							<td>2021.11.10</td>
-						</tr>
-						<tr>
-							<td>
-								<!-- 블랙회원리스트 체크박스 개별선택 -->
-								<div class="checkbox-group">
-									<div class="blackMemberCheckboxGroup">
-										<input type="checkbox" class="bigCheck" name="bmc">
-									</div>
-								</div> <!-- 블랙회원리스트 체크박스 개별선택 끝 -->
-							</td>
-							<th scope="row">3</th>
-							<td>sexyJingun@naver.com</td>
-							<td>sexyJingun</td>
-							<td>2</td>
-							<td>2021.11.09</td>
-							<td>2021.11.10</td>
-						</tr>
+						<c:forEach items="${__BMList__}" var="list">
+							<tr>
+								<td>
+									<!-- 블랙회원리스트 체크박스 개별선택 -->
+									<div class="checkbox-group">
+										<div class="blackMemberCheckboxGroup">
+											<input type="checkbox" class="bigCheck" name="bmc">
+										</div>
+									</div> <!-- 블랙회원리스트 체크박스 개별선택 끝 -->
+								</td>
+								<th scope="row">${list.rownum}</th>
+								<td>${list.email}</td>
+								<td>${list.nickname}</td>
+								<td>${list.userBanned}</td>
+								<td>${list.joinDate}</td>
+								<td>2021.11.10</td>
+							</tr>
+						</c:forEach>
 					</tbody>
 				</table>
 			</div>

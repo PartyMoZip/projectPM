@@ -38,7 +38,7 @@
     <jsp:include
             page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp"/>
     <jsp:include
-            page="${pageContext.request.contextPath}/WEB-INF/views/include/partyMainTab.jsp" />
+            page="${pageContext.request.contextPath}/WEB-INF/views/include/partynav.jsp" />
 
 <div class="board_main">
     <main>

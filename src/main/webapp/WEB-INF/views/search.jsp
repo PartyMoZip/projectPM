@@ -16,6 +16,7 @@
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/search.css?after">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/page.css?after">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/modal.css" />
 </head>
 <body>
 
@@ -242,5 +243,10 @@
 <script src="${pageContext.request.contextPath}/resources/js/search.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/pagination.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/partyinfo.js"></script>
+<!-- 제이쿼리 -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- 스윗알러트 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.10/dist/sweetalert2.all.min.js"></script>
+  <script src="${pageContext.request.contextPath}/resources/js/partyModal.js"></script>
 </body>
 </html>

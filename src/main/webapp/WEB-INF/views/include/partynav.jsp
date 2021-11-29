@@ -14,8 +14,8 @@
                             href="/party/showmain?partyCode=${__PARTY__.partyCode}">메인</a></li>
     <li class="nav-item"><a class="nav-link"
                             href="/party/leaderpage?partyCode=${__PARTY__.partyCode}">파티관리</a></li>
-    <li class="nav-item"><a class="nav-link" href="#">일정</a></li>
-    <li class="nav-item"><a class="nav-link" href="#">파티원</a></li>
+    <li class="nav-item"><a class="nav-link" href="/partyfunc/calendar?partyCode=${__PARTY__.partyCode}">일정</a></li>
+    <li class="nav-item"><a class="nav-link" href="/party/memberlist?partyCode=${__PARTY__.partyCode}">파티원</a></li>
     <li class="nav-item"><a class="nav-link"
                             href="/partyfree/">자유게시판</a></li>
     <li class="nav-item"><a class="nav-link"

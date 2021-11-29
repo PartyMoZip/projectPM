@@ -25,11 +25,13 @@
     <title>파티모집 - 파티 자유</title>
 </head>
 <body>
-<%--HEADER--%>
-<jsp:include
-        page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp"/>
-<jsp:include
-        page="${pageContext.request.contextPath}/WEB-INF/views/include/partyMainTab.jsp"/>
+
+    <%--HEADER--%>
+    <jsp:include
+            page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp"/>
+    <jsp:include
+            page="${pageContext.request.contextPath}/WEB-INF/views/include/partynav.jsp" />
+
 <div class="board-main">
     <main>
         <div class="container-sm">

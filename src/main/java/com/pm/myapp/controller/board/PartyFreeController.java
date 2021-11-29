@@ -63,7 +63,7 @@ public class PartyFreeController {
 	// 파티 자유 게시판 상세보기
 	@GetMapping("/showPartyFDetail")
 	public String showPartyFDetail(
-			@ModelAttribute("cri") Criteria cri, Integer pfrefer,@ModelAttribute("partycode") Integer partycode, Model model)
+			@ModelAttribute("cri") Criteria cri, Integer pfrefer, Integer partycode, Model model)
 		{
 		log.debug("get({}, {}, {}) invoked.", cri, pfrefer, partycode);
 		PartyFreeVO partyFDetail = this.service.getBoardDetail(pfrefer, partycode);
@@ -77,15 +77,15 @@ public class PartyFreeController {
 
 	// 파티 자유 게시판 글쓰기 완료
 	@PostMapping("/writePFreeBoardOk")
-	public String writePFreeBoard(PartyFreeDTO partyFB,@ModelAttribute("cri") Criteria cri, RedirectAttributes rttrs) {
+	public String writePFreeBoard(PartyFreeDTO partyFB, RedirectAttributes rttrs) {
 		log.debug("writePFreeBoard({}) invoked.", partyFB);
-
         // 글 내용 업로드
         boolean result = this.service.writeFBoard(partyFB);
 		rttrs.addAttribute("result", result);
 		rttrs.addAttribute("partycode",partyFB.getPartycode());
 		rttrs.addAttribute("currPage",cri.getCurrPage());
 		return "redirect:/partyfree/getPFreeBoardList";
+
 	} // writePFreeBoard
 
     // 파치 자유 게시판 글 쓰기 화면
