@@ -50,21 +50,23 @@
 
             <form action="/partyfree/writePFreeBoardOk" method="post">
                 <div class="table-Detail">
+                    <input type="hidden" name="nickname" value="${sessionScope.__AUTH__.nickname}">
                     <input type="hidden" name="email" value="${sessionScope.__AUTH__.email}">
+                    <input type="hidden" name="partycode" value="${sdto.partyCode}">
                     <div class="title" id="article-title">
                         <input type="text" name="pfsubject" placeholder="제목을 입력하세요." class="titlearea_input">
                     </div>
                     <!--product details-->
                     <div class="text_area">
                         <span><textarea name="pfcontent" rows="10" class="textarea" placeholder="내용을 입력하세요"></textarea></span>
---%>                </div>
+                   </div>
                     <div class="container-btnGroup">
                         <button type="submit" class="btn btn-primary btn-sm">
                             <i class="fas fa-pen"></i>
                             <span>등록</span>
                         </button>
                         <button type="button" class="btn btn-primary btn-sm"
-                                onclick="location.href='/partyfree/getPFreeBoardList?currPage=${cri.currPage}&amount=${cri.amount}&pagesPerPage=${cri.pagesPerPage}'">
+                                onclick="location.href='/partyfree/getPFreeBoardList?partyCode=${sdto.partyCode}&currPage=${cri.currPage}';">
                             <i class="fas fa-list-ul"></i>
                             <span>목록</span>
                         </button>

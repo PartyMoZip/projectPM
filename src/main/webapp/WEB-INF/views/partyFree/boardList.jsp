@@ -40,24 +40,15 @@
 
 <main>
     <div class="all-wrap">
-        <nav id="freebar" class="nav nav-pills flex-column flex-sm-row">
-            <a class="flex-sm-fill text-sm-center nav-link active" href="#">파티 - 자유게시판</a>
-        </nav>
+        <ul class="nav nav-pills">
+            <li class="nav-item"><a class="nav-link active"
+                                    aria-current="page" href="#">파티-자유게시판</a></li>
+        </ul>
         <!-- 자유게시판 테이블 시작 -->
         <div class="table-responsive">
             <table class="table">
                 <thead>
                 <tr>
-                    <!-- 자유게시판 체크박스 전체선택 -->
-                    <th scope="col">
-                        <div class="checkbox-group">
-                            <div class="checkbox-groupParty">
-                                <input type="checkbox" id="check-allFreeBoard" name="check-allFreeBoard"
-                                       class="bigCheck">
-                            </div>
-                        </div>
-                    </th>
-                    <!-- 자유게시판 체크박스 전체선택 끝 -->
                     <th scope="col">NO</th>
                     <th scope="col">제목</th>
                     <th scope="col">작성자</th>
@@ -70,16 +61,9 @@
                     <c:when test="${not empty list}">
                         <c:forEach items="${list}" var="list">
                             <tr>
-                                <td>
-                                    <div class="checkbox-group">
-                                        <div class="partyCheckboxGroup">
-                                            <input type="checkbox" class="bigCheck" name="fbc">
-                                        </div>
-                                    </div>
-                                </td>
                                 <td><c:out value="${list.pfRefer}"/></td>
                                 <td>
-                                    <a href="/partyfree/showPartyFDetail?pfrefer=${list.pfRefer}&currPage=${pageMaker.cri.currPage}&amount=${pageMaker.cri.amount}&pagesPerPage=${pageMaker.cri.pagesPerPage}">${list.pfSubject}</a>
+                                    <a href="/partyfree/showPartyFDetail?pfrefer=${list.pfRefer}&partyCode=${list.partycode}&currPage=${pageMaker.cri.currPage}&amount=${pageMaker.cri.amount}&pagesPerPage=${pageMaker.cri.pagesPerPage}">${list.pfSubject}</a>
                                 </td>
                                 <td><c:out value="${list.nickname}"/></td>
                                 <td><fmt:formatDate pattern="yyyy.MM.dd" value="${list.pfDate}"/></td>
@@ -101,8 +85,8 @@
 
         <!-- 버튼 -->
         <div class="d-grid gap-2 d-md-block">
-            <button type="button" class="btn btn-primary btn-sm"
-                    onclick="location.href='/partyfree/writePFreeBoardView'">
+            <button type="submit" class="btn btn-primary btn-sm"
+                    onclick="location.href='/partyfree/writePFreeBoardView?partyCode=${sdto.partyCode}&searchWord=${sdto.searchWord}&option=${sdto.option}&currPage=${pageMaker.cri.currPage}';">
                 <i class="fas fa-list-ul"></i>
                 <span>글쓰기</span>
             </button>
@@ -142,7 +126,7 @@
 
         <!-- 검색창 -->
         <!-- 검색창 -->
-        <form action="검색URL" method="get">
+        <form action="/partyfree/getPFreeBoardList" method="get">
             <div class="container-sm search-wrapper">
                 <div class="input-group mb-3">
                     <div class="selectBox">
@@ -159,7 +143,7 @@
                                 alt=""></span>
                     </div>
                     <!-- 검색창 -->
-                    <input type="text" name="keyword" class="form-control" placeholder="   검색어를 입력해주세요."
+                    <input type="text" name="searchWord" class="form-control" placeholder="   검색어를 입력해주세요."
                            aria-label="Text input with dropdown button">
                     <div id="searchIcon" class="search-btn-icon">
                         <button class="search-btn" type="submit">

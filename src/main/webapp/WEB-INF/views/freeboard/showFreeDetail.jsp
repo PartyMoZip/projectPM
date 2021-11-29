@@ -127,7 +127,7 @@
                         <input type="hidden" name="email" value="${boardDetail.email}">
                         <div class="commentWrite_Wrap">
                         <textarea name="frecontent" id="commentContent"
-                                  placeholder=" [${boardDetail.nickname}] 님,  댓글을 남겨보세요"
+                                  placeholder=" [${sessionScope.__AUTH__.nickname}] 님,  댓글을 남겨보세요"
                                   class="comment_inbox" rows="4"
                                   cols="140"></textarea>
                             <button type="submit" class="btn btn-outline-warning">등록</button>
@@ -135,22 +135,19 @@
                     </form>
                 </div>
 
-                <div class="container-btnGroup">
-                    <%--                                        <c:set value="${sessionScope.id}" var="id"/>--%>
-                    <%-- <c:if test="${boardDetail.nickname eq nickname}">--%>
-
+                <div class="container-btnGroup d-flex justify-content-end">
                     <button type="button" class="btn btn-primary btn-sm"
                             onclick="location.href='/freeboard/editFreeBoardView?frefer=${boardDetail.FRefer}'">
                         <i class="fas fa-pen"></i>
                         <span>수정</span>
                     </button>
-                    <button type="submit" class="btn btn-primary btn-sm">
                         <form action="/freeboard/deleteFreeBoard" method="post">
-                            <input type="hidden" name="fRefer" value="${boardDetail.FRefer}">
-                            <i class="fas fa-trash-alt"></i>
-                            <span>삭제</span>
+                            <button type="submit" class="btn btn-primary btn-sm">
+                                    <input type="hidden" name="frefer" value="${boardDetail.FRefer}">
+                                    <i class="fas fa-trash-alt"></i>
+                                    <span>삭제</span>
+                            </button>
                         </form>
-                    </button>
                     <%--  </c:if>--%>
                     <button type="button" class="btn btn-primary btn-sm"
                             onclick="location.href='/freeboard/getFreeBoardList?currPage=${cri.currPage}'">

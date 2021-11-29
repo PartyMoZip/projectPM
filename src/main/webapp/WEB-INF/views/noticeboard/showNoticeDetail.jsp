@@ -58,7 +58,7 @@
                     <span style="text-align : left;">${board.NContent}</span>
                 </div>
 
-                <div class="container-btnGroup">
+                <div class="container-btnGroup d-flex justify-content-end">
                     <button type="button" class="btn btn-primary btn-sm"
                             onclick="location.href='/noticeboard/editNoticeBoardView?nrefer=${board.NRefer}'">
                         <i class="fas fa-pen"></i>
@@ -66,7 +66,7 @@
                     </button>
 
                     <button type="submit" id="deleteButton" class="btn btn-primary btn-sm">
-                        <form action="/noticeboard/deleteNoticeBoard" name="deleteButton" method="post">
+                        <form action="/noticeboard/deleteNoticeBoard" name="deleteButton" method="post" style="margin-bottom: 0px;">
                             <input type="hidden" id="nRefer" name="nrefer" value="${board.NRefer}">
                             <i class="fas fa-trash-alt"></i>
                             <span>삭제</span>
