@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/home.css?after">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/modal.css?after">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/spinner.css?after">
 
 </head>
 
@@ -22,6 +23,9 @@
 
 <%--HEADER--%>
 <jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp"/>
+
+<%--SPINNER--%>
+<jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/include/spinner.jsp"/>
 
 <main>
     <!-- Carousel -->

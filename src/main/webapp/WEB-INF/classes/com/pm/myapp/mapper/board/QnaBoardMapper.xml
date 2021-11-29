@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pm.myapp.mapper.board.QnaBoardMapper">
+
+    <select id="getListWithPaging" resultType="com.pm.myapp.domain.board.QnaBoardListVO">
+        SELECT Q.QREFER, Q.QSUBJECT, Q.QCONTENT, Q.QDATE, Q.EMAIL ,U.NICKNAME, Q.READNUM
+        FROM QNABOARD Q
+        JOIN USERINFO U
+        ON Q.EMAIL = U.EMAIL
+        <choose>
+            <when test="searchWord==null">
+            </when>
+            <when test="option==1">
+                WHERE Q.QCONTENT like '%'||#{searchWord}||'%'
+                OR Q.QSUBJECT like '%'||#{searchWord}||'%'
+                OR U.NICKNAME like '%'||#{searchWord}||'%'
+            </when>
+            <when test="option==2">
+                WHERE U.NICKNAME like '%'||#{searchWord}||'%'
+            </when>
+            <when test="option==3">
+                WHERE Q.QSUBJECT like '%'||#{searchWord}||'%'
+            </when>
+            <when test="option==4">
+                WHERE Q.QCONTENT like '%'||#{searchWord}||'%'
+            </when>
+        </choose>
+        ORDER BY QREFER DESC
+        OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
+        FETCH NEXT #{cri.amount} ROWS ONLY
+
+    </select>
+
+    <select id="readQnaBoard" resultType="com.pm.myapp.domain.board.QnaBoardVO">
+        SELECT
+            Q.qrefer, Q.qsubject, Q.qcontent, Q.qdate, U.nickname, Q.readnum
+        FROM QNABOARD Q
+        JOIN USERINFO U ON Q.email = U.email
+        WHERE Q.qrefer = #{qrefer}
+
+    </select>
+
+    <insert id="writeQnaBoard">
+
+        INSERT INTO QNABOARD(QREFER, QSUBJECT, QCONTENT, QDATE, NICKNAME, EMAIL, READNUM)
+        VALUES(SEQ_QNABOARD.nextval, #{qsubject}, #{qcontent}, sysdate, 'YEONI', ${email}, 0)
+
+    </insert>
+
+    <select id="getTotalCount" resultType="Integer">
+
+        SELECT COUNT(Q.QREFER)
+        FROM QNABOARD Q
+        JOIN USERINFO U
+        ON Q.EMAIL = U.EMAIL
+        <choose>
+            <when test="searchWord==null">
+            </when>
+            <when test="option==1">
+                WHERE Q.QCONTENT like '%'||#{searchWord}||'%'
+                OR Q.QSUBJECT like '%'||#{searchWord}||'%'
+                OR U.NICKNAME like '%'||#{searchWord}||'%'
+            </when>
+            <when test="option==2">
+                WHERE U.NICKNAME like '%'||#{searchWord}||'%'
+            </when>
+            <when test="option==3">
+                WHERE Q.QSUBJECT like '%'||#{searchWord}||'%'
+            </when>
+            <when test="option==4">
+                WHERE Q.QCONTENT like '%'||#{searchWord}||'%'
+            </when>
+        </choose>
+
+
+    </select>
+
+    <update id="editQnaBoard" parameterType="com.pm.myapp.domain.board.QnaBoardDTO">
+        UPDATE QNABOARD
+        SET
+            QSUBJECT = #{qsubject},
+            QCONTENT = #{qcontent}
+        WHERE QREFER = #{qrefer}
+    </update>
+
+    <update id="readIt">
+        UPDATE QNABOARD
+        SET READNUM = READNUM + 1
+        WHERE QREFER = #{qrefer}
+    </update>
+
+    <select id="searchQnaBoard" resultType="com.pm.myapp.domain.board.QnaBoardSearchVO">
+
+            SELECT Q.QREFER, Q.QSUBJECT, Q.QCONTENT, Q.QDATE, U.EMAIL, U.NICKNAME, Q.READNUM
+            FROM QNABOARD Q
+            JOIN USERINFO U ON Q.EMAIL = U.EMAIL
+            <choose>
+                <when test = "option == '1'">
+                    WHERE U.NICKNAME LIKE CONCAT('%', #{keyword}, '%')
+                    OR Q.QCONTENT LIKE CONCAT('%', #{keyword}, '%')
+                    OR Q.QSUBJECT LIKE CONCAT('%', #{keyword}, '%')
+                </when>
+                <when test = "option == '2">
+                    WHERE U.NICKNAME LIKE CONCAT('%', #{keyword}, '%')
+                </when>
+                <when test = "option == '3'">
+                    WHERE Q.QSUBJECT LIKE CONCAT('%', #{keyword}, '%')
+                </when>
+                <when test = "option == '4'">
+                    WHERE Q.QCONTENT LIKE CONCAT('%', #{keyword}, '%')
+                </when>
+            </choose>
+            OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
+            FETCH NEXT #{cri.amount} ROWS ONLY
+
+    </select>
+
+    <!-- 총 게시물 개수 -->
+    <select id = "getTotalSearchCount" resultType = "Integer">
+
+        SELECT COUNT(Q.QREFER)
+        FROM QNABOARD Q
+        JOIN USERINFO U ON F.EMAIL = U.EMAIL
+        WHERE
+        <choose>
+            <when test = "option == '1'">
+                U.NICKNAME LIKE CONCAT('%', #{keyword}, '%')
+                OR Q.QCONTENT LIKE CONCAT('%', #{keyword}, '%')
+                OR Q.QSUBJECT LIKE CONCAT('%', #{keyword}, '%')
+            </when>
+            <when test = "option == '2">
+                U.NICKNAME LIKE CONCAT('%', #{keyword}, '%')
+            </when>
+            <when test = "option == '3'">
+                Q.QSUBJECT LIKE CONCAT('%', #{keyword}, '%')
+            </when>
+            <when test = "option == '4'">
+                Q.QCONTENT LIKE CONCAT('%', #{keyword}, '%')
+            </when>
+        </choose>
+    </select>
+
+    <delete id="deleteQnaBoard">
+        DELETE
+        FROM QNABOARD
+        WHERE QREFER=#{qrefer}
+    </delete>
+
+    <select id="getCommentListPaging" resultType = "com.pm.myapp.domain.board.QnaBoardReplyVO">
+        <![CDATA[
+            SELECT qrerefer, qrecontent, qredate, qrefer, email
+            FROM QNABOARDRE
+            WHERE QREFER = #{qrefer}
+            ORDER BY qrerefer desc
+            OFFSET (#{recri.reCurrPage}-1) * #{recri.reAmount} ROWS
+                FETCH NEXT #{recri.reAmount} ROWS ONLY
+        ]]>
+    </select>
+
+    <insert id="writeComment">
+
+        INSERT INTO QNABOARDRE(qrerefer, qrecontent, qredate, qrefer, email)
+        VALUES(SEQ_FREEBOARDRE.nextval, #{qrecontent}, sysdate, #{qrefer}, #{email})
+
+    </insert>
+
+    <select id="getTotalQnaReply" resultType="int">
+        <![CDATA[
+            SELECT COUNT(qrerefer)
+            FROM QNABOARDRE
+            WHERE qrefer = #{qrefer}
+        ]]>
+    </select>
+
+    <update id="editComment">
+        UPDATE QNABOARDRE
+        SET
+            QRECONTENT = #{qrecontent}
+        WHERE QREREFER = #{qrerefer}
+    </update>
+
+
+    <delete id="deleteComment">
+        DELETE
+        FROM QNABOARDRE
+        WHERE QREFER=#{qrefer}
+    </delete>
+
+
+
+
+</mapper>

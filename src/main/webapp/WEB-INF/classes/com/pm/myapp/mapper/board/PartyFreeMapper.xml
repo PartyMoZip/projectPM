@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pm.myapp.mapper.board.PartyFreeMapper">
+
+    <select id="getListWithPaging" resultType = "com.pm.myapp.domain.board.PartyFreeListVO">
+
+            SELECT PF.PFREFER, PF.PFDATE, PF.PFCONTENT , PF.PFSUBJECT, U.EMAIL, U.NICKNAME , PF.READNUM
+            FROM PARTYFREEBOARD PF
+            JOIN USERINFO U
+            ON PF.EMAIL = U.EMAIL
+            <choose>
+                <when test="searchWord==null">
+                </when>
+                <when test="option==1">
+                    WHERE PF.PFCONTENT like '%'||#{searchWord}||'%'
+                    OR PF.PFSUBJECT like '%'||#{searchWord}||'%'
+                    OR U.NICKNAME like '%'||#{searchWord}||'%'
+                </when>
+                <when test="option==2">
+                    WHERE U.NICKNAME like '%'||#{searchWord}||'%'
+                </when>
+                <when test="option==3">
+                    WHERE PF.PFSUBJECT like '%'||#{searchWord}||'%'
+                </when>
+                <when test="option==4">
+                    WHERE PF.PFCONTENT like '%'||#{searchWord}||'%'
+                </when>
+                </choose>
+                OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
+                FETCH NEXT #{cri.amount} ROWS ONLY
+
+    </select>
+
+    <select id="readPFreeBoard" resultType="com.pm.myapp.domain.board.PartyFreeVO">
+        SELECT PF.PFREFER, PF.PFDATE, PF.PFCONTENT, PF.PARTYCODE, PF.PFSUBJECT, PF.EMAIL, U.NICKNAME, PF.READNUM
+        FROM PARTYFREEBOARD PF
+        JOIN USERINFO U ON PF.EMAIL = U.EMAIL
+        WHERE PF.PFREFER = #{pfrefer} AND PF.PARTYCODE = #{partycode}
+    </select>
+
+    <select id="getTotalCount" resultType="int">
+        SELECT COUNT(PF.PFREFER)
+        FROM PARTYFREEBOARD PF
+        JOIN USERINFO U
+        ON PF.EMAIL = U.EMAIL
+        <choose>
+            <when test="searchWord==null">
+            </when>
+            <when test="option==1">
+                WHERE PF.PFCONTENT like '%'||#{searchWord}||'%'
+                OR PF.PFSUBJECT like '%'||#{searchWord}||'%'
+                OR U.NICKNAME like '%'||#{searchWord}||'%'
+            </when>
+            <when test="option==2">
+                WHERE U.NICKNAME like '%'||#{searchWord}||'%'
+            </when>
+            <when test="option==3">
+                WHERE PF.PFSUBJECT like '%'||#{searchWord}||'%'
+            </when>
+            <when test="option==4">
+                WHERE PF.PFCONTENT like '%'||#{searchWord}||'%'
+            </when>
+        </choose>
+    </select>
+
+    <insert id="writePFreeBoard">
+        INSERT INTO PARTYFREEBOARD(PFREFER, PFDATE, PFCONTENT, PARTYCODE, PFSUBJECT, EMAIL, READNUM)
+        VALUES(SEQ_PFREEBOARD.nextval, sysdate, #{pfcontent}, #{partycode}, #{pfsubject}, #{email}, 0)
+
+    </insert>
+
+    <update id="editPFreeBoard">
+        UPDATE PARTYFREEBOARD
+        SET
+            PFSUBJECT = #{pfsubject},
+            PFCONTENT = #{pfcontent}
+        WHERE PFREFER = #{pfrefer}
+
+    </update>
+
+    <select id="searchPartyFree" resultType="com.pm.myapp.domain.board.PartyFreeSearchVO">
+
+            SELECT PF.PFREFER, PF.PFSUBJECT, PF.PFCONTENT, PF.PFDATE, PF.email
+            FROM PARTYFREEBOARD PF
+            JOIN USERINFO U ON PF.email = U.email
+            WHERE
+            <choose>
+                <when test = "option == '1'">
+                U.EMAIL LIKE CONCAT('%', #{keyword}, '%')
+               OR PF.PFCONTENT LIKE CONCAT('%', #{keyword}, '%')
+               OR PF.PFSUBJECT LIKE CONCAT('%', #{keyword}, '%')
+                </when>
+                <when test = "option == '2">
+                U.EMAIL LIKE CONCAT('%', #{keyword}, '%')
+                </when>
+                <when test = "option == '3'">
+                PF.PFSUBJECT LIKE CONCAT('%', #{keyword}, '%')
+                </when>
+                <when test = "option == '4'">
+                PF.PFCONTENT LIKE CONCAT('%', #{keyword}, '%')
+                </when>
+            </choose>
+            OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
+            FETCH NEXT #{cri.amount} ROWS ONLY
+
+    </select>
+
+    <select id = "getTotalSearchCount" resultType="Integer">
+        SELECT COUNT(PF.PFREFER)
+        FROM PARTYFREEBOARD PF
+        JOIN USERINFO U ON PF.EMAIL = U.EMAIL
+        WHERE
+        <choose>
+            <when test = "option == '1'">
+                U.EMAIL LIKE CONCAT('%', #{keyword}, '%')
+                OR PF.PFCONTENT LIKE CONCAT('%', #{keyword}, '%')
+                OR PF.PFSUBJECT LIKE CONCAT('%', #{keyword}, '%')
+            </when>
+            <when test = "option == '2">
+                U.EMAIL LIKE CONCAT('%', #{keyword}, '%')
+            </when>
+            <when test = "option == '3'">
+                PF.PFSUBJECT LIKE CONCAT('%', #{keyword}, '%')
+            </when>
+            <when test = "option == '4'">
+                PF.PFCONTENT LIKE CONCAT('%', #{keyword}, '%')
+            </when>
+        </choose>
+
+    </select>
+
+    <delete id="deletePFreeBoard">
+        DELETE
+        FROM PARTYFREEBOARD
+        WHERE PFREFER = #{pfRefer}
+
+    </delete>
+
+    <select id="getCommentListPaging" resultType = "com.pm.myapp.domain.board.PartyFreeReplyVO">
+
+        <![CDATA[
+            SELECT PF.pfrerefer, u.nickname, PF.pfrecontent, PF.pfredate, PF.pfrefer
+            FROM PARTYFREERE PF
+            JOIN USERINFO U ON PF.email = u.email
+            WHERE PFREFER = #{pfrefer} and PARTYCODE = #{partycode}
+            ORDER BY pfrerefer desc
+            OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
+            FETCH NEXT #{cri.amount} ROWS ONLY
+        ]]>
+
+    </select>
+
+    <insert id="writeComment">
+
+        INSERT INTO PARTYFREERE(pfrerefer, pfrecontent, pfredate, pfrefer, partycode, email)
+        VALUES(SEQ_PFREEBOARDRE.nextval, #{pfrecontent}, sysdate,#{pfrefer}, #{partycode}, #{email})
+
+    </insert>
+
+    <select id="getTotalReply" resultType="int">
+        <![CDATA[
+        SELECT COUNT(pfrerefer)
+        FROM PARTYFREERE
+        WHERE pfrerefer > 0
+        ]]>
+    </select>
+
+    <update id="editComment">
+        UPDATE PARTYFREERE
+        SET
+            PFRECONTENT = #{pfrecontent}
+        WHERE partycode = #{partycode} and pfrerefer = #{pfrerefer}
+    </update>
+
+
+    <delete id="deleteComment">
+        DELETE
+        FROM PARTYFREERE
+        WHERE PFREREFER=#{pfrerefer} and partycode = #{partycode}
+
+    </delete>
+
+
+</mapper>

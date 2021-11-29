@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pm.myapp.mapper.board.NoticeBoardMapper">
+
+    <select id="getListWithPaging" resultType="com.pm.myapp.domain.board.NoticeBoardListVO">
+
+        SELECT N.NREFER, N.NSUBJECT, N.NCONTENT, N.NDATE, U.EMAIL ,U.NICKNAME, N.READNUM
+        FROM NOTICEBOARD N
+        JOIN USERINFO U
+        ON N.EMAIL = U.EMAIL
+        <choose>
+            <when test="searchWord==null">
+            </when>
+            <when test="option==1">
+                WHERE N.NCONTENT like '%'||#{searchWord}||'%'
+                OR N.NSUBJECT like '%'||#{searchWord}||'%'
+                OR U.NICKNAME like '%'||#{searchWord}||'%'
+            </when>
+            <when test="option==2">
+                WHERE U.NICKNAME like '%'||#{searchWord}||'%'
+            </when>
+            <when test="option==3">
+                WHERE N.NSUBJECT like '%'||#{searchWord}||'%'
+            </when>
+            <when test="option==4">
+                WHERE N.NCONTENT like '%'||#{searchWord}||'%'
+            </when>
+        </choose>
+        ORDER BY NREFER DESC
+        OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
+        FETCH NEXT #{cri.amount} ROWS ONLY
+
+    </select>
+
+    <select id="readNoticeBoard" resultType="com.pm.myapp.domain.board.NoticeBoardVO">
+        SELECT n.nrefer, n.nsubject, n.ncontent, n.ndate, u.nickname,u.email, n.readnum
+        FROM NOTICEBOARD N
+        JOIN USERINFO U ON N.email = U.email
+        WHERE NREFER = #{nrefer}
+
+    </select>
+
+
+    <insert id="writeNoticeBoard">
+
+        INSERT INTO NOTICEBOARD(NREFER, NSUBJECT, NCONTENT, NDATE, NICKNAME, EMAIL, READNUM)
+        VALUES(SEQ_NOTICEBOARD.nextval, #{nSubject}, #{nContent}, sysdate, '관리자', 'test2@test.com', 0)
+
+    </insert>
+
+    <select id="getTotalCount" resultType="Integer">
+
+        SELECT COUNT(N.NREFER)
+        FROM NOTICEBOARD N
+        JOIN USERINFO U
+        ON N.EMAIL = U.EMAIL
+        <choose>
+            <when test="searchWord==null">
+            </when>
+            <when test="option==1">
+                WHERE N.NCONTENT like '%'||#{searchWord}||'%'
+                OR N.NSUBJECT like '%'||#{searchWord}||'%'
+                OR U.NICKNAME like '%'||#{searchWord}||'%'
+            </when>
+            <when test="option==2">
+                WHERE U.NICKNAME like '%'||#{searchWord}||'%'
+            </when>
+            <when test="option==3">
+                WHERE N.NSUBJECT like '%'||#{searchWord}||'%'
+            </when>
+            <when test="option==4">
+                WHERE N.NCONTENT like '%'||#{searchWord}||'%'
+            </when>
+        </choose>
+
+    </select>
+
+    <select id = "searchNoticeBoard" resultType="com.pm.myapp.domain.board.NoticeBoardSearchVO">
+
+        SELECT N.NREFER, N.NSUBJECT, N.NCONTENT, N.NDATE, U.EMAIL ,U.NICKNAME, N.READNUM
+        FROM NOTICEBOARD N
+        JOIN USERINFO U ON N.EMAIL = U.EMAIL
+        <choose>
+        <when test = "option == '1'">
+            WHERE U.NICKNAME LIKE CONCAT('%', #{keyword}, '%')
+            OR N.NCONTENT LIKE CONCAT('%', #{keyword}, '%')
+            OR N.NSUBJECT LIKE CONCAT('%', #{keyword}, '%')
+        </when>
+        <when test = "option == '2">
+            WHERE U.NICKNAME LIKE CONCAT('%', #{keyword}, '%')
+        </when>
+        <when test = "option == '3'">
+            WHERE N.NSUBJECT LIKE CONCAT('%', #{keyword}, '%')
+        </when>
+        <when test = "option == '4'">
+            WHERE N.NCONTENT LIKE CONCAT('%', #{keyword}, '%')
+        </when>
+        </choose>
+        OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
+        FETCH NEXT #{cri.amount} ROWS ONLY
+
+    </select>
+
+    <!-- 검색 게시물 조회 -->
+    <select id = "getTotalSearchCount" resultType = "Integer">
+
+        SELECT COUNT(N.NREFER)
+        FROM NOTICEBOARD N
+        JOIN USERINFO U ON N.EMAIL = U.EMAIL
+        WHERE
+        <choose>
+            <when test = "option == '1'">
+                U.NICKNAME LIKE CONCAT('%', #{keyword}, '%')
+                OR N.NCONTENT LIKE CONCAT('%', #{keyword}, '%')
+                OR N.NSUBJECT LIKE CONCAT('%', #{keyword}, '%')
+            </when>
+            <when test = "option == '2">
+                U.NICKNAME LIKE CONCAT('%', #{keyword}, '%')
+            </when>
+            <when test = "option == '3'">
+                N.NSUBJECT LIKE CONCAT('%', #{keyword}, '%')
+            </when>
+            <when test = "option == '4'">
+                N.NCONTENT LIKE CONCAT('%', #{keyword}, '%')
+            </when>
+        </choose>
+
+    </select>
+
+    <update id="editNoticeBoard" parameterType="com.pm.myapp.domain.board.NoticeBoardDTO">
+        UPDATE NOTICEBOARD
+        SET
+            nsubject = #{nSubject},
+            ncontent = #{nContent}
+        WHERE nrefer = #{nRefer}
+    </update>
+
+    <update id="readIt">
+        UPDATE NOTICEBOARD
+        SET READNUM = READNUM + 1
+        WHERE NREFER = #{nrefer}
+    </update>
+
+    <delete id="deleteNoticeBoard">
+        DELETE
+        FROM NOTICEBOARD
+        WHERE NREFER=#{nRefer}
+    </delete>
+
+
+</mapper>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pm.myapp.mapper.PartyMapper">
+
+    <select id="checkIt" resultType="com.pm.myapp.domain.PartyMemberCheckVO">
+
+        SELECT PARTYCODE
+        FROM PARTYUSER
+    <![CDATA[ 
+        WHERE EMAIL = #{email}
+          AND AUTHCODE > 0
+        ]]>
+
+    </select>
+
+    <select id="getInfo" resultType="com.pm.myapp.domain.PartyVO">
+
+        SELECT (SELECT COUNT(authcode) FROM partyuser WHERE partycode = #{partyCode}) count,
+               P.PARTYCODE,
+               P.PARTYNAME,
+               P.PARTYSCORE,
+               P.CREATEDATE,
+               P.LOGOPIC,
+               P.COVERPIC,
+               P.PARTYPROFILE,
+               P.PARTYBANNED,
+               L.LOCALNAME,
+               H.HOBBYNAME
+        FROM PARTY p
+                 JOIN HOBBY h ON p.HOBBYCODE = h.HOBBYCODE
+                 JOIN LOCALINFO l ON l.LOCALCODE = p.LOCALCODE
+        WHERE P.PARTYCODE = #{partyCode}
+        GROUP BY P.PARTYCODE, P.PARTYNAME, P.PARTYSCORE, P.CREATEDATE, P.LOGOPIC,
+                 P.COVERPIC, P.PARTYPROFILE, P.PARTYBANNED, L.LOCALNAME, H.HOBBYNAME
+
+    </select>
+
+    <insert id="makeJoin">
+
+        INSERT INTO PARTYUSER(EMAIL, PARTYCODE, AUTHCODE)
+        VALUES (#{email}, #{partyCode}, -1)
+
+    </insert>
+
+    <delete id="deleteJoin">
+
+        DELETE
+        FROM PARTYUSER
+        WHERE EMAIL = #{email}
+          AND PARTYCODE = #{partyCode}
+
+    </delete>
+
+    <update id="modifyInfo" parameterType="map">
+
+        UPDATE party
+        SET PARTYNAME = #{partyName},
+        PARTYPROFILE = #{partyProfile}
+        <if test="!fileLocation.equals('')">
+            , COVERPIC = #{fileLocation}
+        </if>
+        WHERE PARTYCODE = #{partyCode}
+
+    </update>
+
+    <update id="makeDesPartyReq">
+
+        UPDATE PARTY
+        SET PARTYBANNED = -1
+        WHERE PARTYCODE = #{partyCode}
+
+    </update>
+
+    <update id="delegatePL">
+
+        UPDATE PARTYUSER
+        SET AUTHCODE = #{authCode}
+        WHERE EMAIL = #{email}
+          AND PARTYCODE = #{partyCode}
+
+    </update>
+
+    <update id="upgradeJoin">
+
+        UPDATE PARTYUSER
+        SET AUTHCODE = 1
+        WHERE EMAIL = #{email}
+          AND PARTYCODE = #{partyCode}
+
+    </update>
+
+    <select id="getMember" resultType="com.pm.myapp.domain.PartyUserVO">
+    
+    <![CDATA[ 
+    SELECT U.NICKNAME, U.USERPIC, U.EMAIL
+    FROM (SELECT * FROM PARTYUSER
+    WHERE PARTYCODE = #{partyCode}
+    ORDER BY AUTHCODE DESC) T
+    JOIN USERINFO U
+    ON T.EMAIL = U.EMAIL
+    WHERE T.AUTHCODE > 0
+    OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
+	FETCH NEXT #{cri.amount} ROWS ONLY
+    ]]>
+    
+    </select>
+
+    <select id="getPartyMN" resultType="int">
+    
+    <![CDATA[
+        SELECT COUNT(U.NICKNAME)
+        FROM (SELECT *
+              FROM PARTYUSER
+              WHERE PARTYCODE = #{partyCode}
+              ORDER BY AUTHCODE DESC) T
+                 JOIN USERINFO U
+                      ON T.EMAIL = U.EMAIL
+        WHERE T.AUTHCODE > 0
+        ]]>
+    
+    </select>
+
+    <select id="getMakingList" resultType="com.pm.myapp.domain.UserDTO">
+    	
+    	SELECT ROWNUM, U.NICKNAME, P.EMAIL
+    	FROM PARTYUSER P
+    	JOIN USERINFO U
+    	ON P.EMAIL = U.EMAIL
+    	WHERE P.PARTYCODE = #{partyCode} AND P.AUTHCODE = -1
+    	OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
+		FETCH NEXT #{cri.amount} ROWS ONLY
+
+    </select>
+
+    <select id="getTotalMakingList" resultType="Integer">
+
+        SELECT COUNT(EMAIL)
+        FROM PARTYUSER
+        WHERE PARTYCODE = #{partyCode}
+          AND AUTHCODE = -1
+
+    </select>
+
+
+</mapper>
