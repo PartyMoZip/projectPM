@@ -14,7 +14,7 @@
     <jsp:include
             page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp"/>
     <jsp:include
-            page="${pageContext.request.contextPath}/WEB-INF/views/include/partyMainTab.jsp" />
+            page="${pageContext.request.contextPath}/WEB-INF/views/include/partynav.jsp" />
 
     <form action = "/partyphoto/edit" method="post" enctype="multipart/form-data">
         <input type="hidden" name="prefer" value="${__DETAIL__.prefer}">
