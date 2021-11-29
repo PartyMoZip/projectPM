@@ -459,6 +459,11 @@ public class PartyPhotoController {
 		
 		model.addAttribute("__MYHEART__", heartCheck);
 		
+		// 총 좋아요 개수 불러오기
+		Integer totalHeart = this.service.getTotalPartyPhotoHeart(hdto.getPrefer(),hdto.getPartyCode());
+		log.info("\t+ totalHeart : {}",totalHeart);
+		model.addAttribute("__TOTALHEART__", totalHeart);
+		
 		rttrs.addAttribute("prefer", hdto.getPrefer());
 		rttrs.addAttribute("partyCode", hdto.getPartyCode());
 		rttrs.addAttribute("currPage", cri.getCurrPage());

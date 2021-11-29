@@ -19,9 +19,9 @@ public class ReportServiceImpl implements ReportService{
 	private ReportMapper mapper;
 	
 	@Override
-	public boolean reportBlackParty(Integer partyCode) {
+	public boolean reportBlackParty(String email, Integer partyCode) {
 		
-		//Integer checkReport = this.mapper.checkReportParty(partyCode);
+		Integer checkReport = this.mapper.checkReportParty(email, partyCode);
 		
 		Integer report = this.mapper.reportParty(partyCode);
 		

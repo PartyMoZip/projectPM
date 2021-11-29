@@ -31,10 +31,10 @@ public class ReportController {
 	
 	// 파티 신고
 	@PostMapping("/doReportParty")
-	public void doReportParty(Integer partyCode) {
+	public void doReportParty(String email, Integer partyCode) {
 		log.debug("doReportParty() invoked.");
 		
-		boolean result = this.service.reportBlackParty(partyCode);
+		boolean result = this.service.reportBlackParty(email,partyCode);
 		
 		
 	} // doReportParty
