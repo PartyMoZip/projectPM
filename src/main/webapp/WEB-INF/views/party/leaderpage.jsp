@@ -31,6 +31,9 @@
 		page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp" />
 	<jsp:include
 		page="${pageContext.request.contextPath}/WEB-INF/views/include/partynav.jsp" />
+  
+  <%--SPINNER--%>
+<jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/include/spinner.jsp"/>
 
 	<%-- <h1>/WEB-INF/views/party/showLeaderPage.jsp</h1>
       <hr>

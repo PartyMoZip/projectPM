@@ -3,11 +3,7 @@ package com.pm.myapp.controller.partyfm;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.pm.myapp.aws.AwsUpload;
-import com.pm.myapp.domain.Criteria;
-import com.pm.myapp.domain.PageDTO;
-import com.pm.myapp.domain.PartyUserVO;
-import com.pm.myapp.domain.PartyVO;
-import com.pm.myapp.domain.UserDTO;
+import com.pm.myapp.domain.*;
 import com.pm.myapp.service.partyfm.PartyService;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -106,22 +102,22 @@ public class PartyController {
     @GetMapping("/leaderpage")
     public void showLeaderPage(Integer partyCode, Model model, @ModelAttribute("cri") Criteria cri) {
         log.debug("showLeaderPage({}) invoked.", partyCode);
-        
+
         PartyVO party = this.service.getParty(partyCode);
         log.info("\t + party : {}", party);
 
         List<UserDTO> member = this.service.getJoinMakingList(partyCode, cri);
         log.info("\t + member : {}", member);
-        
+
         Integer totalNum = this.service.getTotalJoinMakeMember(partyCode);
         log.info("\t + totalNum : {}", totalNum);
-        
-	    PageDTO pageDTO = new PageDTO(cri, totalNum);		
+
+        PageDTO pageDTO = new PageDTO(cri, totalNum);
 
         model.addAttribute("__PARTY__", party);
         model.addAttribute("__MEMBER__", member);
-	    model.addAttribute("pageMaker", pageDTO);
-        
+        model.addAttribute("pageMaker", pageDTO);
+
     } // showLeaderPage
 
     // 파티 로고 등록/변경 [작동]
@@ -173,129 +169,132 @@ public class PartyController {
 
         Map<String, Object> data = new HashMap<>();
 
+        if (!imageUrl.equals("")) {
+            data.put("fileLocation", imageUrl);
+        } // if
+
         data.put("partyName", partyName);
         data.put("partyProfile", partyProfile);
-        data.put("fileLocation", fileLocation);
 
         return data;
 
     } // editPartyProfile
-   
-//	// 파티 정보 변경 [작동]
-//	@PostMapping("/editparty")
-//	public String editParty(PartyDTO dto, RedirectAttributes rttrs) {
-//		log.debug("editParty({}, {}) invoked.",dto);
-//		
-//		boolean result = this.service.editInfo(dto);
-//		log.info("\t + result : {}", result);
-//		
-//		int partyCode = dto.getPartyCode();
-//
-//		rttrs.addAttribute("partyCode",partyCode);
-//		
-//		return "redirect:/party/leaderpage";
-//		
-//	} // editParty
-	
-	// 파티 해체 [작동]
-	@PostMapping("/dobreak")
-	public String doBreakParty(Integer partyCode) {
-		log.debug("doBreakParty({}) invoked.",partyCode);
-		// 신고수 -1로 만들기
-		
-		boolean result = this.service.breakParty(partyCode);
-		log.info("\t + result : {}",result);
-		
-		return "redirect:/";
 
-	} // doBreakParty
-		
-	// 파티장 권한 위임 [작동]
-	@PostMapping("/editleader")
-	@Transactional
-	public String editPartyLeader(
-			String leaderEmail, String memberEmail,
-			Integer partyCode, RedirectAttributes rttrs) {
-		log.debug("editPartyLeader({}, {}, {}) invoked.",leaderEmail,memberEmail,partyCode);
-		// 대상 인물 : 권한코드 2 ( 파티장 )
-		// 기존 파티장 : 권한코드 1 ( 파티원 )
-		boolean result1 = this.service.editPL(1, leaderEmail, partyCode);
-		boolean result2 = this.service.editPL(2, memberEmail, partyCode);
-		log.info("\t + result1 & result2 : {} & {}",result1, result2);
+    //	// 파티 정보 변경 [작동]
+    //	@PostMapping("/editparty")
+    //	public String editParty(PartyDTO dto, RedirectAttributes rttrs) {
+    //		log.debug("editParty({}, {}) invoked.",dto);
+    //
+    //		boolean result = this.service.editInfo(dto);
+    //		log.info("\t + result : {}", result);
+    //
+    //		int partyCode = dto.getPartyCode();
+    //
+    //		rttrs.addAttribute("partyCode",partyCode);
+    //
+    //		return "redirect:/party/leaderpage";
+    //
+    //	} // editParty
 
-		rttrs.addAttribute("partyCode",partyCode);
-		
-		return "redirect:/party/showmain";
-		
-	} // editPartyLeaderu    
-	
-	// 파티 가입 승인 [작동]
-	@PostMapping("/do-accept-join")
-	public String doAcceptJoin(String[] email, Integer partyCode, RedirectAttributes rttrs, Criteria cri) {
-		log.debug("doAcceptJoin({}, {}) invoked.",email.toString(),partyCode);
-		// 권한코드 -1 인지 확인 : 권한코드 1로 변경
-					
-		for(String emaillist : email) {
-			boolean result = this.service.acceptJoin(emaillist, partyCode);
-			log.info("\t + result : {}",result);
-		} // advanced-for
+    // 파티 해체 [작동]
+    @PostMapping("/dobreak")
+    public String doBreakParty(Integer partyCode) {
+        log.debug("doBreakParty({}) invoked.", partyCode);
+        // 신고수 -1로 만들기
 
-		rttrs.addAttribute("partyCode",partyCode);
-		rttrs.addAttribute("currPage",cri.getCurrPage());
-		
-		return "redirect:/party/leaderpage";
-		
-	} // doAcceptJoin
-	
-	// 파티 가입 거절 [작동]
-	@PostMapping("/do-reject-join")
-	public String doRejectJoin(String[] email, Integer partyCode, RedirectAttributes rttrs, Criteria cri) {
-		log.debug("doRejectJoin({}, {}) invoked.",email.toString(),partyCode);
-		// 해당 이메일인지 : 해당 컬럼 삭제
-		
-		for(String emaillist : email) {
-			boolean result = this.service.rejectJoin(emaillist, partyCode);
-			log.info("\t + result : {}",result);
-		} // advanced-for
-		
-		rttrs.addAttribute("partyCode",partyCode);
-		rttrs.addAttribute("currPage",cri.getCurrPage());
-		
-		return "redirect:/party/leaderpage";
-		
-	} // doRejectJoin
-	
-	// 파티원 목록 조회 [작동]
-	@GetMapping("/memberlist")
-	public void showMemberList(@ModelAttribute("cri") Criteria cri,Integer partyCode, Model model) {
-		log.debug("showMemberList() invoked.");
-		// 해당 파티코드인지, 권한코드 1이상 인지 : 이메일 JOIN 으로 부르기
-		
-		List<PartyUserVO> user = this.service.showMember(partyCode, cri);
-		
-		model.addAttribute("__USER__", user);
-		
-	    Integer totalAmount = this.service.getTotalMember(partyCode);
-	    PageDTO pageDTO = new PageDTO(cri, totalAmount);
-			
-	    model.addAttribute("pageMaker", pageDTO);
-		
-	} // showMemberList
-	
-	// 파티원 추방 [작동]
-	@PostMapping("/dokick")
-	public String doKickMember(String email[], Integer partyCode, RedirectAttributes rttrs) {
-		log.debug("doKickMember() invoked.");
-		// 해당 이메일인지 : 해당 컬럼 삭제
-		
-		for(String emaillist : email) {
-			boolean result = this.service.kickMember(emaillist, partyCode);
-			log.info("\t + result : {}",result);
-		} // advanced-for
-		rttrs.addAttribute("partyCode", partyCode);
-		
-		return "redirect:/party/leaderpage";
+        boolean result = this.service.breakParty(partyCode);
+        log.info("\t + result : {}", result);
 
-	} // doKickMember
-	
+        return "redirect:/";
+
+    } // doBreakParty
+
+    // 파티장 권한 위임 [작동]
+    @PostMapping("/editleader")
+    @Transactional
+    public String editPartyLeader(
+            String leaderEmail, String memberEmail,
+            Integer partyCode, RedirectAttributes rttrs) {
+        log.debug("editPartyLeader({}, {}, {}) invoked.", leaderEmail, memberEmail, partyCode);
+        // 대상 인물 : 권한코드 2 ( 파티장 )
+        // 기존 파티장 : 권한코드 1 ( 파티원 )
+        boolean result1 = this.service.editPL(1, leaderEmail, partyCode);
+        boolean result2 = this.service.editPL(2, memberEmail, partyCode);
+        log.info("\t + result1 & result2 : {} & {}", result1, result2);
+
+        rttrs.addAttribute("partyCode", partyCode);
+
+        return "redirect:/party/showmain";
+
+    } // editPartyLeaderu
+
+    // 파티 가입 승인 [작동]
+    @PostMapping("/do-accept-join")
+    public String doAcceptJoin(String[] email, Integer partyCode, RedirectAttributes rttrs, Criteria cri) {
+        log.debug("doAcceptJoin({}, {}) invoked.", email.toString(), partyCode);
+        // 권한코드 -1 인지 확인 : 권한코드 1로 변경
+
+        for (String emaillist : email) {
+            boolean result = this.service.acceptJoin(emaillist, partyCode);
+            log.info("\t + result : {}", result);
+        } // advanced-for
+
+        rttrs.addAttribute("partyCode", partyCode);
+        rttrs.addAttribute("currPage", cri.getCurrPage());
+
+        return "redirect:/party/leaderpage";
+
+    } // doAcceptJoin
+
+    // 파티 가입 거절 [작동]
+    @PostMapping("/do-reject-join")
+    public String doRejectJoin(String[] email, Integer partyCode, RedirectAttributes rttrs, Criteria cri) {
+        log.debug("doRejectJoin({}, {}) invoked.", email.toString(), partyCode);
+        // 해당 이메일인지 : 해당 컬럼 삭제
+
+        for (String emaillist : email) {
+            boolean result = this.service.rejectJoin(emaillist, partyCode);
+            log.info("\t + result : {}", result);
+        } // advanced-for
+
+        rttrs.addAttribute("partyCode", partyCode);
+        rttrs.addAttribute("currPage", cri.getCurrPage());
+
+        return "redirect:/party/leaderpage";
+
+    } // doRejectJoin
+
+    // 파티원 목록 조회 [작동]
+    @GetMapping("/memberlist")
+    public void showMemberList(@ModelAttribute("cri") Criteria cri, Integer partyCode, Model model) {
+        log.debug("showMemberList() invoked.");
+        // 해당 파티코드인지, 권한코드 1이상 인지 : 이메일 JOIN 으로 부르기
+
+        List<PartyUserVO> user = this.service.showMember(partyCode, cri);
+
+        model.addAttribute("__USER__", user);
+
+        Integer totalAmount = this.service.getTotalMember(partyCode);
+        PageDTO pageDTO = new PageDTO(cri, totalAmount);
+
+        model.addAttribute("pageMaker", pageDTO);
+
+    } // showMemberList
+
+    // 파티원 추방 [작동]
+    @PostMapping("/dokick")
+    public String doKickMember(String email[], Integer partyCode, RedirectAttributes rttrs) {
+        log.debug("doKickMember() invoked.");
+        // 해당 이메일인지 : 해당 컬럼 삭제
+
+        for (String emaillist : email) {
+            boolean result = this.service.kickMember(emaillist, partyCode);
+            log.info("\t + result : {}", result);
+        } // advanced-for
+        rttrs.addAttribute("partyCode", partyCode);
+
+        return "redirect:/party/leaderpage";
+
+    } // doKickMember
+
 } // end class

@@ -7,6 +7,7 @@ const selectBtn = document.querySelector(".select-btn");
 const saveBtn = document.querySelector(".save-btn");
 const inputWithdrawal = document.querySelector('.input-withdrawal')
 const withdrawalBtn = document.querySelector('.withdrawal-btn');
+const spinner = document.querySelector('.spinner');
 const formData = new FormData();
 
 
@@ -28,11 +29,6 @@ const handleProfileSubmit = (e) => {
         formData.append("fileLocation", inputFile.files[0]);
     } // if
 
-
-    for (let pair of formData.entries()) {
-        console.log(pair[0] + ', ' + pair[1]);
-    }
-
     console.log(formData);
 
     fetch(`/party/edit-profile`, {
@@ -40,21 +36,26 @@ const handleProfileSubmit = (e) => {
         headers: {},
         body: formData,
     })
-        .then((res) => res.json())
-        .then((data) => {
-            console.log(data);
+        .then((res) => {
+            spinner.classList.remove('hide');
 
-            if (!data.fileLocation === undefined || data.fileLocation != null) {
-                profileImg.setAttribute("src", data.fileLocation);
-            }
+            res.json().then((data) => {
+                spinner.classList.add('hide');
+                console.log(data);
 
-            inputPartyName.value = data.partyName;
-            inputProfile.innerHTML = data.partyProfile;
-            Swal.fire("수정 성공", "수정이 완료되었습니다.", "success")
+                if (!data.fileLocation === undefined || data.fileLocation != null) {
+                    profileImg.setAttribute("src", data.fileLocation);
+                }
+
+                inputPartyName.value = data.partyName;
+                inputProfile.innerHTML = data.partyProfile;
+                Swal.fire("수정 성공", "수정이 완료되었습니다.", "success")
+            })
+                .catch((err) => {
+                    console.log(err);
+                });
         })
-        .catch((err) => {
-            console.log(err);
-        });
+
 } // handleProfileSubmit
 
 // 이미지 업로드 버튼
