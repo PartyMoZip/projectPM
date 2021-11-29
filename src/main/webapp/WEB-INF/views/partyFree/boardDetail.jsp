@@ -140,8 +140,8 @@
 
                 </div>
                 <div class="container-btnGroup d-flex justify-content-end">
-                    <%--                                        <c:set value="${sessionScope.id}" var="id"/>--%>
-                    <%-- <c:if test="${boardDetail.nickname eq nickname}">--%>
+                <c:set value="${sessionScope.__AUTH__.nickname}" var="nickname"/>
+                <c:if test="${boardDetail.nickname eq nickname}">
                     <button type="button" class="btn btn-primary btn-sm"
                             onclick="location.href='/partyfree/editPFBoardView?pfrefer=${boardDetail.pfrefer}'">
                         <i class="fas fa-pen"></i>
@@ -154,7 +154,7 @@
                             <span>삭제</span>
                         </button>
                     </form>
-                    <%--  </c:if>--%>
+                    </c:if>
                     <button type="button" class="btn btn-primary btn-sm"
                             onclick="location.href='/partyfree/getPFreeBoardList?currPage=${cri.currPage}'">
                         <i class="fas fa-list-ul"></i>

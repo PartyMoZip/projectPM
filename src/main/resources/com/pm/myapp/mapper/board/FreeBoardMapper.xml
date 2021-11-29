@@ -80,12 +80,12 @@
 
     </select>
 
-    <update id="updateFreeBoard">
+    <update id="updateFreeBoard" parameterType="com.pm.myapp.domain.board.FreeBoardDTO">
         UPDATE FREEBOARD
         SET
             FSUBJECT = #{fSubject},
             FCONTENT = #{fContent}
-        WHERE FREFER = #{fRefer}
+            WHERE FREFER = #{fRefer}
     </update>
 
     <update id="readIt">

@@ -148,7 +148,7 @@
         WHERE QREFER=#{qrefer}
     </delete>
 
-    <select id="getCommentListPaging" resultType = "com.pm.myapp.domain.board.QnaBoardReplyVO">
+    <select id="getCommentListPaging" resultType = "com.pm.myapp.domain.board.QnaBoardReplyDTO">
         <![CDATA[
         SELECT QRE.QREREFER, QRE.QRECONTENT, QRE.QREDATE, QRE.QREFER, QRE.EMAIL ,U.NICKNAME
         FROM QNABOARDRE QRE
@@ -162,10 +162,8 @@
     </select>
 
     <insert id="writeComment">
-
         INSERT INTO QNABOARDRE(qrerefer, qrecontent, qredate, qrefer, email)
         VALUES(SEQ_FREEBOARDRE.nextval, #{qrecontent}, sysdate, #{qrefer}, #{email})
-
     </insert>
 
     <select id="getTotalQnaReply" resultType="int">

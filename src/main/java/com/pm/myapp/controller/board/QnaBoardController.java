@@ -67,6 +67,7 @@ public class QnaBoardController {
             Integer qrefer, Model model) {
 		log.debug("showQnaDetail({}, {}) invoked.", cri, qrefer);
 
+        // 게시판 조회수 증가
         boolean readOk = this.service.readQnaBoard(qrefer);
         if(readOk) {
             log.info("문의 게시판 {}번 글 읽기 성공", qrefer);
@@ -77,9 +78,11 @@ public class QnaBoardController {
 		log.info("\t + boardDetail : {}", boardDetail);
         model.addAttribute("boardDetail", boardDetail);
 
-        List<QnaBoardReplyVO> reply = this.service.getReply(qrefer, recri);
+        // 댓글 목록 불러오기
+        List<QnaBoardReplyDTO> reply = this.service.getReply(qrefer, recri);
         model.addAttribute("reply", reply);
 
+        // 댓글 총 개수 구하기
         Integer totalAmount = this.service.getTotalQnaReplyList(qrefer);
 
         // 댓글 페이지네이션
@@ -164,7 +167,7 @@ public class QnaBoardController {
 	// 문의 게시판  - 댓글 작성
 	@PostMapping("/writeComment")
 	public String writeComment(
-            Integer qrefer,
+            @ModelAttribute("qrefer") Integer qrefer,
             QnaBoardReplyDTO qnaReply,
             @ModelAttribute("cri") Criteria cri,
             @ModelAttribute("recri") ReplyCriteria recri,
@@ -173,6 +176,8 @@ public class QnaBoardController {
 
 		boolean result = this.service.writeReply(qnaReply);
 		rttrs.addAttribute("qrefer", qrefer);
+        rttrs.addAttribute("currPage", cri.getCurrPage());
+        rttrs.addAttribute("reCurrPage", recri.getReCurrPage());
 
 		return "redirect:/qnaboard/showQnaDetail";
 
@@ -190,6 +195,8 @@ public class QnaBoardController {
 		boolean result = this.service.editReply(qnaReply);
 		rttrs.addAttribute("resultEdit", result);
         rttrs.addAttribute("qrefer", qnaReply.getQrefer());
+        rttrs.addAttribute("currPage", cri.getCurrPage());
+        rttrs.addAttribute("reCurrPage", recri.getReCurrPage());
 
         return "redirect:/qnaboard/showQnaDetail";
 	} // editComment
@@ -205,6 +212,8 @@ public class QnaBoardController {
 
 		boolean result = this.service.deleteReply(qrerefer);
 		rttrs.addAttribute("resultDelete",result);
+        rttrs.addAttribute("currPage", cri.getCurrPage());
+        rttrs.addAttribute("reCurrPage", recri.getReCurrPage());
 
         return "redirect:/qnaboard/showQnaDetail";
 	} // deleteComment

@@ -59,20 +59,22 @@
                 </div>
 
                 <div class="container-btnGroup d-flex justify-content-end">
-                    <button type="button" class="btn btn-primary btn-sm"
-                            onclick="location.href='/noticeboard/editNoticeBoardView?nrefer=${board.NRefer}'">
-                        <i class="fas fa-pen"></i>
-                        <span>수정</span>
-                    </button>
-
-                    <button type="submit" id="deleteButton" class="btn btn-primary btn-sm">
-                        <form action="/noticeboard/deleteNoticeBoard" name="deleteButton" method="post" style="margin-bottom: 0px;">
-                            <input type="hidden" id="nRefer" name="nrefer" value="${board.NRefer}">
-                            <i class="fas fa-trash-alt"></i>
-                            <span>삭제</span>
+                    <c:set value="${sessionScope.__AUTH__.nickname}" var="nickname"/>
+                    <c:if test="${boardDetail.nickname eq nickname}">
+                        <button type="button" class="btn btn-primary btn-sm"
+                                onclick="location.href='/noticeboard/editNoticeBoardView?nrefer=${board.NRefer}'">
+                            <i class="fas fa-pen"></i>
+                            <span>수정</span>
+                        </button>
+                        <form action="/noticeboard/deleteNoticeBoard" name="deleteButton" method="post"
+                              style="margin-bottom: 0px;">
+                            <button type="submit" id="deleteButton" class="btn btn-primary btn-sm">
+                                <input type="hidden" id="nRefer" name="nrefer" value="${board.NRefer}">
+                                <i class="fas fa-trash-alt"></i>
+                                <span>삭제</span>
+                            </button>
                         </form>
-                    </button>
-                    <%--  </c:if>--%>
+                    </c:if>
                     <button type="button" class="btn btn-primary btn-sm"
                             onclick="location.href='/noticeboard/getNoticeBoardList?currPage=${cri.currPage}'">
                         <i class="fas fa-list-ul"></i>
