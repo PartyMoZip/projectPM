@@ -28,11 +28,6 @@ const handleProfileSubmit = (e) => {
         formData.append("fileLocation", inputFile.files[0]);
     } // if
 
-
-    for (let pair of formData.entries()) {
-        console.log(pair[0] + ', ' + pair[1]);
-    }
-
     console.log(formData);
 
     fetch(`/party/edit-profile`, {
