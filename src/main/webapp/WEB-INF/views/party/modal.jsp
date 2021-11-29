@@ -49,27 +49,24 @@ pageEncoding="UTF-8" %>
               <div class="partyLocation">
                 파티 지역:&nbsp;
                 <div class="partyLocationContent">
-                  서울
+                  
                 </div>
               </div>
               <div class="partyCategory">
                 파티 카테고리:&nbsp;
                 <div class="partyCategoryContent">
-                  김진건 멘탈 치유
+                  
                 </div>
               </div>
               <div class="partyMemberPoint">
                 파티 활동 점수:&nbsp;
                 <div class="partyMemberPointContent">
-                  30점
+                 
                 </div>
               </div>
             </div>
             <div class="partyIntro">
-              <p>우리 파티는 김진건 멘탈 치유 파티입니다.<br>
-                진건이형의 멘탈 치유를 위해 다방면으로 노력하고 있으며, 진건의형의 재활을 위해 야외활동을 적극 권유하고 있습니다.<br>
-                진건이형의 멘탈 회복을 위해 다들 힘을 모아주세요.<br>에이멘
-              </p>
+              
             </div>
           </div>
         </div>
@@ -91,7 +88,7 @@ pageEncoding="UTF-8" %>
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
     crossorigin="anonymous"></script>
   <!-- 제이쿼리 -->
-  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <!-- 스윗알러트 -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.10/dist/sweetalert2.all.min.js"></script>
   <script src="${pageContext.request.contextPath}/resources/js/partyModal.js"></script>
