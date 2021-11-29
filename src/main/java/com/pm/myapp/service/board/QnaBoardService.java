@@ -18,7 +18,7 @@ public interface QnaBoardService {
     // 문의 게시판 게시물의 상세보기
     public abstract QnaBoardVO getBoardDetail(Integer qrefer);
     // 문의 게시판 댓글 목록
-    public abstract List<QnaBoardReplyVO> getReply(Integer qrefer, ReplyCriteria recri);
+    public abstract List<QnaBoardReplyDTO> getReply(Integer qrefer, ReplyCriteria recri);
     // 문의 게시판 댓글 등록
     public abstract boolean writeReply(QnaBoardReplyDTO QnaReply);
     // 문의 게시판 댓글 수정
@@ -39,7 +39,7 @@ public interface QnaBoardService {
     // 문의 게시판 글삭제
     public abstract boolean deleteBoard(Integer qrefer);
     // 문의 게시판 댓글 삭제
-    public abstract boolean deleteReply(Integer qrerefer);
+    public abstract boolean deleteReply(Integer qrefer);
 
     // 6. 문의 게시판 검색 //
     // 문의 게시글 검색

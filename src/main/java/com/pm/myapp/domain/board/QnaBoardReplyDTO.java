@@ -12,5 +12,6 @@ public class QnaBoardReplyDTO {
     private Date qredate;
     private Integer qrefer;
     private String email;
+    private String nickname;
 
 }

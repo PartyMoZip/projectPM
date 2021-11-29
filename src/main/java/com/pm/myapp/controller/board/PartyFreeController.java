@@ -77,12 +77,17 @@ public class PartyFreeController {
 
 	// 파티 자유 게시판 글쓰기 완료
 	@PostMapping("/writePFreeBoardOk")
-	public String writePFreeBoard(PartyFreeDTO partyFB, RedirectAttributes rttrs) {
-		log.debug("writePFreeBoard({}) invoked.", partyFB);
-		boolean result = this.service.writeFBoard(partyFB);
-		rttrs.addAttribute("result", result);
 
-		return "redirect:/partyFree/boardList";
+	public String writePFreeBoard(PartyFreeDTO partyFB, @ModelAttribute("cri") Criteria cri,RedirectAttributes rttrs) {
+
+		log.debug("writePFreeBoard({}) invoked.", partyFB);
+        // 글 내용 업로드
+        boolean result = this.service.writeFBoard(partyFB);
+		rttrs.addAttribute("result", result);
+		rttrs.addAttribute("partycode",partyFB.getPartycode());
+		rttrs.addAttribute("currPage",cri.getCurrPage());
+		return "redirect:/partyfree/getPFreeBoardList";
+
 	} // writePFreeBoard
 
     // 파치 자유 게시판 글 쓰기 화면

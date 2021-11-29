@@ -53,9 +53,9 @@
                                         aria-current="page" href="#">자유게시판</a></li>
             </ul>
 
-            <form action="/freeboard/editFreeBoard?frefer=${__boardDetail__.FRefer}" method="post">
+            <form action="/freeboard/editFreeBoard" method="post">
+                <input hidden id="fRefer" name="fRefer" value="${__boardDetail__.FRefer}">
                 <div class="table-Detail">
-                    <!--product details-->
                     <div class="content">
                         <div class="title_area">
                             <span><input type="text" name="fSubject" value="${__boardDetail__.FSubject}"></span>
@@ -79,9 +79,6 @@
                                         cols="137">${__boardDetail__.FContent}"</textarea>
                         </span>
                         <div class="container-btnGroup">
-                            <%--                                        <c:set value="${sessionScope.id}" var="id"/>--%>
-                            <%-- <c:if test="${boardDetail.nickname eq nickname}">--%>
-
                             <button type="submit" class="btn btn-primary btn-sm">
                                 <i class="fas fa-pen"></i>
                                 <span>등록</span>

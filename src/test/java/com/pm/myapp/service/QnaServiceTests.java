@@ -119,15 +119,15 @@ public class QnaServiceTests {
     public void testWriteReply() {
         log.debug("testWriteReply() invoked.");
 
-        QnaBoardReplyVO boardReply = new QnaBoardReplyVO(null, "yewoni", null, null, "test4@test.com");
-        log.info("\t + new Comment : {}", boardReply.getQrerefer());
+        //QnaBoardReplyVO boardReply = new QnaBoardReplyVO(null, "yewoni", null, null, "test4@test.com");
+        //log.info("\t + new Comment : {}", boardReply.getQrerefer());
     }
 
     @Test
     public void testEditReply() {
         log.debug("testEditReply() invoked.");
 
-        QnaBoardReplyVO boardReply = new QnaBoardReplyVO(null, "ming", null, null, "test2@test.com");
+       // QnaBoardReplyVO boardReply = new QnaBoardReplyVO(null, "ming", null, null, "test2@test.com");
     }
 
     @Test

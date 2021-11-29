@@ -120,30 +120,29 @@ public class FreeBoardController {
 
 	// 자유 게시판 수정
 	@PostMapping("/editFreeBoard")
-	public String editFreeBoard(FreeBoardDTO freeBoard, RedirectAttributes rttrs) {
+	public String editFreeBoard(FreeBoardDTO freeBoard) {
 		log.debug("editFreeBoard({}) invoked.", freeBoard);
 
-		boolean result = this.service.editBoard(freeBoard);
-		rttrs.addAttribute("result", result);
+		service.editBoard(freeBoard);
 
-		return "redirect:/freeboard/showFreeDetail";
+		return "redirect:/freeboard/getFreeBoardList";
 
 	} // editFreeBoard
 
 	// 자유 게시판 삭제
 	@PostMapping("/deleteFreeBoard")
 	public String deleteFreeBoard(
-            Integer frefer,
+            @RequestParam("frefer") Integer frefer,
             @ModelAttribute("cri") Criteria cri,
             RedirectAttributes rttrs) {
 		log.debug("deleteFreeBoard({}) invoked.", frefer);
 
 		boolean result = this.service.deleteBoard(frefer);
 		rttrs.addAttribute("result", result);
-
+/*
         boolean resultReply = this.service.deleteFreeBoardReply(frefer);
-        rttrs.addAttribute("resultRe", resultReply);
-		return "redirect:/freeboard/boardList";
+        rttrs.addAttribute("resultRe", resultReply);*/
+		return "redirect:/freeboard/getFreeBoardList";
 
 	} // deleteFreeBoard
 
@@ -205,6 +204,8 @@ public class FreeBoardController {
 		boolean result = this.service.editReply(freeReply);
 		rttrs.addAttribute("result", result);
         rttrs.addAttribute("frefer", freeReply.getFrefer());
+        rttrs.addAttribute("currPage", cri.getCurrPage());
+        rttrs.addAttribute("reCurrPage",recri.getReCurrPage());
 
 
         return "redirect:/freeboard/showFreeDetail";
@@ -213,14 +214,16 @@ public class FreeBoardController {
 	// 자유 게시판  - 댓글 삭제
 	@PostMapping("/deleteComment")
 	public String deleteComment(
-            Integer frefer,
+            @RequestParam("frerefer") Integer frerefer,
             @ModelAttribute("cri") Criteria cri,
             @ModelAttribute("recri") ReplyCriteria recri,
             RedirectAttributes rttrs) {
-		log.debug("deleteComment({}) invoked.", frefer);
+		log.debug("deleteComment({}) invoked.", frerefer);
 
-		boolean result = this.service.deleteFreeBoardReply(frefer);
+		boolean result = this.service.deleteFreeBoardReply(frerefer);
 		rttrs.addAttribute("result", result);
+        rttrs.addAttribute("currPage", cri.getCurrPage());
+        rttrs.addAttribute("reCurrPage",recri.getReCurrPage());
 
         return "redirect:/freeboard/showFreeDetail";
 	} // deleteComment
