@@ -233,6 +233,16 @@ public class PartyServiceImpl implements PartyService,InitializingBean, Disposab
 		return (check==0);
 	} // checkPartyname
 
+	@Override
+	public Integer getMaxPartyCode() {
+		log.debug("getMaxPartyCode() invoked.");
+		
+		Integer maxPartyCode = this.mapper.maxPartyCode();
+		log.info("\t+ maxPartyCode : ", maxPartyCode);
+		
+		return maxPartyCode;
+	} // getMaxPartyCode
+
 	
 
 } // end class

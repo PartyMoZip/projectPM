@@ -51,8 +51,9 @@ public class PartyController {
     @PostMapping("/createparty")
     public boolean createNewParty(
     		HttpServletRequest req,
+    		MultipartFile image,
     		PartyDTO pdto
-    		) {
+    		) throws IOException {
         log.debug("createNewParty({}) invoked.",pdto);
         String partyName = pdto.getPartyName();
         boolean checking = this.service.checkPartyname(partyName);
@@ -62,14 +63,41 @@ public class PartyController {
         
         if(checking) {
         	
-        	 HttpSession session = req.getSession();
-             UserDTO user = (UserDTO) session.getAttribute(LoginController.authKey);
-             String email = user.getEmail();
-         	
-             result = this.service.createNewParty(pdto, email);
-             log.info("\t+ result : {}", result);
-             
-        }// if-else
+        	HttpSession session = req.getSession();
+            UserDTO user = (UserDTO) session.getAttribute(LoginController.authKey);
+            String email = user.getEmail();
+            
+            // 파티별, 날짜별 폴더를 생성 후 그림 파일 업로드
+            // 날짜 GET
+            Calendar cal = Calendar.getInstance();
+            String year = cal.get(cal.YEAR) + "";
+            String month = (cal.get(cal.MONTH) + 1) + "";
+            String date = cal.get(cal.DATE) + "";
+            
+            Integer partyCode = this.service.getMaxPartyCode()+1;
+            
+     		String imagePath = "image/logo/" + partyCode + "/";
+    		log.debug("\t+ imagePath : {}",imagePath);
+    		
+    		String imageUrl = "";
+
+    		String originalName = image.getOriginalFilename(); // 파일의 원래 이름
+    		
+    		if(originalName != "" && originalName != null) {
+    				
+    			// 랜덤값 형성 및 aws에 파일 업로드
+    			UUID uuid = UUID.randomUUID(); // 랜덤값
+    			imageUrl = awsUpload.fileUpload(image, imagePath, uuid);
+    			log.info("\t+ imageUrl : {}",imageUrl);
+    			
+        		pdto.setFileLocation(imageUrl);
+
+                result = this.service.createNewParty(pdto, email);
+                log.info("\t+ result : {}", result);
+    				
+    		} // if
+
+        } // if
         
         return result;
        
@@ -128,7 +156,7 @@ public class PartyController {
 
     // 파티 메인 보기 [작동]
     @GetMapping("/showmain")
-    public String showPartyMain(Integer partyCode, Model model) {
+    public String showPartyMain(@ModelAttribute("partyCode") Integer partyCode, Model model) {
         log.debug("showPartyMain({}) invoked.", partyCode);
         PartyVO party = this.service.getParty(partyCode);
         log.info("\t + party : {}", party);
@@ -141,7 +169,7 @@ public class PartyController {
 
     // 파티 관리 페이지 [작동]
     @GetMapping("/leaderpage")
-    public void showLeaderPage(Integer partyCode, Model model, @ModelAttribute("cri") Criteria cri) {
+    public void showLeaderPage(@ModelAttribute("partyCode") Integer partyCode, Model model, @ModelAttribute("cri") Criteria cri) {
         log.debug("showLeaderPage({}) invoked.", partyCode);
 
         PartyVO party = this.service.getParty(partyCode);
@@ -255,7 +283,7 @@ public class PartyController {
     @Transactional
     public String editPartyLeader(
             String leaderEmail, String memberEmail,
-            Integer partyCode, RedirectAttributes rttrs) {
+            @ModelAttribute("partyCode") Integer partyCode, RedirectAttributes rttrs) {
         log.debug("editPartyLeader({}, {}, {}) invoked.", leaderEmail, memberEmail, partyCode);
         // 대상 인물 : 권한코드 2 ( 파티장 )
         // 기존 파티장 : 권한코드 1 ( 파티원 )
@@ -271,8 +299,8 @@ public class PartyController {
 
     // 파티 가입 승인 [작동]
     @PostMapping("/do-accept-join")
-    public String doAcceptJoin(String[] email, Integer partyCode, RedirectAttributes rttrs, Criteria cri) {
-        log.debug("doAcceptJoin({}, {}) invoked.", email.toString(), partyCode);
+    public String doAcceptJoin(String[] email, @ModelAttribute("partyCode") Integer partyCode, RedirectAttributes rttrs, Criteria cri) {
+        log.debug("doAcceptJoin({}, {}) invoked.", email, partyCode);
         // 권한코드 -1 인지 확인 : 권한코드 1로 변경
 
         for (String emaillist : email) {
@@ -289,8 +317,8 @@ public class PartyController {
 
     // 파티 가입 거절 [작동]
     @PostMapping("/do-reject-join")
-    public String doRejectJoin(String[] email, Integer partyCode, RedirectAttributes rttrs, Criteria cri) {
-        log.debug("doRejectJoin({}, {}) invoked.", email.toString(), partyCode);
+    public String doRejectJoin(String[] email, @ModelAttribute("partyCode") Integer partyCode, RedirectAttributes rttrs, Criteria cri) {
+        log.debug("doRejectJoin({}, {}) invoked.", email, partyCode);
         // 해당 이메일인지 : 해당 컬럼 삭제
 
         for (String emaillist : email) {
@@ -307,7 +335,7 @@ public class PartyController {
 
     // 파티원 목록 조회 [작동]
     @GetMapping("/memberlist")
-    public void showMemberList(@ModelAttribute("cri") Criteria cri, Integer partyCode, Model model) {
+    public void showMemberList(@ModelAttribute("cri") Criteria cri, @ModelAttribute("partyCode") Integer partyCode, Model model) {
         log.debug("showMemberList() invoked.");
         // 해당 파티코드인지, 권한코드 1이상 인지 : 이메일 JOIN 으로 부르기
 
@@ -324,7 +352,7 @@ public class PartyController {
 
     // 파티원 추방 [작동]
     @PostMapping("/dokick")
-    public String doKickMember(String email[], Integer partyCode, RedirectAttributes rttrs) {
+    public String doKickMember(String email[], @ModelAttribute("cri") Criteria cri, @ModelAttribute("partyCode") Integer partyCode, RedirectAttributes rttrs) {
         log.debug("doKickMember() invoked.");
         // 해당 이메일인지 : 해당 컬럼 삭제
 
@@ -334,7 +362,7 @@ public class PartyController {
         } // advanced-for
         rttrs.addAttribute("partyCode", partyCode);
 
-        return "redirect:/party/leaderpage";
+        return "redirect:/party/memberlist";
 
     } // doKickMember
 

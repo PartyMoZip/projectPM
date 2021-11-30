@@ -61,42 +61,33 @@
 					</thead>
 
 					<tbody>
+						<form action="/party/dokick" method="post">
+							<input type="hidden" name="partyCode" value="${partyCode}">
+							<input type="hidden" name="currPage" value="${cri.currPage}">
+							<c:forEach items="${__USER__}" var="user">
+							<tr>
+								<td>
+									<!-- 파티관리 체크박스 개별선택 -->
+									<div class="checkbox-group">
+										<div class="partyCheckboxGroup">
+											<input type="checkbox" class="bigCheck" name="email" value="${user.email}">
+										</div>
+									</div> <!-- 파티관리 체크박스 개별선택 끝 -->
+								</td>
 
-						<tr>
-							<td>
-								<!-- 파티관리 체크박스 개별선택 -->
-								<div class="checkbox-group">
-									<div class="partyCheckboxGroup">
-										<input type="checkbox" class="bigCheck" name="amk">
-									</div>
-								</div> <!-- 파티관리 체크박스 개별선택 끝 -->
-							</td>
-
-							<td><img
-								src="${pageContext.request.contextPath}/resources/images/logo.svg"
-								alt="파티원 이미지"></td>
-							<td>sexypeople</td>
-							<td>2021.01.01</td>
-
-						</tr>
-
-						<tr>
-							<td>
-								<!-- 파티관리 체크박스 개별선택 -->
-								<div class="checkbox-group">
-									<div class="partyCheckboxGroup">
-										<input type="checkbox" class="bigCheck" name="amk">
-									</div>
-								</div> <!-- 파티관리 체크박스 개별선택 끝 -->
-							</td>
-
-							<td><img
-								src="${pageContext.request.contextPath}/resources/images/logo.svg"
-								alt="파티원 이미지"></td>
-							<td>sexypeople</td>
-							<td>2021.01.01</td>
-
-						</tr>
+								<td><img
+									src="${user.userpic}"
+									alt="파티원 이미지"></td>
+								<td>${user.nickname}</td>
+								<td>${user.joindate}</td>
+							</tr>
+							</c:forEach>
+							<div class="bottom-menu-btn">
+								<div class="d-grid gap-2 d-md-block">
+									<button class="btn btn-primary" type="submit">추방</button>
+								</div>
+							</div>
+						</form>
 
 					</tbody>
 				</table>
@@ -105,26 +96,40 @@
 
 			<!-- 하단메뉴 -->
 			<!-- 버튼 -->
-			<div class="bottom-menu-btn">
-				<div class="d-grid gap-2 d-md-block">
-					<button class="btn btn-primary" type="button">추방</button>
-				</div>
-			</div>
+
 
 			<div class="bottom-menu-page">
 				<div class="changePage">
 					<nav aria-label="Page navigation example">
-						<ul class="pagination justify-content-center">
-							<li class="page-item"><a class="page-link" href="#"
-								aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-							</a></li>
-							<li class="page-item"><a class="page-link active" href="#">1</a></li>
-							<li class="page-item"><a class="page-link" href="#">2</a></li>
-							<li class="page-item"><a class="page-link" href="#">3</a></li>
-							<li class="page-item"><a class="page-link" href="#"
-								aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-							</a></li>
-						</ul>
+						<c:choose>
+							<c:when test="${not empty __USER__}">
+								<div id="pagination">
+									<form id="paginationForm">
+										<ul class="pagination justify-content-center">
+											<c:if test="${pageMaker.prev}">
+												<li class="prev page-item"><a class="prev page-link"
+													href="/party/memberlist?partyCode=${partyCode}&currPage=${pageMaker.startPage-1}">◀</a>
+												</li>
+											</c:if>
+
+											<c:forEach begin="${pageMaker.startPage}"
+												end="${pageMaker.endPage}" var="pageNum">
+												<li class="page-item"><a id="page-curr"
+													class="page-link"
+													href="/party/memberlist?partyCode=${partyCode}&currPage=${pageNum}">
+														${pageNum} </a></li>
+											</c:forEach>
+
+											<c:if test="${pageMaker.next}">
+												<li class="next page-item"><a class="next page-link"
+													href="/party/memberlist?partyCode=${partyCode}&currPage=${pageMaker.endPage+1}">▶</a>
+												</li>
+											</c:if>
+										</ul>
+									</form>
+								</div>
+							</c:when>
+						</c:choose>
 					</nav>
 				</div>
 			</div>
