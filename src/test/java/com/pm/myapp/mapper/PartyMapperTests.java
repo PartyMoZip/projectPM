@@ -151,6 +151,28 @@ public class PartyMapperTests {
 
 	} // testGetMember
 	
+	@Test
+	public void testCreateNewParty() {
+		PartyDTO pdto = new PartyDTO();
+		pdto.setPartyName("test클럽");
+		pdto.setPartyProfile("여기는 테스트클럽");
+		pdto.setHobbyCode(1);
+		pdto.setLocalCode(2);
+		
+		String email = "thehappypool@naver.com";
+		
+		log.debug("testCreateNewParty({}, {}) invoked.", pdto, email);
+		
+		Integer createresult = this.mapper.makeNewParty(pdto);
+		log.info("\t+ createresult : ", createresult);
+
+		Integer maxPartyCode = this.mapper.maxPartyCode();
+		log.info("\t+ maxPartyCode : ", maxPartyCode);
+		
+		Integer settingresult = this.mapper.makeLeader(maxPartyCode, email);
+		log.info("\t+ settingresult : ", settingresult);
+	} // 
+	
 	@After
 	public void tearDown() {
 		log.debug("tearDown() invoked.");

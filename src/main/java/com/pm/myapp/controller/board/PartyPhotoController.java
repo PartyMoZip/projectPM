@@ -359,7 +359,7 @@ public class PartyPhotoController {
 		List<String> photo = this.service.getPhotoAddress(prefer,partyCode);
 		log.info("\t+ photo : {}",photo);
 		
-		if(photo!=null) {
+		if(photo.size() != 0) {
 			
 			// 1. 해당 경로 데이터베이스에서 삭제
 			for(String file : photo) {
@@ -370,8 +370,8 @@ public class PartyPhotoController {
 			} // for
 			
 			// 2. aws 에서 그림 완전 삭제
-			String[] delete = (String[]) photo.toArray();
-			awsUpload.deleteFiles(delete);
+			// String[] delete = (String[]) photo.toArray();
+			// awsUpload.deleteFiles(delete);
 			
 		} // if
 		
@@ -479,7 +479,7 @@ public class PartyPhotoController {
 		rttrs.addAttribute("currPage", cri.getCurrPage());
 		rttrs.addAttribute("reCurrPage", recri.getReCurrPage());
 		
-		return "/partyphoto/detail";
+		return "redirect:/partyphoto/detail";
 		
 	} // givePhotoHeart
 

@@ -71,8 +71,8 @@ public class SearchMapperTests {
 
         SearchWordDTO searchWord = new SearchWordDTO();
         searchWord.setWord("%축구%");
-        searchWord.setHobby("축구");
-        searchWord.setLocal("축구");
+//        searchWord.setHobby("축구");
+//        searchWord.setLocal("축구");
 
         // searchWord.setWord2("%축구%");
         // searchWord.setWord3("%축구%");

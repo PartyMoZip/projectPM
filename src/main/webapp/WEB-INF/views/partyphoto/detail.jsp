@@ -40,14 +40,6 @@
     ${__TOTALHEART__}
     <hr>
 
-    <form action="/partyphoto/delete" method="post">
-        <input type="hidden" name="currPage" value="${cri.currPage}">
-        <input type="hidden" name="reCurrPage" value="${recri.reCurrPage}">
-        <input type="hidden" name="partyCode" value="${__DETAIL__.partycode}">
-        <input type="hidden" name="prefer" value="${__DETAIL__.prefer}">
-        <input type="submit" value="삭제">
-    </form>
-
 <form action="/partyphoto/writecomment" method="post">
     <input type="hidden" name="currPage" value="${cri.currPage}">
     <input type="hidden" name="reCurrPage" value="${recri.reCurrPage}">
@@ -62,19 +54,35 @@
 
 <hr>
 <c:forEach items="${__COMMENT__}" var="comment">
-    <form action="/partyphoto/editcommit" method="post">
+    <form action="/partyphoto/editcomment" method="post">
         <input type="hidden" name="currPage" value="${cri.currPage}">
         <input type="hidden" name="reCurrPage" value="${recri.reCurrPage}">
         <input type="hidden" name="partyCode" value="${__DETAIL__.partycode}">
         <input type="hidden" name="prefer" value="${__DETAIL__.prefer}">
+        <input type="hidden" name="prerefer" value="${comment.prerefer}">
+        <div>날짜</div>
+        <div>${comment.predate}</div>
         <div>댓글 내용</div>
-        <input type="text" name="precontent">
+        <div>${comment.precontent}</div>
+        <input type="hidden" id="${comment.prerefer}totext" name="precontent" value="${comment.precontent}">
         <div>닉네임</div>
         <div>${comment.nickname}</div>
         <input type="hidden" name="email" value="${sessionScope.__AUTH__.email}">
-        <input type="submit" value="댓글 작성">
-
+        <c:if test="${sessionScope.__AUTH__.email eq comment.email}">
+          <input type="button" id="${comment.prerefer}" name="mod" value="수정">
+          <input type="hidden" id="${comment.prerefer}tosubmit" value="수정완료">
+        </c:if>
     </form>
+    <c:if test="${sessionScope.__AUTH__.email eq comment.email}">
+         <form action="/partyphoto/deletecomment" method="post">
+             <input type="hidden" name="currPage" value="${cri.currPage}">
+             <input type="hidden" name="reCurrPage" value="${recri.reCurrPage}">
+             <input type="hidden" name="partyCode" value="${__DETAIL__.partycode}">
+             <input type="hidden" name="prefer" value="${__DETAIL__.prefer}">
+             <input type="hidden" name="prerefer" value="${comment.prerefer}">
+             <input type="submit" value="삭제">
+         </form>
+    </c:if>
 </c:forEach>
 
 <c:choose>
@@ -132,4 +140,18 @@
     수정</a>
 
 </body>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+
+    $(document).ready(function () {
+        $(document).on("click", function (e) {
+            var click_val_1 = e.target.getAttribute('id');
+            console.log(click_val_1);
+                    $('#' + click_val_1 + 'totext').attr("type", "text");
+                    $('#' + click_val_1 + 'tosubmit').attr("type", "submit");
+        });
+    });
+
+</script>
 </html>

@@ -206,6 +206,33 @@ public class PartyServiceImpl implements PartyService,InitializingBean, Disposab
 		
 	} // getTotalJoinMakeMember
 
+	@Override
+	public boolean createNewParty(PartyDTO pdto, String email) {
+		log.debug("createNewParty({}, {}) invoked.", pdto, email);
+		
+		Integer createresult = this.mapper.makeNewParty(pdto);
+		log.info("\t+ createresult : ", createresult);
+
+		Integer maxPartyCode = this.mapper.maxPartyCode();
+		log.info("\t+ maxPartyCode : ", maxPartyCode);
+		
+		Integer settingresult = this.mapper.makeLeader(maxPartyCode, email);
+		log.info("\t+ settingresult : ", settingresult);
+		
+		return (createresult + settingresult == 2);
+		
+	} // createNewParty
+
+	@Override
+	public boolean checkPartyname(String partyName) {
+		log.debug("checkPartyname({}) invoked.", partyName);
+		
+		Integer check = this.mapper.checkName(partyName);
+		log.info("\t+ check : {}", check);
+		
+		return (check==0);
+	} // checkPartyname
+
 	
 
 } // end class

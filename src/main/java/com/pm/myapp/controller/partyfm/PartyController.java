@@ -3,6 +3,7 @@ package com.pm.myapp.controller.partyfm;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.pm.myapp.aws.AwsUpload;
+import com.pm.myapp.controller.join.LoginController;
 import com.pm.myapp.domain.*;
 import com.pm.myapp.service.partyfm.PartyService;
 import lombok.NoArgsConstructor;
@@ -19,6 +20,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.io.IOException;
 import java.util.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 
 @Log4j2
 @NoArgsConstructor
@@ -34,6 +38,43 @@ public class PartyController {
 
     @Setter(onMethod_ = {@Autowired})
     private AwsUpload awsUpload;
+    
+    
+    // 파티 만들기 - view
+    @GetMapping("/newparty")
+    public void makeNewParty() {
+        log.debug("createParty() invoked.");
+
+    } // makeNewParty
+    
+    // 파티 만들기
+    @PostMapping("/createparty")
+    public boolean createNewParty(
+    		HttpServletRequest req,
+    		PartyDTO pdto
+    		) {
+        log.debug("createNewParty({}) invoked.",pdto);
+        String partyName = pdto.getPartyName();
+        boolean checking = this.service.checkPartyname(partyName);
+        log.info("\t+ checking : {}",checking);
+        
+        boolean result = false;
+        
+        if(checking) {
+        	
+        	 HttpSession session = req.getSession();
+             UserDTO user = (UserDTO) session.getAttribute(LoginController.authKey);
+             String email = user.getEmail();
+         	
+             result = this.service.createNewParty(pdto, email);
+             log.info("\t+ result : {}", result);
+             
+        }// if-else
+        
+        return result;
+       
+    } //
+    
 
     // 파티 상세 보기 [작동]
     @GetMapping("/detail")
