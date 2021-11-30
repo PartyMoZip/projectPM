@@ -212,7 +212,7 @@
     </div>
 
 	<!-- 사이드 슬라이드 배너 -->
-	<div class="sideBanner">
+	<div class="sideBanner shadow-sm">
     	<img src="https://cdn-icons-png.flaticon.com/512/2057/2057748.png" alt="가입이미지"
     	href="">
     	<span class="txt-label">파티생성</span>
