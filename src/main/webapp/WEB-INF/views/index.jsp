@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/home.css?after">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/modal.css?after">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/spinner.css?after">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/partyCreateBanner.css?after">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/newPartyBanner.css?after">
 
 </head>
 
@@ -236,7 +236,7 @@
 <script src="${pageContext.request.contextPath}/resources/js/autocomplete.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/mainpage.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/partyinfo.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/partyCreateBanner.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/newPartyBanner.js"></script>
 
 </body>
 </html>

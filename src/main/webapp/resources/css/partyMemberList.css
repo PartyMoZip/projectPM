@@ -109,8 +109,8 @@ input[type="checkbox"]:checked::before {
 
 /* 파티원 이미지 크기조절*/
 td > img {
-	width: 20vw;
-    height: 10vh;
+	width: 10vw;
+    height: 15vh;
     margin: 10px 0px;
 }
 
