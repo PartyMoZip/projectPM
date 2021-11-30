@@ -94,7 +94,7 @@
     <select id="getMember" resultType="com.pm.myapp.domain.PartyUserVO">
     
     <![CDATA[ 
-    SELECT U.NICKNAME, U.USERPIC, U.EMAIL
+    SELECT U.NICKNAME, U.USERPIC, U.EMAIL, U.JOINDATE
     FROM (SELECT * FROM PARTYUSER
     WHERE PARTYCODE = #{partyCode}
     ORDER BY AUTHCODE DESC) T

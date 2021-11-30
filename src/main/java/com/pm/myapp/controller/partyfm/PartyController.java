@@ -156,7 +156,7 @@ public class PartyController {
 
     // 파티 메인 보기 [작동]
     @GetMapping("/showmain")
-    public String showPartyMain(Integer partyCode, Model model) {
+    public String showPartyMain(@ModelAttribute("partyCode") Integer partyCode, Model model) {
         log.debug("showPartyMain({}) invoked.", partyCode);
         PartyVO party = this.service.getParty(partyCode);
         log.info("\t + party : {}", party);
@@ -169,7 +169,7 @@ public class PartyController {
 
     // 파티 관리 페이지 [작동]
     @GetMapping("/leaderpage")
-    public void showLeaderPage(Integer partyCode, Model model, @ModelAttribute("cri") Criteria cri) {
+    public void showLeaderPage(@ModelAttribute("partyCode") Integer partyCode, Model model, @ModelAttribute("cri") Criteria cri) {
         log.debug("showLeaderPage({}) invoked.", partyCode);
 
         PartyVO party = this.service.getParty(partyCode);
@@ -283,7 +283,7 @@ public class PartyController {
     @Transactional
     public String editPartyLeader(
             String leaderEmail, String memberEmail,
-            Integer partyCode, RedirectAttributes rttrs) {
+            @ModelAttribute("partyCode") Integer partyCode, RedirectAttributes rttrs) {
         log.debug("editPartyLeader({}, {}, {}) invoked.", leaderEmail, memberEmail, partyCode);
         // 대상 인물 : 권한코드 2 ( 파티장 )
         // 기존 파티장 : 권한코드 1 ( 파티원 )
@@ -299,8 +299,8 @@ public class PartyController {
 
     // 파티 가입 승인 [작동]
     @PostMapping("/do-accept-join")
-    public String doAcceptJoin(String[] email, Integer partyCode, RedirectAttributes rttrs, Criteria cri) {
-        log.debug("doAcceptJoin({}, {}) invoked.", email.toString(), partyCode);
+    public String doAcceptJoin(String[] email, @ModelAttribute("partyCode") Integer partyCode, RedirectAttributes rttrs, Criteria cri) {
+        log.debug("doAcceptJoin({}, {}) invoked.", email, partyCode);
         // 권한코드 -1 인지 확인 : 권한코드 1로 변경
 
         for (String emaillist : email) {
@@ -317,8 +317,8 @@ public class PartyController {
 
     // 파티 가입 거절 [작동]
     @PostMapping("/do-reject-join")
-    public String doRejectJoin(String[] email, Integer partyCode, RedirectAttributes rttrs, Criteria cri) {
-        log.debug("doRejectJoin({}, {}) invoked.", email.toString(), partyCode);
+    public String doRejectJoin(String[] email, @ModelAttribute("partyCode") Integer partyCode, RedirectAttributes rttrs, Criteria cri) {
+        log.debug("doRejectJoin({}, {}) invoked.", email, partyCode);
         // 해당 이메일인지 : 해당 컬럼 삭제
 
         for (String emaillist : email) {
@@ -335,7 +335,7 @@ public class PartyController {
 
     // 파티원 목록 조회 [작동]
     @GetMapping("/memberlist")
-    public void showMemberList(@ModelAttribute("cri") Criteria cri, Integer partyCode, Model model) {
+    public void showMemberList(@ModelAttribute("cri") Criteria cri, @ModelAttribute("partyCode") Integer partyCode, Model model) {
         log.debug("showMemberList() invoked.");
         // 해당 파티코드인지, 권한코드 1이상 인지 : 이메일 JOIN 으로 부르기
 
@@ -352,7 +352,7 @@ public class PartyController {
 
     // 파티원 추방 [작동]
     @PostMapping("/dokick")
-    public String doKickMember(String email[], Integer partyCode, RedirectAttributes rttrs) {
+    public String doKickMember(String email[], @ModelAttribute("cri") Criteria cri, @ModelAttribute("partyCode") Integer partyCode, RedirectAttributes rttrs) {
         log.debug("doKickMember() invoked.");
         // 해당 이메일인지 : 해당 컬럼 삭제
 
@@ -362,7 +362,7 @@ public class PartyController {
         } // advanced-for
         rttrs.addAttribute("partyCode", partyCode);
 
-        return "redirect:/party/leaderpage";
+        return "redirect:/party/memberlist";
 
     } // doKickMember
 
