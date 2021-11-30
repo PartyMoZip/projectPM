@@ -263,8 +263,6 @@
 								<span class="h5">그동안 파티를 이용해주셔서 감사합니다.😂</span>
 							</p>
 
-							<input type="text" class="w-100 form-control input-withdrawal"
-								placeholder="진짜 해체하실거에요?">
 							<form action="/party/dobreak" method="post">
 								<div class="d-flex justify-content-center mt-3">
 									<button type="button"
