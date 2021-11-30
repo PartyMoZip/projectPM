@@ -264,10 +264,11 @@
 							</p>
 
 							<form action="/party/dobreak" method="post">
+								<input type="hidden" name="partyCode" value="${__PARTY__.partyCode}">
 								<div class="d-flex justify-content-center mt-3">
-									<button type="button"
+									<button type="submit"
 										class="btn btn-danger align-self-center withdrawal-btn"
-										name="partyCode" value="${__PARTY__.partyCode}">해체하기</button>
+										name="partyCode">해체하기</button>
 								</div>
 							</form>
 						</div>

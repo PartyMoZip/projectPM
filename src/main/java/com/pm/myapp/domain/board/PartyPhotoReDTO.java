@@ -1,8 +1,9 @@
 package com.pm.myapp.domain.board;
 
+import java.sql.Date;
+
 import lombok.Data;
 
-import java.util.Date;
 
 @Data
 public class PartyPhotoReDTO {

@@ -1,6 +1,7 @@
 package com.pm.myapp.mapper;
 
 import com.pm.myapp.domain.Criteria;
+import com.pm.myapp.domain.PartyDTO;
 import com.pm.myapp.domain.PartyMemberCheckVO;
 import com.pm.myapp.domain.PartyUserVO;
 import com.pm.myapp.domain.PartyVO;
@@ -36,5 +37,13 @@ public interface PartyMapper {
     public abstract List<UserDTO> getMakingList(@Param("partyCode") Integer partyCode, @Param("cri") Criteria cri);
     
     public abstract Integer getTotalMakingList(Integer partyCode);
+    
+    public abstract Integer makeNewParty(@Param("pdto") PartyDTO pdto);
+
+    public abstract Integer makeLeader(@Param("partyCode") Integer partyCode, @Param("email") String email);
+    
+    public abstract Integer maxPartyCode();
+    
+    public abstract Integer checkName(String partyName);
 
 } // end interface
