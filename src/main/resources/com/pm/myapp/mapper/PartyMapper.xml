@@ -146,7 +146,7 @@
     <insert id="makeNewParty">
 
         INSERT INTO PARTY(PARTYCODE, PARTYNAME, PARTYSCORE, CREATEDATE, LOGOPIC, COVERPIC, PARTYPROFILE, PARTYBANNED, HOBBYCODE, LOCALCODE)
-		VALUES(SEQ_PARTYCODE.nextval, #{pdto.partyName}, 0, sysdate, null, null, #{pdto.partyProfile}, 0, #{pdto.hobbyCode}, #{pdto.localCode})
+		VALUES(SEQ_PARTYCODE.nextval, #{pdto.partyName}, 0, sysdate, null,  #{pdto.fileLocation}, #{pdto.partyProfile}, 0, #{pdto.hobbyCode}, #{pdto.localCode})
 
     </insert>
     

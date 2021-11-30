@@ -51,8 +51,9 @@ public class PartyController {
     @PostMapping("/createparty")
     public boolean createNewParty(
     		HttpServletRequest req,
+    		MultipartFile image,
     		PartyDTO pdto
-    		) {
+    		) throws IOException {
         log.debug("createNewParty({}) invoked.",pdto);
         String partyName = pdto.getPartyName();
         boolean checking = this.service.checkPartyname(partyName);
@@ -62,14 +63,41 @@ public class PartyController {
         
         if(checking) {
         	
-        	 HttpSession session = req.getSession();
-             UserDTO user = (UserDTO) session.getAttribute(LoginController.authKey);
-             String email = user.getEmail();
-         	
-             result = this.service.createNewParty(pdto, email);
-             log.info("\t+ result : {}", result);
-             
-        }// if-else
+        	HttpSession session = req.getSession();
+            UserDTO user = (UserDTO) session.getAttribute(LoginController.authKey);
+            String email = user.getEmail();
+            
+            // 파티별, 날짜별 폴더를 생성 후 그림 파일 업로드
+            // 날짜 GET
+            Calendar cal = Calendar.getInstance();
+            String year = cal.get(cal.YEAR) + "";
+            String month = (cal.get(cal.MONTH) + 1) + "";
+            String date = cal.get(cal.DATE) + "";
+            
+            Integer partyCode = this.service.getMaxPartyCode()+1;
+            
+     		String imagePath = "image/logo/" + partyCode + "/";
+    		log.debug("\t+ imagePath : {}",imagePath);
+    		
+    		String imageUrl = "";
+
+    		String originalName = image.getOriginalFilename(); // 파일의 원래 이름
+    		
+    		if(originalName != "" && originalName != null) {
+    				
+    			// 랜덤값 형성 및 aws에 파일 업로드
+    			UUID uuid = UUID.randomUUID(); // 랜덤값
+    			imageUrl = awsUpload.fileUpload(image, imagePath, uuid);
+    			log.info("\t+ imageUrl : {}",imageUrl);
+    			
+        		pdto.setFileLocation(imageUrl);
+
+                result = this.service.createNewParty(pdto, email);
+                log.info("\t+ result : {}", result);
+    				
+    		} // if
+
+        } // if
         
         return result;
        

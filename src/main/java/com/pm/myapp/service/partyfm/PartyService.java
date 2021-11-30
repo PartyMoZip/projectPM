@@ -44,4 +44,6 @@ public interface PartyService {
 	
 	public abstract boolean checkPartyname(String partyName);
 	
+	public abstract Integer getMaxPartyCode();
+	
 } //end interface
