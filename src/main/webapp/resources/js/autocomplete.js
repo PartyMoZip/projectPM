@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
             leftBox.classList.add("left-box");
             thumbBox.classList.add("thumb-box");
             party.classList.add("mx-3");
-            thumbnail.setAttribute("src", el.logoPic);
+            thumbnail.setAttribute("src", el.coverPic);
             party.innerHTML = el.partyName;
             thumbBox.appendChild(thumbnail);
             leftBox.appendChild(thumbBox);
