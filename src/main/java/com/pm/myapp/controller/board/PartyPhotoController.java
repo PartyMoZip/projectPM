@@ -292,7 +292,7 @@ public class PartyPhotoController {
 			} // for
 			
 			// 2. aws 에서 그림 완전 삭제
-			awsUpload.deleteFiles(deleteFileLocations);
+			// awsUpload.deleteFiles(deleteFileLocations);
 			
 		} // if
 		
@@ -345,7 +345,7 @@ public class PartyPhotoController {
 	@PostMapping("/delete")
 	public String deletePhotoBoard(
 			Integer prefer,
-			Integer partyCode,
+			@ModelAttribute("partyCode") Integer partyCode,
 			@ModelAttribute("cri") Criteria cri,
 			RedirectAttributes rttrs
 			) {
@@ -389,7 +389,7 @@ public class PartyPhotoController {
 	@PostMapping("/writecomment")
 	public String writeComment(
 			Integer prefer,
-			Integer partyCode,
+			@ModelAttribute("partyCode") Integer partyCode,
 			@ModelAttribute("cri") Criteria cri,
 			ReplyCriteria recri,
 			PartyPhotoReDTO dto,
