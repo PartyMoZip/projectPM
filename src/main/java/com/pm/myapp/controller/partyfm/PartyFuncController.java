@@ -38,14 +38,14 @@ public class PartyFuncController {
 	Calendar cal = Calendar.getInstance();
 
 	@GetMapping("/calendar")
-	public String view(Integer partyCode , Model model) {
+	public String view(@ModelAttribute("partyCode")Integer partyCode , Model model) {
 		model.addAttribute("partyCode", partyCode);
 		return "fullcalendar/fullcalendar";
 	}//view
 
 	@GetMapping("/calendar/data")
 	@ResponseBody
-	public List<CalendarDTO> list(Integer partyCode) {
+	public List<CalendarDTO> list(@ModelAttribute("partyCode")Integer partyCode) {
 		List<CalendarDTO> list = service.calendarList(partyCode); //잭슨바이딩이 List만들때 get이라는 키워드를 json 형태로 만들어줌
 		return list;
 	} //list
@@ -74,7 +74,7 @@ public class PartyFuncController {
 	public String view_chat(
 			HttpServletRequest request,
 			HttpServletResponse response,
-			Integer partyCode,
+			@ModelAttribute("partyCode") Integer partyCode,
 			Model model) throws Exception {
 
 		System.out.println("들어옴");
