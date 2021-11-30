@@ -30,7 +30,7 @@
 
 <main>
     <!-- Carousel -->
-    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+    <div id="carouselExampleIndicators" class="carousel slide" style="z-index: -9" data-bs-ride="carousel">
         <div class="carousel-indicators">
             <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
                     aria-current="true" aria-label="Slide 1"></button>
@@ -65,159 +65,160 @@
         </button>
     </div>
 
-    <div class="container">
+    <div style="position: relative">
+        <div class="container">
 
-        <%--검색창--%>
-        <div class="container-sm d-flex justify-content-center align-items-center">
-            <div class="search-wrapper">
-                <form action="/search/list" method="get" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-                    <div class="container-sm p-0">
-                        <input type="text" name="word" id="search-bar" class="form-control"
-                               placeholder="찾고 있는 파티를 입력해보세요."
-                               aria-label="Search">
-                        <button class="search-btn">
+            <%--검색창--%>
+            <div class="container-sm d-flex justify-content-center align-items-center">
+                <div class="search-wrapper">
+                    <form action="/search/list" method="get" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+                        <div class="container-sm p-0">
+                            <input type="text" name="word" id="search-bar" class="form-control"
+                                   placeholder="찾고 있는 파티를 입력해보세요."
+                                   aria-label="Search">
+                            <button class="search-btn">
                             <span>
                                 <i class="fas fa-search"></i>
                             </span>
-                        </button>
-                    </div>
-                    <div class="search-box hide">
-                        <ul class="search-ul p-0"></ul>
-                    </div>
-                </form>
+                            </button>
+                        </div>
+                        <div class="search-box hide">
+                            <ul class="search-ul p-0"></ul>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div>
 
 
-        <%--내 파티 목록--%>
-        <%--파티 리스트--%>
-        <div class="album py-5">
-            <div class="header">
-                <c:choose>
-                    <c:when test="${list != null && sessionScope.__AUTH__.email != null && result == true}">
-                        <h4>나의 파티</h4>
+            <%--내 파티 목록--%>
+            <%--파티 리스트--%>
+            <div class="album py-5">
+                <div class="header">
+                    <c:choose>
+                        <c:when test="${list != null && sessionScope.__AUTH__.email != null && result == true}">
+                            <h4>나의 파티</h4>
 
-                        <span class="icon">
+                            <span class="icon">
                             <i class="fas fa-angle-right"></i>
                         </span>
-                    </c:when>
-                    <c:otherwise>
-                        <h4>이 파티는 어떠세요?</h4>
-                    </c:otherwise>
-                </c:choose>
-            </div>
+                        </c:when>
+                        <c:otherwise>
+                            <h4>이 파티는 어떠세요?</h4>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
 
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                <c:forEach items="${list}" var="party">
-                    <div class="col">
-                        <div class="card shadow-sm">
-                            <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
-                                 xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
-                                 preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                    <c:forEach items="${list}" var="party">
+                        <div class="col">
+                            <div class="card shadow-sm">
+                                <img src="${party.coverPic}" alt="파티 커버이미지" class="bd-placeholder-img card-img-top"
+                                     width="100%" height="225"
+                                     role="img" aria-label="Placeholder: Thumbnail"
+                                ><title>Placeholder</title>
                                 <rect width="100%" height="100%" fill="#55595c"></rect>
-                                <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
-                            </svg>
+                                </img>
 
-                            <div class="card-body">
-                                <p class="card-text"><c:out value="${party.partyName}"/></p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <button type="button" class="btn btn-outline-success" id="showPartyBtn"
-                                                data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                                data-bs-whatever="">View
-                                        </button>
-                                        <input type="hidden" class="input-partycode" value="${party.partyCode}">
+                                <div class="card-body">
+                                    <p class="card-text"><c:out value="${party.partyName}"/></p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <button type="button" class="btn btn-outline-success" id="showPartyBtn"
+                                                    data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                                    data-bs-whatever="">View
+                                            </button>
+                                            <input type="hidden" class="input-partycode" value="${party.partyCode}">
+                                        </div>
+                                        <small class="text-muted"><c:out value="${party.hobbyName}"/></small>
+                                        <small class="text-muted"><c:out value="${party.localName}"/></small>
+                                        <small class="text-muted"><c:out value="${party.partyScore}"/></small>
                                     </div>
-                                    <small class="text-muted"><c:out value="${party.hobbyName}"/></small>
-                                    <small class="text-muted"><c:out value="${party.localName}"/></small>
-                                    <small class="text-muted"><c:out value="${party.partyScore}"/></small>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                </c:forEach>
+                    </c:forEach>
+                </div>
             </div>
-        </div>
 
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                <div class="modal-content">
-                    <!-- 모달 헤더 -->
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalCenteredScrollableTitle">
-                            지금 바로 가입해보세요!
-                        </h5>
-                        <button type="button" class="btn-close" id="closeBtnIcon"
-                                data-bs-dismiss="modal"></button>
-                    </div>
-                    <!-- 모달 중단부 -->
-                    <div class="modal-body">
-                        <div>
-                            <img class="modal-img" alt="파티메인이미지">
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <!-- 모달 헤더 -->
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalCenteredScrollableTitle">
+                                지금 바로 가입해보세요!
+                            </h5>
+                            <button type="button" class="btn-close" id="closeBtnIcon"
+                                    data-bs-dismiss="modal"></button>
                         </div>
-                        <div class="partyContents">
-                            <div class="partyName">
-                                <div class="modal-partyName"></div>
+                        <!-- 모달 중단부 -->
+                        <div class="modal-body">
+                            <div>
+                                <img class="modal-img" alt="파티메인이미지">
                             </div>
-                            <div class="partyInfo">
-                                <span class="modal-count"></span>
-                                <span class="modal-localName">
-                                </span>
-                                <span class="modal-hobbyName">
-                                </span>
-                                <div class="modal-partyScore">
+                            <div class="partyContents">
+                                <div class="partyName">
+                                    <div class="modal-partyName"></div>
                                 </div>
+                                <div class="partyInfo">
+                                    <span class="modal-count"></span>
+                                    <span class="modal-localName">
+                                </span>
+                                    <span class="modal-hobbyName">
+                                </span>
+                                    <div class="modal-partyScore">
+                                    </div>
+                                </div>
+                                <p class="modal-profile">
+                                </p>
                             </div>
-                            <p class="modal-profile">
-                            </p>
+                        </div>
+                        <!-- 모달 하단부 -->
+                        <div class="modal-footer">
+                            <input type="hidden" class="user-email" value="${sessionScope.__AUTH__.email}">
+                            <button type="submit" class="btn btn-secondary party-req-btn"
+                                    data-bs-toggle="button">
+                                파티신청
+                            </button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                닫기
+                            </button>
                         </div>
                     </div>
-                    <!-- 모달 하단부 -->
-                    <div class="modal-footer">
-                        <input type="hidden" class="user-email" value="${sessionScope.__AUTH__.email}">
-                        <button type="submit" class="btn btn-secondary party-req-btn"
-                                data-bs-toggle="button">
-                            파티신청
-                        </button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                            닫기
-                        </button>
+                </div>
+            </div>
+
+            <%--더 둘러보기 스와이퍼--%>
+            <div class="py-5">
+                <div class="header">
+                    <h4>더 둘러보기</h4>
+                </div>
+                <div class="swiper mySwiper">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide swiper-item"><span>축구</span></div>
+                        <div class="swiper-slide swiper-item"><span>야구</span></div>
+                        <div class="swiper-slide swiper-item"><span>컴퓨터게임</span></div>
+                        <div class="swiper-slide swiper-item"><span>등산</span></div>
+                        <div class="swiper-slide swiper-item"><span>공부</span></div>
+                        <div class="swiper-slide swiper-item"><span>당구</span></div>
+                        <div class="swiper-slide swiper-item"><span>보드게임</span></div>
+                        <div class="swiper-slide swiper-item"><span>DIY</span></div>
+                        <div class="swiper-slide swiper-item"><span>요리</span></div>
                     </div>
+                    <div class="swiper-pagination"></div>
                 </div>
             </div>
         </div>
 
-        <%--더 둘러보기 스와이퍼--%>
-        <div class="py-5">
-            <div class="header">
-                <h4>더 둘러보기</h4>
-            </div>
-            <div class="swiper mySwiper">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide swiper-item"><span>축구</span></div>
-                    <div class="swiper-slide swiper-item"><span>야구</span></div>
-                    <div class="swiper-slide swiper-item"><span>컴퓨터게임</span></div>
-                    <div class="swiper-slide swiper-item"><span>등산</span></div>
-                    <div class="swiper-slide swiper-item"><span>공부</span></div>
-                    <div class="swiper-slide swiper-item"><span>당구</span></div>
-                    <div class="swiper-slide swiper-item"><span>보드게임</span></div>
-                    <div class="swiper-slide swiper-item"><span>DIY</span></div>
-                    <div class="swiper-slide swiper-item"><span>요리</span></div>
-                </div>
-                <div class="swiper-pagination"></div>
-            </div>
+        <!-- 사이드 슬라이드 배너 -->
+        <div class="sideBanner shadow-sm">
+            <img src="https://cdn-icons-png.flaticon.com/512/2057/2057748.png" alt="가입이미지"
+                 href="">
+            <span class="txt-label">파티생성</span>
         </div>
     </div>
-
-	<!-- 사이드 슬라이드 배너 -->
-	<div class="sideBanner">
-    	<img src="https://cdn-icons-png.flaticon.com/512/2057/2057748.png" alt="가입이미지"
-    	href="">
-    	<span class="txt-label">파티생성</span>
-  	</div>
-
 </main>
 
 <%--FOOTER--%>
