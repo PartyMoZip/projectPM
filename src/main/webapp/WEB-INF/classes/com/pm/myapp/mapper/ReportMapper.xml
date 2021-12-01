@@ -4,6 +4,13 @@
 
 <mapper namespace="com.pm.myapp.mapper.ReportMapper">
 
+	<select id="checkReportParty" resultType="Integer">
+	
+		SELECT 
+	
+	</select>
+
+
 	<update id="reportParty">
 	
 		UPDATE PARTY
