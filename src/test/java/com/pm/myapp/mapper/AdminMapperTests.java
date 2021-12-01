@@ -55,8 +55,8 @@ public class AdminMapperTests {
 		log.debug("testGetBlackParty() invoked.");
 		
 		Criteria cri = new Criteria();
-		List<BlackPartyVO> blackParty = this.mapper.getBlackParty(cri);
-		log.info("\t+ blackParty : {}", blackParty);
+//		List<BlackPartyVO> blackParty = this.mapper.getBlackParty(cri);
+//		log.info("\t+ blackParty : {}", blackParty);
 
 	} // testGetBlackParty
 	
@@ -65,7 +65,8 @@ public class AdminMapperTests {
 		log.debug("testGetAllList() invoked.");
 		
 		Criteria cri = new Criteria();
-		List<AllPartyVO> allParty = this.mapper.getAllList(cri);
+		String searchWord = ""; 
+		List<AllPartyVO> allParty = this.mapper.getAllList(cri, searchWord);
 		log.info("\t+ allParty : {}", allParty);
 
 	} // testGetAllList
