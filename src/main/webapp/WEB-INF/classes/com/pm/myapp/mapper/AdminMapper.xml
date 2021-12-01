@@ -28,32 +28,51 @@
 	
 	<select id="getBlackParty" resultType="com.pm.myapp.domain.BlackPartyVO">
 	
-	    <![CDATA[ 
-		SELECT ROWNUM, P.PARTYNAME, I.NICKNAME, P.PARTYBANNED, P.CREATEDATE  
+
+		SELECT ROWNUM, P.PARTYNAME, I.NICKNAME, P.PARTYBANNED, P.CREATEDATE, P.PARTYCODE  
 		FROM PARTY P
 		JOIN PARTYUSER U
 		ON P.PARTYCODE = U.PARTYCODE
 		JOIN USERINFO I
 		ON U.EMAIL = I.EMAIL
-		WHERE P.PARTYBANNED > 5 AND U.AUTHCODE = 2
-		ORDER BY rownum desc
-		OFFSET (#{currPage}-1) * #{amount} ROWS
-		FETCH NEXT #{amount} ROWS ONLY
+		<![CDATA[ 
+			WHERE P.PARTYBANNED > 5 AND U.AUTHCODE = 2
 		]]>
+		<choose>
+        	<when test="searchWord==null">
+        	</when>
+        	<otherwise>
+        		AND (P.PARTYNAME like '%'||#{searchWord}||'%'
+        		OR I.NICKNAME like '%'||#{searchWord}||'%')
+        	</otherwise>
+        </choose>
+		ORDER BY rownum desc
+		OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
+		FETCH NEXT #{cri.amount} ROWS ONLY
+
 		
 	</select>
 	
 	<select id="getAllBP" resultType="int">
 	
-		<![CDATA[ 
+
 		SELECT COUNT(P.PARTYNAME)  
 		FROM PARTY P
 		JOIN PARTYUSER U
 		ON P.PARTYCODE = U.PARTYCODE
 		JOIN USERINFO I
 		ON U.EMAIL = I.EMAIL
-		WHERE P.PARTYBANNED > 5 AND U.AUTHCODE = 2
+		<![CDATA[ 
+			WHERE P.PARTYBANNED > 5 AND U.AUTHCODE = 2
 		]]>
+		<choose>
+        	<when test="searchWord==null">
+        	</when>
+        	<otherwise>
+        		AND (P.PARTYNAME like '%'||#{searchWord}||'%'
+        		OR I.NICKNAME like '%'||#{searchWord}||'%')
+        	</otherwise>
+        </choose>
 	
 	</select>
 
@@ -82,39 +101,102 @@
 	<update id="deleteParty">
 
 		UPDATE PARTY
-		SET PARTYBANNED = -1
+		SET PARTYBANNED = -2
 		WHERE PARTYCODE = #{partyCode}
 
 	</update>
 	
 	<select id="getAllList" resultType="com.pm.myapp.domain.AllPartyVO">
 	
-	    <![CDATA[ 
 		SELECT ROWNUM, P.PARTYCODE, P.PARTYNAME, P.PARTYSCORE, I.NICKNAME, P.PARTYBANNED, P.CREATEDATE, (SELECT count(*) from partyuser where partycode=p.partycode) AS PARTYMEMBER 
 		FROM PARTY P
 		JOIN PARTYUSER U
 		ON P.PARTYCODE = U.PARTYCODE
 		JOIN USERINFO I
 		ON U.EMAIL = I.EMAIL
-		WHERE P.PARTYBANNED > -1 AND U.AUTHCODE = 2
-		ORDER BY rownum desc
-		OFFSET (#{currPage}-1) * #{amount} ROWS
-		FETCH NEXT #{amount} ROWS ONLY
+		<![CDATA[ 
+			WHERE P.PARTYBANNED > -1 AND U.AUTHCODE = 2
 		]]>
+		<choose>
+        	<when test="searchWord==null">
+        	</when>
+        	<otherwise>
+        		AND (P.PARTYNAME like '%'||#{searchWord}||'%'
+        		OR I.NICKNAME like '%'||#{searchWord}||'%')
+        	</otherwise>
+        </choose>
+		ORDER BY rownum desc
+		OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
+		FETCH NEXT #{cri.amount} ROWS ONLY
 		
 	</select>
 	
 	<select id="getAllPL" resultType="int">
 	
-	    <![CDATA[ 
 		SELECT COUNT(P.PARTYCODE) 
 		FROM PARTY P
 		JOIN PARTYUSER U
 		ON P.PARTYCODE = U.PARTYCODE
 		JOIN USERINFO I
 		ON U.EMAIL = I.EMAIL
-		WHERE P.PARTYBANNED > -1 AND U.AUTHCODE = 2
+		<![CDATA[ 
+			WHERE P.PARTYBANNED > -1 AND U.AUTHCODE = 2
 		]]>
+		<choose>
+        	<when test="searchWord==null">
+        	</when>
+        	<otherwise>
+        		AND (P.PARTYNAME like '%'||#{searchWord}||'%'
+        		OR I.NICKNAME like '%'||#{searchWord}||'%')
+        	</otherwise>
+        </choose>
+	
+	</select>
+	
+	<select id="getBreakList" resultType="com.pm.myapp.domain.AllPartyVO">
+	
+		SELECT ROWNUM, P.PARTYCODE, P.PARTYNAME, P.PARTYSCORE, I.NICKNAME, P.PARTYBANNED, P.CREATEDATE, (SELECT count(*) from partyuser where partycode=p.partycode) AS PARTYMEMBER 
+		FROM PARTY P
+		JOIN PARTYUSER U
+		ON P.PARTYCODE = U.PARTYCODE
+		JOIN USERINFO I
+		ON U.EMAIL = I.EMAIL
+		<![CDATA[ 
+			WHERE P.PARTYBANNED = -1 AND U.AUTHCODE = 2
+		]]>
+		<choose>
+        	<when test="searchWord==null">
+        	</when>
+        	<otherwise>
+        		AND (P.PARTYNAME like '%'||#{searchWord}||'%'
+        		OR I.NICKNAME like '%'||#{searchWord}||'%')
+        	</otherwise>
+        </choose>
+		ORDER BY rownum desc
+		OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
+		FETCH NEXT #{cri.amount} ROWS ONLY
+		
+	</select>
+	
+	<select id="getTotalBreak" resultType="int">
+	
+		SELECT COUNT(P.PARTYCODE) 
+		FROM PARTY P
+		JOIN PARTYUSER U
+		ON P.PARTYCODE = U.PARTYCODE
+		JOIN USERINFO I
+		ON U.EMAIL = I.EMAIL
+		<![CDATA[ 
+			WHERE P.PARTYBANNED = -1 AND U.AUTHCODE = 2
+		]]>
+		<choose>
+        	<when test="searchWord==null">
+        	</when>
+        	<otherwise>
+        		AND (P.PARTYNAME like '%'||#{searchWord}||'%'
+        		OR I.NICKNAME like '%'||#{searchWord}||'%')
+        	</otherwise>
+        </choose>
 	
 	</select>
 	
