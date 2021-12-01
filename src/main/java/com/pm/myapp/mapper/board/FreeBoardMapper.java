@@ -47,7 +47,7 @@ public interface FreeBoardMapper {
     // 자유 게시판 삭제
     public abstract Integer deleteFreeBoard(Integer frefer);
     // 자유 게시판 댓글 삭제
-    public abstract Integer deleteFreeBoardReply(Integer frefer);
+    public abstract Integer deleteFreeBoardReply(FreeBoardReplyDTO freeReply);
 
 
 

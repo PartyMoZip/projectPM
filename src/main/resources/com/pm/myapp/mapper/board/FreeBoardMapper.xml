@@ -160,7 +160,8 @@
             SELECT
                 FRE.frerefer, FRE.frecontent, FRE.fredate, FRE.frefer, U.nickname, FRE.email
             FROM FREEBOARDRE FRE
-            JOIN USERINFO U ON FRE.email = U.email
+            JOIN USERINFO U
+            ON FRE.email = U.email
             WHERE frefer = #{frefer}
             ORDER BY frerefer desc
             OFFSET (#{recri.reCurrPage}-1) * #{recri.reAmount} ROWS
@@ -187,14 +188,14 @@
         UPDATE FREEBOARDRE
         SET
             FRECONTENT = #{frecontent}
-        WHERE FREFER = #{frefer}
+        WHERE FREREFER = #{frerefer} AND FREFER = #{frefer}
     </update>
 
 
     <delete id="deleteComment">
         DELETE
         FROM FREEBOARDRE
-        WHERE FREFER=#{frefer}
+        WHERE FREREFER=#{frerefer} AMD FREFER = #{frefer}
     </delete>
 
 </mapper>

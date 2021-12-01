@@ -147,10 +147,10 @@ public class QnaBoardServiceImpl implements QnaBoardService {
 
     // 댓글삭제
     @Override
-    public boolean deleteReply(Integer qrefer) {
-        log.debug("deleteReply({}) invoked.", qrefer);
+    public boolean deleteReply(QnaBoardReplyDTO qnaReply) {
+        log.debug("deleteReply({}) invoked.", qnaReply);
 
-        int affectedRows = this.mapper.deleteComment(qrefer);
+        int affectedRows = this.mapper.deleteComment(qnaReply);
         log.info("\t + affectedRows : {}", affectedRows);
 
         return (affectedRows == 1);
