@@ -40,7 +40,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
         >
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/partyfunc/partychat?partyCode=${partyCode}"
+        <a class="nav-link" href="/partyfunc/partychat?partyCode=${partyCode}"target="_blank"
           >채팅</a
         >
       </li>

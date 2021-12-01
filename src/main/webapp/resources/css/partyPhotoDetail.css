@@ -253,3 +253,22 @@ textarea {
 	display: table-cell;
 	vertical-align: middle;
 }
+
+.photoCommentDate {
+	display: flex;
+}
+
+.photoCommentContent {
+	display: inline-block;
+	border: 2px solid lightgray;
+	border-radius: 5px;
+	padding: 3px;
+}
+
+.photoCommentWriter {
+	display: flex;
+}
+
+.photoCommentEdit {
+	float: left;
+}
