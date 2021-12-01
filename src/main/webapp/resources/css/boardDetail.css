@@ -224,3 +224,53 @@ textarea {
     margin-top: 20px;
     text-align: end;
 }
+
+.freeBoardCommentWriter {
+	font-weight: 600;
+}
+
+.freeBoardCommentInfo {
+	display: flex;
+}
+
+.freeBoardCommentNickname {
+	font-weight: 600;
+}
+
+.freeBoardCommentContent {
+	display: table;
+	border: 2px solid lightgray;
+	border-radius: 5px;
+	padding: 3px;
+	margin: 10px 0px;	
+}
+
+.freeBoardCommentEdit {
+	margin-top: 6px;
+	float: left;
+}
+
+.qnaBoardCommentWriter {
+	font-weight: 600;
+}
+
+.qnaBoardCommentInfo {
+	display: flex;
+}
+
+.qnaBoardCommentNickname {
+	font-weight: 600;
+}
+
+.qnaBoardCommentContent {
+	display: table;
+	border: 2px solid lightgray;
+	border-radius: 5px;
+	padding: 3px;
+	margin: 10px 0px;	
+}
+
+.qnaBoardCommentEdit {
+	margin-top: 6px;
+	float: left;
+}

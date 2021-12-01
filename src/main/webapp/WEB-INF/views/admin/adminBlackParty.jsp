@@ -45,7 +45,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="/admin/adminPartyBreak"
+            <a class="nav-link" href="/admin/adminPartyBreak"
               >파티해체 승인 요청</a
             >
           </li>

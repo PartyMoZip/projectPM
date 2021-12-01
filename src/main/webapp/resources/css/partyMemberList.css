@@ -131,8 +131,8 @@ td > img {
   background-color: red;
 }
 
-.bottom-menu-page.bottom-menu-btn {
-	margin-left: 25px;
+.bottom-menu-page .bottom-menu-btn {
+	margin-left: 30px;
 }
 
 .d-grip.gap-2.d-md-block {
