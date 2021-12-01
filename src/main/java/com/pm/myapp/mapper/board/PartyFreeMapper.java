@@ -10,7 +10,7 @@ import java.util.List;
 public interface PartyFreeMapper {
 
     // 파티 자유 게시판 목록 - 페이징 처리
-    public abstract List<PartyFreeListVO> getListWithPaging(@Param("partycode")Integer partycode, @Param("searchWord") String searchWord, @Param("option") Integer option, @Param("cri") Criteria cri);
+    public abstract List<PartyFreeListVO> getListWithPaging(@Param("partyCode")Integer partycode, @Param("searchWord") String searchWord, @Param("option") Integer option, @Param("cri") Criteria cri);
     // 파티 내 자유 게시판  개수 반환
     public abstract Integer getTotalCount(@Param("partyCode") Integer partyCode, @Param("searchWord") String searchWord, @Param("option") Integer option);
 

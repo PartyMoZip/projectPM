@@ -77,6 +77,8 @@
 			<mvc:exclude-mapping path="/party/editparty" />
 			<mvc:exclude-mapping path="/partyphoto/write" />
 			<mvc:exclude-mapping path="/partyphoto/edit" />
+			<mvc:exclude-mapping path="/partyfree/writePFreeBoardOk" />
+			<mvc:exclude-mapping path="/partyfree/editPFreeBoard" />
 			<mvc:exclude-mapping path="/partyphoto/heart" />
 
 			<beans:ref bean="PartyInterceptor" />

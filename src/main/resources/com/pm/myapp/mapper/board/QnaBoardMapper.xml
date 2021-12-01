@@ -39,7 +39,8 @@
                Q.qcontent,
                Q.qdate,
                U.nickname,
-               Q.readnum
+               Q.readnum,
+               U.userpic
         FROM QNABOARD Q
                  JOIN USERINFO U ON Q.email = U.email
         WHERE Q.qrefer = #{qrefer}

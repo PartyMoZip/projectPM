@@ -15,5 +15,6 @@ public class QnaBoardVO {
     private String nickname;
     private String email;
     private Integer readnum;
+    private String userpic;
 
 }

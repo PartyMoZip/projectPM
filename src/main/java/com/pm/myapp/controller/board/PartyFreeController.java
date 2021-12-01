@@ -43,7 +43,7 @@ public class PartyFreeController {
             option = 1;
         } // if
 
-		log.debug("getPFreeBoardList({}) invoked.", model);
+		log.debug("getPFreeBoardList({}) invoked.", sdto);
 
         // 목록 불러오기
 		List<PartyFreeListVO> list = this.service.getListPerPage(partyCode, searchWord, option, cri);
@@ -65,7 +65,6 @@ public class PartyFreeController {
 
 	// 파티 자유 게시판 상세보기
 	@GetMapping("/showPartyFDetail")
-
 	public void showPartyFDetail(
             @ModelAttribute("sdto") BoardSearchListDTO sdto,
 			@ModelAttribute("cri") Criteria cri,
@@ -86,6 +85,7 @@ public class PartyFreeController {
         // 파티 자유 게시판 글 상세보기
 		PartyFreeVO partyFDetail = this.service.getBoardDetail(pfrefer, partycode);
 		log.info("\t + partyFree : {}", partyFDetail);
+		List<PartyFreeReplyVO> reply = this.service.getReply(pfrefer, partycode, recri);
 		model.addAttribute("boardDetail", partyFDetail);
 		model.addAttribute("__COMMENT__", reply);
 
@@ -138,7 +138,7 @@ public class PartyFreeController {
 	@PostMapping("/editPFreeBoard")
 	public String editPFreeBoard(PartyFreeDTO partyFree, RedirectAttributes rttrs) {
 		log.debug("editPFreeBoard({}) invoked.", partyFree);
-		service.editBoard(partyFree);
+		this.service.editBoard(partyFree);
 
 
 		return "redirect:/partyFree/getPFreeBoardList";
@@ -167,11 +167,11 @@ public class PartyFreeController {
 
 		log.debug("searchPFreeBoard() invoked.");
 
-		List<PartyFreeSearchVO> searchList = this.service.search(partyCode, cri, searchWord, option);
+		List<PartyFreeSearchVO> searchList = this.service.search(partycode, cri, searchWord, option);
 		model.addAttribute("__list__", searchList);
 
 		// 페이징 처리
-		Integer totalAmount = this.service.getTotalSearch(partyCode, searchWord, option);
+		Integer totalAmount = this.service.getTotalSearch(partycode, searchWord, option);
 		PageDTO pageDTO = new PageDTO(cri, totalAmount);
 		model.addAttribute("pageMaker", pageDTO);
 
