@@ -81,9 +81,9 @@ public class FreeBoardServiceImpl implements FreeBoardService, InitializingBean,
 
     // 댓글 삭제
     @Override
-    public boolean deleteFreeBoardReply(Integer frefer) {
+    public boolean deleteFreeBoardReply(FreeBoardReplyDTO freeReply) {
 
-        int affectedRows = this.mapper.deleteFreeBoardReply(frefer);
+        int affectedRows = this.mapper.deleteFreeBoardReply(freeReply);
         return (affectedRows != 0);
     }
 

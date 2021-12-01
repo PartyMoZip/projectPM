@@ -44,7 +44,7 @@ public interface QnaBoardMapper {
     // 문의 게시판 삭제
     public abstract int deleteQnaBoard(Integer qrefer);
     // 문의 게시판 댓글 삭제
-    public abstract int deleteComment(Integer qrerefer);
+    public abstract int deleteComment(QnaBoardReplyDTO qnaReply);
 
 
 

@@ -32,9 +32,8 @@
 				src="${pageContext.request.contextPath}/resources/images/logo.svg"
 				alt="logo" width=150; height=50;
 				style="float: right">
-			<div class="container-lg chatData">
+			<div class="container-lg-chatData">
 				<div id="divChatData"></div>
-
 			</div>
 		</div>
 		<div class="container-chatReply">
@@ -110,7 +109,6 @@
 									+ '</div>');
 					$('#divChatData').append(
 							'<div class="chatInfo">' + msgData.msg + '</div>');
-
 				}
 				// 입장
 				else if (msgData.cmd == 'CMD_ENTER') {

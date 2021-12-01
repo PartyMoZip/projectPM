@@ -14,5 +14,6 @@ public class PartyFreeVO {
     private String pfsubject;
     private String email;
     private Integer readnum;
+    private String userpic;
 
 }

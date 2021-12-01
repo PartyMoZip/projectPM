@@ -76,12 +76,12 @@
                         </div>
 
                         <span><textarea name="fContent" rows="10"
-                                        cols="137">${__boardDetail__.FContent}"</textarea>
+                                        cols="137">${__boardDetail__.FContent}</textarea>
                         </span>
                         <div class="container-btnGroup">
                             <button type="submit" class="btn btn-primary btn-sm">
                                 <i class="fas fa-pen"></i>
-                                <span>등록</span>
+                                <span>수정</span>
                             </button>
                             <%--  </c:if>--%>
                             <button type="button" class="btn btn-primary btn-sm"
@@ -109,6 +109,7 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
 <script src="${pageContext.request.contextPath}/resources/js/board.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/search.js"></script>
 <!--<script src="${pageContext.request.contextPath}/resources/js/comment.js"></script>-->
 </body>
 </html>

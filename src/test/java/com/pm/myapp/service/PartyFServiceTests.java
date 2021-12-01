@@ -72,8 +72,8 @@ public class PartyFServiceTests {
         log.debug("test() invoked.");
 
         int pfrefer = 1;
-        boolean isSuccess = this.service.deleteBoard(pfrefer);
-        log.info("\t + isSuccess : {}", isSuccess);
+        //boolean isSuccess = this.service.deleteBoard(pfrefer);
+        //log.info("\t + isSuccess : {}", isSuccess);
     } //testRemove
 
     @Test
@@ -113,9 +113,9 @@ public class PartyFServiceTests {
         Criteria cri = new Criteria();
         cri.setCurrPage(1);
         cri.setAmount(10);
-        List<PartyFreeReplyVO> partyReplyList = this.service.getReply(1,2,cri);
-        Objects.requireNonNull(partyReplyList);
-        partyReplyList.forEach(log::info);
+        //List<PartyFreeReplyVO> partyReplyList = this.service.getReply(1,2,cri);
+        //Objects.requireNonNull(partyReplyList);
+    //    partyReplyList.forEach(log::info);
     }
 
     @Test
@@ -130,8 +130,8 @@ public class PartyFServiceTests {
         log.debug("test() invoked.");
 
         int pfrerefer = 1;
-        boolean isSuccess = this.service.deleteReply(pfrerefer);
-        log.info("\t + isSuccess : {}", isSuccess);
+        //boolean isSuccess = this.service.deleteReply(pfrerefer);
+        //log.info("\t + isSuccess : {}", isSuccess);
     }
 
     @Test
@@ -147,8 +147,8 @@ public class PartyFServiceTests {
     public void testGetTotalReply() {
         log.debug("testGetTotalReply() invoked.");
 
-        int totalCount = this.service.getTotalReply();
-        log.info("\t + totalCount : {}", totalCount);
+      //  int totalCount = this.service.getTotalReply();
+       // log.info("\t + totalCount : {}", totalCount);
     }
 
     @After

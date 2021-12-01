@@ -35,7 +35,7 @@
     </select>
 
     <select id="readNoticeBoard" resultType="com.pm.myapp.domain.board.NoticeBoardVO">
-        SELECT n.nrefer, n.nsubject, n.ncontent, n.ndate, u.nickname,u.email, n.readnum
+        SELECT n.nrefer, n.nsubject, n.ncontent, n.ndate, u.nickname,u.email, n.readnum, u.userpic
         FROM NOTICEBOARD N
         JOIN USERINFO U ON N.email = U.email
         WHERE NREFER = #{nrefer}
@@ -46,7 +46,7 @@
     <insert id="writeNoticeBoard">
 
         INSERT INTO NOTICEBOARD(NREFER, NSUBJECT, NCONTENT, NDATE, NICKNAME, EMAIL, READNUM)
-        VALUES(SEQ_NOTICEBOARD.nextval, #{nSubject}, #{nContent}, sysdate, '관리자', 'test2@test.com', 0)
+        VALUES(SEQ_NOTICEBOARD.nextval, #{nSubject}, #{nContent}, sysdate, '관리자', 'test1@test.com', 0)
 
     </insert>
 

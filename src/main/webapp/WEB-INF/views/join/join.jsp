@@ -63,6 +63,7 @@
 
 
 </div>
+<script src="${pageContext.request.contextPath}/resources/js/search.js"></script>
 </body>
 </html>
 

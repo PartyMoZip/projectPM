@@ -76,7 +76,6 @@
 
             <!-- 버튼 -->
             <div class="d-grid gap-2 d-md-block">
-                ${sessionScope.__AUTH__.userBanned}
                 <c:if test="${sessionScope.__AUTH__.userBanned == -2}">
                     <button type="button" class="btn btn-primary btn-sm"
                     onclick="location.href='/noticeboard/writeNoticeBoardView'">
@@ -163,6 +162,7 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
 <script src="${pageContext.request.contextPath}/resources/js/board.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/search.js"></script>
 </body>
 
 </html>

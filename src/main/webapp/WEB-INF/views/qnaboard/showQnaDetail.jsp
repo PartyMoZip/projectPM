@@ -43,7 +43,7 @@
                     </div>
                     <div class="info_desc">
                         <div class="profile_thumb">
-                            <img src="${pageContext.request.contextPath}/resources/images/profile.jpg" alt width="50"
+                            <img src="${boardDetail.userpic}" alt width="50"
                                  height="50" class="img_thumb">
                         </div>
                         <div class="cover_info">
@@ -66,29 +66,57 @@
                     <!--댓글 리스트-->
                     <div class="commentList_wrap">
                         <div class="commentList">
-                            <table>
-                                <tbody>
+
                                 <c:choose>
-                                    <c:when test="${not empty reply}">
-                                        <c:forEach items="${reply}" var="reply">
-                                            <tr>
-                                                <td><c:out value="${sessionScope.__AUTH__.nickname}"/></td>
-                                            </tr>
-                                            <tr>
-                                                <td><c:out value="${reply.qrecontent}"/></td>
-                                            </tr>
-                                            <tr>
-                                                <td><fmt:formatDate pattern="yyyy.MM.dd HH:mm:ss"
-                                                                    value="${reply.qredate}"/></td>
-                                            </tr>
+
+                                    <c:when test="${not empty __COMMENT__}">
+                                        <c:forEach items="${__COMMENT__}" var="comment">
+                                        <!-- 수정 + 상세-->    
+                                        <form action="/qnaboard/editComment" method="post">
+                                            <input type="hidden" name="currPage" value="${cri.currPage}">
+                                            <input type="hidden" name="reCurrPage" value="${recri.reCurrPage}">
+                                            <input type="hidden" name="qrefer" value="${comment.qrefer}">
+                                            <input type="hidden" name="qrerefer" value="${comment.qrerefer}">
+
+                                                <div>닉네임 : <c:out value="${comment.nickname}"/></div>
+
+                                                <div>댓글내용 : <c:out value="${comment.qrecontent}"/></div>
+                                                <input type="hidden" id="${comment.qrerefer}totext" name="qrecontent"
+                                                value="${comment.qrecontent}">
+
+                                                <div><fmt:formatDate pattern="yyyy.MM.dd HH:mm:ss"
+                                                                    value="${comment.qredate}"/></div>
+
+                                                <input type="hidden" name="email" value="${sessionScope.__AUTH__.email}">
+                                                <c:if test="${sessionScope.__AUTH__.email eq comment.email}">
+                                                    <input type="button" id="${comment.qrerefer}" name="mod" value="수정">
+                                                    <input type="hidden" id="${comment.qrerefer}tosubmit" value="수정완료">
+                                                </c:if>
+
+
+                                            </form>
+                                            <!-- 삭제 버튼 -->
+
+                                                <c:if test="${sessionScope.__AUTH__.email eq comment.email}">
+                                                    <form action="/qnaboard/deleteComment" method="post">
+                                                        <input type="hidden" name="currPage" value="${cri.currPage}">
+                                                        <input type="hidden" name="reCurrPage" value="${recri.reCurrPage}">
+                                                        <input type="hidden" name="qrefer" value="${comment.qrefer}">
+                                                        <input type="hidden" name="qrerefer" value="${comment.qrerefer}">
+                                                        <input type="submit" value="삭제">
+                                                    </form>
+                                                </c:if>
+
+
+
                                         </c:forEach>
                                     </c:when>
+
                                     <c:otherwise>
                                         <td>등록된 글이 없습니다</td>
                                     </c:otherwise>
                                 </c:choose>
-                                </tbody>
-                            </table>
+
                             <div id="pagination">
                                 <form id="paginationForm">
                                     <ul class="pagination justify-content-center">
@@ -126,7 +154,7 @@
                         <input type="hidden" name="currPage" value="${cri.currPage}">
                         <input type="hidden" name="reCurrPage" value="${recri.reCurrPage}">
                         <input type="hidden" name="qrefer" value="${boardDetail.qrefer}">
-                        <input type="hidden" name="email" value="${boardDetail.email}">
+                        <input type="hidden" name="email" value="${sessionScope.__AUTH__.email}">
                         <div class="commentWrite_Wrap">
                         <textarea name="qrecontent" id="commentContent"
                                   placeholder=" [${sessionScope.__AUTH__.nickname}] 님,  댓글을 남겨보세요"
@@ -136,33 +164,33 @@
                         </div>
                     </form>
                 </div>
-            </div>
-            <div class="container-btnGroup d-flex justify-content-end">
-                <c:set value="${sessionScope.__AUTH__.nickname}" var="nickname"/>
-                <c:if test="${boardDetail.nickname eq nickname}">
-                    <button type="button" class="btn btn-primary btn-sm"
-                            onclick="location.href='/qnaboard/editQnaBoardView?qrefer=${boardDetail.qrefer}'">
-                        <i class="fas fa-pen"></i>
-                        <span>수정</span>
-                    </button>
-                    <form action="/qnaboard/deleteQnaBoard" name="deleteButton" method="post">
-                        <button type="submit" id="deleteButton" class="btn btn-primary btn-sm">
-                            <input type="hidden" id="qrefer" name="qrefer" value="${boardDetail.qrefer}">
-                            <i class="fas fa-trash-alt"></i>
-                            <span>삭제</span>
+
+                <div class="container-btnGroup d-flex justify-content-end">
+                    <c:set value="${sessionScope.__AUTH__.nickname}" var="nickname"/>
+                    <c:if test="${boardDetail.nickname eq nickname}">
+                        <button type="button" class="btn btn-primary btn-sm"
+                                onclick="location.href='/qnaboard/editQnaBoardView?qrefer=${boardDetail.qrefer}'">
+                            <i class="fas fa-pen"></i>
+                            <span>수정</span>
                         </button>
-                    </form>
-                </c:if>
-                <button type="button" class="btn btn-primary btn-sm"
-                        onclick="location.href='/qnaboard/getQnaBoardList?currPage=${cri.currPage}'">
-                    <i class="fas fa-list-ul"></i>
-                    <span>목록</span>
-                </button>
+                        <form action="/qnaboard/deleteQnaBoard" name="deleteButton" method="post">
+                            <button type="submit" id="deleteButton" class="btn btn-primary btn-sm">
+                                <input type="hidden" id="qrefer" name="qrefer" value="${boardDetail.qrefer}">
+                                <i class="fas fa-trash-alt"></i>
+                                <span>삭제</span>
+                            </button>
+                        </form>
+                    </c:if>
+                    <button type="button" class="btn btn-primary btn-sm"
+                            onclick="location.href='/qnaboard/getQnaBoardList?currPage=${cri.currPage}'">
+                        <i class="fas fa-list-ul"></i>
+                        <span>목록</span>
+                    </button>
+                </div>
             </div>
         </div>
 	</main>
 </div>
-
 
 <%--FOOTER--%>
 <div class="container">
@@ -176,6 +204,18 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
 <script src="${pageContext.request.contextPath}/resources/js/board.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/search.js"></script>
 <!--<script src="${pageContext.request.contextPath}/resources/js/comment.js"></script>-->
+<script>
+    $(document).ready(function () {
+        $(document).on("click", function (e) {
+            var click_val_1 = e.target.getAttribute('id');
+            console.log(click_val_1);
+            $('#' + click_val_1 + 'totext').attr("type", "text");
+            $('#' + click_val_1 + 'tosubmit').attr("type", "submit");
+        });
+    });
+</script>
+
 </body>
 </html>

@@ -44,7 +44,7 @@
 
                     <div class="info_desc">
                         <div class="profile_thumb">
-                            <img src="${pageContext.request.contextPath}/resources/images/profile.jpg" alt width="50"
+                            <img src="${board.userpic}" alt width="50"
                                  height="50" class="img_thumb">
                         </div>
                         <div class="cover_info">
@@ -68,6 +68,7 @@
                         </button>
                         <form action="/noticeboard/deleteNoticeBoard" name="deleteButton" method="post"
                               style="margin-bottom: 0px;">
+                            <c:set value="${sessionScope.__AUTH__.nickname}" var="nickname"/>
                             <button type="submit" id="deleteButton" class="btn btn-primary btn-sm">
                                 <input type="hidden" id="nRefer" name="nrefer" value="${board.NRefer}">
                                 <i class="fas fa-trash-alt"></i>
@@ -98,6 +99,7 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
 <script src="${pageContext.request.contextPath}/resources/js/board.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/search.js"></script>
 <script>
 
 
