@@ -109,6 +109,7 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
 <script src="${pageContext.request.contextPath}/resources/js/board.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/search.js"></script>
 <!--<script src="${pageContext.request.contextPath}/resources/js/comment.js"></script>-->
 </body>
 </html>

@@ -248,6 +248,7 @@
 		crossorigin="anonymous"></script>
 	<!-- 제이쿼리 -->
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/search.js"></script>
 	<!-- 스윗알러트 -->
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<script

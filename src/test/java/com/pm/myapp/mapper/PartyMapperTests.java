@@ -154,10 +154,11 @@ public class PartyMapperTests {
 	@Test
 	public void testCreateNewParty() {
 		PartyDTO pdto = new PartyDTO();
-		pdto.setPartyName("test클럽");
-		pdto.setPartyProfile("여기는 테스트클럽");
+		pdto.setPartyName("테스트한다테스트");
+		pdto.setPartyProfile("꼭해보자꼭");
 		pdto.setHobbyCode(1);
 		pdto.setLocalCode(2);
+		pdto.setFileLocation("https://cdn.pixabay.com/photo/2021/10/18/07/25/bird-6720306__340.jpg");
 		
 		String email = "thehappypool@naver.com";
 		

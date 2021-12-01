@@ -162,6 +162,7 @@
 
 <script src="${pageContext.request.contextPath}/resources/js/board.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/pagination.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/search.js"></script>
 </body>
 
 </html>
