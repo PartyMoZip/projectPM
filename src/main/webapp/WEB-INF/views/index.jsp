@@ -14,7 +14,7 @@
           integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/home.css?after">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/modal.css?after">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/modal.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/spinner.css?after">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/newPartyBanner.css?after">
 
@@ -147,46 +147,45 @@
                     <div class="modal-content">
                         <!-- 모달 헤더 -->
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalCenteredScrollableTitle">
-                                지금 바로 가입해보세요!
-                            </h5>
                             <button type="button" class="btn-close" id="closeBtnIcon"
                                     data-bs-dismiss="modal"></button>
                         </div>
                         <!-- 모달 중단부 -->
-                        <div class="modal-body">
-                            <div>
-                                <img class="modal-img" alt="파티메인이미지">
-                            </div>
-                            <div class="partyContents">
+                        <div class="modal-body d-flex">
+                            <div class="partyContents d-flex flex-column justify-content-center">
                                 <div class="partyName">
                                     <div class="modal-partyName"></div>
                                 </div>
-                                <div class="partyInfo">
-                                    <span class="modal-count"></span>
-                                    <span class="modal-localName">
-                                </span>
-                                    <span class="modal-hobbyName">
-                                </span>
-                                    <div class="modal-partyScore">
-                                    </div>
+                                <div class="modal-hobbyName">
                                 </div>
                                 <p class="modal-profile">
                                 </p>
+                                <div class="partyInfo">
+                                    <span class="modal-count badge bg-success"></span>
+                                    <span class="modal-localName badge bg-success">
+                                </span>
+                                    <span class="modal-partyScore badge bg-success">
+                            </span>
+                                </div>
+                                <div class="btn-container mt-5" role="group" aria-label="Basic mixed styles example">
+                                    <input type="hidden" class="user-email" value="${sessionScope.__AUTH__.email}">
+                                    <button type="button" class="modal-btn btn btn-success party-req-btn"
+                                            data-bs-toggle="button">
+                                        파티신청
+                                    </button>
+                                    <button type="button" class="modal-btn btn btn-outline-danger"
+                                            data-bs-dismiss="modal">
+                                        닫기
+                                    </button>
+                                </div>
+                            </div>
+                            <div>
+                                <img class="modal-img" alt="파티메인이미지" width="500px" height="auto">
                             </div>
                         </div>
-                        <!-- 모달 하단부 -->
-                        <div class="modal-footer">
-                            <input type="hidden" class="user-email" value="${sessionScope.__AUTH__.email}">
-                            <button type="submit" class="btn btn-secondary party-req-btn"
-                                    data-bs-toggle="button">
-                                파티신청
-                            </button>
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                닫기
-                            </button>
-                        </div>
+
                     </div>
+
                 </div>
             </div>
 

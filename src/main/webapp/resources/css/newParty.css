@@ -29,7 +29,7 @@
     color: var(--primary-color-text);
 }
 
-.btn.btn-primary.mt-4.save-btn {
+.btn.btn-primary.mt-4.create-btn {
     border-color: var(--primary-color);
     background-color: var(--primary-color-text);
     color: var(--primary-color);
@@ -37,7 +37,7 @@
     margin: 0 auto;
 }
 
-.btn.btn-primary.mt-4.save-btn:hover {
+.btn.btn-primary.mt-4.create-btn:hover {
     border-color: var(--primary-color);
     background-color: var(--primary-color);
     color: var(--primary-color-text);
