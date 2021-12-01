@@ -17,5 +17,6 @@ public class FreeBoardVO {
     private String email;
     private String freePhoto;
     private Integer readnum;
+    private String userpic;
 
 } // end class

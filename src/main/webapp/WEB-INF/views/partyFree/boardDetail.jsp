@@ -48,7 +48,7 @@
 
                     <div class="info_desc">
                         <div class="profile_thumb">
-                            <img src="${pageContext.request.contextPath}/resources/images/profile.jpg" alt width="50"
+                            <img src="${boardDetail.userpic}" alt width="50"
                                  height="50" class="img_thumb">
                         </div>
                         <div class="cover_info">
@@ -68,27 +68,57 @@
                 <!--댓글 리스트-->
                 <div class="commentList_wrap">
                     <div class="commentList">
-                        <table>
-                            <tbody>
-                            <c:choose>
-                                <c:when test="${not empty reply}">
-                                    <c:forEach items="${reply}" var="reply">
-                                        <tr>
-                                            <td><c:out value="${reply.nickname}"/></td>
-                                            <td><fmt:formatDate pattern="yyyy.MM.dd HH:mm:ss"
-                                                                value="${reply.pfredate}"/></td>
-                                        </tr>
-                                        <tr>
-                                            <td><c:out value="${reply.pfrecontent}"/></td>
-                                        </tr>
-                                    </c:forEach>
-                                </c:when>
-                                <c:otherwise>
-                                    <td>등록된 글이 없습니다</td>
-                                </c:otherwise>
-                            </c:choose>
-                            </tbody>
-                        </table>
+                            
+                                <c:choose>
+
+                                    <c:when test="${not empty __COMMENT__}">
+                                        <c:forEach items="${__COMMENT__}" var="comment">
+                                        <!-- 수정 + 상세-->    
+                                        <form action="/partyfree/editComment" method="post">
+                                            <input type="hidden" name="currPage" value="${cri.currPage}">
+                                            <input type="hidden" name="reCurrPage" value="${recri.reCurrPage}">
+                                            <input type="hidden" name="pfrefer" value="${comment.pfrefer}">
+                                            <input type="hidden" name="pfrerefer" value="${comment.pfrerefer}">
+
+                                                <div>닉네임 : <c:out value="${comment.nickname}"/></div>
+
+                                                <div>댓글내용 : <c:out value="${comment.pfrecontent}"/></div>
+                                                <input type="hidden" id="${comment.pfrerefer}totext" name="pfrecontent"
+                                                value="${comment.pfrecontent}">
+
+                                                <div><fmt:formatDate pattern="yyyy.MM.dd HH:mm:ss"
+                                                                    value="${comment.pfredate}"/></div>
+
+                                                <input type="hidden" name="email" value="${sessionScope.__AUTH__.email}">
+                                                <c:if test="${sessionScope.__AUTH__.email eq comment.email}">
+                                                    <input type="button" id="${comment.pfrerefer}" name="mod" value="수정">
+                                                    <input type="hidden" id="${comment.pfrerefer}tosubmit" value="수정완료">
+                                                </c:if>
+
+
+                                            </form>
+                                            <!-- 삭제 버튼 -->
+
+                                                <c:if test="${sessionScope.__AUTH__.email eq comment.email}">
+                                                    <form action="/partyfree/deleteComment" method="post">
+                                                        <input type="hidden" name="currPage" value="${cri.currPage}">
+                                                        <input type="hidden" name="reCurrPage" value="${recri.reCurrPage}">
+                                                        <input type="hidden" name="pfrefer" value="${comment.pfrefer}">
+                                                        <input type="hidden" name="pfrerefer" value="${comment.pfrerefer}">
+                                                        <input type="submit" value="삭제">
+                                                    </form>
+                                                </c:if>
+
+
+
+                                        </c:forEach>
+                                    </c:when>
+
+                                    <c:otherwise>
+                                        <td>등록된 글이 없습니다</td>
+                                    </c:otherwise>
+                                </c:choose>
+
                         <div id="pagination">
                             <form id="paginationForm">
                                 <ul class="pagination justify-content-center">
@@ -176,5 +206,15 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
 <script src="${pageContext.request.contextPath}/resources/js/board.js"></script>
+<script>
+    $(document).ready(function () {
+        $(document).on("click", function (e) {
+            var click_val_1 = e.target.getAttribute('id');
+            console.log(click_val_1);
+            $('#' + click_val_1 + 'totext').attr("type", "text");
+            $('#' + click_val_1 + 'tosubmit').attr("type", "submit");
+        });
+    });
+</script>
 </body>
 </html>

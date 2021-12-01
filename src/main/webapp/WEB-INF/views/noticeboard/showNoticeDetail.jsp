@@ -44,7 +44,7 @@
 
                     <div class="info_desc">
                         <div class="profile_thumb">
-                            <img src="${pageContext.request.contextPath}/resources/images/profile.jpg" alt width="50"
+                            <img src="${board.userpic}" alt width="50"
                                  height="50" class="img_thumb">
                         </div>
                         <div class="cover_info">

@@ -44,60 +44,7 @@
         page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp"/>
 
 
-<c:choose>
-    <c:when test="${not empty __COMMENT__}">
-        <div id="pagination">
-            <form id="paginationForm">
-                <ul class="pagination justify-content-center">
-                    <c:if test="${replyPageMaker.prev}">
-                        <li class="prev page-item">
-                            <a class="prev page-link"
-                               href="/partyphoto/detail?prefer=${__DETAIL__.prefer}&partyCode=${__DETAIL__.partycode}&currPage=${cri.currPage}&reCurrPage=${replyPageMaker.startPage-1}">◀</a>
-                        </li>
-                    </c:if>
 
-                    <c:forEach begin="${replyPageMaker.startPage}" end="${replyPageMaker.endPage}" var="pageNum">
-                        <li class="page-item">
-                            <a id="page-curr" class="page-link"
-                               href="/partyphoto/detail?prefer=${__DETAIL__.prefer}&partyCode=${__DETAIL__.partycode}&currPage=${cri.currPage}&reCurrPage=${pageNum}">
-                                    ${pageNum}
-                            </a>
-                        </li>
-                    </c:forEach>
-
-                    <c:if test="${replyPageMaker.next}">
-                        <li class="next page-item">
-                            <a class="next page-link"
-                               href="/partyphoto/detail?prefer=${__DETAIL__.prefer}&partyCode=${__DETAIL__.partycode}&currPage=${cri.currPage}&reCurrPage=${replyPageMaker.endPage+1}">▶</a>
-                        </li>
-                    </c:if>
-                </ul>
-            </form>
-        </div>
-    </c:when>
-</c:choose>
-
-<hr>
-<c:choose>
-    <c:when test="${empty ldto.searchWord && empty ldto.option}">
-        <a href="/partyphoto/list?partyCode=${__DETAIL__.partycode}&currPage=${cri.currPage}"></option>목록</a>
-    </c:when>
-    <c:when test="${empty ldto.searchWord}">
-        <a href="/partyphoto/list?partyCode=${__DETAIL__.partycode}&currPage=${cri.currPage}"></option>목록</a>
-    </c:when>
-    <c:when test="${empty ldto.option}">
-        <a href="/partyphoto/list?partyCode=${__DETAIL__.partycode}&currPage=${cri.currPage}&searchWord=${ldto.searchWord}"></option>
-            목록</a>
-    </c:when>
-    <c:otherwise>
-        <a href="/partyphoto/list?partyCode=${__DETAIL__.partycode}&currPage=${cri.currPage}&searchWord=${ldto.searchWord}&option=${ldto.option}"></option>
-            목록</a>
-    </c:otherwise>
-</c:choose>
-<hr>
-<a href="/partyphoto/editview?prefer=${__DETAIL__.prefer}&partyCode=${ldto.partyCode}&currPage=${cri.currPage}&searchWord=${ldto.searchWord}&option=${ldto.option}"></option>
-    수정</a>
-<main>
 
     <%-- ${__DETAIL__}
     <hr>
@@ -105,34 +52,30 @@
         <img src="${photo}">
     </c:forEach>
     <hr>
-    <form action="/partyphoto/heart" method="post">
+
+    <form class="form-heart" action="/partyphoto/heart" method="post">
         <input type="hidden" name="currPage" value="${cri.currPage}">
         <input type="hidden" name="reCurrPage" value="${recri.reCurrPage}">
         <input type="hidden" name="partyCode" value="${__DETAIL__.partycode}">
         <input type="hidden" name="prefer" value="${__DETAIL__.prefer}">
-        <input type="hidden" name="email"
-            value="${sessionScope.__AUTH__.email}"> <input type="submit"
-            value="좋아요">
+        <input type="hidden" name="email" value="${sessionScope.__AUTH__.email}">
+        <button class="btn-hit">
+            <span>
+                <c:choose>
+                    <c:when test="${__MYHEART__ == 1}">
+                        <i class="far fa-thumbs-up" style="font-size:2rem; color:#5E92FF"></i>
+                    </c:when>
+                    <c:otherwise>
+                        <i class="far fa-thumbs-up" style="font-size:2rem;"></i>
+                    </c:otherwise>
+                </c:choose>
+            </span>
+        </button>
     </form>
-    <div>내가 누른 좋아요</div>
-    ${__MYHEART__}
-    <hr>
+
     <div>총 좋아요 개수</div>
     ${__TOTALHEART__}
     <hr>
-
-    <form action="/partyphoto/writecomment" method="post">
-        <input type="hidden" name="currPage" value="${cri.currPage}">
-        <input type="hidden" name="reCurrPage" value="${recri.reCurrPage}">
-        <input type="hidden" name="partyCode" value="${__DETAIL__.partycode}">
-        <input type="hidden" name="prefer" value="${__DETAIL__.prefer}">
-        <div>댓글 내용</div>
-        <input type="text" name="precontent">
-        <div>닉네임 : ${sessionScope.__AUTH__.nickname}</div>
-        <input type="hidden" name="email"
-            value="${sessionScope.__AUTH__.email}"> <input type="submit"
-            value="댓글 작성">
-    </form>
 
     <hr>
     <c:forEach items="${__COMMENT__}" var="comment">
@@ -305,34 +248,17 @@
                         <!--댓글 리스트-->
                         <div class="commentList_wrap">
                             <div class="commentList">
-                                <table>
-                                    <tbody>
+
                                     <c:choose>
                                         <c:when test="${not empty __COMMENT__}">
                                             <c:forEach items="${__COMMENT__}" var="comment">
                                                 <form action="/partyphoto/editcomment" method="post">
                                                     <input type="hidden" name="currPage" value="${cri.currPage}">
                                                     <input type="hidden" name="reCurrPage" value="${recri.reCurrPage}">
-                                                    <input type="hidden" name="partyCode"
-                                                           value="${__DETAIL__.partycode}">
+                                                    <input type="hidden" name="partyCode" value="${__DETAIL__.partycode}">
                                                     <input type="hidden" name="prefer" value="${__DETAIL__.prefer}">
                                                     <input type="hidden" name="prerefer" value="${comment.prerefer}">
-                                                    <tr>
-                                                        <td>
-                                                                ${comment.nickname}
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                                ${comment.precontent}
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <%--<fmt:formatDate pattern="yyyy.MM.dd HH:mm:ss"
-                                                                            value="${comment.fredate}"/>--%>
-                                                        </td>
-                                                    </tr>
+
                                                         <%--<div>날짜</div>
                                                         <div>${comment.predate}</div>
                                                         <div>댓글 내용</div>
@@ -377,8 +303,7 @@
                                             <td>등록된 글이 없습니다</td>
                                         </c:otherwise>
                                     </c:choose>
-                                    </tbody>
-                                </table>
+
                                 <div id="pagination">
                                     <form id="paginationForm">
                                         <ul class="pagination justify-content-center">
@@ -408,17 +333,7 @@
                         <!-- replylist_wrap END -->
                         <!--reply write-->
                         <!--댓글내용-->
-                        <%--<form action="/partyphoto/writecomment" method="post">--%>
-                        <%--	<input type="hidden" name="currPage" value="${cri.currPage}">--%>
-                        <%--	<input type="hidden" name="reCurrPage" value="${recri.reCurrPage}">--%>
-                        <%--	<input type="hidden" name="partyCode" value="${__DETAIL__.partycode}">--%>
-                        <%--	<input type="hidden" name="prefer" value="${__DETAIL__.prefer}">--%>
-                        <%--	<div>댓글 내용</div>--%>
-                        <%--	<input type="text" name="precontent">--%>
-                        <%--	<div>닉네임 : ${sessionScope.__AUTH__.nickname}</div>--%>
-                        <%--	<input type="hidden" name="email" value="${sessionScope.__AUTH__.email}">--%>
-                        <%--	<input type="submit" value="댓글 작성">--%>
-                        <%--</form>--%>
+
 
                         <form action="/partyphoto/writecomment" method="POST">
                             <input type="hidden" name="currPage" value="${cri.currPage}">

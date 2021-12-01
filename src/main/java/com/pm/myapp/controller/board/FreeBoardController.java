@@ -212,7 +212,7 @@ public class FreeBoardController {
 		boolean result = this.service.deleteFreeBoardReply(freeReply);
         log.info("\t +result : {}", result);
 
-        rttrs.addAttribute("pfrefer", freeReply.getFrefer());
+        rttrs.addAttribute("frefer", freeReply.getFrefer());
         rttrs.addAttribute("currPage", cri.getCurrPage());
         rttrs.addAttribute("reCurrPage",recri.getReCurrPage());
 

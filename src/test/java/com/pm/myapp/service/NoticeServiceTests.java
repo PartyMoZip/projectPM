@@ -63,9 +63,9 @@ public class NoticeServiceTests {
     public void testModify() {
         log.debug("testModify() invoked.");
 
-        NoticeBoardVO board = new NoticeBoardVO(1, "Test", "Test", null, "yewoni", "yewoni@test.com", null);
-        Objects.requireNonNull(board);
-        log.info("\t + board : {}", board);
+//        NoticeBoardVO board = new NoticeBoardVO(1, "Test", "Test", null, "yewoni", "yewoni@test.com", null);
+//        Objects.requireNonNull(board);
+//        log.info("\t + board : {}", board);
     } // testModify
 
     @Test

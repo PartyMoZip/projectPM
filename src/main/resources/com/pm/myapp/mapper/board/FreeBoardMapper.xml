@@ -37,7 +37,7 @@
 
     <select id="readFreeBoard" resultType="com.pm.myapp.domain.board.FreeBoardVO">
         SELECT
-            F.frefer, F.fsubject,F.fcontent, F.fdate, U.nickname, F.email, F.freephoto, F.readnum
+            F.frefer, F.fsubject,F.fcontent, F.fdate, U.nickname, F.email, F.freephoto, F.readnum, U.userpic
         FROM FREEBOARD F
         JOIN USERINFO U ON F.email = U.email
         WHERE F.frefer = #{frefer}
@@ -192,10 +192,10 @@
     </update>
 
 
-    <delete id="deleteComment">
+    <delete id="deleteFreeBoardReply">
         DELETE
         FROM FREEBOARDRE
-        WHERE FREREFER=#{frerefer} AMD FREFER = #{frefer}
+        WHERE FREREFER=#{frerefer} AND FREFER = #{frefer}
     </delete>
 
 </mapper>

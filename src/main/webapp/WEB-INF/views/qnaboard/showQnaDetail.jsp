@@ -43,7 +43,7 @@
                     </div>
                     <div class="info_desc">
                         <div class="profile_thumb">
-                            <img src="${pageContext.request.contextPath}/resources/images/profile.jpg" alt width="50"
+                            <img src="${boardDetail.userpic}" alt width="50"
                                  height="50" class="img_thumb">
                         </div>
                         <div class="cover_info">
@@ -102,7 +102,7 @@
                                                         <input type="hidden" name="currPage" value="${cri.currPage}">
                                                         <input type="hidden" name="reCurrPage" value="${recri.reCurrPage}">
                                                         <input type="hidden" name="qrefer" value="${comment.qrefer}">
-                                                        <input type="hidden" name="qrerefer" valuse="${comment.qrerefer}">
+                                                        <input type="hidden" name="qrerefer" value="${comment.qrerefer}">
                                                         <input type="submit" value="삭제">
                                                     </form>
                                                 </c:if>
