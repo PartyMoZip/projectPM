@@ -227,23 +227,24 @@ textarea {
 
 /* 파티포토게시판 컨텐츠 css */
 .partyPhotoContents {
-	display: flex;
+	/*display: flex;*/
 }
 
 .partyPhotoImg {
-	text-align: center;
-	width: 50%;
+	/*text-align: center;*/
+	/*width: 50%;*/
 	margin: 0 5px; /* 간격을 위해 준 속성 */
 }
 
 .partyPhotoImg > img {
 	width: 400px;
 	height: 300px;
+    margin-bottom: 20px;
 }
 
 .partyPhotoText {
 	display: table;
-	text-align: center;
+	/*text-align: center;*/
 	width: 50%;
 	margin: 0 5px; /* 간격을 위해 준 속성 */
 }

@@ -94,7 +94,7 @@
     <select id="getMember" resultType="com.pm.myapp.domain.PartyUserVO">
     
     <![CDATA[ 
-    SELECT U.NICKNAME, U.USERPIC, U.EMAIL
+    SELECT U.NICKNAME, U.USERPIC, U.EMAIL, U.JOINDATE
     FROM (SELECT * FROM PARTYUSER
     WHERE PARTYCODE = #{partyCode}
     ORDER BY AUTHCODE DESC) T
@@ -141,6 +141,34 @@
         WHERE PARTYCODE = #{partyCode}
           AND AUTHCODE = -1
 
+    </select>
+    
+    <insert id="makeNewParty">
+
+        INSERT INTO PARTY(PARTYCODE, PARTYNAME, PARTYSCORE, CREATEDATE, LOGOPIC, COVERPIC, PARTYPROFILE, PARTYBANNED, HOBBYCODE, LOCALCODE)
+		VALUES(SEQ_PARTYCODE.nextval, #{pdto.partyName}, 0, sysdate, null,  #{pdto.fileLocation}, #{pdto.partyProfile}, 0, #{pdto.hobbyCode}, #{pdto.localCode})
+
+    </insert>
+    
+    <select id="maxPartyCode" resultType="Integer">
+
+       select LAST_NUMBER from user_sequences where sequence_name = 'SEQ_PARTYCODE'
+       
+    </select>
+    
+    <insert id="makeLeader">
+
+        INSERT INTO PARTYUSER(PARTYCODE, EMAIL, AUTHCODE)
+        VALUES(#{partyCode}, #{email}, 2)
+        
+    </insert>
+    
+    <select id="checkName" resultType="Integer">
+    
+    	SELECT COUNT(PARTYNAME)
+    	FROM PARTY
+    	WHERE PARTYNAME = #{partyName}
+    
     </select>
 
 
