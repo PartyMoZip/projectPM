@@ -39,7 +39,7 @@ public interface QnaBoardService {
     // 문의 게시판 글삭제
     public abstract boolean deleteBoard(Integer qrefer);
     // 문의 게시판 댓글 삭제
-    public abstract boolean deleteReply(Integer qrefer);
+    public abstract boolean deleteReply(QnaBoardReplyDTO qnaReply);
 
     // 6. 문의 게시판 검색 //
     // 문의 게시글 검색

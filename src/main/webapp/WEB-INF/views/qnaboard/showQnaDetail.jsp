@@ -126,7 +126,7 @@
                         <input type="hidden" name="currPage" value="${cri.currPage}">
                         <input type="hidden" name="reCurrPage" value="${recri.reCurrPage}">
                         <input type="hidden" name="qrefer" value="${boardDetail.qrefer}">
-                        <input type="hidden" name="email" value="${boardDetail.email}">
+                        <input type="hidden" name="email" value="${sessionScope.__AUTH__.email}">
                         <div class="commentWrite_Wrap">
                         <textarea name="qrecontent" id="commentContent"
                                   placeholder=" [${sessionScope.__AUTH__.nickname}] 님,  댓글을 남겨보세요"
@@ -136,33 +136,33 @@
                         </div>
                     </form>
                 </div>
-            </div>
-            <div class="container-btnGroup d-flex justify-content-end">
-                <c:set value="${sessionScope.__AUTH__.nickname}" var="nickname"/>
-                <c:if test="${boardDetail.nickname eq nickname}">
-                    <button type="button" class="btn btn-primary btn-sm"
-                            onclick="location.href='/qnaboard/editQnaBoardView?qrefer=${boardDetail.qrefer}'">
-                        <i class="fas fa-pen"></i>
-                        <span>수정</span>
-                    </button>
-                    <form action="/qnaboard/deleteQnaBoard" name="deleteButton" method="post">
-                        <button type="submit" id="deleteButton" class="btn btn-primary btn-sm">
-                            <input type="hidden" id="qrefer" name="qrefer" value="${boardDetail.qrefer}">
-                            <i class="fas fa-trash-alt"></i>
-                            <span>삭제</span>
+
+                <div class="container-btnGroup d-flex justify-content-end">
+                    <c:set value="${sessionScope.__AUTH__.nickname}" var="nickname"/>
+                    <c:if test="${boardDetail.nickname eq nickname}">
+                        <button type="button" class="btn btn-primary btn-sm"
+                                onclick="location.href='/qnaboard/editQnaBoardView?qrefer=${boardDetail.qrefer}'">
+                            <i class="fas fa-pen"></i>
+                            <span>수정</span>
                         </button>
-                    </form>
-                </c:if>
-                <button type="button" class="btn btn-primary btn-sm"
-                        onclick="location.href='/qnaboard/getQnaBoardList?currPage=${cri.currPage}'">
-                    <i class="fas fa-list-ul"></i>
-                    <span>목록</span>
-                </button>
+                        <form action="/qnaboard/deleteQnaBoard" name="deleteButton" method="post">
+                            <button type="submit" id="deleteButton" class="btn btn-primary btn-sm">
+                                <input type="hidden" id="qrefer" name="qrefer" value="${boardDetail.qrefer}">
+                                <i class="fas fa-trash-alt"></i>
+                                <span>삭제</span>
+                            </button>
+                        </form>
+                    </c:if>
+                    <button type="button" class="btn btn-primary btn-sm"
+                            onclick="location.href='/qnaboard/getQnaBoardList?currPage=${cri.currPage}'">
+                        <i class="fas fa-list-ul"></i>
+                        <span>목록</span>
+                    </button>
+                </div>
             </div>
         </div>
 	</main>
 </div>
-
 
 <%--FOOTER--%>
 <div class="container">

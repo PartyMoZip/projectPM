@@ -71,12 +71,12 @@
                         </div>
 
                         <span><textarea name="pfcontent" rows="10"
-                                        cols="137">${__boardDetail__.pfcontent}"</textarea>
+                                        cols="137">${__boardDetail__.pfcontent}</textarea>
                     </span>
                         <div class="container-btnGroup">
                             <button type="submit" class="btn btn-primary btn-sm">
                                 <i class="fas fa-pen"></i>
-                                <span>등록</span>
+                                <span>수정</span>
                             </button>
                             <button type="button" class="btn btn-primary btn-sm"
                                     onclick="location.href='/partyfree/getPFreeBoardList?currPage=${cri.currPage}'">

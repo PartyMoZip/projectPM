@@ -1,6 +1,7 @@
 package com.pm.myapp.service.board;
 
 import com.pm.myapp.domain.Criteria;
+import com.pm.myapp.domain.ReplyCriteria;
 import com.pm.myapp.domain.board.*;
 import com.pm.myapp.mapper.board.PartyFreeMapper;
 import lombok.Setter;
@@ -25,9 +26,9 @@ public class PartyFreeServiceImpl implements PartyFreeService, InitializingBean,
 
     // 파티 자유 게시판 목록 -  페이징 처리
     @Override
-    public List<PartyFreeListVO> getListPerPage(String searchWord, Integer option, Criteria cri) {
+    public List<PartyFreeListVO> getListPerPage(Integer partyCode, String searchWord, Integer option, Criteria cri) {
         log.debug("getListPerPage({}) invoked.", cri);
-        List<PartyFreeListVO> partyFree = this.mapper.getListWithPaging(searchWord, option, cri);
+        List<PartyFreeListVO> partyFree = this.mapper.getListWithPaging(partyCode, searchWord, option, cri);
         log.info("\t + partyFree : {}", partyFree);
         return partyFree;
     }
@@ -65,10 +66,10 @@ public class PartyFreeServiceImpl implements PartyFreeService, InitializingBean,
 
     // 파티 자유 게시판 글삭제
     @Override
-    public boolean deleteBoard(Integer pfrefer) {
-        log.debug("remove({}) invoked.", pfrefer);
+    public boolean deleteBoard(Integer pfrefer, Integer partyCode) {
+        log.debug("remove({}, {}) invoked.", pfrefer, partyCode);
 
-        int affectedRows = this.mapper.deletePFreeBoard(pfrefer);
+        int affectedRows = this.mapper.deletePFreeBoard(pfrefer, partyCode);
         log.info("\t + affectedRows : {}", affectedRows);
 
         return (affectedRows == 1);
@@ -76,34 +77,43 @@ public class PartyFreeServiceImpl implements PartyFreeService, InitializingBean,
 
     // 파티 자유 게시판 검색
     @Override
-    public List<PartyFreeSearchVO> search(String searchWord, Integer option, Criteria cri) {
+    public List<PartyFreeSearchVO> search(Integer partyCode, Criteria cri, String searchWord, Integer option) {
         String searchOption_mod = "pf." + searchWord;
         Integer keyword_mod = 0;
 
-        List<PartyFreeSearchVO> searchList = this.mapper.searchPartyFree(searchOption_mod, keyword_mod, cri);
+        List<PartyFreeSearchVO> searchList = this.mapper.searchPartyFree(partyCode,searchOption_mod, keyword_mod, cri);
         return searchList;
     }
 
     // 총 게시물 개수 반환
     @Override
-    public Integer getTotal(String searchWord, Integer option) {
+    public Integer getTotal(Integer partyCode, String searchWord, Integer option) {
         log.debug("getTotal() invoked.");
-        return this.mapper.getTotalCount(searchWord, option);
+        return this.mapper.getTotalCount(partyCode, searchWord, option);
     }
 
     @Override
-    public Integer getTotalSearch(String searchWord, Integer option) {
+    public Integer getTotalSearch(Integer partyCode, String searchWord, Integer option) {
         log.debug("getTotalSearch() invoked.");
 
-        return this.mapper.getTotalSearchCount(searchWord, option);
+        return this.mapper.getTotalSearchCount(partyCode, searchWord, option);
+    }
+
+    // 게시판 조회수 증가
+    @Override
+    public boolean readPFreeBoard(Integer pfrefer, Integer partycode) {
+        Integer affectedLine = this.mapper.readIt(pfrefer, partycode);
+        log.info("\t + affectedLine : {}", affectedLine);
+
+        return (affectedLine==1);
     }
 
     // 댓글 목록
     @Override
-    public List<PartyFreeReplyVO> getReply(Integer pfrefer, Integer partycode, Criteria cri) {
+    public List<PartyFreeReplyVO> getReply(Integer pfrefer, Integer partycode, ReplyCriteria recri) {
         log.debug("getComment() invoked.");
 
-        List<PartyFreeReplyVO> commentList= this.mapper.getCommentListPaging(pfrefer, partycode, cri);
+        List<PartyFreeReplyVO> commentList= this.mapper.getCommentListPaging(pfrefer, partycode, recri);
         log.info("\t + allReply : {}", commentList);
 
         return commentList;
@@ -132,10 +142,10 @@ public class PartyFreeServiceImpl implements PartyFreeService, InitializingBean,
 
     // 댓글 삭제
     @Override
-    public boolean deleteReply(Integer pfrefer) {
-        log.debug("deleteReply({}) invoked.", pfrefer);
+    public boolean deleteReply(PartyFreeReplyDTO pfreeReply) {
+        log.debug("deleteReply({}) invoked.", pfreeReply);
 
-        int affectedRows = this.mapper.deleteComment(pfrefer);
+        int affectedRows = this.mapper.deleteComment(pfreeReply);
         log.info("\t + affectedRows : {}", affectedRows);
 
         return (affectedRows==1);
@@ -144,10 +154,11 @@ public class PartyFreeServiceImpl implements PartyFreeService, InitializingBean,
 
     // 댓글 개수
     @Override
-    public Integer getTotalReply() {
+    public Integer getTotalReply(Integer pfrefer) {
         log.debug("getTotalReply({}) invoked.");
 
-        return this.mapper.getTotalReply();
+        Integer totalNum = this.mapper.getTotalReply(pfrefer);
+        return totalNum;
     }
 
 

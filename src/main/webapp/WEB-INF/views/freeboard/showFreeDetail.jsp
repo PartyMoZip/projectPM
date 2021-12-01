@@ -126,7 +126,7 @@
                         <input type="hidden" name="reCurrPage" value="${recri.reCurrPage}">
                         <input type="hidden" name="frefer" value="${boardDetail.FRefer}">
                         <%--<h6>${boardDetail.nickname}</h6>--%>
-                        <input type="hidden" name="email" value="${boardDetail.email}">
+                        <input type="hidden" name="email" value="${sessionScope.__AUTH__.email}">
                         <div class="commentWrite_Wrap">
                         <textarea name="frecontent" id="commentContent"
                                   placeholder=" [${sessionScope.__AUTH__.nickname}] 님,  댓글을 남겨보세요"

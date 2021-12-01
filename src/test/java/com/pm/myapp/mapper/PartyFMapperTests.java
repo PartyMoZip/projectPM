@@ -93,8 +93,8 @@ public class PartyFMapperTests {
     public void testDeletePFreeBoard() { // 파티 자유 게시판 삭제 - 테스트 완료
         log.debug("testDeletePFreeBoard() invoked.");
 
-        int affectedLines = this.mapper.deletePFreeBoard(4);
-        log.info("\t + affectedLines", affectedLines);
+        ////int affectedLines = this.mapper.deletePFreeBoard(4);
+      //  log.info("\t + affectedLines", affectedLines);
 
     } // testDeletePFreeBoard
 
@@ -108,8 +108,8 @@ public class PartyFMapperTests {
         cri.setAmount(10);
         cri.setCurrPage(1);
         cri.setPagesPerPage(10);
-        List<PartyFreeSearchVO> list = this.mapper.searchPartyFree(searchOption, keyword, cri);
-        log.info("\t + list : {}", list);
+        //List<PartyFreeSearchVO> list = this.mapper.searchPartyFree(searchOption, keyword, cri);
+        //log.info("\t + list : {}", list);
     } // testSearchPartyFree
 
     @Test
@@ -127,8 +127,8 @@ public class PartyFMapperTests {
         Criteria cri = new Criteria();
         cri.setAmount(1);
         cri.setAmount(10);
-        List<PartyFreeReplyVO> list = this.mapper.getCommentListPaging(2,2, cri);
-        list.forEach(log::info);
+        //List<PartyFreeReplyVO> list = this.mapper.getCommentListPaging(2,2, cri);
+        //list.forEach(log::info);
     }
 
     @Test
@@ -161,8 +161,8 @@ public class PartyFMapperTests {
     public void testDeleteComment() { // 파티 자유 게시판 댓글 삭제 - 테스트 완료
         log.debug("testDeleteComment() invoked.");
 
-        int affectedLines = this.mapper.deleteComment(2);
-        log.info("\t + affectedLines : {}", affectedLines);
+       // int affectedLines = this.mapper.deleteComment(2);
+        //log.info("\t + affectedLines : {}", affectedLines);
 
     }
 

@@ -65,7 +65,7 @@
                             <tr>
                                 <td><c:out value="${list.pfRefer}"/></td>
                                 <td>
-                                    <a href="/partyfree/showPartyFDetail?pfrefer=${list.pfRefer}&partyCode=${list.partycode}&currPage=${pageMaker.cri.currPage}&amount=${pageMaker.cri.amount}&pagesPerPage=${pageMaker.cri.pagesPerPage}">${list.pfSubject}</a>
+                                    <a href="/partyfree/showPartyFDetail?pfrefer=${list.pfRefer}&partyCode=${list.partycode}&currPage=${pageMaker.cri.currPage}">${list.pfSubject}</a>
                                 </td>
                                 <td><c:out value="${list.nickname}"/></td>
                                 <td><fmt:formatDate pattern="yyyy.MM.dd" value="${list.pfDate}"/></td>

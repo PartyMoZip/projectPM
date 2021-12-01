@@ -204,14 +204,16 @@ public class QnaBoardController {
 	// 문의 게시판  - 댓글 삭제
 	@PostMapping("/deleteComment")
 	public String deleteComment(
-            @RequestParam("qrerefer") Integer qrerefer,
+            QnaBoardReplyDTO qnaReply,
             @ModelAttribute("cri") Criteria cri,
             @ModelAttribute("recri") ReplyCriteria recri,
             RedirectAttributes rttrs) {
-		log.debug("deleteComment({}) invoked.", qrerefer);
+		log.debug("deleteComment({}, {}, {}) invoked.", qnaReply, cri, recri);
 
-		boolean result = this.service.deleteReply(qrerefer);
-		rttrs.addAttribute("resultDelete",result);
+		boolean result = this.service.deleteReply(qnaReply);
+		log.info("\t + result : {}", result);
+
+        rttrs.addAttribute("qrefer", qnaReply.getQrefer());
         rttrs.addAttribute("currPage", cri.getCurrPage());
         rttrs.addAttribute("reCurrPage", recri.getReCurrPage());
 

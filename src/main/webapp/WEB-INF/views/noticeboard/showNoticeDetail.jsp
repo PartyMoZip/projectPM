@@ -68,6 +68,7 @@
                         </button>
                         <form action="/noticeboard/deleteNoticeBoard" name="deleteButton" method="post"
                               style="margin-bottom: 0px;">
+                            <c:set value="${sessionScope.__AUTH__.nickname}" var="nickname"/>
                             <button type="submit" id="deleteButton" class="btn btn-primary btn-sm">
                                 <input type="hidden" id="nRefer" name="nrefer" value="${board.NRefer}">
                                 <i class="fas fa-trash-alt"></i>
