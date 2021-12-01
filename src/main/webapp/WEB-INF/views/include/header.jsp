@@ -23,7 +23,7 @@
                 <li><a href="/noticeboard/getNoticeBoardList" class="nav-link px-2 link-dark">공지</a></li>
                 <li><a href="/qnaboard/getQnaBoardList" class="nav-link px-2 link-dark">문의</a></li>
                 <c:if test="${sessionScope.__AUTH__.userBanned == -2}">
-                    <li><a href="/admin/adminParty" class="nav-link px-2 link-dark">관리자</a></li>
+                    <li><a href="/admin/getPartyList" class="nav-link px-2 link-dark">관리자</a></li>
                 </c:if>
 
             </ul>

@@ -46,20 +46,20 @@ public class AdminServiceImpl implements AdminService {
 	} // getTotalBM
 
 	@Override
-	public List<BlackPartyVO> showBlackParty(Criteria cri) {
+	public List<BlackPartyVO> showBlackParty(Criteria cri,String searchWord) {
 		log.debug("showBlackParty({}) invoked.",cri);
 
-		List<BlackPartyVO> blackParty = this.mapper.getBlackParty(cri);
+		List<BlackPartyVO> blackParty = this.mapper.getBlackParty(cri, searchWord);
 		log.info("\t+ blackParty : {}", blackParty);
 		
 		return blackParty;
 	} // showBlackParty
 	
 	@Override
-	public Integer getTotalBP() {
+	public Integer getTotalBP(String searchWord) {
 		log.debug("getTotalBP({}) invoked.");
 
-		int totalNum = this.mapper.getAllBP();
+		int totalNum = this.mapper.getAllBP(searchWord);
 		log.info("\t+ totalnum : {}",totalNum);
 		
 		return totalNum;
@@ -92,22 +92,45 @@ public class AdminServiceImpl implements AdminService {
 	} // breakParty
 
 	@Override
-	public List<AllPartyVO> getList(Criteria cri) {
+	public List<AllPartyVO> getList(Criteria cri, String searchWord) {
 		log.debug("getList({}) invoked.",cri);
 		
-		List<AllPartyVO> partyList = this.mapper.getAllList(cri);
+		List<AllPartyVO> partyList = this.mapper.getAllList(cri, searchWord);
+		log.info("\t+ partyList : {}", partyList);
 		
-		return null;
+		return partyList;
 	} // getList
 
 	@Override
-	public Integer getTotalPL() {
+	public Integer getTotalPL(String searchWord) {
 		log.debug("getTotalPL({}) invoked.");
 
-		int totalNum = this.mapper.getAllPL();
+		int totalNum = this.mapper.getAllPL(searchWord);
 		log.info("\t+ totalnum : {}",totalNum);
 		
 		return totalNum;
 	} // getTotalPL
+
+	@Override
+	public List<AllPartyVO> showBreakParty(Criteria cri, String searchWord) {
+		log.debug("getList({}) invoked.",cri);
+		
+		List<AllPartyVO> partyList = this.mapper.getBreakList(cri, searchWord);
+		log.info("\t+ partyList : {}", partyList);
+		
+		return partyList;
+		
+	} // showBreakParty
+
+	@Override
+	public Integer getTotalBreakParty(String searchWord) {
+		log.debug("getTotalPL({}) invoked.");
+
+		int totalNum = this.mapper.getTotalBreak(searchWord);
+		log.info("\t+ totalnum : {}",totalNum);
+		
+		return totalNum;
+		
+	} // getTotalBreakParty
 
 } // end class

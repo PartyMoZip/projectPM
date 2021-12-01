@@ -33,40 +33,40 @@ public class AdminController {
    private AdminService service;
 
    // 파티관리 페이지 조회
-   @GetMapping("/adminParty")
-   public void getAdminParty(){
-      log.debug("getAdminParty() invoked.");
-
-   } // adminParty
+//   @GetMapping("/adminParty")
+//   public void getAdminParty(){
+//      log.debug("getAdminParty() invoked.");
+//
+//   } // adminParty
 
    // 블랙회원리스트 조회
-   @GetMapping("/adminBlackMember")
-   public void adminBlackMember(@ModelAttribute("cri") Criteria cri, Model model) {
-      log.debug("adminBlackMember() invoked.");
-      // 번호 이메일 닉넴 신고건수 가입일자 
-      List<BlackMemberVO> bmlist = this.service.showBlackMember(cri);
-      log.info("\t+ bmlist : {}", bmlist);
-      
-      model.addAttribute("__BMList__", bmlist);
-      
-      Integer totalAmount = this.service.getTotalBM();
-      PageDTO pageDTO = new PageDTO(cri, totalAmount);
-		
-      model.addAttribute("pageMaker", pageDTO);
-      
-   } // adminBlackMember
+//   @GetMapping("/adminBlackMember")
+//   public void adminBlackMember(@ModelAttribute("cri") Criteria cri, Model model) {
+//      log.debug("adminBlackMember() invoked.");
+//      // 번호 이메일 닉넴 신고건수 가입일자 
+//      List<BlackMemberVO> bmlist = this.service.showBlackMember(cri);
+//      log.info("\t+ bmlist : {}", bmlist);
+//      
+//      model.addAttribute("__BMList__", bmlist);
+//      
+//      Integer totalAmount = this.service.getTotalBM();
+//      PageDTO pageDTO = new PageDTO(cri, totalAmount);
+//		
+//      model.addAttribute("pageMaker", pageDTO);
+//      
+//   } // adminBlackMember
    
    // 블랙파티리스트 조회
    @GetMapping("/adminBlackParty")
-   public void adminBlackParty(@ModelAttribute("cri") Criteria cri, Model model) {
+   public void adminBlackParty(String searchWord, @ModelAttribute("cri") Criteria cri, Model model) {
       log.debug("adminBlackParty() invoked.");
       // 번호 파티이름 파티장 신고건수 파티 생성일자 
-      List<BlackPartyVO> bpList = this.service.showBlackParty(cri);
+      List<BlackPartyVO> bpList = this.service.showBlackParty(cri, searchWord);
       log.info("\t+ bpList : {}", bpList);
       
       model.addAttribute("__BPList__", bpList);
       
-      Integer totalAmount = this.service.getTotalBP();
+      Integer totalAmount = this.service.getTotalBP(searchWord);
       PageDTO pageDTO = new PageDTO(cri, totalAmount);
 		
       model.addAttribute("pageMaker", pageDTO);
@@ -74,49 +74,74 @@ public class AdminController {
    } // adminBlackParty
    
    // 회원 추방
-   @PostMapping("/doKickUser")
-   public void doKickUser(String email) {
-      log.debug("doKickUser({}) invoked.",email);
-      
-      boolean result = this.service.kickUser(email);
-      log.info("\t+ result : {}",result);
-      
-   } // doKickUser
+//   @PostMapping("/doKickUser")
+//   public void doKickUser(String email) {
+//      log.debug("doKickUser({}) invoked.",email);
+//      
+//      boolean result = this.service.kickUser(email);
+//      log.info("\t+ result : {}",result);
+//      
+//   } // doKickUser
    
    // 파티 해체
-   @PostMapping("/doBreakParty")
-   public void doBreakParty(Integer partyCode) {
-      log.debug("doBreakParty({}) invoked.",partyCode);
+//   @PostMapping("/doBreakParty")
+//   public void doBreakParty(Integer partyCode) {
+//      log.debug("doBreakParty({}) invoked.",partyCode);
+//      
+//      boolean result = this.service.breakParty(partyCode);
+//      log.info("\t+ result : {}",result);
+//      
+//   } // doBreakParty
+   
+   // 파티해체 승인 페이지
+   @GetMapping("/adminPartyBreak")
+   public void adminPartyBreak(@ModelAttribute("cri") Criteria cri, String searchWord, Model model) {
+      log.debug("adminPartyBreak() invoked.");
       
-      boolean result = this.service.breakParty(partyCode);
-      log.info("\t+ result : {}",result);
+      List<AllPartyVO> partyList = this.service.showBreakParty(cri, searchWord);
+      log.info("\t+ partyList : {}",partyList);
       
-   } // doBreakParty
+      model.addAttribute("__PartyList__", partyList);
+      
+      Integer totalAmount = this.service.getTotalBreakParty(searchWord);
+      PageDTO pageDTO = new PageDTO(cri, totalAmount);
+		
+      model.addAttribute("pageMaker", pageDTO);
+      
+   } // adminPartyBreak
    
    // 파티해체 승인
-   @PostMapping("/adminPartyBreak")
-   public void adminPartyBreak(Integer partyCode) {
-      log.debug("adminPartyBreak({}) invoked.",partyCode);
+   @PostMapping("/breakparty")
+   public String adminPartyBreak(Integer[] partyCode) {
+      log.debug("adminPartyBreak({}) invoked.",partyCode.toString());
       
-      boolean result = this.service.breakParty(partyCode);
-      log.info("\t+ result : {}",result);
+      for(Integer partyCodes : partyCode) {
+    	  
+          boolean result = this.service.breakParty(partyCodes);
+          log.info("\t+ result : {}",result);
+          
+      } // for
+      
+      return "/admin/adminPartyBreak";
       
    } // adminPartyBreak
    
    // 파티 전체 리스트 조회
    @GetMapping("/getPartyList")
-   public void getPartyList(@ModelAttribute("cri") Criteria cri, Model model) {
+   public String getPartyList(@ModelAttribute("cri") Criteria cri, String searchWord, Model model) {
       log.debug("getPartyList() invoked.");
       
-      List<AllPartyVO> partyList = this.service.getList(cri);
+      List<AllPartyVO> partyList = this.service.getList(cri, searchWord);
       log.info("\t+ partyList : {}",partyList);
       
       model.addAttribute("__PartyList__", partyList);
       
-      Integer totalAmount = this.service.getTotalPL();
+      Integer totalAmount = this.service.getTotalPL(searchWord);
       PageDTO pageDTO = new PageDTO(cri, totalAmount);
 		
       model.addAttribute("pageMaker", pageDTO);
+      
+      return "/admin/adminParty";
       
    } // getPartyList      
 
