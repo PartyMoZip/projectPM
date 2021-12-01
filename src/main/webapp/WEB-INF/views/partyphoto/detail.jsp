@@ -43,133 +43,6 @@
 <jsp:include
         page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp"/>
 
-
-
-
-    <%-- ${__DETAIL__}
-    <hr>
-    <c:forEach items="${__PHOTO__}" var="photo">
-        <img src="${photo}">
-    </c:forEach>
-    <hr>
-
-    <form class="form-heart" action="/partyphoto/heart" method="post">
-        <input type="hidden" name="currPage" value="${cri.currPage}">
-        <input type="hidden" name="reCurrPage" value="${recri.reCurrPage}">
-        <input type="hidden" name="partyCode" value="${__DETAIL__.partycode}">
-        <input type="hidden" name="prefer" value="${__DETAIL__.prefer}">
-        <input type="hidden" name="email" value="${sessionScope.__AUTH__.email}">
-        <button class="btn-hit">
-            <span>
-                <c:choose>
-                    <c:when test="${__MYHEART__ == 1}">
-                        <i class="far fa-thumbs-up" style="font-size:2rem; color:#5E92FF"></i>
-                    </c:when>
-                    <c:otherwise>
-                        <i class="far fa-thumbs-up" style="font-size:2rem;"></i>
-                    </c:otherwise>
-                </c:choose>
-            </span>
-        </button>
-    </form>
-
-    <div>총 좋아요 개수</div>
-    ${__TOTALHEART__}
-    <hr>
-
-    <hr>
-    <c:forEach items="${__COMMENT__}" var="comment">
-        <form action="/partyphoto/editcomment" method="post">
-            <input type="hidden" name="currPage" value="${cri.currPage}">
-            <input type="hidden" name="reCurrPage" value="${recri.reCurrPage}">
-            <input type="hidden" name="partyCode"
-                value="${__DETAIL__.partycode}"> <input type="hidden"
-                name="prefer" value="${__DETAIL__.prefer}"> <input
-                type="hidden" name="prerefer" value="${comment.prerefer}">
-            <div>날짜</div>
-            <div>${comment.predate}</div>
-            <div>댓글 내용</div>
-            <div>${comment.precontent}</div>
-            <input type="hidden" id="${comment.prerefer}totext"
-                name="precontent" value="${comment.precontent}">
-            <div>닉네임</div>
-            <div>${comment.nickname}</div>
-            <input type="hidden" name="email"
-                value="${sessionScope.__AUTH__.email}">
-            <c:if test="${sessionScope.__AUTH__.email eq comment.email}">
-                <input type="button" id="${comment.prerefer}" name="mod" value="수정">
-                <input type="hidden" id="${comment.prerefer}tosubmit" value="수정완료">
-            </c:if>
-        </form>
-        <c:if test="${sessionScope.__AUTH__.email eq comment.email}">
-            <form action="/partyphoto/deletecomment" method="post">
-                <input type="hidden" name="currPage" value="${cri.currPage}">
-                <input type="hidden" name="reCurrPage" value="${recri.reCurrPage}">
-                <input type="hidden" name="partyCode"
-                    value="${__DETAIL__.partycode}"> <input type="hidden"
-                    name="prefer" value="${__DETAIL__.prefer}"> <input
-                    type="hidden" name="prerefer" value="${comment.prerefer}">
-                <input type="submit" value="삭제">
-            </form>
-        </c:if>
-    </c:forEach>
-
-    <c:choose>
-        <c:when test="${not empty __COMMENT__}">
-            <div id="pagination">
-                <form id="paginationForm">
-                    <ul class="pagination justify-content-center">
-                        <c:if test="${replyPageMaker.prev}">
-                            <li class="prev page-item"><a class="prev page-link"
-                                href="/partyphoto/detail?prefer=${__DETAIL__.prefer}&partyCode=${__DETAIL__.partycode}&currPage=${cri.currPage}&reCurrPage=${replyPageMaker.startPage-1}">◀</a>
-                            </li>
-                        </c:if>
-
-                        <c:forEach begin="${replyPageMaker.startPage}"
-                            end="${replyPageMaker.endPage}" var="pageNum">
-                            <li class="page-item"><a id="page-curr" class="page-link"
-                                href="/partyphoto/detail?prefer=${__DETAIL__.prefer}&partyCode=${__DETAIL__.partycode}&currPage=${cri.currPage}&reCurrPage=${pageNum}">
-                                    ${pageNum} </a></li>
-                        </c:forEach>
-
-                        <c:if test="${replyPageMaker.next}">
-                            <li class="next page-item"><a class="next page-link"
-                                href="/partyphoto/detail?prefer=${__DETAIL__.prefer}&partyCode=${__DETAIL__.partycode}&currPage=${cri.currPage}&reCurrPage=${replyPageMaker.endPage+1}">▶</a>
-                            </li>
-                        </c:if>
-                    </ul>
-                </form>
-            </div>
-        </c:when>
-    </c:choose>
-
-    <hr>
-    <c:choose>
-        <c:when test="${empty ldto.searchWord && empty ldto.option}">
-            <a
-                href="/partyphoto/list?partyCode=${__DETAIL__.partycode}&currPage=${cri.currPage}"></option>목록</a>
-        </c:when>
-        <c:when test="${empty ldto.searchWord}">
-            <a
-                href="/partyphoto/list?partyCode=${__DETAIL__.partycode}&currPage=${cri.currPage}"></option>목록</a>
-        </c:when>
-        <c:when test="${empty ldto.option}">
-            <a
-                href="/partyphoto/list?partyCode=${__DETAIL__.partycode}&currPage=${cri.currPage}&searchWord=${ldto.searchWord}"></option>
-                목록</a>
-        </c:when>
-        <c:otherwise>
-            <a
-                href="/partyphoto/list?partyCode=${__DETAIL__.partycode}&currPage=${cri.currPage}&searchWord=${ldto.searchWord}&option=${ldto.option}"></option>
-                목록</a>
-        </c:otherwise>
-    </c:choose>
-    <hr>
-    <a
-        href="/partyphoto/editview?prefer=${__DETAIL__.prefer}&partyCode=${ldto.partyCode}&currPage=${cri.currPage}&searchWord=${ldto.searchWord}&option=${ldto.option}"></option>
-        수정</a>
---%>
-
     <div class="board_main">
         <main>
             <div class="container-sm">
@@ -177,17 +50,17 @@
                     <!--product details-->
                     <div class="content">
                         <div class="title_area">
-                            <h5 class="title_text">제목</h5>
+                            <h5 class="title_text">${__DETAIL__.psubject}</h5>
                         </div>
                         <div class="info_desc">
                             <div class="profile_thumb">
                                 <img
-                                        src="${pageContext.request.contextPath}/resources/images/profile.jpg"
+                                        src="${__DETAIL__.userpic}"
                                         alt width="50" height="50" class="img_thumb">
                             </div>
                             <div class="cover_info">
-                                <div>${detail.nickname}<br> <span>${detail.qdate}</span>
-                                    <span>조회 ${detail.readnum}</span>
+                                <div>${__DETAIL__.nickname}<br> <span>${__DETAIL__.pdate}</span>
+                                    <span>조회 ${__DETAIL__.readnum}</span>
                                 </div>
                             </div>
                         </div>
@@ -201,45 +74,36 @@
                                 </c:forEach>
                             </div>
                             <div class="partyPhotoText">
-									<span>
-										ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ </span>
+									<span>${__DETAIL__.pcontent}</span>
                             </div>
-                        </div>
 
-                    </div>
-
-                    <c:forEach items="${__COMMENT__}" var="comment">
-                        <form action="/partyphoto/editcomment" method="post">
-                            <input type="hidden" name="currPage" value="${cri.currPage}">
-                            <input type="hidden" name="reCurrPage" value="${recri.reCurrPage}">
-                            <input type="hidden" name="partyCode" value="${__DETAIL__.partycode}">
-                            <input type="hidden" name="prefer" value="${__DETAIL__.prefer}">
-                            <input type="hidden" name="prerefer" value="${comment.prerefer}">
-                            <div>날짜</div>
-                            <div>${comment.predate}</div>
-                            <div>댓글 내용</div>
-                            <div>${comment.precontent}</div>
-                            <input type="hidden" id="${comment.prerefer}totext" name="precontent"
-                                   value="${comment.precontent}">
-                            <div>닉네임</div>
-                            <div>${comment.nickname}</div>
-                            <input type="hidden" name="email" value="${sessionScope.__AUTH__.email}">
-                            <c:if test="${sessionScope.__AUTH__.email eq comment.email}">
-                                <input type="button" id="${comment.prerefer}" name="mod" value="수정">
-                                <input type="hidden" id="${comment.prerefer}tosubmit" value="수정완료">
-                            </c:if>
-                        </form>
-                        <c:if test="${sessionScope.__AUTH__.email eq comment.email}">
-                            <form action="/partyphoto/deletecomment" method="post">
+                            <form class="form-heart" action="/partyphoto/heart" method="post">
                                 <input type="hidden" name="currPage" value="${cri.currPage}">
                                 <input type="hidden" name="reCurrPage" value="${recri.reCurrPage}">
                                 <input type="hidden" name="partyCode" value="${__DETAIL__.partycode}">
                                 <input type="hidden" name="prefer" value="${__DETAIL__.prefer}">
-                                <input type="hidden" name="prerefer" value="${comment.prerefer}">
-                                <input type="submit" value="삭제">
+                                <input type="hidden" name="email" value="${sessionScope.__AUTH__.email}">
+                                <button class="btn-hit">
+                                    <span>
+                                        <c:choose>
+                                            <c:when test="${__MYHEART__ == 1}">
+                                                <i class="far fa-thumbs-up" style="font-size:2rem; color:#5E92FF"></i>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <i class="far fa-thumbs-up" style="font-size:2rem;"></i>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </span>
+                                </button>
                             </form>
-                        </c:if>
-                    </c:forEach>
+                        
+                            <div>총 좋아요 개수</div>
+                            ${__TOTALHEART__}
+                            <hr>
+                        </div>
+
+                    </div>
+
                     <!--댓글-->
                     <div class="comment_area">
                         <div class="comment_text">
@@ -259,18 +123,15 @@
                                                     <input type="hidden" name="prefer" value="${__DETAIL__.prefer}">
                                                     <input type="hidden" name="prerefer" value="${comment.prerefer}">
 
-                                                        <%--<div>날짜</div>
                                                         <div>${comment.predate}</div>
-                                                        <div>댓글 내용</div>
                                                         <div>${comment.precontent}</div>
                                                         <input type="hidden" id="${comment.prerefer}totext" name="precontent" value="${comment.precontent}">
-                                                        <div>닉네임</div>
                                                         <div>${comment.nickname}</div>
                                                         <input type="hidden" name="email" value="${sessionScope.__AUTH__.email}">
                                                         <c:if test="${sessionScope.__AUTH__.email eq comment.email}">
                                                             <input type="button" id="${comment.prerefer}" name="mod" value="수정">
                                                             <input type="hidden" id="${comment.prerefer}tosubmit" value="수정완료">
-                                                        </c:if>--%>
+                                                        </c:if>
                                                 </form>
                                                 <c:if test="${sessionScope.__AUTH__.email eq comment.email}">
                                                     <form action="/partyphoto/deletecomment" method="post">
@@ -286,18 +147,7 @@
                                                     </form>
                                                 </c:if>
                                             </c:forEach>
-                                            <c:forEach items="${reply}" var="reply">
-                                                <tr>
-                                                    <td><c:out value="${sessionScope.__AUTH__.nickname}"/></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><c:out value="${reply.qrecontent}"/></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><fmt:formatDate pattern="yyyy.MM.dd HH:mm:ss"
-                                                                        value="${reply.qredate}"/></td>
-                                                </tr>
-                                            </c:forEach>
+
                                         </c:when>
                                         <c:otherwise>
                                             <td>등록된 글이 없습니다</td>
@@ -309,20 +159,20 @@
                                         <ul class="pagination justify-content-center">
                                             <c:if test="${replyPageMaker.prev}">
                                                 <li class="prev page-item"><a class="prev page-link"
-                                                                              href="">◀</a>
+                                                                              href="/partyphoto/detail?partyCode=${__DETAIL__.partycode}&prefer=${__DETAIL__.prefer}&currPage=${cri.currPage}&reCurrPage=${recri.reCurrPage-1}&searchWord=${ldto.searchWord}&option=${ldto.option}">◀</a>
                                                 </li>
                                             </c:if>
                                             <c:forEach begin="${replyPageMaker.startPage}"
                                                        end="${replyPageMaker.endPage}" var="pageNum">
                                                 <li class="page-item"><a id="page-curr"
                                                                          class="page-link"
-                                                                         href="">
+                                                                         href="/partyphoto/detail?partyCode=${__DETAIL__.partycode}&prefer=${__DETAIL__.prefer}&currPage=${cri.currPage}&reCurrPage=${pageNum}&searchWord=${ldto.searchWord}&option=${ldto.option}">
                                                         ${pageNum} </a></li>
                                             </c:forEach>
 
                                             <c:if test="${replyPageMaker.next}">
                                                 <li class="next page-item"><a class="next page-link"
-                                                                              href="">▶</a>
+                                                                              href="/partyphoto/detail?partyCode=${__DETAIL__.partycode}&prefer=${__DETAIL__.prefer}&currPage=${cri.currPage}&reCurrPage=${recri.reCurrPage+1}&searchWord=${ldto.searchWord}&option=${ldto.option}">▶</a>
                                                 </li>
                                             </c:if>
                                         </ul>
@@ -353,18 +203,22 @@
 
                 <div class="container-btnGroup d-flex justify-content-end">
                     <c:set value="${sessionScope.__AUTH__.nickname}" var="nickname"/>
-                    <button type="button" class="btn btn-primary btn-sm"
-                            onclick="location.href='/partyphoto/editview?prefer=${__DETAIL__.prefer}&partyCode=${ldto.partyCode}&currPage=${cri.currPage}&searchWord=${ldto.searchWord}&option=${ldto.option}'">
-                        <i class="fas fa-pen"></i> <span>수정</span>
-                    </button>
-                    <form action="" method="post">
+                    <form action="/partyphoto/editview" method="get"></form>
                         <button type="submit" class="btn btn-primary btn-sm">
-                            <input type="hidden" name="frefer" value=""> <i
-                                class="fas fa-trash-alt"></i> <span>삭제</span>
+                            <input type="hidden" name="prefer" value="${__DETAIL__.prefer}">
+                            <input type="hidden" name="partyCode" value="${__DETAIL__.partycode}">
+                            <i class="fas fa-pen"></i> <span>수정</span>
+                        </button>
+                    </form>
+                    <form action="/partyphoto/delete" method="post">
+                        <button type="submit" class="btn btn-primary btn-sm">
+                            <input type="hidden" name="prefer" value="${__DETAIL__.prefer}">
+                            <input type="hidden" name="partyCode" value="${__DETAIL__.partycode}">
+                            <i class="fas fa-trash-alt"></i> <span>삭제</span>
                         </button>
                     </form>
                     <button type="button" class="btn btn-primary btn-sm"
-                            onclick="location.href='/partyphoto/list?partyCode=${__DETAIL__.partycode}&currPage=${cri.currPage}'">
+                            onclick="location.href='/partyphoto/list?partyCode=${__DETAIL__.partycode}&currPage=${cri.currPage}&searchWord=${ldto.searchWord}&option=${ldto.option}'">
                         <i class="fas fa-list-ul"></i> <span>목록</span>
                     </button>
                 </div>

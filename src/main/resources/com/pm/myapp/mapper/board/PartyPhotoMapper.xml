@@ -74,7 +74,7 @@
 
     <select id="getDetail" resultType = "com.pm.myapp.domain.board.PartyPhotoDTO">
 
-        SELECT P.PREFER, P.PDATE, P.PARTYCODE, P.PCONTENT, P.PSUBJECT, P.EMAIL, U.NICKNAME, P.READNUM
+        SELECT P.PREFER, P.PDATE, P.PARTYCODE, P.PCONTENT, P.PSUBJECT, P.EMAIL, U.NICKNAME, P.READNUM, U.USERPIC
         FROM PARTYPHOTOBOARD P
                  JOIN USERINFO U
                       ON P.EMAIL = U.EMAIL
