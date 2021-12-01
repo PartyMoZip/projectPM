@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<title>파티포토갤러리 - 글 쓰기</title>
 <link rel="icon"
 	href="${pageContext.request.contextPath}/resources/images/favicon.ico" />
-<title>파티포토갤러리 - 글쓰기</title>
 <link rel="icon"
 	href="${pageContext.request.contextPath}/resources/images/favicon.ico" />
 <link rel="stylesheet"
@@ -18,7 +18,6 @@
 	href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
 	integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
 	crossorigin="anonymous" />
-
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/partyMainPhoto.css" />
 
@@ -91,8 +90,6 @@
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<!-- 스윗알러트 -->
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/js/partyedit.js"></script>
 
 </body>
 </html>

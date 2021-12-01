@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<title>파티모집 - 파티생성</title>
 <!-- 부트스트랩 css -->
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
@@ -18,10 +19,10 @@
 
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/partyMain.css?after" />
-<title>파티모집 - 파티관리</title>
 <link rel="icon"
 	href="${pageContext.request.contextPath}/resources/images/favicon.ico" />
 </head>
+
 <body>
 
 	<%--HEADER--%>

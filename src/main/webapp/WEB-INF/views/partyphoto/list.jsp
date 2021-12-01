@@ -83,6 +83,7 @@
     </main>
 
 </div>
+
 <div class="bottom-menu-page">
     <div class="changePage">
         <nav aria-label="Page navigation example">
@@ -133,8 +134,6 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- 스윗알러트 -->
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script
-        src="${pageContext.request.contextPath}/resources/js/partyMain.js"></script>
 
 </body>
 </html>
