@@ -40,7 +40,7 @@
 			<ul class="nav nav-pills">
 				<li class="nav-item"><a class="nav-link" aria-current="page"
 					href="/admin/getPartyList">파티관리</a></li>
-				<li class="nav-item"><a class="nav-link active"
+				<li class="nav-item"><a class="nav-link"
 					href="/admin/adminPartyBreak">파티해체 승인 요청</a></li>
 				<li class="nav-item"><a class="nav-link"
 					href="/admin/adminBlackParty">블랙파티리스트 관리</a></li>

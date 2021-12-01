@@ -223,6 +223,7 @@ textarea {
 .container-btnGroup {
     margin-top: 20px;
     text-align: end;
+    justify-content: end;
 }
 
 /* 파티포토게시판 컨텐츠 css */
@@ -243,10 +244,7 @@ textarea {
 }
 
 .partyPhotoText {
-	display: table;
-	/*text-align: center;*/
-	width: 50%;
-	margin: 0 5px; /* 간격을 위해 준 속성 */
+	display: block;
 }
 
 .partyPhotoText > span {
@@ -254,21 +252,26 @@ textarea {
 	vertical-align: middle;
 }
 
-.photoCommentDate {
+.photoCommentInfo {
 	display: flex;
+}
+
+.photoCommentNickName {
+	font-weight: 600;
 }
 
 .photoCommentContent {
-	display: inline-block;
+	display: table;
 	border: 2px solid lightgray;
 	border-radius: 5px;
 	padding: 3px;
-}
-
-.photoCommentWriter {
-	display: flex;
+	margin: 10px 0px;
 }
 
 .photoCommentEdit {
 	float: left;
+}
+
+.likeBtn {
+	text-align: center;
 }

@@ -2,6 +2,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
 
 /* 파티메인페이지 시작 */
+main {
+	height: 100vh;
+    max-height: 850px;
+}
+
 /* 파티메인페이지 메뉴바 css */
 .page-item .page-link {
 	color: black;
