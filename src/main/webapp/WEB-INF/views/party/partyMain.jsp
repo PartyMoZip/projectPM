@@ -59,13 +59,15 @@ pageEncoding="UTF-8" %>
             </div>
           </div>
         </div>
-      </div>
-    </main>
 
-    <%--FOOTER--%>
-    <jsp:include
-      page="${pageContext.request.contextPath}/WEB-INF/views/include/footer.jsp"
-    />
+    </div>
+</main>
+
+<div class="container">
+<%--FOOTER--%>
+<jsp:include
+        page="${pageContext.request.contextPath}/WEB-INF/views/include/footer.jsp"/>
+</div>
 
     <!-- 부트스트랩 js -->
     <script
