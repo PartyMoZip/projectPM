@@ -74,6 +74,7 @@
 			<mvc:exclude-mapping path="/party/edit-profile" />
 			<mvc:exclude-mapping path="/party/detail" />
 			<mvc:exclude-mapping path="/party/join" />
+			<mvc:exclude-mapping path="/party/newparty" />
 			<mvc:exclude-mapping path="/party/editparty" />
 			<mvc:exclude-mapping path="/partyphoto/write" />
 			<mvc:exclude-mapping path="/partyphoto/edit" />

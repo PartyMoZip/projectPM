@@ -41,9 +41,10 @@ public class PartyController {
 
     // 파티 만들기 - view
     @GetMapping("/newparty")
-    public void makeNewParty() {
+    public String makeNewParty() {
         log.debug("createParty() invoked.");
 
+        return "/party/newParty";
     } // makeNewParty
 
     // 파티 만들기
