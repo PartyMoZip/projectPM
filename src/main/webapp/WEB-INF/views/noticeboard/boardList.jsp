@@ -76,11 +76,14 @@
 
             <!-- 버튼 -->
             <div class="d-grid gap-2 d-md-block">
-                <button type="button" class="btn btn-primary btn-sm"
-                        onclick="location.href='/noticeboard/writeNoticeBoardView'">
+                ${sessionScope.__AUTH__.userBanned}
+                <c:if test="${sessionScope.__AUTH__.userBanned == -2}">
+                    <button type="button" class="btn btn-primary btn-sm"
+                    onclick="location.href='/noticeboard/writeNoticeBoardView'">
                     <i class="fas fa-list-ul"></i>
-                    <span>글쓰기</span>
-                </button>
+                <span>글쓰기</span>
+            </button>
+                </c:if>
             </div>
             <div id="pagination">
                 <form id="paginationForm">

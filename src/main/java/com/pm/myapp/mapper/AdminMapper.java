@@ -2,6 +2,8 @@ package com.pm.myapp.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.pm.myapp.domain.AllPartyVO;
 import com.pm.myapp.domain.BlackMemberVO;
 import com.pm.myapp.domain.BlackPartyVO;
@@ -13,9 +15,13 @@ public interface AdminMapper {
 	
 	public abstract Integer getAllBM();
 	
-	public abstract List<BlackPartyVO> getBlackParty(Criteria cri);
+	public abstract List<BlackPartyVO> getBlackParty(@Param("cri")Criteria cri, @Param("searchWord") String searchWord);
 	
-	public abstract Integer getAllBP();
+	public abstract Integer getAllBP(String searchWord);
+	
+	public abstract List<AllPartyVO> getBreakList(@Param("cri")Criteria cri, @Param("searchWord") String searchWord);
+	
+	public abstract Integer getTotalBreak(String searchWord);
 	
 	public abstract Integer deletePartyUser(String email);
 	
@@ -25,8 +31,8 @@ public interface AdminMapper {
 
 	public abstract Integer deleteParty(Integer partyCode);
 	
-	public abstract List<AllPartyVO> getAllList(Criteria cri);
+	public abstract List<AllPartyVO> getAllList(@Param("cri")Criteria cri, @Param("searchWord") String searchWord);
 	
-	public abstract Integer getAllPL();
+	public abstract Integer getAllPL(String searchWord);
 	
 } // end interface
