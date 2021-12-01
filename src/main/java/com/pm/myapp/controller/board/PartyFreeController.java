@@ -70,7 +70,7 @@ public class PartyFreeController {
 		log.info("\t + partyFree : {}", partyFDetail);
 		List<PartyFreeReplyVO> reply = this.service.getReply(pfrefer,partycode, cri);
 		model.addAttribute("boardDetail", partyFDetail);
-		model.addAttribute("reply", reply);
+		model.addAttribute("__COMMENT__", reply);
 
 		return "/partyFree/boardDetail";
 	} // showPartyFDetail

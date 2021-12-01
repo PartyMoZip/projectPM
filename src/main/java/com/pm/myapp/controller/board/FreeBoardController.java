@@ -77,7 +77,7 @@ public class FreeBoardController {
 
         // 댓글 목록 불러오기
         List<FreeBoardReplyDTO> reply = this.service.getReply(frefer, recri);
-        model.addAttribute("reply", reply);
+        model.addAttribute("__COMMENT__", reply);
 
         // 댓글 총 개수 구하기
         Integer totalAmount = this.service.getTotalFreeReplyList(frefer);

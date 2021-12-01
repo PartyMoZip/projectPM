@@ -178,14 +178,14 @@
         UPDATE QNABOARDRE
         SET
             QRECONTENT = #{qrecontent}
-        WHERE QREFER = #{qrefer}
+        WHERE QREFER = #{qrefer} AND QREREFER = #{qrerefer}
     </update>
 
 
     <delete id="deleteComment">
         DELETE
         FROM QNABOARDRE
-        WHERE QREFER=#{qrefer}
+        WHERE QREFER=#{qrefer} AND QREREFER = #{qrerefer}
     </delete>
 
 

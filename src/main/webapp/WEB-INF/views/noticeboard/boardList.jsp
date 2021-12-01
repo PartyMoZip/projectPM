@@ -76,7 +76,6 @@
 
             <!-- 버튼 -->
             <div class="d-grid gap-2 d-md-block">
-                ${sessionScope.__AUTH__.userBanned}
                 <c:if test="${sessionScope.__AUTH__.userBanned == -2}">
                     <button type="button" class="btn btn-primary btn-sm"
                     onclick="location.href='/noticeboard/writeNoticeBoardView'">
