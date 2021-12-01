@@ -1,0 +1,121 @@
+@import "global.css";
+@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
+
+/* 나의 파티 */
+.container.mt-5.px-5.profile-box.shadow-sm {
+  display: flex;
+  height: 80vh;
+}
+
+.header h4 {
+  display: block;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.btn-primary {
+  border-color: var(--primary-color);
+  background-color: var(--primary-color-dark);
+  color: var(--primary-color-text);
+}
+
+.btn-primary:hover {
+  border-color: var(--primary-color);
+  background-color: var(--primary-color);
+}
+
+.btn-outline-secondary:hover {
+  border-color: var(--bs-danger);
+  background-color: var(--bs-danger);
+  color: var(--primary-color-text);
+}
+
+.btn.btn-primary.mt-4.save-btn {
+  border-color: var(--primary-color);
+  background-color: var(--primary-color-text);
+  color: var(--primary-color);
+  display: block;
+  margin: 0 auto;
+}
+
+.btn.btn-primary.mt-4.save-btn:hover {
+  border-color: var(--primary-color);
+  background-color: var(--primary-color);
+  color: var(--primary-color-text);
+  display: block;
+  margin: 0 auto;
+}
+
+/* 프로필 설정 */
+.profile-box {
+  border: 1px solid #efefef;
+  padding: 2rem;
+}
+
+.img-profile img {
+  width: 220px;
+  height: auto;
+}
+
+.label-partyName {
+  font-weight: bold;
+}
+
+.label-partyLoc {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.label-partyCategory {
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+.input-partyName {
+  max-width: 220px;
+}
+
+.form-select {
+  width: 100px;
+}
+
+.input-newParty:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.25rem rgba(76 175 80/ 25%);
+}
+
+.container-categoryBtn {
+  display: flex;
+  justify-content: center;
+}
+
+.container-categoryBtn.flex-wrap {
+  margin-top: 20px;
+}
+
+.btn-outline-secondary {
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+  background-color: var(--primary-color);
+}
+
+.btn-outline-secondary:hover {
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+  background-color: var(--primary-color);
+}
+
+.btn-check:checked + .btn-outline-secondary {
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+  background-color: var(--primary-color);
+}
+
+.btn-check + .btn-outline-secondary {
+  margin-right: 20px;
+  margin-bottom: 10px;
+  width: max-content;
+  vertical-align: middle;
+  text-align: center;
+}

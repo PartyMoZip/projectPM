@@ -65,12 +65,14 @@ public class PartyFreeController {
 
 	// 파티 자유 게시판 상세보기
 	@GetMapping("/showPartyFDetail")
+
 	public void showPartyFDetail(
             @ModelAttribute("sdto") BoardSearchListDTO sdto,
 			@ModelAttribute("cri") Criteria cri,
             @ModelAttribute("recri") ReplyCriteria recri,
             Integer pfrefer, Integer partycode,
             Model model)
+
 		{
 		log.debug("get({}, {}, {}) invoked.", cri, pfrefer, partycode);
 
@@ -101,7 +103,6 @@ public class PartyFreeController {
 
 	// 파티 자유 게시판 글쓰기 완료
 	@PostMapping("/writePFreeBoardOk")
-
 	public String writePFreeBoard(PartyFreeDTO partyFB, @ModelAttribute("cri") Criteria cri,RedirectAttributes rttrs) {
 
 		log.debug("writePFreeBoard({}) invoked.", partyFB);
@@ -110,13 +111,14 @@ public class PartyFreeController {
 		rttrs.addAttribute("result", result);
 		rttrs.addAttribute("partycode",partyFB.getPartycode());
 		rttrs.addAttribute("currPage",cri.getCurrPage());
+		
 		return "redirect:/partyfree/getPFreeBoardList";
 
 	} // writePFreeBoard
 
     // 파치 자유 게시판 글 쓰기 화면
     @GetMapping("/writePFreeBoardView")
-    public String writePFBoardView(@ModelAttribute("cri") Criteria cri) {
+    public String writePFBoardView(@ModelAttribute("cri") Criteria cri, @ModelAttribute("partyCode") Integer partycode) {
         log.debug("writePFBoardView() invoked.");
 
         return "/partyFree/boardWrite";
@@ -124,7 +126,7 @@ public class PartyFreeController {
 
 	// 파티 자유 게시판 수정 View
 	@GetMapping("/editPFBoardView")
-	public String editPFBoardView(@ModelAttribute("cri") Criteria cri, Integer pfrefer, Integer partycode, Model model) {
+	public String editPFBoardView(@ModelAttribute("cri") Criteria cri, Integer pfrefer, @ModelAttribute("partyCode") Integer partycode, Model model) {
 		log.debug("editPFBoardView({}, {})", cri, pfrefer, partycode);
 
 		PartyFreeVO boardDetail = this.service.getBoardDetail(pfrefer, partycode);
@@ -152,6 +154,7 @@ public class PartyFreeController {
             @RequestParam("partyCode") Integer partyCode,
             @ModelAttribute("cri") Criteria cri,
             RedirectAttributes rttrs) {
+
 		log.debug("deletePFreeBoard({}) invoked.", pfrefer);
 
 		boolean result = this.service.deleteBoard(pfrefer, partyCode);
@@ -162,7 +165,8 @@ public class PartyFreeController {
 
 	// 파티 자유 게시판  검색
 	@GetMapping("/searchPFreeBoard")
-	public String searchPFreeBoard(Integer partyCode, @ModelAttribute("cri") Criteria cri, String searchWord, Integer option, Model model) {
+	public String searchPFreeBoard(@ModelAttribute("cri") Criteria cri, @RequestParam("partyCode")Integer partycode, String searchWord, Integer option, Model model) {
+
 		log.debug("searchPFreeBoard() invoked.");
 
 		List<PartyFreeSearchVO> searchList = this.service.search(partyCode, cri, searchWord, option);

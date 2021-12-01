@@ -286,10 +286,10 @@ public class PartyPhotoServiceImpl implements PartyPhotoService {
 		
 		if(currHit==0) {
 			nextHit = this.mapper.upHeart(hdto);
-			log.info("\t+ nextHit : {}", nextHit);
+			log.info("\t+ nextUpHit : {}", nextHit);
 		}else {
 			nextHit = this.mapper.downHeart(hdto);
-			log.info("\t+ nextHit : {}", nextHit);
+			log.info("\t+ nextDownHit : {}", nextHit);
 		} // if-else
 		
 		Integer affectedHeart = this.mapper.checkPhotoHeart(hdto);

@@ -7,7 +7,9 @@ const hobbyName = document.querySelector(".modal-hobbyName");
 const partyScore = document.querySelector(".modal-partyScore");
 const profile = document.querySelector(".modal-profile");
 const reqBtn = document.querySelector(".party-req-btn");
+const spinner = document.querySelector(".spinner");
 let partyCode;
+
 
 // 파티 가입 신청
 const handleRequest = (e) => {
@@ -34,22 +36,26 @@ const handleRequest = (e) => {
         },
         body: JSON.stringify(data),
     })
-        .then((res) => res.json())
-        .then((data) => {
-            Swal.fire(
-                '파티가입 신청 완료',
-                '해당 파티장이 승인하면 파티원이 될 수 있어요!',
-                'success'
-            )
+        .then((res) => {
+            // spinner.classList.remove("hide");
+            res.json().then((data) => {
+                // spinner.classList.add("hide");
+                Swal.fire(
+                    '성공',
+                    '파티 가입이 신청되었습니다!',
+                    'success'
+                )
+            }).catch((err) => {
+                // spinner.classList.add("hide");
+                console.log(err);
+                Swal.fire(
+                    '실패',
+                    '이미 가입했거나 신청한 파티에요!',
+                    'warning'
+                )
+            })
         })
-        .catch((err) => {
-            console.log(err);
-            Swal.fire(
-                '에러',
-                '이미 가입했거나 신청한 파티에요!',
-                'warning'
-            )
-        })
+
 }
 
 // 파티 정보 모달팝업
@@ -62,8 +68,12 @@ const handleShowInfo = (e) => {
     // api 불러와서 modal 정보 입력
     fetch(`/party/detail?partyCode=${partyCode}`, {
         method: "GET",
-    }).then((res) => res.json())
-        .then((data) => {
+    }).then((res) => {
+        spinner.classList.remove("hide");
+
+        res.json().then((data) => {
+            spinner.classList.add("hide");
+
             console.log(data);
             img.setAttribute("src", data.coverPic);
             count.innerHTML = data.count;
@@ -73,7 +83,9 @@ const handleShowInfo = (e) => {
             partyScore.innerHTML = data.partyScore;
             profile.innerHTML = data.partyProfile;
         })
-        .catch((err) => console.log(err));
+            .catch((err) => console.log(err));
+    })
+
 }
 
 for (let i = 0; i < viewBtn.length; i++) {
@@ -81,3 +93,4 @@ for (let i = 0; i < viewBtn.length; i++) {
 }
 
 reqBtn.addEventListener("click", handleRequest);
+

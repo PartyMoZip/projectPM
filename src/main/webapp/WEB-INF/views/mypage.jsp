@@ -20,6 +20,9 @@
 <%--HEADER--%>
 <jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp"/>
 
+<%--SPINNER--%>
+<jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/include/spinner.jsp"/>
+
 <main>
     <%--내 파티 목록--%>
     <div class="container mt-5 px-5 profile-box shadow-sm">

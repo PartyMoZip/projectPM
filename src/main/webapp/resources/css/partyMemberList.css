@@ -1,0 +1,195 @@
+@import "global.css";
+
+/* 감싸는 전체 div 너비, 중앙 정렬 */
+.all-wrap {
+  margin: 0 auto;
+  width: 80%;
+}
+
+/* 탭 메뉴 css */
+.nav.nav-pills {
+	margin: 50px 30px;
+	justify-content: center;
+}
+
+.nav-pills .nav-item {
+	margin-right: 5px;
+}
+
+.nav-pills .nav-link.active {
+	background-color: var(--primary-color);
+	padding: 3px 6px;
+}
+
+.nav-pills .nav-link {
+	padding: 3px 6px;
+	background-color: lightgrey;
+	color: #212529;
+}
+
+.nav-pills .nav-link:hover {
+	background-color: var(--primary-color);
+	color: var(--primary-color-text);
+}
+
+/* 파티관리 > 정렬 탭 색상 컨트롤 */
+a.nav-link.dropdown-toggle {
+  color: #212529;
+}
+
+a.nav-link.dropdown-toggle.show {
+  color: #212529;
+}
+
+/* th, td 수평, 수직 중앙 정렬 */
+th {
+  text-align: center;
+  vertical-align: middle;
+  font-weight: 400;
+}
+
+td {
+  text-align: center;
+  vertical-align: middle;
+}
+
+/* 바텀메뉴 정렬 */
+.bottom-menu {
+  text-align: center;
+  vertical-align: middle;
+}
+
+/* 체크박스 디자인 */
+.checkbox-group {
+  vertical-align: middle;
+  text-align: center;
+  margin-right: -5px;
+}
+
+.checkbox-group input.bigCheck {
+  font-size: 1em;
+  width: 1.25em;
+  height: 1.25em;
+  vertical-align: middle;
+}
+
+input[type="checkbox"] {
+  -webkit-appearance: none;
+  position: relative;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  outline: none !important;
+  border: 1px solid #212529;
+  border-radius: 2px;
+  background: #fbfbfb;
+}
+
+input[type="checkbox"]::before {
+  content: "\2713";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  overflow: hidden;
+  transform: scale(0) translate(-50%, -50%);
+  line-height: 1;
+}
+
+input[type="checkbox"]:checked {
+  background-color: var(--primary-color);
+  border-color: rgba(255, 255, 255);
+  color: white;
+}
+
+input[type="checkbox"]:checked::before {
+  border-radius: 2px;
+  transform: scale(1) translate(-50%, -50%);
+}
+/* 체크박스 디자인 끝 */
+
+/* 파티원 이미지 크기조절*/
+td > img {
+	width: 10vw;
+    height: 15vh;
+    margin: 10px 0px;
+}
+
+/* 버튼 디자인 */
+.btn.btn-primary {
+  width: 70px;
+  height: 34px;
+  padding: 3px;
+  font-size: 12px;
+  font-weight: 600;
+  background: none;
+  color: black;
+  border: 2px solid red;
+}
+
+.btn.btn-primary:hover {
+  color: var(--primary-color-text);
+  background-color: red;
+}
+
+.bottom-menu-page.bottom-menu-btn {
+	margin-left: 25px;
+}
+
+.d-grip.gap-2.d-md-block {
+  display: flex;
+}
+
+.page-item .page-link {
+  color: black;
+}
+
+.page-item .page-link:hover {
+  color: var(--primary-color-text);
+  background-color: var(--primary-color);
+}
+
+.page-item .page-link.active {
+  color: var(--primary-color-text);
+  background-color: var(--primary-color);
+}
+
+.page-item.active .page-link {
+  color: var(--primary-color-text);
+  background-color: var(--primary-color);
+}
+
+/* 검색창 */
+.search-wrapper {
+  margin-top: 30px;
+  max-width: 500px;
+  position: relative;
+}
+
+.search-btn {
+  color: var(--secondary-text-color);
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 20px;
+  background-color: inherit;
+  border: unset;
+  outline: none;
+}
+
+.search-wrapper form {
+  width: 100%;
+}
+
+.search-wrapper input {
+  border-radius: 10rem;
+  border: 1px solid var(--primary-color);
+  padding: 14px 20px;
+}
+
+.searchButton {
+  margin: 0 auto;
+}
+
+input::-webkit-search-cancel-button {
+  display: none;
+}

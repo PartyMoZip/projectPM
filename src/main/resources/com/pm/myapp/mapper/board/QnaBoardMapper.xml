@@ -48,8 +48,8 @@
 
     <insert id="writeQnaBoard">
 
-        INSERT INTO QNABOARD(QREFER, QSUBJECT, QCONTENT, QDATE, NICKNAME, EMAIL, READNUM)
-        VALUES (SEQ_QNABOARD.nextval, #{qsubject}, #{qcontent}, sysdate, #{nickname}, #{email}, 0)
+        INSERT INTO QNABOARD(QREFER, QSUBJECT, QCONTENT, QDATE, EMAIL, READNUM)
+        VALUES(SEQ_QNABOARD.nextval, #{qsubject}, #{qcontent}, sysdate, #{email}, 0)
 
     </insert>
 

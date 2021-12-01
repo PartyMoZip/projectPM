@@ -39,17 +39,16 @@
 		<div class="all-wrap">
 			<!-- 탭 메뉴 -->
 			<ul class="nav nav-pills">
+				<li class="nav-item"><a class="nav-link" aria-current="page"
+					href="/admin/getPartyList">파티관리</a></li>
 				<li class="nav-item"><a class="nav-link active"
-					aria-current="page" href="/admin/adminParty">파티관리</a></li>
-				<li class="nav-item"><a class="nav-link"
 					href="/admin/adminPartyBreak">파티해체 승인 요청</a></li>
-				<li class="nav-item"><a class="nav-link"
-					href="/admin/adminBlackMember">블랙회원리스트 관리</a></li>
 				<li class="nav-item"><a class="nav-link"
 					href="/admin/adminBlackParty">블랙파티리스트 관리</a></li>
 			</ul>
 
 			<!-- 파티관리 테이블 시작 -->
+			<form action="/admin/breakparty" method="post">
 			<div class="table-responsive">
 				<table class="table">
 					<thead>
@@ -70,70 +69,28 @@
 							<th scope="col">파티장</th>
 							<th scope="col">파티인원 수</th>
 							<th scope="col">창설일자</th>
-							<th scope="col">
-								<div class="nav-item dropdown">
-									<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
-										href="#" role="button" aria-expanded="false">활동점수 정렬</a>
-									<div class="dropdown-menu">
-										<li><a class="dropdown-item" href="#">활동점수 최소 순</a></li>
-										<li>
-											<hr class="dropdown-divider">
-										</li>
-										<li><a class="dropdown-item" href="#">활동점수 최대 순</a></li>
-									</div>
-								</div>
-							</th>
+							<th scope="col">활동점수</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>
-								<!-- 파티관리 체크박스 개별선택 -->
-								<div class="checkbox-group">
-									<div class="partyCheckboxGroup">
-										<input type="checkbox" class="bigCheck" name="pc">
-									</div>
-								</div> <!-- 파티관리 체크박스 개별선택 끝 -->
-							</td>
-							<th scope="row">1</th>
-							<td>sexypeople</td>
-							<td>sexyjingun</td>
-							<td>10</td>
-							<td>2021.11.10</td>
-							<td>50</td>
-						</tr>
-						<tr>
-							<td>
-								<!-- 파티관리 체크박스 개별선택 -->
-								<div class="checkbox-group">
-									<div class="partyCheckboxGroup">
-										<input type="checkbox" class="bigCheck" name="pc">
-									</div>
-								</div> <!-- 파티관리 체크박스 개별선택 끝 -->
-							</td>
-							<th scope="row">2</th>
-							<td>sexypeople</td>
-							<td>sexyjingun</td>
-							<td>10</td>
-							<td>2021.11.10</td>
-							<td>50</td>
-						</tr>
-						<tr>
-							<td>
-								<!-- 파티관리 체크박스 개별선택 -->
-								<div class="checkbox-group">
-									<div class="partyCheckboxGroup">
-										<input type="checkbox" class="bigCheck" name="pc">
-									</div>
-								</div> <!-- 파티관리 체크박스 개별선택 끝 -->
-							</td>
-							<th scope="row">3</th>
-							<td>sexypeople</td>
-							<td>sexyjingun</td>
-							<td>10</td>
-							<td>2021.11.10</td>
-							<td>50</td>
-						</tr>
+						<c:forEach items="${__PartyList__}" var="list">
+							<tr>
+								<td>
+									<!-- 파티관리 체크박스 개별선택 -->
+									<div class="checkbox-group">
+										<div class="partyCheckboxGroup">
+											<input type="checkbox" class="bigCheck" name="partyCode" value="${list.partyCode}">
+										</div>
+									</div> <!-- 파티관리 체크박스 개별선택 끝 -->
+								</td>
+								<th scope="row">${list.rownum}</th>
+								<td>${list.partyName}</td>
+								<td>${list.nickname}</td>
+								<td>${list.partyMember}</td>
+								<td>${list.createDate}</td>
+								<td>${list.partyScore}</td>
+							</tr>
+						</c:forEach>
 					</tbody>
 				</table>
 			</div>
@@ -144,24 +101,41 @@
 			<div class="bottom-menu-btn">
 
 				<div class="d-grid gap-2 d-md-block">
-					<button class="btn btn-primary" type="button">파티 해체</button>
+					<button class="btn btn-primary" type="submit">파티 해체</button>
 				</div>
 			</div>
-
+			</form>
 			<div class="bottom-menu-page">
 				<div class="changePage">
 					<nav aria-label="Page navigation example">
-						<ul class="pagination justify-content-center">
-							<li class="page-item"><a class="page-link" href="#"
-								aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-							</a></li>
-							<li class="page-item"><a class="page-link active" href="#">1</a></li>
-							<li class="page-item"><a class="page-link" href="#">2</a></li>
-							<li class="page-item"><a class="page-link" href="#">3</a></li>
-							<li class="page-item"><a class="page-link" href="#"
-								aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-							</a></li>
-						</ul>
+						<c:choose>
+							<c:when test="${not empty __PartyList__}">
+								<div id="pagination">
+									<form id="paginationForm">
+										<ul class="pagination justify-content-center">
+											<c:if test="${pageMaker.prev}">
+												<li class="prev page-item"><a class="prev page-link"
+																			  href="/admin/getPartyList?currPage=${pageMaker.startPage-1}&searchWord=${searchWord}">◀</a>
+												</li>
+											</c:if>
+			
+											<c:forEach begin="${pageMaker.startPage}"
+													   end="${pageMaker.endPage}" var="pageNum">
+												<li class="page-item"><a id="page-curr" class="page-link"
+																		 href="/admin/getPartyList?currPage=${pageNum}&searchWord=${searchWord}">
+														${pageNum} </a></li>
+											</c:forEach>
+			
+											<c:if test="${pageMaker.next}">
+												<li class="next page-item"><a class="next page-link"
+																			  href="/admin/getPartyList?currPage=${pageMaker.endPage+1}&searchWord=${searchWord}">▶</a>
+												</li>
+											</c:if>
+										</ul>
+									</form>
+								</div>
+							</c:when>
+						</c:choose>
 					</nav>
 				</div>
 			</div>
@@ -169,7 +143,7 @@
 			<!-- 검색창 -->
 
 			<div class="container-sm search-wrapper">
-				<form action="/search" method="get"
+				<form action="/admin/getPartyList" method="get"
 					class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
 					<input type="search" name="searchWord" class="form-control"
 						placeholder="검색어를 입력해주세요." aria-label="Search">

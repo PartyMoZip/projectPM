@@ -13,5 +13,6 @@ public class PartyDTO {
 	private Integer localCode;
 	private Integer hobbyCode;
 	private Integer partyCode;
+	private String fileLocation;
 
 } // end class

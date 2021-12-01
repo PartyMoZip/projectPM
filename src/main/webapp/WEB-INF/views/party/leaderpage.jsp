@@ -31,6 +31,9 @@
 		page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp" />
 	<jsp:include
 		page="${pageContext.request.contextPath}/WEB-INF/views/include/partynav.jsp" />
+  
+  <%--SPINNER--%>
+<jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/include/spinner.jsp"/>
 
 	<%-- <h1>/WEB-INF/views/party/showLeaderPage.jsp</h1>
       <hr>
@@ -98,7 +101,7 @@
 			<div class="all-wrap">
 				<!-- 파티승인요청 테이블 시작 -->
 				<div class="table-responsive">
-					<form action="/party/do-accept-join" method="post">
+					<form class="form-accept" method="post">
 						<input type="hidden" class="input-partycode" name="partyCode"
 							value="${__PARTY__.partyCode}"> <input type="hidden"
 							class="input-partycode" name="currPage" value="${cri.currPage}">
@@ -127,7 +130,7 @@
 											<!-- 파티승인요청 체크박스 개별선택 -->
 											<div class="checkbox-group">
 												<div class="partyCheckboxGroup">
-													<input type="checkbox" class="bigCheck" name="emailAccept"
+													<input type="checkbox" class="bigCheck" name="email"
 														value="${member.email}">
 												</div>
 											</div> <!-- 파티승인요청 체크박스 개별선택 끝 -->
@@ -138,58 +141,16 @@
 								</c:forEach>
 							</tbody>
 						</table>
-						<div class="bottom-menu-btn">
-							<button class="btn btn-primary" type="submit">승인</button>
+						<div class="d-flex justify-content-center">
+							<div class="bottom-menu-btn btn-group">
+								<button class="btn btn-primary btn-accept" type="submit">승인</button>
+								<button class="btn btn-primary btn-reject" type="submit">거절</button>
+							</div>
 						</div>
 					</form>
 				</div>
 
-				<!-- 파티승인요청 거절 테이블 시작 -->
-				<div class="table-responsive">
-					<form action="/party/do-reject-join" method="post">
-						<input type="hidden" name="partyCode"
-							value="${__PARTY__.partyCode}">
-						<table class="table">
-							<thead>
-								<tr>
-									<!-- 파티승인요청 거절 체크박스 전체선택 -->
-									<th scope="col">
-										<div class="checkbox-group">
-											<div class="checkbox-groupParty">
-												<input type="checkbox" id="check-allPartyReject"
-													name="check-allPartyReject" class="bigCheck">
-											</div>
-										</div>
-									</th>
-									<!-- 파티승인요청 거절 체크박스 전체선택 끝 -->
-									<th scope="col">번호</th>
-									<th scope="col">닉네임</th>
-								</tr>
-							</thead>
-							<tbody>
-								<c:forEach items="${__MEMBER__}" var="member">
-									<tr>
-										<td>
-											<!-- 파티승인요청 거절 체크박스 개별선택 -->
-											<div class="checkbox-group">
-												<div class="partyCheckboxGroup">
-													<input type="checkbox" class="bigCheck" name="emailReject"
-														value="${member.email}">
-												</div>
-											</div> <!-- 파티승인요청 거절 체크박스 개별선택 끝 -->
-										</td>
-										<th scope="row">${member.rownum}</th>
-										<td>${member.nickname}</td>
-									</tr>
-								</c:forEach>
-							</tbody>
-						</table>
-						<div class="bottom-menu-btn">
-							<button class="btn btn-primary" type="submit">거절</button>
-						</div>
-					</form>
-				</div>
-				<!-- 파티승인요청 거절 테이블 끝-->
+				
 
 				<div class="bottom-menu-page">
 					<div class="changePage">
@@ -260,13 +221,12 @@
 								<span class="h5">그동안 파티를 이용해주셔서 감사합니다.😂</span>
 							</p>
 
-							<input type="text" class="w-100 form-control input-withdrawal"
-								placeholder="진짜 해체하실거에요?">
 							<form action="/party/dobreak" method="post">
+								<input type="hidden" name="partyCode" value="${__PARTY__.partyCode}">
 								<div class="d-flex justify-content-center mt-3">
-									<button type="button"
+									<button type="submit"
 										class="btn btn-danger align-self-center withdrawal-btn"
-										name="partyCode" value="${__PARTY__.partyCode}">해체하기</button>
+										name="partyCode">해체하기</button>
 								</div>
 							</form>
 						</div>

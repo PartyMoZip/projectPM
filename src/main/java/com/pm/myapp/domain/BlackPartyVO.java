@@ -1,18 +1,19 @@
 package com.pm.myapp.domain;
 
-import java.util.Date;
+import java.sql.Date;
 
-import lombok.Value;
+import lombok.Data;
 
 
-@Value
+@Data
 public class BlackPartyVO {
 
 	private Integer rownum;
 	private String partyName;
-	private String partyCapt;
+	private String nickname;
 	private Integer partyBanned;
 	private Date createDate;
+	private Integer partyCode;
 	
 	
 } // end class

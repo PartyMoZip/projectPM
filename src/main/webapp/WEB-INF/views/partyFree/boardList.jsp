@@ -26,6 +26,8 @@
 	href="${pageContext.request.contextPath}/resources/css/home.css">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/boardList.css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/partyMain.css" />
 
 <title>파티메인페이지 - 자유게시판</title>
 </head>
