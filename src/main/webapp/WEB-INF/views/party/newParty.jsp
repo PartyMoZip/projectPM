@@ -20,7 +20,7 @@
 	href="${pageContext.request.contextPath}/resources/images/favicon.ico" />
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/newParty.css?after" />
-	
+
 </head>
 
 <body>
@@ -61,12 +61,6 @@
 						<input type="file" class="form-control input-file visually-hidden"
 							name="fileLocation">
 					</div>
-					<div
-						class="d-flex flex-column justify-content-center align-items-center w-100 col-3 mt-3">
-						<span class="align-self-baseline label-partyName">파티이름</span> <input
-							type="text" class="form-control input-newParty mt-2"
-							name="newParty" value="">
-					</div>
 				</div>
 			</div>
 
@@ -88,17 +82,13 @@
 
 					<div
 						class="d-flex flex-column justify-content-center align-items-left w-100 col-3 mt-3">
-						<span class="align-self-baseline label-partyMemNum">인원 수</span> <select
-							class="form-select form-select-sm"
-							aria-label=".form-select-sm example">
-							<option selected>인원 수</option>
-							<option value="1">10명</option>
-							<option value="2">30명</option>
-							<option value="3">50명</option>
-							<option value="4">100명</option>
-						</select>
+						<span class="align-self-baseline label-partyName">파티이름</span> <input
+							type="text" class="form-control input-newParty mt-2"
+							name="newParty" value="">
 					</div>
 
+					<span class="align-self-baseline label-partyCategory">취미
+						카테고리</span>
 					<div class="container-categoryBtn flex-wrap">
 
 						<input type="radio" class="btn-check" name="options-outlined"
@@ -140,6 +130,7 @@
 					</div>
 
 				</div>
+
 			</div>
 		</div>
 		<button type="submit" class="btn btn-primary mt-4 save-btn">저장하기</button>
