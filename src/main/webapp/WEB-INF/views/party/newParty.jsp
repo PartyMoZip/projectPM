@@ -16,11 +16,11 @@
 	href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
 	integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
 	crossorigin="anonymous" />
-
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/partyMain.css?after" />
 <link rel="icon"
 	href="${pageContext.request.contextPath}/resources/images/favicon.ico" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/newParty.css?after" />
+
 </head>
 
 <body>
@@ -35,52 +35,105 @@
 
 	<main>
 
-		<!-- 파티프로필 설정 -->
+		<!-- 파티 생성 -->
+		<div class="header">
+			<h4>파티생성</h4>
+		</div>
 		<div class="container mt-5 px-5 profile-box shadow-sm">
-			<div class="header">
-				<h4>파티프로필 설정</h4>
-			</div>
-
-			<form class="form-data" enctype="multipart/form-data">
-				<input type="hidden" class="input-partycode" name="partyCode"
-					value="${__PARTY__.partyCode}"> <input type="hidden"
-					class="input-partycode" name="currPage" value="${cri.currPage}">
+			<div class="container-lg d-flex justify-content-center">
 				<div
-					class="container-lg d-flex justify-content-center align-items-center">
-					<div
-						class="d-flex flex-column justify-content-center align-items-center">
-						<div class="img-profile justify-content-center align-items-center">
-							<img src="${__PARTY__.coverPic}" alt="파티 프로필 사진" width="700px"
-								height="auto">
-						</div>
-						<div class="mt-2">
-							<button type="button" class="btn btn-outline-primary select-btn">
-								이미지 업로드</button>
-							<input type="file"
-								class="form-control input-file visually-hidden"
-								name="fileLocation" accept="image/*">
-						</div>
-						<div
-							class="d-flex flex-column justify-content-center align-items-center w-100 col-3 mt-4">
-							<span class="align-self-baseline label-name"
-								style="font-weight: bold">파티 이름</span> <input type="text"
-								class="form-control input-partyname mt-2" name="partyName"
-								value="${__PARTY__.partyName}">
-						</div>
-						<div
-							class="d-flex flex-column justify-content-center align-items-center w-100 col-3 mt-4">
-							<span class="align-self-baseline label-name"
-								style="font-weight: bold">파티 소개글</span>
-							<textarea class="form-control input-partyprofile mt-2"
-								name="partyProfile">${__PARTY__.partyProfile}</textarea>
-						</div>
+					class="d-flex flex-column justify-content-center align-items-center">
+					<div class="card shadow-sm">
+						<svg class="bd-placeholder-img card-img-top" width="100%"
+							height="225" xmlns="http://www.w3.org/2000/svg" role="img"
+							aria-label="Placeholder: Thumbnail"
+							preserveAspectRatio="xMidYMid slice" focusable="false">
+              <title>Placeholder</title>
+              <rect width="100%" height="100%" fill="#55595c"></rect>
+              <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail
+              </text>
+            </svg>
+					</div>
 
-						<button type="submit" class="btn btn-primary mt-4 save-btn">저장하기</button>
+					<div class="mt-2">
+						<button type="button" class="btn btn-outline-primary select-btn">
+							이미지 업로드</button>
+						<input type="file" class="form-control input-file visually-hidden"
+							name="fileLocation">
 					</div>
 				</div>
-			</form>
-		</div>
+			</div>
 
+			<div class="container-lg d-flex justify-content-center">
+				<div
+					class="d-flex flex-column justify-content-center align-items-center">
+					<div
+						class="d-flex flex-column justify-content-center align-items-left w-100 col-3 mt-3">
+						<span class="align-self-baseline label-partyLoc">활동지역</span> <select
+							class="form-select form-select-sm"
+							aria-label=".form-select-sm example">
+							<option selected>지역</option>
+							<option value="1">강남</option>
+							<option value="2">강동</option>
+							<option value="3">강북</option>
+							<option value="4">강서</option>
+						</select>
+					</div>
+
+					<div
+						class="d-flex flex-column justify-content-center align-items-left w-100 col-3 mt-3">
+						<span class="align-self-baseline label-partyName">파티이름</span> <input
+							type="text" class="form-control input-newParty mt-2"
+							name="newParty" value="">
+					</div>
+
+					<span class="align-self-baseline label-partyCategory">취미
+						카테고리</span>
+					<div class="container-categoryBtn flex-wrap">
+
+						<input type="radio" class="btn-check" name="options-outlined"
+							id="btn-check-soccer" checked autocomplete="off"> <label
+							class="btn btn-outline-secondary" for="btn-check-soccer">축구</label><br>
+
+						<input type="radio" class="btn-check" name="options-outlined"
+							id="btn-check-baseball" checked autocomplete="off"> <label
+							class="btn btn-outline-secondary" for="btn-check-baseball">야구</label><br>
+
+						<input type="radio" class="btn-check" name="options-outlined"
+							id="btn-check-game" checked autocomplete="off"> <label
+							class="btn btn-outline-secondary" for="btn-check-game">컴퓨터게임</label><br>
+
+						<input type="radio" class="btn-check" name="options-outlined"
+							id="btn-check-mountain" checked autocomplete="off"> <label
+							class="btn btn-outline-secondary" for="btn-check-mountain">등산</label><br>
+
+						<input type="radio" class="btn-check" name="options-outlined"
+							id="btn-check-study" checked autocomplete="off"> <label
+							class="btn btn-outline-secondary" for="btn-check-study">공부</label><br>
+
+						<input type="radio" class="btn-check" name="options-outlined"
+							id="btn-check-billiards" checked autocomplete="off"> <label
+							class="btn btn-outline-secondary" for="btn-check-billiards">당구</label><br>
+
+						<input type="radio" class="btn-check" name="options-outlined"
+							id="btn-check-boardGame" checked autocomplete="off"> <label
+							class="btn btn-outline-secondary" for="btn-check-boardGame">보드게임</label><br>
+
+						<input type="radio" class="btn-check" name="options-outlined"
+							id="btn-check-DIY" checked autocomplete="off"> <label
+							class="btn btn-outline-secondary" for="btn-check-DIY">DIY</label><br>
+
+						<input type="radio" class="btn-check" name="options-outlined"
+							id="btn-check-cooking" checked autocomplete="off"> <label
+							class="btn btn-outline-secondary" for="btn-check-cooking">요리</label><br>
+
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+		<button type="submit" class="btn btn-primary mt-4 save-btn">저장하기</button>
 	</main>
 
 	<%--FOOTER--%>

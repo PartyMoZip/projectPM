@@ -48,6 +48,7 @@
             <form action="/qnaboard/writeQnaBoardOk" method="post">
                 <div class="table-Detail">
                     <input type="hidden" name="email" value="${sessionScope.__AUTH__.email}">
+                    <input type="hidden" name="nickname" value="${sessionScope.__AUTH__.nickname}">
                     <div class="title" id="article-title">
                         <input type="text" name="qsubject" placeholder="제목을 입력하세요." class="titlearea_input">
                     </div>

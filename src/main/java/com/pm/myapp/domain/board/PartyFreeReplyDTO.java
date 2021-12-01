@@ -8,9 +8,10 @@ import java.util.Date;
 public class PartyFreeReplyDTO {
 
     private Integer pfrerefer;
-    private String email;
     private String pfrecontent;
+    private Date pfredate;
     private Integer pfrefer;
     private Integer partycode;
+    private String email;
 
 } // end class

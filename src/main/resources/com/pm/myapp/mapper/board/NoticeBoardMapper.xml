@@ -46,7 +46,7 @@
     <insert id="writeNoticeBoard">
 
         INSERT INTO NOTICEBOARD(NREFER, NSUBJECT, NCONTENT, NDATE, NICKNAME, EMAIL, READNUM)
-        VALUES(SEQ_NOTICEBOARD.nextval, #{nSubject}, #{nContent}, sysdate, '관리자', 'test2@test.com', 0)
+        VALUES(SEQ_NOTICEBOARD.nextval, #{nSubject}, #{nContent}, sysdate, '관리자', 'test1@test.com', 0)
 
     </insert>
 

@@ -34,10 +34,14 @@
     </select>
 
     <select id="readQnaBoard" resultType="com.pm.myapp.domain.board.QnaBoardVO">
-        SELECT
-            Q.qrefer, Q.qsubject, Q.qcontent, Q.qdate, U.nickname, Q.readnum
+        SELECT Q.qrefer,
+               Q.qsubject,
+               Q.qcontent,
+               Q.qdate,
+               U.nickname,
+               Q.readnum
         FROM QNABOARD Q
-        JOIN USERINFO U ON Q.email = U.email
+                 JOIN USERINFO U ON Q.email = U.email
         WHERE Q.qrefer = #{qrefer}
 
     </select>
@@ -79,8 +83,7 @@
 
     <update id="editQnaBoard" parameterType="com.pm.myapp.domain.board.QnaBoardDTO">
         UPDATE QNABOARD
-        SET
-            QSUBJECT = #{qsubject},
+        SET QSUBJECT = #{qsubject},
             QCONTENT = #{qcontent}
         WHERE QREFER = #{qrefer}
     </update>
@@ -93,50 +96,50 @@
 
     <select id="searchQnaBoard" resultType="com.pm.myapp.domain.board.QnaBoardSearchVO">
 
-            SELECT Q.QREFER, Q.QSUBJECT, Q.QCONTENT, Q.QDATE, U.EMAIL, U.NICKNAME, Q.READNUM
-            FROM QNABOARD Q
-            JOIN USERINFO U ON Q.EMAIL = U.EMAIL
-            <choose>
-                <when test = "option == '1'">
-                    WHERE U.NICKNAME LIKE CONCAT('%', #{keyword}, '%')
-                    OR Q.QCONTENT LIKE CONCAT('%', #{keyword}, '%')
-                    OR Q.QSUBJECT LIKE CONCAT('%', #{keyword}, '%')
-                </when>
-                <when test = "option == '2">
-                    WHERE U.NICKNAME LIKE CONCAT('%', #{keyword}, '%')
-                </when>
-                <when test = "option == '3'">
-                    WHERE Q.QSUBJECT LIKE CONCAT('%', #{keyword}, '%')
-                </when>
-                <when test = "option == '4'">
-                    WHERE Q.QCONTENT LIKE CONCAT('%', #{keyword}, '%')
-                </when>
-            </choose>
-            OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
-            FETCH NEXT #{cri.amount} ROWS ONLY
+        SELECT Q.QREFER, Q.QSUBJECT, Q.QCONTENT, Q.QDATE, U.EMAIL, U.NICKNAME, Q.READNUM
+        FROM QNABOARD Q
+        JOIN USERINFO U ON Q.EMAIL = U.EMAIL
+        <choose>
+            <when test="option == '1'">
+                WHERE U.NICKNAME LIKE CONCAT('%', #{keyword}, '%')
+                OR Q.QCONTENT LIKE CONCAT('%', #{keyword}, '%')
+                OR Q.QSUBJECT LIKE CONCAT('%', #{keyword}, '%')
+            </when>
+            <when test="option == '2">
+                WHERE U.NICKNAME LIKE CONCAT('%', #{keyword}, '%')
+            </when>
+            <when test="option == '3'">
+                WHERE Q.QSUBJECT LIKE CONCAT('%', #{keyword}, '%')
+            </when>
+            <when test="option == '4'">
+                WHERE Q.QCONTENT LIKE CONCAT('%', #{keyword}, '%')
+            </when>
+        </choose>
+        OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
+        FETCH NEXT #{cri.amount} ROWS ONLY
 
     </select>
 
     <!-- 총 게시물 개수 -->
-    <select id = "getTotalSearchCount" resultType = "Integer">
+    <select id="getTotalSearchCount" resultType="Integer">
 
         SELECT COUNT(Q.QREFER)
         FROM QNABOARD Q
         JOIN USERINFO U ON F.EMAIL = U.EMAIL
         WHERE
         <choose>
-            <when test = "option == '1'">
+            <when test="option == '1'">
                 U.NICKNAME LIKE CONCAT('%', #{keyword}, '%')
                 OR Q.QCONTENT LIKE CONCAT('%', #{keyword}, '%')
                 OR Q.QSUBJECT LIKE CONCAT('%', #{keyword}, '%')
             </when>
-            <when test = "option == '2">
+            <when test="option == '2">
                 U.NICKNAME LIKE CONCAT('%', #{keyword}, '%')
             </when>
-            <when test = "option == '3'">
+            <when test="option == '3'">
                 Q.QSUBJECT LIKE CONCAT('%', #{keyword}, '%')
             </when>
-            <when test = "option == '4'">
+            <when test="option == '4'">
                 Q.QCONTENT LIKE CONCAT('%', #{keyword}, '%')
             </when>
         </choose>
@@ -145,12 +148,12 @@
     <delete id="deleteQnaBoard">
         DELETE
         FROM QNABOARD
-        WHERE QREFER=#{qrefer}
+        WHERE QREFER = #{qrefer}
     </delete>
 
-    <select id="getCommentListPaging" resultType = "com.pm.myapp.domain.board.QnaBoardReplyDTO">
+    <select id="getCommentListPaging" resultType="com.pm.myapp.domain.board.QnaBoardReplyDTO">
         <![CDATA[
-        SELECT QRE.QREREFER, QRE.QRECONTENT, QRE.QREDATE, QRE.QREFER, QRE.EMAIL ,U.NICKNAME
+        SELECT QRE.QREREFER, QRE.QRECONTENT, QRE.QREDATE, QRE.QREFER, QRE.EMAIL, U.NICKNAME
         FROM QNABOARDRE QRE
         JOIN USERINFO U
         ON QRE.EMAIL = U.EMAIL
@@ -163,32 +166,27 @@
 
     <insert id="writeComment">
         INSERT INTO QNABOARDRE(qrerefer, qrecontent, qredate, qrefer, email)
-        VALUES(SEQ_FREEBOARDRE.nextval, #{qrecontent}, sysdate, #{qrefer}, #{email})
+        VALUES (SEQ_FREEBOARDRE.nextval, #{qrecontent}, sysdate, #{qrefer}, #{email})
     </insert>
 
     <select id="getTotalQnaReply" resultType="int">
         <![CDATA[
-            SELECT COUNT(qrerefer)
-            FROM QNABOARDRE
-            WHERE qrefer = #{qrefer}
+        SELECT COUNT(qrerefer)
+        FROM QNABOARDRE
+        WHERE qrefer = #{qrefer}
         ]]>
     </select>
 
     <update id="editComment">
         UPDATE QNABOARDRE
-        SET
-            QRECONTENT = #{qrecontent}
-        WHERE QREFER = #{qrefer} AND QREREFER = #{qrerefer}
+        SET QRECONTENT = #{qrecontent}
+        WHERE QREFER = #{qrefer} and QREREFER = #{qrerefer}
     </update>
-
 
     <delete id="deleteComment">
         DELETE
         FROM QNABOARDRE
-        WHERE QREFER=#{qrefer} AND QREREFER = #{qrerefer}
+        WHERE QREFER = #{qrefer} and QREREFER = #{qrerefer}
     </delete>
-
-
-
 
 </mapper>

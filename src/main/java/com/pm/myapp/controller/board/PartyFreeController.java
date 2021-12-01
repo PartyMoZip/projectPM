@@ -2,6 +2,7 @@ package com.pm.myapp.controller.board;
 
 import com.pm.myapp.domain.Criteria;
 import com.pm.myapp.domain.PageDTO;
+import com.pm.myapp.domain.ReplyCriteria;
 import com.pm.myapp.domain.board.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -43,13 +44,15 @@ public class PartyFreeController {
         } // if
 
 		log.debug("getPFreeBoardList({}) invoked.", model);
-		List<PartyFreeListVO> list = this.service.getListPerPage(searchWord, option, cri);
+
+        // 목록 불러오기
+		List<PartyFreeListVO> list = this.service.getListPerPage(partyCode, searchWord, option, cri);
 
 		log.info("\t + list size : {}", list.size());
 		model.addAttribute("list", list);
 
 		// 페이징 처리
-		Integer totalAmount = this.service.getTotal(searchWord, option);
+		Integer totalAmount = this.service.getTotal(partyCode,searchWord, option);
 		PageDTO pageDTO = new PageDTO(cri, totalAmount);
 		model.addAttribute("pageMaker", pageDTO);
 		
@@ -62,17 +65,38 @@ public class PartyFreeController {
 
 	// 파티 자유 게시판 상세보기
 	@GetMapping("/showPartyFDetail")
-	public String showPartyFDetail(
-			@ModelAttribute("cri") Criteria cri, Integer pfrefer, @ModelAttribute("partyCode") Integer partycode, Model model)
+
+	public void showPartyFDetail(
+            @ModelAttribute("sdto") BoardSearchListDTO sdto,
+			@ModelAttribute("cri") Criteria cri,
+            @ModelAttribute("recri") ReplyCriteria recri,
+            Integer pfrefer, Integer partycode,
+            Model model)
+
 		{
 		log.debug("get({}, {}, {}) invoked.", cri, pfrefer, partycode);
+
+
+        // 게시판 조회수 증가\
+        boolean readOk = this.service.readPFreeBoard(pfrefer, partycode);
+        if(readOk) {
+            log.info("파티 자유 게시판 {}글 읽기 성공", pfrefer);
+        }
+
+        // 파티 자유 게시판 글 상세보기
 		PartyFreeVO partyFDetail = this.service.getBoardDetail(pfrefer, partycode);
 		log.info("\t + partyFree : {}", partyFDetail);
-		List<PartyFreeReplyVO> reply = this.service.getReply(pfrefer,partycode, cri);
 		model.addAttribute("boardDetail", partyFDetail);
 		model.addAttribute("__COMMENT__", reply);
 
-		return "/partyFree/boardDetail";
+
+        // 댓글 총 개수 구하기
+        Integer totalAmount = this.service.getTotalReply(pfrefer);
+
+        // 댓글 페이지네이션 처리
+        PageDTO pageDTO = new PageDTO(recri, totalAmount);
+        model.addAttribute("replyPageMaker", pageDTO);
+
 	} // showPartyFDetail
 
 	// 파티 자유 게시판 글쓰기 완료
@@ -114,80 +138,100 @@ public class PartyFreeController {
 	@PostMapping("/editPFreeBoard")
 	public String editPFreeBoard(PartyFreeDTO partyFree, RedirectAttributes rttrs) {
 		log.debug("editPFreeBoard({}) invoked.", partyFree);
-		boolean result = this.service.editBoard(partyFree);
-		rttrs.addAttribute("resultmod",result);
+		service.editBoard(partyFree);
 
-		return "redirect:/partyFree/boardDetail";
+
+		return "redirect:/partyFree/getPFreeBoardList";
 
 	} // editPFreeBoard
 
 	// 파티 자유 게시판  삭제
 	@PostMapping("/deletePFreeBoard")
-	public String deletePFreeBoard(@RequestParam("pfrefer")Integer pfrefer,@RequestParam("partyCode")Integer partycode, RedirectAttributes rttrs) {
-		log.debug("deletePFreeBoard({}) invoked.", pfrefer);
-		boolean result = this.service.deleteBoard(pfrefer);
-		rttrs.addAttribute("resultDel", result);
+	public String deletePFreeBoard(
+            @RequestParam("pfrefer")Integer pfrefer,
+            @RequestParam("partyCode") Integer partyCode,
+            @ModelAttribute("cri") Criteria cri,
+            RedirectAttributes rttrs) {
 
-		return "redirect:/partyFree/boardList";
+		log.debug("deletePFreeBoard({}) invoked.", pfrefer);
+
+		boolean result = this.service.deleteBoard(pfrefer, partyCode);
+		rttrs.addAttribute("result", result);
+
+		return "redirect:/partyFree/getPFreeBoardList";
 	} // deletePFreeBoard
 
 	// 파티 자유 게시판  검색
 	@GetMapping("/searchPFreeBoard")
 	public String searchPFreeBoard(@ModelAttribute("cri") Criteria cri, @RequestParam("partyCode")Integer partycode, String searchWord, Integer option, Model model) {
+
 		log.debug("searchPFreeBoard() invoked.");
 
-		List<PartyFreeSearchVO> searchList = this.service.search(searchWord, option, cri);
+		List<PartyFreeSearchVO> searchList = this.service.search(partyCode, cri, searchWord, option);
 		model.addAttribute("__list__", searchList);
 
 		// 페이징 처리
-		Integer totalAmount = this.service.getTotalSearch(searchWord, option);
+		Integer totalAmount = this.service.getTotalSearch(partyCode, searchWord, option);
 		PageDTO pageDTO = new PageDTO(cri, totalAmount);
 		model.addAttribute("pageMaker", pageDTO);
 
-		return "/partyFree/searchList";
+        return "redirect:/partyFree/getPFreeBoardList";
 	} // searchPFreeBoard
-	
-	// 파티 자유 게시판  - 댓글 목록
-	@GetMapping("/getComment")
-	public String getComment(Model model, Integer pfrefer, Integer partycode, Criteria cri) {
-		log.debug("getComment() invoked.");
-		List<PartyFreeReplyVO> list = this.service.getReply(pfrefer, partycode, cri);
 
-		log.info("\t + list size : {}", list.size());
-		model.addAttribute("list", list);
-
-		return "redirect:/partyFree/boardDetail";
-	} // commentList
-	
 	// 파티 자유 게시판  - 댓글 작성
 	@PostMapping("/writeComment")
-	public String writeComment(PartyFreeReplyDTO partyReply, RedirectAttributes rttrs) {
-		log.debug("writeComment({}) invoked.", partyReply);
+	public String writeComment(
+            @ModelAttribute("pfrefer") Integer pfrefer,
+            PartyFreeReplyDTO partyReply,
+            @ModelAttribute("cri") Criteria cri,
+            @ModelAttribute("recri") ReplyCriteria recri,
+            RedirectAttributes rttrs) {
+		log.debug("writeComment({}, {}) invoked.",pfrefer, partyReply);
 
 		boolean result = this.service.writeReply(partyReply);
-		rttrs.addAttribute("resultWrtieComment", result);
+        rttrs.addAttribute("pfrefer", pfrefer);
+        rttrs.addAttribute("currPage", cri.getCurrPage());
+        rttrs.addAttribute("reCurrPage",recri.getReCurrPage());
 
 		return "redirect:/partyFree/boardDetail";
 	} // writeComment
 	
 	// 파티 자유 게시판  - 댓글 수정
 	@PostMapping("/editComment")
-	public String editComment(PartyFreeReplyDTO partyReply, RedirectAttributes rttrs) {
-		log.debug("editComment({}) invoked.", partyReply);
+	public String editComment(
+            PartyFreeReplyDTO dto,
+            @ModelAttribute("cri") Criteria cri,
+            @ModelAttribute("recri") ReplyCriteria recri,
+            RedirectAttributes rttrs) {
+		log.debug("editComment({}, {}, {}) invoked.", cri, recri, dto);
 
-		boolean result = this.service.editReply(partyReply);
-		rttrs.addAttribute("resultEdit", result);
+		boolean result = this.service.editReply(dto);
+		rttrs.addAttribute("pfrefer", dto.getPfrefer());
+        rttrs.addAttribute("partyCode", dto.getPartycode());
+        rttrs.addAttribute("currPage", cri.getCurrPage());
+        rttrs.addAttribute("reCurrPage",recri.getReCurrPage());
 
-		return "redirect:/partyFree/boardDetail";
+
+
+        return "redirect:/partyFree/boardDetail";
 	} // editComment
 	
 	// 파티 자유 게시판  - 댓글 삭제
 	@PostMapping("/deleteComment")
-	public String deleteComment(@RequestParam("pfrerefer") Integer pfrerefer, RedirectAttributes rttrs) {
-		log.debug("deleteComment({}) invoked.", pfrerefer);
+	public String deleteComment(
+            PartyFreeReplyDTO dto,
+            @ModelAttribute("cri") Criteria cri,
+            @ModelAttribute("recri") ReplyCriteria recri,
+            RedirectAttributes rttrs) {
+		log.debug("deleteComment({},{},{}) invoked.", dto, cri, recri);
 
-		boolean result = this.service.deleteReply(pfrerefer);
-		rttrs.addAttribute("resultDeleteComm", result);
+		boolean result = this.service.deleteReply(dto);
+        log.info("\t+ result : {}", result);
+
+        rttrs.addAttribute("pfrefer", dto.getPfrefer());
+        rttrs.addAttribute("partyCode", dto.getPartycode());
+        rttrs.addAttribute("currPage", cri.getCurrPage());
+        rttrs.addAttribute("reCurrPage",recri.getReCurrPage());
 
 		return "redirect:/partyFree/boardDetail";
 	} // deleteComment

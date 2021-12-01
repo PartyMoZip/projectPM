@@ -41,7 +41,7 @@ public interface FreeBoardService {
     // 자유 게시판 글 삭제
     public abstract boolean deleteBoard(Integer frefer);
     // 자유 게시판 댓글 삭제
-    public abstract boolean deleteFreeBoardReply(Integer frefer);
+    public abstract boolean deleteFreeBoardReply(FreeBoardReplyDTO freeReply);
 
     // 6. 자유 게시판 검색 //
     // 자유 게시판 검색

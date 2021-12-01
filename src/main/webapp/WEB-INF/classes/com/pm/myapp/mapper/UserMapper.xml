@@ -46,7 +46,7 @@
         <if test='email != null and !email.equals("")'>
             JOIN partyuser pu ON p.partycode = pu.partycode
             JOIN userinfo u ON u.email = pu.email
-            where u.email = #{email}
+            where u.email = #{email} and pu.AUTHCODE != -1
         </if>
         ORDER BY p.partyscore DESC)
 

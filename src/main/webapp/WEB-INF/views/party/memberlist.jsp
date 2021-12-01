@@ -65,28 +65,22 @@
 							<input type="hidden" name="partyCode" value="${partyCode}">
 							<input type="hidden" name="currPage" value="${cri.currPage}">
 							<c:forEach items="${__USER__}" var="user">
-							<tr>
-								<td>
-									<!-- 파티관리 체크박스 개별선택 -->
-									<div class="checkbox-group">
-										<div class="partyCheckboxGroup">
-											<input type="checkbox" class="bigCheck" name="email" value="${user.email}">
-										</div>
-									</div> <!-- 파티관리 체크박스 개별선택 끝 -->
-								</td>
+								<tr>
+									<td>
+										<!-- 파티관리 체크박스 개별선택 -->
+										<div class="checkbox-group">
+											<div class="partyCheckboxGroup">
+												<input type="checkbox" class="bigCheck" name="email"
+													value="${user.email}">
+											</div>
+										</div> <!-- 파티관리 체크박스 개별선택 끝 -->
+									</td>
 
-								<td><img
-									src="${user.userpic}"
-									alt="파티원 이미지"></td>
-								<td>${user.nickname}</td>
-								<td>${user.joindate}</td>
-							</tr>
+									<td><img src="${user.userpic}" alt="파티원 이미지"></td>
+									<td>${user.nickname}</td>
+									<td>${user.joindate}</td>
+								</tr>
 							</c:forEach>
-							<div class="bottom-menu-btn">
-								<div class="d-grid gap-2 d-md-block">
-									<button class="btn btn-primary" type="submit">추방</button>
-								</div>
-							</div>
 						</form>
 
 					</tbody>
@@ -99,6 +93,9 @@
 
 
 			<div class="bottom-menu-page">
+				<div class="bottom-menu-btn">
+					<button class="btn btn-primary" type="submit">추방</button>
+				</div>
 				<div class="changePage">
 					<nav aria-label="Page navigation example">
 						<c:choose>
@@ -147,7 +144,7 @@
 					</button>
 				</form>
 			</div>
-			
+
 		</div>
 	</main>
 

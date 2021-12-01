@@ -152,8 +152,8 @@ public class QnaMapperTests {
     public void testDeleteComment() { // 문의 게시판 댓글 삭제
         log.debug("testDeleteComment() invoked.");
 
-        int affectedLines=this.mapper.deleteComment(13);
-        log.info("\t + affectedLines : {}", affectedLines);
+        //int affectedLines=this.mapper.deleteComment(13);
+       // log.info("\t + affectedLines : {}", affectedLines);
     }
 }
 

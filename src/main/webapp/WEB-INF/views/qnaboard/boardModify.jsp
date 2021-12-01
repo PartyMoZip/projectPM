@@ -68,12 +68,12 @@
                         </div>
 
                         <span><textarea name="qcontent" rows="10"
-                                        cols="137">${__boardDetail__.qcontent}"</textarea>
+                                        cols="137">${__boardDetail__.qcontent}</textarea>
                     </span>
                         <div class="container-btnGroup">
                             <button type="submit" class="btn btn-primary btn-sm">
                                 <i class="fas fa-pen"></i>
-                                <span>등록</span>
+                                <span>수정</span>
                             </button>
                             <button type="button" class="btn btn-primary btn-sm"
                                     onclick="location.href='/qnaboard/getQnaBoardList?currPage=${cri.currPage}'">

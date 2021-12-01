@@ -76,12 +76,12 @@
                         </div>
 
                         <span><textarea name="fContent" rows="10"
-                                        cols="137">${__boardDetail__.FContent}"</textarea>
+                                        cols="137">${__boardDetail__.FContent}</textarea>
                         </span>
                         <div class="container-btnGroup">
                             <button type="submit" class="btn btn-primary btn-sm">
                                 <i class="fas fa-pen"></i>
-                                <span>등록</span>
+                                <span>수정</span>
                             </button>
                             <%--  </c:if>--%>
                             <button type="button" class="btn btn-primary btn-sm"

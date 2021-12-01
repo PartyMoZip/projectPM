@@ -39,13 +39,11 @@
                 <li class="nav-item"><a class="nav-link active"
                                         aria-current="page" href="#">파티 자유게시판</a></li>
             </ul>
-            <input hidden id="boardName" value="lost">
             <div class="table-Detail">
-
                 <!--product details-->
                 <div class="content">
                     <div class="title_area">
-                        <h5 class="title_text">${boardDetail.pfrefer}</h5>
+                        <h5 class="title_text">${boardDetail.pfsubject}</h5>
                     </div>
 
                     <div class="info_desc">
@@ -54,6 +52,7 @@
                                  height="50" class="img_thumb">
                         </div>
                         <div class="cover_info">
+                            <div>${boardDetail.nickname}</div>
                             <span>${boardDetail.pfdate}</span>
                             <span>조회 ${boardDetail.readnum}</span>
                         </div>
@@ -128,8 +127,7 @@
                         <input type="hidden" name="currPage" value="${cri.currPage}">
                         <input type="hidden" name="reCurrPage" value="${recri.reCurrPage}">
                         <input type="hidden" name="pfrefer" value="${boardDetail.pfrefer}">
-                        <h6>${boardDetail.nickname}</h6>
-                        <input type="hidden" name="email" value="${boardDetail.email}">
+                        <input type="hidden" name="email" value="${sessionScope.__AUTH__.email}">
                         <div class="commentWrite_Wrap">
                         <textarea name="pfrecontent" id="commentContent" placeholder=" 댓글을 남겨보세요"
                                   class="comment_inbox" rows="4"

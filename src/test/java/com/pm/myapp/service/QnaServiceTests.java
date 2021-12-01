@@ -145,8 +145,8 @@ public class QnaServiceTests {
     public void testDeleteReply() {
         log.debug("testDeleteReply() invoked.");
         int qrerefer = 1;
-        boolean isSuccess = this.service.deleteReply(qrerefer);
-        log.info("\t + isSuccess : {}", isSuccess);
+      //  boolean isSuccess = this.service.deleteReply(qrerefer);
+       // log.info("\t + isSuccess : {}", isSuccess);
     }
 
     @Test

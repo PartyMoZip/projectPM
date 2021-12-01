@@ -159,21 +159,9 @@ public class FreeBoardController {
 		PageDTO pageDTO = new PageDTO(cri, totalAmount);
 		model.addAttribute("pageMaker", pageDTO);
 
-		return "/freeboard/searchList";
+        return "redirect:/freeboard/getFreeBoardList";
 	} // searchFreeBoard
 
-	/*// 자유 게시판  - 댓글 목록
-	@GetMapping("/getComment")
-	public String getComment(Model model, Integer frefer, ReplyCriteria recri) {
-		log.debug("getComment() invoked.");
-		List<FreeBoardReplyVO> list = this.service.getReply(frefer, recri);
-
-		log.info("\t + list size : {}", list.size());
-		model.addAttribute("list", list);
-
-        return "redirect:/freeboard/showFreeDetail";
-	} // commentList
-	*/
 	// 자유 게시판  - 댓글 작성
 	@PostMapping("/writeComment")
 	public String writeComment(
@@ -202,7 +190,8 @@ public class FreeBoardController {
 		log.debug("editComment({}) invoked.", freeReply);
 
 		boolean result = this.service.editReply(freeReply);
-		rttrs.addAttribute("result", result);
+		log.info("\t + result : {}", result);
+
         rttrs.addAttribute("frefer", freeReply.getFrefer());
         rttrs.addAttribute("currPage", cri.getCurrPage());
         rttrs.addAttribute("reCurrPage",recri.getReCurrPage());
@@ -214,14 +203,16 @@ public class FreeBoardController {
 	// 자유 게시판  - 댓글 삭제
 	@PostMapping("/deleteComment")
 	public String deleteComment(
-            @RequestParam("frerefer") Integer frerefer,
+            FreeBoardReplyDTO freeReply,
             @ModelAttribute("cri") Criteria cri,
             @ModelAttribute("recri") ReplyCriteria recri,
             RedirectAttributes rttrs) {
-		log.debug("deleteComment({}) invoked.", frerefer);
+		log.debug("deleteComment({}, {}, {}) invoked.", freeReply, cri, recri);
 
-		boolean result = this.service.deleteFreeBoardReply(frerefer);
-		rttrs.addAttribute("result", result);
+		boolean result = this.service.deleteFreeBoardReply(freeReply);
+        log.info("\t +result : {}", result);
+
+        rttrs.addAttribute("pfrefer", freeReply.getFrefer());
         rttrs.addAttribute("currPage", cri.getCurrPage());
         rttrs.addAttribute("reCurrPage",recri.getReCurrPage());
 
