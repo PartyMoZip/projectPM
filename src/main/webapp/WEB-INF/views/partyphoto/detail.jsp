@@ -478,6 +478,7 @@
 
 </body>
 <script src="${pageContext.request.contextPath}/resources/js/photoedit.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/search.js"></script>
 <script>
     $(document).ready(function () {
         $(document).on("click", function (e) {

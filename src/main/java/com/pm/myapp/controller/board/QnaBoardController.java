@@ -80,7 +80,7 @@ public class QnaBoardController {
 
         // 댓글 목록 불러오기
         List<QnaBoardReplyDTO> reply = this.service.getReply(qrefer, recri);
-        model.addAttribute("reply", reply);
+        model.addAttribute("__COMMENT__", reply);
 
         // 댓글 총 개수 구하기
         Integer totalAmount = this.service.getTotalQnaReplyList(qrefer);
@@ -212,7 +212,7 @@ public class QnaBoardController {
 
 		boolean result = this.service.deleteReply(qnaReply);
 		log.info("\t + result : {}", result);
-
+		
         rttrs.addAttribute("qrefer", qnaReply.getQrefer());
         rttrs.addAttribute("currPage", cri.getCurrPage());
         rttrs.addAttribute("reCurrPage", recri.getReCurrPage());

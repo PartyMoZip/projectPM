@@ -87,10 +87,8 @@ public class PartyFreeController {
 		PartyFreeVO partyFDetail = this.service.getBoardDetail(pfrefer, partycode);
 		log.info("\t + partyFree : {}", partyFDetail);
 		model.addAttribute("boardDetail", partyFDetail);
+		model.addAttribute("__COMMENT__", reply);
 
-        // 댓글 목록 불러오기
-		List<PartyFreeReplyVO> reply = this.service.getReply(pfrefer,partycode, recri);
-		model.addAttribute("reply", reply);
 
         // 댓글 총 개수 구하기
         Integer totalAmount = this.service.getTotalReply(pfrefer);
