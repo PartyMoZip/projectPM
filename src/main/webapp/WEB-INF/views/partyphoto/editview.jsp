@@ -101,7 +101,7 @@
 					</button>
 					<button type="button" class="btn btn-primary btn-sm"
 						onclick="location.href='/partyphoto/list?partyCode=${ldto.partyCode}&currPage=${cri.currPage}&searchWord=${ldto.searchWord}&option=${ldto.option}';">
-						<i class="fas fa-list-ul"></i> <span>취소</span>
+						<i class="fas fa-list-ul"></i> <span>목록</span>
 					</button>
 				</div>
 			</div>
