@@ -47,61 +47,70 @@ public class PartyController {
         return "/party/newParty";
     } // makeNewParty
 
+    // 파티 중복확인
+    @PostMapping("/checkparty")
+    @ResponseBody
+    public Map<String, Boolean> checkParty(
+            @RequestBody String json
+    ) {
+        log.debug("checkparty() invoked.");
+
+        JsonElement element = JsonParser.parseString(json);
+
+        String partyName = element.getAsJsonObject().get("partyName").getAsString();
+        Boolean result = this.service.checkPartyname(partyName);
+
+        Map<String, Boolean> data = new HashMap<>();
+        data.put("result", result);
+
+        return data;
+    }
+
     // 파티 만들기
     @PostMapping("/createparty")
-    public boolean createNewParty(
+    public String createNewParty(
             HttpServletRequest req,
-            MultipartFile image,
-            PartyDTO pdto
+            @RequestParam("imageFile") MultipartFile image,
+            PartyDTO pdto,
+            RedirectAttributes rttrs
     ) throws IOException {
         log.debug("createNewParty({}) invoked.", pdto);
-        String partyName = pdto.getPartyName();
-        boolean checking = this.service.checkPartyname(partyName);
-        log.info("\t+ checking : {}", checking);
+        log.debug("image:{}", image);
 
-        boolean result = false;
+        String link = "/";
 
-        if (checking) {
+        HttpSession session = req.getSession();
+        UserDTO user = (UserDTO) session.getAttribute(LoginController.authKey);
+        String email = user.getEmail();
 
-            HttpSession session = req.getSession();
-            UserDTO user = (UserDTO) session.getAttribute(LoginController.authKey);
-            String email = user.getEmail();
+        // 파티코드
+        Integer partyCode = this.service.getMaxPartyCode();
 
-            // 파티별, 날짜별 폴더를 생성 후 그림 파일 업로드
-            // 날짜 GET
-            Calendar cal = Calendar.getInstance();
-            String year = cal.get(cal.YEAR) + "";
-            String month = (cal.get(cal.MONTH) + 1) + "";
-            String date = cal.get(cal.DATE) + "";
+        // 이미지
+        String imagePath = "image/logo/" + partyCode + "/";
+        log.debug("\t+ imagePath : {}", imagePath);
 
-            Integer partyCode = this.service.getMaxPartyCode() + 1;
+        // 랜덤값 형성 및 aws에 파일 업로드
+        UUID uuid = UUID.randomUUID(); // 랜덤값
 
-            String imagePath = "image/logo/" + partyCode + "/";
-            log.debug("\t+ imagePath : {}", imagePath);
+        String imageUrl = awsUpload.fileUpload(image, imagePath, uuid);
+        pdto.setFileLocation(imageUrl);
 
-            String imageUrl = "";
+        log.info("pdto: {}", pdto);
 
-            String originalName = image.getOriginalFilename(); // 파일의 원래 이름
+        // 파티 생성 서비스 실행
+        boolean result = this.service.createNewParty(pdto, email);
+        log.info("\t+ result : {}", result);
 
-            if (originalName != "" && originalName != null) {
+        if (result) {
+            rttrs.addAttribute("partyCode", partyCode);
+            return "redirect:/party/showmain";
+        }
 
-                // 랜덤값 형성 및 aws에 파일 업로드
-                UUID uuid = UUID.randomUUID(); // 랜덤값
-                imageUrl = awsUpload.fileUpload(image, imagePath, uuid);
-                log.info("\t+ imageUrl : {}", imageUrl);
+        log.info("link:{}", link);
 
-                pdto.setFileLocation(imageUrl);
-
-                result = this.service.createNewParty(pdto, email);
-                log.info("\t+ result : {}", result);
-
-            } // if
-
-        } // if
-
-        return result;
-
-    } //
+        return link;
+    } // createNewParty
 
 
     // 파티 상세 보기 [작동]
