@@ -62,10 +62,14 @@
   font-weight: bold;
 }
 
-.label-partyLoc,
-.label-partyMemNum {
+.label-partyLoc {
   font-weight: bold;
   margin-bottom: 10px;
+}
+
+.label-partyCategory {
+  font-weight: bold;
+  margin-top: 20px;
 }
 
 .input-partyName {
@@ -87,7 +91,7 @@
 }
 
 .container-categoryBtn.flex-wrap {
-  margin-top: 40px;
+  margin-top: 20px;
 }
 
 .btn-outline-secondary {
