@@ -42,8 +42,9 @@
         <div class="header">
             <h4>파티생성</h4>
         </div>
-        <form class="form-data" enctype="multipart/form-data">
-            <div class="container mt-5 px-5 ">
+
+        <div class="container mt-5 px-5 ">
+            <form class="form-data form-party" action="/party/createparty" enctype="multipart/form-data" method="post">
                 <div class="container-lg d-flex justify-content-center">
                     <div class="d-flex flex-column justify-content-center align-items-center">
                         <div class="img-profile justify-content-center align-items-center">
@@ -55,7 +56,7 @@
                                 이미지 업로드
                             </button>
                             <input type="file" class="form-control input-file visually-hidden"
-                                   name="fileLocation">
+                                   name="imageFile" required>
                         </div>
                     </div>
                 </div>
@@ -65,27 +66,28 @@
                             class="d-flex flex-column justify-content-center align-items-center">
                         <div
                                 class="d-flex flex-column justify-content-center align-items-left w-100 col-3 mt-3">
-                            <span class="align-self-baseline label-partyLoc">활동지역</span> <select
-                                class="form-select form-select-sm"
-                                aria-label=".form-select-sm example">
-                            <option selected>지역</option>
-                            <option value="1">강남</option>
-                            <option value="2">강동</option>
-                            <option value="3">강북</option>
-                            <option value="4">강서</option>
-                        </select>
+                            <span class="align-self-baseline label-partyLoc">지역</span>
+                            <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                <option selected>지역</option>
+                                <option value="1">강동</option>
+                                <option value="2">강서</option>
+                                <option value="3">강남</option>
+                                <option value="4">강북</option>
+                            </select>
                         </div>
 
-                        <div
-                                class="d-flex flex-column justify-content-center align-items-left w-100 col-3 mt-3">
-                            <span class="align-self-baseline label-partyName">파티이름</span>
-                            <input
-                                    type="text" class="form-control input-newParty mt-2"
-                                    name="newParty">
+                        <div class="d-flex flex-column justify-content-center align-items-left w-100 col-3 mt-3">
+                            <span class="align-self-baseline label-partyName">파티 이름</span>
+                            <input type="text" class="form-control input-partyName mt-2" name="partyName" required>
                         </div>
 
-                        <span class="align-self-baseline label-partyCategory">취미
-						카테고리</span>
+                        <div class="d-flex flex-column justify-content-center align-items-left w-100 col-3 mt-3">
+                            <span class="align-self-baseline label-partyName">파티 소개글</span>
+                            <textarea type="textarea" class="form-control input-profile mt-2" rows="4"
+                                      name="partyProfile" required></textarea>
+                        </div>
+
+                        <span class="align-self-baseline label-partyCategory">취미</span>
                         <div class="container-categoryBtn flex-wrap">
 
                             <input type="radio" class="btn-check" name="options-outlined"
@@ -125,16 +127,17 @@
                                 class="btn btn-outline-secondary" for="btn-check-cooking">요리</label><br>
 
                         </div>
-
+                        <input class="party-info" type="hidden" name="localCode">
+                        <input class="party-info" type="hidden" name="hobbyCode">
                     </div>
 
                 </div>
+            </form>
+        </div>
+        <div class="mt-5">
+            <button type="submit" class="btn btn-primary mt-4 create-btn">생성하기</button>
+        </div>
 
-            </div>
-            <div>
-                <button type="submit" class="btn btn-primary mt-4 save-btn">저장하기</button>
-            </div>
-        </form>
     </div>
 </main>
 
