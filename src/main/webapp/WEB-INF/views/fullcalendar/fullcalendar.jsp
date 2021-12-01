@@ -203,6 +203,7 @@ contentType="text/html;charset=UTF-8" language="java"%>
     <!-- 스윗알러트 -->
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="${pageContext.request.contextPath}/resources/js/partyMain.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/search.js"></script>
 
     <%-- fullcalendar --%>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js"></script>
