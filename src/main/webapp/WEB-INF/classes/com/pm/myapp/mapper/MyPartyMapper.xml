@@ -17,7 +17,9 @@
 		FROM PARTY P
 		JOIN PARTYUSER U
 		ON P.PARTYCODE = U.PARTYCODE
-		WHERE U.EMAIL = #{email}
+		<![CDATA[ 
+			WHERE U.EMAIL = #{email} AND P.PARTYBANNED > 0
+		]]>
 		OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
 		FETCH NEXT #{cri.amount} ROWS ONLY
 
@@ -26,11 +28,11 @@
 	<select id="getTMPL" resultType="int">
 	
 		<![CDATA[ 
-		SELECT COUNT(P.PARTYCODE) 
-		FROM PARTY P
-		JOIN PARTYUSER U
-		ON P.PARTYCODE = U.PARTYCODE
-		WHERE U.EMAIL = #{email}
+			SELECT COUNT(P.PARTYCODE) 
+			FROM PARTY P
+			JOIN PARTYUSER U
+			ON P.PARTYCODE = U.PARTYCODE
+			WHERE U.EMAIL = #{email} AND P.PARTYBANNED > 0
     	]]>
 			
 	</select>
@@ -51,6 +53,7 @@
 		<foreach collection="hobbyCode" item="hobby" index="index" separator="," open="(" close=")">
 			#{hobby}
 		</foreach>
+		 AND P.PARTYBANNED > 0
 		<![CDATA[ 
 		ORDER BY P.PARTYCODE DESC
 		OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
@@ -67,7 +70,8 @@
 		WHERE P.HOBBYCODE IN
 		<foreach collection="hobbyCode" item="hobby" index="index" separator="," open="(" close=")">
 			#{hobby}
-		</foreach>		
+		</foreach>
+		 AND P.PARTYBANNED > 0		
 	
 	</select>
 

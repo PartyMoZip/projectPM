@@ -6,10 +6,14 @@ const inputFile = document.querySelector(".input-file");
 const profileImg = document.querySelector(".img-profile img");
 const selectBtn = document.querySelector(".select-btn");
 const saveBtn = document.querySelector(".save-btn");
+
 const inputWithdrawal = document.querySelector('.input-withdrawal')
 const withdrawalBtn = document.querySelector('.withdrawal-btn');
 const spinner = document.querySelector(".spinner");
 const formData = new FormData();
+
+const formParty = document.querySelector('.form-party');
+const createBtn = document.querySelector(".create-btn");
 
 document.addEventListener("DOMContentLoaded", () => {
     // 파티 탈퇴 이벤트
@@ -169,13 +173,99 @@ document.addEventListener("DOMContentLoaded", () => {
 
     } // handleWithdrawalSubmit
 
+    // 파티생성
+    const handleCreateParty = (e) => {
+        e.preventDefault();
+        console.log("파티생성");
+
+        let localSelect = document.querySelector('.form-select');
+        let inputPartyName = document.querySelector('.input-partyName').value;
+        let inputProfile = document.querySelector('.input-profile').value;
+        let hobbyArr = document.querySelectorAll('input[type="radio"]');
+        let radio = document.querySelector('input[type="radio"]:checked').getAttribute("id");
+        let hobbyCode;
+        let localCode = localSelect.options[localSelect.selectedIndex].value;
+        let inputArr = document.querySelectorAll('.party-info');
+
+        hobbyArr.forEach((ele, idx) => {
+            if (ele.getAttribute("id") === radio) {
+                hobbyCode = idx + 1;
+            }
+        });
+
+        if (inputFile.value === "" || inputPartyName === "" || inputProfile === "") {
+            Swal.fire("에러", "정보를 전부 기입해주세요.", "warning");
+            return;
+        }
+
+        if (localCode === "지역") {
+            Swal.fire("에러", "지역을 선택해주세요.", "warning");
+            return;
+        }
+
+        console.log(inputFile.value);
+        console.log(`${typeof inputPartyName, inputPartyName}`); // 파티이름
+        console.log(`${typeof inputProfile, inputProfile}`); // 프로필
+        console.log(`${typeof hobbyCode, hobbyCode}`); // 취미번호
+        console.log(`${typeof localCode, localCode}`); // 지역번호
+
+        if (!checkSpell(inputPartyName)) {
+            Swal.fire("에러", "특수문자나 단순 자모음은 검색할 수 없습니다.", "warning");
+            return;
+        }
+
+        fetch(`/party/checkparty`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                partyName: inputPartyName
+            }),
+        })
+            .then((res) => {
+                spinner.classList.remove("hide");
+
+                res.json().then((data) => {
+                    spinner.classList.add("hide");
+                    console.log(data);
+
+                    if (data.result) {
+
+                        inputArr[0].setAttribute("value", localCode);
+                        inputArr[1].setAttribute("value", hobbyCode);
+                        formParty.submit();
+                    } else {
+                        Swal.fire('실패', '중복된 파티명입니다.', 'warning');
+                    } // if
+                })
+                    .catch((err) => {
+                        console.log(err);
+                    });
+            })
+
+    }
+
+    // 정규표현식
+    const checkSpell = (word) => {
+        const regExp = /[!?@#$%^&*():;+-=~{}<>\_\[\]\|\\\"\'\,\.\/\`\₩]/g;
+        const regExp2 = /[ㄱ-ㅎㅏ-ㅣ]/g;
+        let result = true;
+
+        if (regExp.test(word) || regExp2.test(word)) {
+            result = false;
+        }
+
+        return result;
+    }
+
     // enterBtn.addEventListener("click")
     for (const leaveBtn of leaveBtns) {
         leaveBtn.addEventListener("click", handleLeaveParty)
     }
-    saveBtn.addEventListener("click", handleProfileSubmit);
+    createBtn.addEventListener("click", handleCreateParty);
     selectBtn.addEventListener("click", handleUploadClick);
+    saveBtn.addEventListener("click", handleProfileSubmit);
     withdrawalBtn.addEventListener("click", handleWithdrawalSubmit);
-
 })
 

@@ -144,52 +144,49 @@
             </div>
         </div>
 
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
                     <!-- 모달 헤더 -->
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalCenteredScrollableTitle">
-                            지금 바로 가입해보세요!
-                        </h5>
                         <button type="button" class="btn-close" id="closeBtnIcon"
                                 data-bs-dismiss="modal"></button>
                     </div>
                     <!-- 모달 중단부 -->
-                    <div class="modal-body">
-                        <div>
-                            <img class="modal-img" alt="파티메인이미지">
-                        </div>
-                        <div class="partyContents">
+                    <div class="modal-body d-flex">
+                        <div class="partyContents d-flex flex-column justify-content-center">
                             <div class="partyName">
                                 <div class="modal-partyName"></div>
                             </div>
-                            <div class="partyInfo">
-                                <span class="modal-count"></span>
-                                <span class="modal-localName">
-                                </span>
-                                <span class="modal-hobbyName">
-                                </span>
-                                <div class="modal-partyScore">
-                                </div>
+                            <div class="modal-hobbyName">
                             </div>
                             <p class="modal-profile">
                             </p>
+                            <div class="partyInfo">
+                                <span class="modal-count badge bg-success"></span>
+                                <span class="modal-localName badge bg-success">
+                                </span>
+                                <span class="modal-partyScore badge bg-success">
+                            </span>
+                            </div>
+                            <div class="btn-container mt-5" role="group" aria-label="Basic mixed styles example">
+                                <input type="hidden" class="user-email" value="${sessionScope.__AUTH__.email}">
+                                <button type="button" class="modal-btn btn btn-success party-req-btn"
+                                        data-bs-toggle="button">
+                                    파티신청
+                                </button>
+                                <button type="button" class="modal-btn btn btn-outline-danger" data-bs-dismiss="modal">
+                                    닫기
+                                </button>
+                            </div>
+                        </div>
+                        <div>
+                            <img class="modal-img" alt="파티메인이미지" width="500" height="100%">
                         </div>
                     </div>
-                    <!-- 모달 하단부 -->
-                    <div class="modal-footer">
-                        <input type="hidden" class="user-email" value="${sessionScope.__AUTH__.email}">
-                        <button type="submit" class="btn btn-secondary party-req-btn"
-                                data-bs-toggle="button">
-                            파티신청
-                        </button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                            닫기
-                        </button>
-                    </div>
+
                 </div>
+
             </div>
         </div>
 
@@ -247,6 +244,5 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- 스윗알러트 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.10/dist/sweetalert2.all.min.js"></script>
-<%--<script src="${pageContext.request.contextPath}/resources/js/partyModal.js"></script>--%>
 </body>
 </html>

@@ -69,18 +69,15 @@ const handleShowInfo = (e) => {
     fetch(`/party/detail?partyCode=${partyCode}`, {
         method: "GET",
     }).then((res) => {
-        spinner.classList.remove("hide");
-
         res.json().then((data) => {
-            spinner.classList.add("hide");
 
             console.log(data);
             img.setAttribute("src", data.coverPic);
-            count.innerHTML = data.count;
+            count.innerHTML = `#${data.count}명`;
             partyName.innerHTML = data.partyName;
-            localName.innerHTML = data.localName;
+            localName.innerHTML = `#${data.localName}`;
             hobbyName.innerHTML = data.hobbyName;
-            partyScore.innerHTML = data.partyScore;
+            partyScore.innerHTML = `#${data.partyScore}점`;
             profile.innerHTML = data.partyProfile;
         })
             .catch((err) => console.log(err));

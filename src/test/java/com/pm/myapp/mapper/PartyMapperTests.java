@@ -1,9 +1,9 @@
 package com.pm.myapp.mapper;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import com.pm.myapp.domain.*;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.extern.log4j.Log4j2;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,15 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.pm.myapp.domain.Criteria;
-import com.pm.myapp.domain.PartyDTO;
-import com.pm.myapp.domain.PartyMemberCheckVO;
-import com.pm.myapp.domain.PartyUserVO;
-import com.pm.myapp.domain.PartyVO;
-
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.extern.log4j.Log4j2;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /*
 	PartyMapper 테스트 모두 통과
@@ -35,6 +29,7 @@ import lombok.extern.log4j.Log4j2;
 @RunWith(SpringRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
 public class PartyMapperTests {
+
 
 	@Setter(onMethod_= {@Autowired})
 	private PartyMapper mapper;
@@ -179,4 +174,5 @@ public class PartyMapperTests {
 		log.debug("tearDown() invoked.");
 	} // tearDown
 	
+
 } // end class

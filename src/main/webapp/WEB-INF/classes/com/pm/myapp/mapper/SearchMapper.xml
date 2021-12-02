@@ -11,6 +11,7 @@
         SELECT
             /*+ index_desc(party) */ *
         FROM party
+        WHERE PARTYBANNED > -1
         OFFSET (#{currPage} - 1) * #{amount} ROWS FETCH NEXT #{amount} ROWS ONLY
         ]]>
 
@@ -47,7 +48,7 @@
                  OR l.localname LIKE '%' || #{word} || '%'
               ORDER BY partycode DESC)
         <![CDATA[
-        WHERE ROWNUM < 6
+        WHERE ROWNUM < 6 AND PARTYBANNED > -1
         ]]>
     </select>
 
@@ -72,10 +73,10 @@
         <where>
             <choose>
                 <when test="searchWord.word != null">
-                    partyname LIKE '%'||#{searchWord.word}||'%'
+                    p.partybanned > -1 AND p.partyname LIKE '%'||#{searchWord.word}||'%'
                 </when>
                 <otherwise>
-                    partyname like '%'
+                    p.partybanned > -1 AND p.partyname like '%'
                 </otherwise>
             </choose>
             <if test='searchWord.hobby != null and !searchWord.hobby.equals("")'>
@@ -114,10 +115,10 @@
         <where>
             <choose>
                 <when test='searchWord.word != null and !searchWord.word.equals("")'>
-                    partyname like '%'||#{searchWord.word}||'%'
+                    partyname like '%'||#{searchWord.word}||'%' AND p.partybanned > -1
                 </when>
                 <otherwise>
-                    partyname like '%'
+                    partyname like '%' AND p.partybanned > -1
                 </otherwise>
             </choose>
 
@@ -140,7 +141,7 @@
         <![CDATA[
         SELECT COUNT(partycode)
         FROM party
-        WHERE partycode > 0
+        WHERE partycode > 0 AND partybanned > -1
         ]]>
 
     </select>
@@ -155,9 +156,12 @@
                       ON p.hobbycode = h.hobbycode
                  JOIN localinfo l
                       ON p.localcode = l.localcode
-        WHERE partyname LIKE '%' || #{word} || '%'
+        <![CDATA[
+        WHERE p.partybanned > -1 AND (
+        	partyname LIKE '%' || #{word} || '%'
            OR h.hobbyname LIKE '%' || #{hobby} || '%'
-           OR l.localname LIKE '%' || #{local} || '%'
+           OR l.localname LIKE '%' || #{local} || '%' )
+           ]]>
 
     </select>
 
@@ -170,10 +174,10 @@
         <where>
             <choose>
                 <when test='word != null and !word.equals("")'>
-                    partyname like #{word}
+                    partyname like #{word} AND p.partybanned > -1
                 </when>
                 <otherwise>
-                    partyname like '%'
+                    partyname like '%' AND p.partybanned > -1
                 </otherwise>
             </choose>
 

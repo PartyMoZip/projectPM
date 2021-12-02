@@ -14,7 +14,7 @@ const paginationForm = document.querySelector("#paginationForm");
 const checkSpell = (word) => {
     const regExp = /[!?@#$%^&*():;+-=~{}<>\_\[\]\|\\\"\'\,\.\/\`\₩]/g;
     const regExp2 = /[ㄱ-ㅎㅏ-ㅣ]/g;
-    let result = "true";
+    let result = true;
 
     if (regExp.test(word) || regExp2.test(word)) {
         result = false;
@@ -34,7 +34,7 @@ const handleHeaderSubmit = (e) => {
 
     if (!checkSpell(headerSearch.value)) {
         Swal.fire(
-            "입력 오류",
+            "에러",
             "특수문자나 단순 자모음은 검색할 수 없습니다.",
             "warning"
         )
