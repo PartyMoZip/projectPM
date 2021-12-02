@@ -87,7 +87,7 @@
     <update id="readIt">
         UPDATE PARTYFREEBOARD
         SET READNUM = READNUM + 1
-        WHERE PARTYCODE = #{partyCode} AND PFREFER = #{pfrefer}
+        WHERE PARTYCODE = #{partycode} AND PFREFER = #{pfrefer}
     </update>
 
     <select id="searchPartyFree" resultType="com.pm.myapp.domain.board.PartyFreeSearchVO">

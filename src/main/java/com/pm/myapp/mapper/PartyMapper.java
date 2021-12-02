@@ -24,9 +24,9 @@ public interface PartyMapper {
 
     public abstract Integer upgradeJoin(String email, Integer partyCode);
 
-    public abstract List<PartyUserVO> getMember(@Param("partyCode") Integer partyCode, @Param("cri") Criteria cri);
+    public abstract List<PartyUserVO> getMember(@Param("partyCode") Integer partyCode, @Param("cri") Criteria cri, @Param("searchWord") String searchWord);
 
-    public abstract Integer getPartyMN(Integer partyCode);
+    public abstract Integer getPartyMN(@Param("partyCode") Integer partyCode, @Param("searchWord") String searchWord);
 
     public abstract List<UserDTO> getMakingList(@Param("partyCode") Integer partyCode, @Param("cri") Criteria cri);
 
@@ -39,5 +39,7 @@ public interface PartyMapper {
     public abstract Integer maxPartyCode();
 
     public abstract Integer checkName(String partyName);
+    
+    public abstract Integer checkAuthCode(@Param("email") String email, @Param("partyCode") Integer partyCode);
 
 } // end interface

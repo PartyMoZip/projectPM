@@ -32,7 +32,7 @@ public class PartyFreeController {
 	@GetMapping("/getPFreeBoardList")
 	public String getPFreeBoardList(
             @ModelAttribute("sdto") BoardSearchListDTO sdto,
-			@ModelAttribute("cri")Criteria cri,
+			@ModelAttribute("cri") Criteria cri,
 			Model model) {
 		Integer partyCode = sdto.getPartyCode();
         String searchWord = sdto.getSearchWord();
@@ -73,19 +73,19 @@ public class PartyFreeController {
             Model model)
 
 		{
-		log.debug("get({}, {}, {}) invoked.", cri, pfrefer, partycode);
+		log.debug("get({}, {}, {}, {}) invoked.", cri, pfrefer, partycode, sdto);
 
 
         // 게시판 조회수 증가\
-        boolean readOk = this.service.readPFreeBoard(pfrefer, partycode);
+        boolean readOk = this.service.readPFreeBoard(pfrefer, sdto.getPartyCode());
         if(readOk) {
             log.info("파티 자유 게시판 {}글 읽기 성공", pfrefer);
         }
 
         // 파티 자유 게시판 글 상세보기
-		PartyFreeVO partyFDetail = this.service.getBoardDetail(pfrefer, partycode);
+		PartyFreeVO partyFDetail = this.service.getBoardDetail(pfrefer, sdto.getPartyCode());
 		log.info("\t + partyFree : {}", partyFDetail);
-		List<PartyFreeReplyVO> reply = this.service.getReply(pfrefer, partycode, recri);
+		List<PartyFreeReplyVO> reply = this.service.getReply(pfrefer, sdto.getPartyCode(), recri);
 		model.addAttribute("boardDetail", partyFDetail);
 		model.addAttribute("__COMMENT__", reply);
 
@@ -102,11 +102,11 @@ public class PartyFreeController {
 	// 파티 자유 게시판 글쓰기 완료
 	@PostMapping("/writePFreeBoardOk")
 	public String writePFreeBoard(PartyFreeDTO partyFB, @ModelAttribute("cri") Criteria cri,RedirectAttributes rttrs) {
-
 		log.debug("writePFreeBoard({}) invoked.", partyFB);
         // 글 내용 업로드
         boolean result = this.service.writeFBoard(partyFB);
-		rttrs.addAttribute("result", result);
+        log.info("\t+ result : {}", result);
+        
 		rttrs.addAttribute("partycode",partyFB.getPartycode());
 		rttrs.addAttribute("currPage",cri.getCurrPage());
 		

@@ -66,15 +66,10 @@ uri="http://java.sun.com/jsp/jstl/fmt" %>
             <div class="table-Detail">
               <input
                 type="hidden"
-                name="nickname"
-                value="${sessionScope.__AUTH__.nickname}"
-              />
-              <input
-                type="hidden"
                 name="email"
                 value="${sessionScope.__AUTH__.email}"
               />
-              <input type="hidden" name="partycode" value="${sdto.partyCode}" />
+              <input type="hidden" name="partycode" value="${partyCode}" />
               <div class="title" id="article-title">
                 <input
                   type="text"
