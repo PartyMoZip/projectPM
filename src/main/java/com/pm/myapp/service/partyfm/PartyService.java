@@ -30,9 +30,9 @@ public interface PartyService {
 
     public abstract boolean rejectJoin(String email, Integer partyCode);
 
-    public abstract List<PartyUserVO> showMember(@Param("partyCode") Integer partyCode, Criteria cri);
+    public abstract List<PartyUserVO> showMember(@Param("partyCode") Integer partyCode, Criteria cri, String searchWord);
 
-    public abstract Integer getTotalMember(Integer partyCode);
+    public abstract Integer getTotalMember(Integer partyCode, String searchWord);
 
     public abstract boolean kickMember(String email, Integer partyCode);
 
@@ -42,4 +42,6 @@ public interface PartyService {
 
     public abstract Integer getMaxPartyCode();
 
+    public abstract boolean checkLeader(String email, Integer partyCode);
+    
 } //end interface

@@ -14,4 +14,5 @@ public class PartyFreeDTO {
     private String pfsubject;
     private String email;
     private Integer readnum;
+    
 }

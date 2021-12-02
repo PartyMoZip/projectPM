@@ -151,10 +151,10 @@ public class PartyServiceImpl implements PartyService,InitializingBean, Disposab
 	} // rejectJoin
 
 	@Override
-	public List<PartyUserVO> showMember(Integer partyCode, Criteria cri) {
-		log.debug("showMember({},{}) invoked.", partyCode,cri);
+	public List<PartyUserVO> showMember(Integer partyCode, Criteria cri, String searchWord) {
+		log.debug("showMember({},{},{}) invoked.", partyCode,cri,searchWord);
 		
-		List<PartyUserVO> user = this.mapper.getMember(partyCode,cri);
+		List<PartyUserVO> user = this.mapper.getMember(partyCode,cri,searchWord);
 		
 		log.info("\t + user : {}",user);
 		
@@ -163,10 +163,10 @@ public class PartyServiceImpl implements PartyService,InitializingBean, Disposab
 	} // showMember
 
 	@Override
-	public Integer getTotalMember(Integer partyCode) {
-		log.debug("getTotalMember({}) invoked.", partyCode);
+	public Integer getTotalMember(Integer partyCode, String searchWord) {
+		log.debug("getTotalMember({},{}) invoked.", partyCode,searchWord);
 		
-		int resultNum = this.mapper.getPartyMN(partyCode);
+		int resultNum = this.mapper.getPartyMN(partyCode, searchWord);
 		log.info("\t+ resultNum : {}",resultNum);
 		
 		return resultNum;
@@ -242,6 +242,16 @@ public class PartyServiceImpl implements PartyService,InitializingBean, Disposab
 		
 		return maxPartyCode;
 	} // getMaxPartyCode
+
+	@Override
+	public boolean checkLeader(String email, Integer partyCode) {
+		log.debug("checkLeader({}, {}) invoked.",email,partyCode);
+		
+		Integer checkLeaderCode = this.mapper.checkAuthCode(email, partyCode);
+		log.info("\t+ checkLeaderCode : ", checkLeaderCode);
+		
+		return (checkLeaderCode==2);
+	} // checkLeader
 
 	
 

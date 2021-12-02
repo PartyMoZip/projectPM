@@ -56,21 +56,22 @@
 							<!-- 파티관리 체크박스 전체선택 끝 -->
 							<th scope="col">이미지</th>
 							<th scope="col">닉네임</th>
-							<th scope="col">가입일자</th>
+							<th scope="col">파티장 위임</th>
 						</tr>
 					</thead>
 
 					<tbody>
-						<form action="/party/dokick" method="post">
+						<form action="/party/dokick" method="post" id="dokick">
 							<input type="hidden" name="partyCode" value="${partyCode}">
 							<input type="hidden" name="currPage" value="${cri.currPage}">
+						</form>
 							<c:forEach items="${__USER__}" var="user">
 								<tr>
 									<td>
 										<!-- 파티관리 체크박스 개별선택 -->
 										<div class="checkbox-group">
 											<div class="partyCheckboxGroup">
-												<input type="checkbox" class="bigCheck" name="email"
+												<input type="checkbox" class="bigCheck" name="email" form="dokick"
 													value="${user.email}">
 											</div>
 										</div> <!-- 파티관리 체크박스 개별선택 끝 -->
@@ -78,10 +79,19 @@
 
 									<td><img src="${user.userpic}" alt="파티원 이미지"></td>
 									<td>${user.nickname}</td>
-									<td>${user.joindate}</td>
+									<td><c:if test="${__AUTHCHECK__}">
+											<c:if test="${user.email ne sessionScope.__AUTH__.email}">
+												<form action="/party/editleader" method="post">
+													<input type="hidden" name="partyCode" value="${partyCode}">
+													<input type="hidden" name="leaderEmail" value="${sessionScope.__AUTH__.email}">
+													<input type="hidden" name="memberEmail" value="${user.email}">
+													<button class="btn btn-primary" type="submit">파티장 위임</button>
+												</form>
+											</c:if>
+										</c:if></td>
 								</tr>
 							</c:forEach>
-						</form>
+
 
 					</tbody>
 				</table>
@@ -94,7 +104,7 @@
 
 			<div class="bottom-menu-page">
 				<div class="bottom-menu-btn">
-					<button class="btn btn-primary" type="submit">추방</button>
+					<button class="btn btn-primary" type="submit" form="dokick">추방</button>
 				</div>
 				<div class="changePage">
 					<nav aria-label="Page navigation example">
@@ -105,7 +115,7 @@
 										<ul class="pagination justify-content-center">
 											<c:if test="${pageMaker.prev}">
 												<li class="prev page-item"><a class="prev page-link"
-													href="/party/memberlist?partyCode=${partyCode}&currPage=${pageMaker.startPage-1}">◀</a>
+													href="/party/memberlist?partyCode=${partyCode}&currPage=${pageMaker.startPage-1}&searchWord=${searchWord}">◀</a>
 												</li>
 											</c:if>
 
@@ -113,13 +123,13 @@
 												end="${pageMaker.endPage}" var="pageNum">
 												<li class="page-item"><a id="page-curr"
 													class="page-link"
-													href="/party/memberlist?partyCode=${partyCode}&currPage=${pageNum}">
+													href="/party/memberlist?partyCode=${partyCode}&currPage=${pageNum}&searchWord=${searchWord}">
 														${pageNum} </a></li>
 											</c:forEach>
 
 											<c:if test="${pageMaker.next}">
 												<li class="next page-item"><a class="next page-link"
-													href="/party/memberlist?partyCode=${partyCode}&currPage=${pageMaker.endPage+1}">▶</a>
+													href="/party/memberlist?partyCode=${partyCode}&currPage=${pageMaker.endPage+1}&searchWord=${searchWord}">▶</a>
 												</li>
 											</c:if>
 										</ul>
@@ -134,10 +144,11 @@
 			<!-- 검색창 -->
 
 			<div class="container-sm search-wrapper">
-				<form action="/search" method="get"
+				<form action="/party/memberlist" method="get"
 					class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+					<input type="hidden" name="partyCode" value="${partyCode}">
 					<input type="search" name="searchWord" class="form-control"
-						placeholder="검색어를 입력해주세요." aria-label="Search">
+						placeholder="닉네임을 입력해주세요." aria-label="Search">
 					<button class="search-btn">
 						<span> <i class="fas fa-search"></i>
 						</span>

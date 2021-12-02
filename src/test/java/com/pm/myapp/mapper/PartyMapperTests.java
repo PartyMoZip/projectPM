@@ -145,9 +145,9 @@ public class PartyMapperTests {
 		
 		Criteria cri = new Criteria();
 		
-		int partyCode = 14;
-		List<PartyUserVO> list = this.mapper.getMember(partyCode, cri);
-		log.info("\t+ list : {}",list);
+//		int partyCode = 14;
+//		List<PartyUserVO> list = this.mapper.getMember(partyCode, cri);
+//		log.info("\t+ list : {}",list);
 
 	} // testGetMember
 	

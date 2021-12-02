@@ -334,16 +334,29 @@ public class PartyController {
 
     // 파티원 목록 조회 [작동]
     @GetMapping("/memberlist")
-    public void showMemberList(@ModelAttribute("cri") Criteria cri, @ModelAttribute("partyCode") Integer partyCode, Model model) {
+    public void showMemberList(
+    		HttpServletRequest req,
+    		@ModelAttribute("cri") Criteria cri,
+    		@ModelAttribute("partyCode") Integer partyCode,
+    		@ModelAttribute("searchWord") String searchWord,
+    		Model model) {
         log.debug("showMemberList() invoked.");
         log.info("partyCode: {}", partyCode);
         // 해당 파티코드인지, 권한코드 1이상 인지 : 이메일 JOIN 으로 부르기
+        
+        HttpSession session = req.getSession();
+        UserDTO userinfo = (UserDTO) session.getAttribute(LoginController.authKey);
+        String email = userinfo.getEmail();
+        
+        boolean check = this.service.checkLeader(email, partyCode);
+        
+        model.addAttribute("__AUTHCHECK__", check);
 
-        List<PartyUserVO> user = this.service.showMember(partyCode, cri);
+        List<PartyUserVO> user = this.service.showMember(partyCode, cri, searchWord);
 
         model.addAttribute("__USER__", user);
 
-        Integer totalAmount = this.service.getTotalMember(partyCode);
+        Integer totalAmount = this.service.getTotalMember(partyCode, searchWord);
         PageDTO pageDTO = new PageDTO(cri, totalAmount);
 
         model.addAttribute("pageMaker", pageDTO);

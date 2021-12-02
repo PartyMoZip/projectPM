@@ -16,7 +16,7 @@ public interface PartyFreeService {
     // 게시판 조회수 증가
     public abstract boolean readPFreeBoard(Integer pfrefer, Integer partycode);
     // 파티 자유 게시판 상세보기
-    public abstract PartyFreeVO getBoardDetail(Integer  pfrefer, Integer partycode);
+    public abstract PartyFreeVO getBoardDetail(Integer pfrefer, Integer partycode);
     // 9. 댓글 목록
     public abstract List<PartyFreeReplyVO> getReply(Integer pfrefer, Integer partycode, ReplyCriteria recri);
 
