@@ -237,9 +237,9 @@
 
 	</main>
 
-	<%--FOOTER--%>
+	<%--FOOTER
 	<jsp:include
-		page="${pageContext.request.contextPath}/WEB-INF/views/include/footer.jsp" />
+		page="${pageContext.request.contextPath}/WEB-INF/views/include/footer.jsp" />--%>
 
 	<!-- 부트스트랩 js -->
 	<script
