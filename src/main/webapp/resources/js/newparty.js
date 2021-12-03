@@ -258,14 +258,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         return result;
     }
-
-    // enterBtn.addEventListener("click")
-    for (const leaveBtn of leaveBtns) {
-        leaveBtn.addEventListener("click", handleLeaveParty)
-    }
-    saveBtn.addEventListener("click", handleProfileSubmit);
+    
     selectBtn.addEventListener("click", handleUploadClick);
-    withdrawalBtn.addEventListener("click", handleWithdrawalSubmit);
     createBtn.addEventListener("click", handleCreateParty);
+    saveBtn.addEventListener("click", handleProfileSubmit);
 })
 

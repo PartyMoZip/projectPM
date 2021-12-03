@@ -122,7 +122,7 @@ public class AdminController {
           
       } // for
       
-      return "/admin/adminPartyBreak";
+      return "/admin/getPartyList";
       
    } // adminPartyBreak
    
