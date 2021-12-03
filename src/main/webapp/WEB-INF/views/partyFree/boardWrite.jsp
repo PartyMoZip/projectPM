@@ -47,9 +47,6 @@ uri="http://java.sun.com/jsp/jstl/fmt" %>
     <jsp:include
       page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp"
     />
-    <jsp:include
-      page="${pageContext.request.contextPath}/WEB-INF/views/include/partynav.jsp"
-    />
 
     <div class="board_main">
       <main>
