@@ -10,7 +10,7 @@ public class PartyFreeListVO {
     private Integer pfRefer;
     private Date pfDate;
     private String pfContent;
-    private Integer partycode;
+    private Integer partyCode;
     private String pfSubject;
     private String email;
     private Integer readnum;

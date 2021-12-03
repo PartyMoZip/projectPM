@@ -69,7 +69,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" %>
                 name="email"
                 value="${sessionScope.__AUTH__.email}"
               />
-              <input type="hidden" name="partycode" value="${partyCode}" />
+              <input type="hidden" name="partyCode" value="${partyCode}" />
               <div class="title" id="article-title">
                 <input
                   type="text"

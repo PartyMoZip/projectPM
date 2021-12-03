@@ -14,11 +14,11 @@ public interface PartyFreeService {
     public abstract Integer getTotal(Integer partyCode, String searchWord, Integer option);
 
     // 게시판 조회수 증가
-    public abstract boolean readPFreeBoard(Integer pfrefer, Integer partycode);
+    public abstract boolean readPFreeBoard(Integer pfrefer, Integer partyCode);
     // 파티 자유 게시판 상세보기
-    public abstract PartyFreeVO getBoardDetail(Integer pfrefer, Integer partycode);
+    public abstract PartyFreeVO getBoardDetail(Integer pfrefer, Integer partyCode);
     // 9. 댓글 목록
-    public abstract List<PartyFreeReplyVO> getReply(Integer pfrefer, Integer partycode, ReplyCriteria recri);
+    public abstract List<PartyFreeReplyVO> getReply(Integer pfrefer, Integer partyCode, ReplyCriteria recri);
 
     // 10. 댓글 등록
     public abstract boolean writeReply(PartyFreeReplyDTO pfreeReply);

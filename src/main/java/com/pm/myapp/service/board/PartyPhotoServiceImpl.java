@@ -165,6 +165,25 @@ public class PartyPhotoServiceImpl implements PartyPhotoService {
 	public boolean registerImages(Map<String, Object> imageInfo) {
 		log.debug("registerImages({}) invoked.",imageInfo);
 		
+		int prefer = (int) imageInfo.get("prefer");
+		int partyCode = (int) imageInfo.get("partyCode");
+		
+		String last_seq = "SEQ_PARTYPHOTOLIST"  + "_" + partyCode + "_" + prefer;
+		Integer lastNumber = this.mapper.checkLastSeq(last_seq);
+		log.info("\t+ lastNumber : {}", lastNumber);
+		
+		if(lastNumber==null) {
+			
+			String create_seq = "create sequence SEQ_PARTYPHOTOLIST"  + "_" + partyCode + "_" + prefer + " START WITH 1 INCREMENT BY 1 Nocache";
+			this.mapper.createSeq(create_seq);
+			
+		} // if
+		
+		String read_seq = "SELECT SEQ_PARTYPHOTOLIST"  + "_" + partyCode + "_" + prefer + "." + "NEXTVAL " + "FROM DUAL";
+		Integer seqNum = this.mapper.getNextVal(read_seq);
+		
+		imageInfo.put("photonum",seqNum);
+		
 		Integer affectedLine = this.mapper.registerImage(imageInfo);
 		log.info("\t+ affectedLine : {}", affectedLine);
 		

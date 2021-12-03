@@ -10,7 +10,7 @@ public class PartyFreeDTO {
     private Integer pfrefer;
     private Date pfdate;
     private String pfcontent;
-    private Integer partycode;
+    private Integer partyCode;
     private String pfsubject;
     private String email;
     private Integer readnum;

@@ -65,15 +65,15 @@ public class PartyFreeController {
 
 	// 파티 자유 게시판 상세보기
 	@GetMapping("/showPartyFDetail")
-	public void showPartyFDetail(
+	public String showPartyFDetail(
             @ModelAttribute("sdto") BoardSearchListDTO sdto,
 			@ModelAttribute("cri") Criteria cri,
             @ModelAttribute("recri") ReplyCriteria recri,
-            Integer pfrefer, Integer partycode,
+            Integer pfrefer,
             Model model)
 
 		{
-		log.debug("get({}, {}, {}, {}) invoked.", cri, pfrefer, partycode, sdto);
+		log.debug("get({}, {}, {}) invoked.", cri, pfrefer,  sdto);
 
 
         // 게시판 조회수 증가\
@@ -97,6 +97,8 @@ public class PartyFreeController {
         PageDTO pageDTO = new PageDTO(recri, totalAmount);
         model.addAttribute("replyPageMaker", pageDTO);
 
+        
+        return "/partyFree/boardDetail";
 	} // showPartyFDetail
 
 	// 파티 자유 게시판 글쓰기 완료
@@ -107,7 +109,7 @@ public class PartyFreeController {
         boolean result = this.service.writeFBoard(partyFB);
         log.info("\t+ result : {}", result);
         
-		rttrs.addAttribute("partycode",partyFB.getPartycode());
+		rttrs.addAttribute("partyCode",partyFB.getPartyCode());
 		rttrs.addAttribute("currPage",cri.getCurrPage());
 		
 		return "redirect:/partyfree/getPFreeBoardList";
@@ -116,7 +118,7 @@ public class PartyFreeController {
 
     // 파치 자유 게시판 글 쓰기 화면
     @GetMapping("/writePFreeBoardView")
-    public String writePFBoardView(@ModelAttribute("cri") Criteria cri, @ModelAttribute("partyCode") Integer partycode) {
+    public String writePFBoardView(@ModelAttribute("cri") Criteria cri, @ModelAttribute("partyCode") Integer partyCode) {
         log.debug("writePFBoardView() invoked.");
 
         return "/partyFree/boardWrite";
@@ -124,10 +126,10 @@ public class PartyFreeController {
 
 	// 파티 자유 게시판 수정 View
 	@GetMapping("/editPFBoardView")
-	public String editPFBoardView(@ModelAttribute("cri") Criteria cri, Integer pfrefer, @ModelAttribute("partyCode") Integer partycode, Model model) {
-		log.debug("editPFBoardView({}, {})", cri, pfrefer, partycode);
+	public String editPFBoardView(@ModelAttribute("cri") Criteria cri, Integer pfrefer, @ModelAttribute("partyCode") Integer partyCode, Model model) {
+		log.debug("editPFBoardView({}, {})", cri, pfrefer, partyCode);
 
-		PartyFreeVO boardDetail = this.service.getBoardDetail(pfrefer, partycode);
+		PartyFreeVO boardDetail = this.service.getBoardDetail(pfrefer, partyCode);
 		log.info("\t + boardDetail : {}", boardDetail);
 
 		model.addAttribute("__boardDetail__", boardDetail);
@@ -163,15 +165,15 @@ public class PartyFreeController {
 
 	// 파티 자유 게시판  검색
 	@GetMapping("/searchPFreeBoard")
-	public String searchPFreeBoard(@ModelAttribute("cri") Criteria cri, @RequestParam("partyCode")Integer partycode, String searchWord, Integer option, Model model) {
+	public String searchPFreeBoard(@ModelAttribute("cri") Criteria cri, @RequestParam("partyCode")Integer partyCode, String searchWord, Integer option, Model model) {
 
 		log.debug("searchPFreeBoard() invoked.");
 
-		List<PartyFreeSearchVO> searchList = this.service.search(partycode, cri, searchWord, option);
+		List<PartyFreeSearchVO> searchList = this.service.search(partyCode, cri, searchWord, option);
 		model.addAttribute("__list__", searchList);
 
 		// 페이징 처리
-		Integer totalAmount = this.service.getTotalSearch(partycode, searchWord, option);
+		Integer totalAmount = this.service.getTotalSearch(partyCode, searchWord, option);
 		PageDTO pageDTO = new PageDTO(cri, totalAmount);
 		model.addAttribute("pageMaker", pageDTO);
 
@@ -193,7 +195,7 @@ public class PartyFreeController {
         rttrs.addAttribute("currPage", cri.getCurrPage());
         rttrs.addAttribute("reCurrPage",recri.getReCurrPage());
 
-		return "redirect:/partyFree/boardDetail";
+		return "redirect:/partyFree/showPartyFDetail";
 	} // writeComment
 	
 	// 파티 자유 게시판  - 댓글 수정
@@ -207,7 +209,7 @@ public class PartyFreeController {
 
 		boolean result = this.service.editReply(dto);
 		rttrs.addAttribute("pfrefer", dto.getPfrefer());
-        rttrs.addAttribute("partyCode", dto.getPartycode());
+        rttrs.addAttribute("partyCode", dto.getPartyCode());
         rttrs.addAttribute("currPage", cri.getCurrPage());
         rttrs.addAttribute("reCurrPage",recri.getReCurrPage());
 
@@ -229,7 +231,7 @@ public class PartyFreeController {
         log.info("\t+ result : {}", result);
 
         rttrs.addAttribute("pfrefer", dto.getPfrefer());
-        rttrs.addAttribute("partyCode", dto.getPartycode());
+        rttrs.addAttribute("partyCode", dto.getPartyCode());
         rttrs.addAttribute("currPage", cri.getCurrPage());
         rttrs.addAttribute("reCurrPage",recri.getReCurrPage());
 

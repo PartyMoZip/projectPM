@@ -7,10 +7,12 @@
     <!-- SELECT/INSERT/UPDATE/DELETE 각각의 SQL문장을 저장하는 태그가 이미 준비되어 있다.(DTD에) -->
     <select id="getList" resultType = "com.pm.myapp.domain.board.PartyPhotoDTO">
 
-        SELECT P.PREFER, P.PDATE, P.PARTYCODE, P.PSUBJECT, U.NICKNAME, P.READNUM
+        SELECT P.PREFER, P.PDATE, P.PARTYCODE, P.PSUBJECT, U.NICKNAME, P.READNUM, O.PARTYPIC
         FROM PARTYPHOTOBOARD P
         JOIN USERINFO U
         ON P.EMAIL = U.EMAIL
+        JOIN (SELECT PREFER, PARTYPIC FROM PARTYPHOTO WHERE PHOTONUM=1) O
+        ON P.PREFER = O.PREFER
         WHERE P.PARTYCODE = #{partyCode}
         <choose>
             <when test="searchWord==null">
@@ -143,8 +145,8 @@
 
     <insert id="registerImage" parameterType="hashMap">
 
-        INSERT INTO PARTYPHOTO(PREFER, PARTYPIC, PARTYCODE)
-        VALUES(#{prefer}, #{fileLocation}, #{partyCode})
+        INSERT INTO PARTYPHOTO(PREFER, PARTYPIC, PARTYCODE, PHOTONUM)
+        VALUES(#{prefer}, #{fileLocation}, #{partyCode}, #{photonum})
 
     </insert>
 

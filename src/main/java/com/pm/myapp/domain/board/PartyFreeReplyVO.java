@@ -1,10 +1,11 @@
 package com.pm.myapp.domain.board;
 
-import lombok.Value;
+import lombok.Data;
+
 
 import java.util.Date;
 
-@Value
+@Data
 public class PartyFreeReplyVO {
 
     private Integer pfrerefer;
@@ -12,5 +13,6 @@ public class PartyFreeReplyVO {
     private String pfrecontent;
     private Date pfredate;
     private Integer pfrefer;
+    private String email;
 
 }

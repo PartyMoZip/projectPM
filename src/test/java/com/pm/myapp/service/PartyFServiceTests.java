@@ -50,7 +50,7 @@ public class PartyFServiceTests {
         dto.setPfsubject("TEST");
         dto.setPfcontent("TEST");
         dto.setPfdate(null);
-        dto.setPartycode(null);
+        dto.setPartyCode(null);
 
 
         boolean affectedLine = this.service.writeFBoard(dto);
@@ -120,9 +120,9 @@ public class PartyFServiceTests {
 
     @Test
     public void testWriteReply() {
-        log.debug("testWriteReply() invoked.");
-        PartyFreeReplyVO partyReply = new PartyFreeReplyVO(1, "yeoni", "TEST", null, 1);
-        log.info("\t + pfcontent : {}", partyReply.getPfrerefer());
+//        log.debug("testWriteReply() invoked.");
+//        PartyFreeReplyVO partyReply = new PartyFreeReplyVO(1, "yeoni", "TEST", null, 1);
+//        log.info("\t + pfcontent : {}", partyReply.getPfrerefer());
     }
 
     @Test
@@ -138,9 +138,9 @@ public class PartyFServiceTests {
     public void testEditReply() {
         log.debug("test() invoked.");
 
-        PartyFreeReplyVO partyReply = new PartyFreeReplyVO(1, "예워니", "TEST", null, 1);
-        Objects.requireNonNull(partyReply);
-        log.info("\t + partyReply : {}", partyReply);
+//        PartyFreeReplyVO partyReply = new PartyFreeReplyVO(1, "예워니", "TEST", null, 1);
+//        Objects.requireNonNull(partyReply);
+//        log.info("\t + partyReply : {}", partyReply);
     }
 
     @Test
