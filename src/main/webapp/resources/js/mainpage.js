@@ -1,7 +1,7 @@
 const colorArr = ["#ffb6b9", "#fae3d9", "#bbded6", "#8ac6d1", "#515bd4", "#8134af", "#dd2a7b", "#feda77", "#7F95D1"];
 const swiperItems = document.querySelectorAll('.swiper-item');
 
-window.onload = () => {
+document.addEventListener('DOMContentLoaded', ()=>{
     let numArr = [];
 
     // 중복 제거
@@ -20,7 +20,7 @@ window.onload = () => {
     for (let i = 0; i < numArr.length; i++) {
         setColor(i, numArr[i]);
     }
-}
+})
 
 // 배경색 설정
 const setColor = (idx, num) => {
