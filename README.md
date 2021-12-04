@@ -41,8 +41,8 @@
 - 반응형 웹 페이지로 다양한 디바이스 지원
 
 ## 🔖 Erd
-<a href="https://ibb.co/NT8zL3y"><img src="https://i.ibb.co/0sg3fXG/03-erd.jpg" alt="03-erd" border="0"></a><br />
+<a href="https://ibb.co/tQXq1PZ"><img src="https://i.ibb.co/0mtCzVB/partymozip-erd.png" alt="partymozip-erd" border="0"></a>
 
 ## 📁 발표자료
 
-[고구마켓.pdf](https://drive.google.com/file/d/1T4IIT61aFExQqoYX2rsQpETxyvP9UU0D/view?usp=sharing)
+[파티모집.pdf](https://drive.google.com/file/d/1V2NRh5z7Cue3MP0UcM6iVN02EscrnSvx/view?usp=sharing)
