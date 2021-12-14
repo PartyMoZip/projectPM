@@ -37,7 +37,7 @@
 
     <select id="readFreeBoard" resultType="com.pm.myapp.domain.board.FreeBoardVO">
         SELECT
-            F.frefer, F.fsubject,F.fcontent, F.fdate, U.nickname, F.email, F.freephoto, F.readnum
+            F.frefer, F.fsubject,F.fcontent, F.fdate, U.nickname, F.email, F.freephoto, F.readnum, U.userpic
         FROM FREEBOARD F
         JOIN USERINFO U ON F.email = U.email
         WHERE F.frefer = #{frefer}
@@ -160,7 +160,8 @@
             SELECT
                 FRE.frerefer, FRE.frecontent, FRE.fredate, FRE.frefer, U.nickname, FRE.email
             FROM FREEBOARDRE FRE
-            JOIN USERINFO U ON FRE.email = U.email
+            JOIN USERINFO U
+            ON FRE.email = U.email
             WHERE frefer = #{frefer}
             ORDER BY frerefer desc
             OFFSET (#{recri.reCurrPage}-1) * #{recri.reAmount} ROWS
@@ -187,14 +188,14 @@
         UPDATE FREEBOARDRE
         SET
             FRECONTENT = #{frecontent}
-        WHERE FREFER = #{frefer}
+        WHERE FREREFER = #{frerefer} AND FREFER = #{frefer}
     </update>
 
 
-    <delete id="deleteComment">
+    <delete id="deleteFreeBoardReply">
         DELETE
         FROM FREEBOARDRE
-        WHERE FREFER=#{frefer}
+        WHERE FREREFER=#{frerefer} AND FREFER = #{frefer}
     </delete>
 
 </mapper>

@@ -6,257 +6,257 @@
 
     <!-- SELECT/INSERT/UPDATE/DELETE 각각의 SQL문장을 저장하는 태그가 이미 준비되어 있다.(DTD에) -->
     <select id="getList" resultType = "com.pm.myapp.domain.board.PartyPhotoDTO">
-    
+
         SELECT P.PREFER, P.PDATE, P.PARTYCODE, P.PSUBJECT, U.NICKNAME, P.READNUM
         FROM PARTYPHOTOBOARD P
         JOIN USERINFO U
         ON P.EMAIL = U.EMAIL
         WHERE P.PARTYCODE = #{partyCode}
         <choose>
-        	<when test="searchWord==null">
-        	</when>
-        	<when test="option==1">
-        		AND (P.PCONTENT like '%'||#{searchWord}||'%'
-        		OR P.PSUBJECT like '%'||#{searchWord}||'%'
-        		OR U.NICKNAME like '%'||#{searchWord}||'%')
-        	</when>
-        	<when test="option==2">
-        	    AND U.NICKNAME like '%'||#{searchWord}||'%'
-        	</when>
-           	<when test="option==3">
-           	    AND P.PSUBJECT like '%'||#{searchWord}||'%'
-        	</when>
-           	<when test="option==4">
-           	    AND P.PCONTENT like '%'||#{searchWord}||'%'
-        	</when>
+            <when test="searchWord==null">
+            </when>
+            <when test="option==1">
+                AND (P.PCONTENT like '%'||#{searchWord}||'%'
+                OR P.PSUBJECT like '%'||#{searchWord}||'%'
+                OR U.NICKNAME like '%'||#{searchWord}||'%')
+            </when>
+            <when test="option==2">
+                AND U.NICKNAME like '%'||#{searchWord}||'%'
+            </when>
+            <when test="option==3">
+                AND P.PSUBJECT like '%'||#{searchWord}||'%'
+            </when>
+            <when test="option==4">
+                AND P.PCONTENT like '%'||#{searchWord}||'%'
+            </when>
         </choose>
         ORDER BY P.PREFER DESC
         OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
-		FETCH NEXT #{cri.amount} ROWS ONLY
-    
+        FETCH NEXT #{cri.amount} ROWS ONLY
+
     </select>
-    
+
     <select id="getTotalList" resultType = "Integer">
-    
+
         SELECT COUNT(P.PREFER)
         FROM PARTYPHOTOBOARD P
         JOIN USERINFO U
         ON P.EMAIL = U.EMAIL
         WHERE PARTYCODE = #{partyCode}
         <choose>
-        	<when test="searchWord==null">
-        	</when>
-        	<when test="option==1">
-        		AND P.PCONTENT like '%'||#{searchWord}||'%'
-        		AND P.PSUBJECT like '%'||#{searchWord}||'%'
-        		AND U.NICKNAME like '%'||#{searchWord}||'%'
-        	</when>
-        	<when test="option==2">
-        	    AND U.NICKNAME like '%'||#{searchWord}||'%'
-        	</when>
-           	<when test="option==3">
-           	    AND P.PSUBJECT like '%'||#{searchWord}||'%'
-        	</when>
-           	<when test="option==4">
-           	    AND P.PCONTENT like '%'||#{searchWord}||'%'
-        	</when>
+            <when test="searchWord==null">
+            </when>
+            <when test="option==1">
+                AND P.PCONTENT like '%'||#{searchWord}||'%'
+                AND P.PSUBJECT like '%'||#{searchWord}||'%'
+                AND U.NICKNAME like '%'||#{searchWord}||'%'
+            </when>
+            <when test="option==2">
+                AND U.NICKNAME like '%'||#{searchWord}||'%'
+            </when>
+            <when test="option==3">
+                AND P.PSUBJECT like '%'||#{searchWord}||'%'
+            </when>
+            <when test="option==4">
+                AND P.PCONTENT like '%'||#{searchWord}||'%'
+            </when>
         </choose>
-    
+
     </select>
-    
+
     <update id="readIt">
-    
-    	UPDATE PARTYPHOTOBOARD
-    	SET READNUM = READNUM + 1
+
+        UPDATE PARTYPHOTOBOARD
+        SET READNUM = READNUM + 1
         WHERE PARTYCODE = #{partyCode} AND PREFER = #{prefer}
-    
+
     </update>
-    
+
     <select id="getDetail" resultType = "com.pm.myapp.domain.board.PartyPhotoDTO">
-    
-        SELECT P.PREFER, P.PDATE, P.PARTYCODE, P.PCONTENT, P.PSUBJECT, P.EMAIL, U.NICKNAME, P.READNUM
+
+        SELECT P.PREFER, P.PDATE, P.PARTYCODE, P.PCONTENT, P.PSUBJECT, P.EMAIL, U.NICKNAME, P.READNUM, U.USERPIC
         FROM PARTYPHOTOBOARD P
-        JOIN USERINFO U
-        ON P.EMAIL = U.EMAIL
+                 JOIN USERINFO U
+                      ON P.EMAIL = U.EMAIL
         WHERE P.PARTYCODE = #{partyCode} AND P.PREFER = #{prefer}
-        
+
     </select>
-    
+
     <select id="getPhoto" resultType = "String">
-    
+
         SELECT PARTYPIC
         FROM PARTYPHOTO
         WHERE PARTYCODE = #{partyCode} AND PREFER = #{prefer}
-        
+
     </select>
-    
+
     <select id="getReplyList" resultType = "com.pm.myapp.domain.board.PartyPhotoReDTO">
-    
+
         SELECT P.PREREFER, P.PRECONTENT, P.PREDATE, P.PREFER, P.PARTYCODE, P.EMAIL, U.NICKNAME
         FROM PARTYPHOTORE P
-        JOIN USERINFO U
-        ON U.EMAIL = P.EMAIL
+                 JOIN USERINFO U
+                      ON U.EMAIL = P.EMAIL
         WHERE P.PARTYCODE = #{partyCode} AND PREFER = #{prefer}
         ORDER BY P.PREREFER DESC
         OFFSET (#{recri.reCurrPage}-1) * #{recri.reAmount} ROWS
-		FETCH NEXT #{recri.reAmount} ROWS ONLY
-        
+            FETCH NEXT #{recri.reAmount} ROWS ONLY
+
     </select>
-    
+
     <select id="checkTotalPhotoHeart" resultType="Integer">
-    
-    	SELECT SUM(HIT) FROM PHOTOHEART
-	    WHERE PARTYCODE = #{partyCode} AND PREFER = #{prefer}
-    
+
+        SELECT SUM(HIT) FROM PHOTOHEART
+        WHERE PARTYCODE = #{partyCode} AND PREFER = #{prefer}
+
     </select>
-    
-	<select id="getTotalReply" resultType = "Integer">
-    
+
+    <select id="getTotalReply" resultType = "Integer">
+
         SELECT COUNT(PREREFER)
         FROM PARTYPHOTORE
         WHERE PARTYCODE = #{partyCode} AND PREFER = #{prefer}
-        
+
     </select>
 
     <select id="maxRefer" resultType="Integer">
-    
-    	SELECT MAX(PREFER)
-    	FROM PARTYPHOTOBOARD
-    	WHERE PARTYCODE = #{dto.partycode}
-    
+
+        SELECT MAX(PREFER)
+        FROM PARTYPHOTOBOARD
+        WHERE PARTYCODE = #{dto.partycode}
+
     </select>
 
     <select id="checkPrefer" resultType="Integer">
-    
-    	SELECT COUNT(PREFER) FROM PARTYPHOTOBOARD
-    	WHERE PARTYCODE = #{dto.partyCode}
-    
+
+        SELECT COUNT(PREFER) FROM PARTYPHOTOBOARD
+        WHERE PARTYCODE = #{dto.partyCode}
+
     </select>
 
     <insert id="writePhotoBoard">
-    
-    	INSERT INTO PARTYPHOTOBOARD(PREFER, PDATE, PSUBJECT, PCONTENT, PARTYCODE, EMAIL, READNUM)
-    	VALUES(#{dto.prefer}, sysdate, #{dto.psubject}, #{dto.pcontent},
-    		  #{dto.partycode}, #{dto.email}, 0)
+
+        INSERT INTO PARTYPHOTOBOARD(PREFER, PDATE, PSUBJECT, PCONTENT, PARTYCODE, EMAIL, READNUM)
+        VALUES(#{dto.prefer}, sysdate, #{dto.psubject}, #{dto.pcontent},
+               #{dto.partycode}, #{dto.email}, 0)
 
     </insert>
-    
+
     <insert id="registerImage" parameterType="hashMap">
-    
-    	INSERT INTO PARTYPHOTO(PREFER, PARTYPIC, PARTYCODE)
-    	VALUES(#{prefer}, #{fileLocation}, #{partyCode})
+
+        INSERT INTO PARTYPHOTO(PREFER, PARTYPIC, PARTYCODE)
+        VALUES(#{prefer}, #{fileLocation}, #{partyCode})
 
     </insert>
 
 
     <update id="updatePartyPhoto">
-    	
-    	UPDATE PARTYPHOTOBOARD
-    	SET PSUBJECT = #{dto.psubject},
-    	PCONTENT = #{dto.pcontent}
-    	WHERE PREFER = #{dto.prefer} AND PARTYCODE = #{dto.partycode}
+
+        UPDATE PARTYPHOTOBOARD
+        SET PSUBJECT = #{dto.psubject},
+            PCONTENT = #{dto.pcontent}
+        WHERE PREFER = #{dto.prefer} AND PARTYCODE = #{dto.partycode}
 
     </update>
 
 
     <delete id="deletePhoto">
-    
-		DELETE FROM PARTYPHOTO
-		WHERE PARTYPIC=#{file}
-    
+
+        DELETE FROM PARTYPHOTO
+        WHERE PARTYPIC=#{file}
+
     </delete>
-    
+
     <delete id="deletePhotoReply">
-    
-		DELETE FROM PARTYPHOTORE
-		WHERE PARTYCODE = #{partyCode} AND PREFER = #{prefer}
-    
+
+        DELETE FROM PARTYPHOTORE
+        WHERE PARTYCODE = #{partyCode} AND PREFER = #{prefer}
+
     </delete>
-    
+
     <delete id="deletePhotoBoard">
-    
-		DELETE FROM PARTYPHOTOBOARD
-		WHERE PARTYCODE = #{partyCode} AND PREFER = #{prefer}
-    
+
+        DELETE FROM PARTYPHOTOBOARD
+        WHERE PARTYCODE = #{partyCode} AND PREFER = #{prefer}
+
     </delete>
-    
+
     <select id="checkReply" resultType="Integer">
-    
-    	SELECT MAX(PREREFER) FROM PARTYPHOTORE
-    	WHERE PARTYCODE = #{dto.partyCode} AND PREFER = #{dto.prefer}
-    
+
+        SELECT MAX(PREREFER) FROM PARTYPHOTORE
+        WHERE PARTYCODE = #{dto.partyCode} AND PREFER = #{dto.prefer}
+
     </select>
-    
+
     <select id="checkLastSeq" resultType="Integer">
-    
-		SELECT LAST_NUMBER FROM USER_SEQUENCES WHERE SEQUENCE_NAME = #{last_seq}
-    	
+
+        SELECT LAST_NUMBER FROM USER_SEQUENCES WHERE SEQUENCE_NAME = #{last_seq}
+
     </select>
-    
+
     <select id="createSeq" parameterType="Hashmap">
-    
-    	${create_seq}
-    
+
+        ${create_seq}
+
     </select>
-    
+
     <select id="getNextVal" resultType="Integer">
-    
-    	${read_seq}
-    	
+
+        ${read_seq}
+
     </select>
-    
+
     <insert id="writePartyPhotoReply">
-    
-    	INSERT INTO PARTYPHOTORE(PREREFER, PRECONTENT, PREDATE, PREFER, PARTYCODE, EMAIL)
-		VALUES(#{dto.prerefer}, #{dto.precontent}, sysdate, #{dto.prefer}, #{dto.partyCode}, #{dto.email})
-		    
+
+        INSERT INTO PARTYPHOTORE(PREREFER, PRECONTENT, PREDATE, PREFER, PARTYCODE, EMAIL)
+        VALUES(#{dto.prerefer}, #{dto.precontent}, sysdate, #{dto.prefer}, #{dto.partyCode}, #{dto.email})
+
     </insert>
-    
+
     <update id="updatePhotoBoardReply">
-    
-    	UPDATE PARTYPHOTORE
-    	SET PRECONTENT = #{dto.precontent}
-    	WHERE PARTYCODE=#{dto.partyCode} AND PREFER=#{dto.prefer} AND PREREFER=#{dto.prerefer}
-    
+
+        UPDATE PARTYPHOTORE
+        SET PRECONTENT = #{dto.precontent}
+        WHERE PARTYCODE=#{dto.partyCode} AND PREFER=#{dto.prefer} AND PREREFER=#{dto.prerefer}
+
     </update>
 
-	<delete id="deletePhotoBoardReply">
-	
-		DELETE FROM PARTYPHOTORE
-		WHERE PARTYCODE=#{dto.partyCode} AND PREFER=#{dto.prefer} AND PREREFER=#{dto.prerefer}
-	
-	</delete>
-	
-	<select id="checkPhotoHeart" resultType="Integer">
-    
-    	SELECT HIT FROM PHOTOHEART
-    	WHERE PARTYCODE=#{hdto.partyCode} AND PREFER=#{hdto.prefer} AND EMAIL=#{hdto.email}
-    	
+    <delete id="deletePhotoBoardReply">
+
+        DELETE FROM PARTYPHOTORE
+        WHERE PARTYCODE=#{dto.partyCode} AND PREFER=#{dto.prefer} AND PREREFER=#{dto.prerefer}
+
+    </delete>
+
+    <select id="checkPhotoHeart" resultType="Integer">
+
+        SELECT HIT FROM PHOTOHEART
+        WHERE PARTYCODE=#{hdto.partyCode} AND PREFER=#{hdto.prefer} AND EMAIL=#{hdto.email}
+
     </select>
-    
+
     <select id="makeHeart" resultType="Integer">
-    
-    	INSERT INTO PHOTOHEART(HIT, EMAIL, PREFER, PARTYCODE)
-    	VALUES(0,#{hdto.email},#{hdto.prefer},#{hdto.partyCode})
-    	
+
+        INSERT INTO PHOTOHEART(HIT, EMAIL, PREFER, PARTYCODE)
+        VALUES(0,#{hdto.email},#{hdto.prefer},#{hdto.partyCode})
+
     </select>
-    
+
     <update id="upHeart">
-    
-    	UPDATE PHOTOHEART
-    	SET HIT = 1
-    	WHERE PARTYCODE=#{hdto.partyCode} AND PREFER=#{hdto.prefer} AND EMAIL=#{hdto.email}
-    	
+
+        UPDATE PHOTOHEART
+        SET HIT = 1
+        WHERE PARTYCODE=#{hdto.partyCode} AND PREFER=#{hdto.prefer} AND EMAIL=#{hdto.email}
+
     </update>
-      
+
     <update id="downHeart">
-    
-    	UPDATE PHOTOHEART
-    	SET HIT = 0
-    	WHERE PARTYCODE=#{hdto.partyCode} AND PREFER=#{hdto.prefer} AND EMAIL=#{hdto.email}
-    	
+
+        UPDATE PHOTOHEART
+        SET HIT = 0
+        WHERE PARTYCODE=#{hdto.partyCode} AND PREFER=#{hdto.prefer} AND EMAIL=#{hdto.email}
+
     </update>
-    
+
 
 
 </mapper>

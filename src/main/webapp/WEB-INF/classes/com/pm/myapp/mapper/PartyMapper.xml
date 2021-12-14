@@ -93,23 +93,31 @@
 
     <select id="getMember" resultType="com.pm.myapp.domain.PartyUserVO">
     
-    <![CDATA[
-        SELECT U.NICKNAME, U.USERPIC, U.EMAIL, U.JOINDATE
-        FROM (SELECT *
-              FROM PARTYUSER
-              WHERE PARTYCODE = #{partyCode}
-              ORDER BY AUTHCODE DESC) T
-                 JOIN USERINFO U
-                      ON T.EMAIL = U.EMAIL
-        WHERE T.AUTHCODE > 0
-        OFFSET (#{cri.currPage} - 1) * #{cri.amount} ROWS FETCH NEXT #{cri.amount} ROWS ONLY
-        ]]>
+
+    SELECT U.NICKNAME, U.USERPIC, U.EMAIL, U.JOINDATE
+    FROM (SELECT * FROM PARTYUSER
+    WHERE PARTYCODE = #{partyCode}
+    ORDER BY AUTHCODE DESC) T
+    JOIN USERINFO U
+    ON T.EMAIL = U.EMAIL
+    <![CDATA[ 
+    WHERE T.AUTHCODE > 0
+    ]]>
+    <choose>
+        <when test="searchWord==null">
+        </when>
+        <otherwise>
+         	AND U.NICKNAME like '%'||#{searchWord}||'%'
+        </otherwise>
+    </choose>
+    OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
+	FETCH NEXT #{cri.amount} ROWS ONLY
+
     
     </select>
 
-    <select id="getPartyMN" resultType="int">
-    
-    <![CDATA[
+    <select id="getPartyMN" resultType="int">    
+
         SELECT COUNT(U.NICKNAME)
         FROM (SELECT *
               FROM PARTYUSER
@@ -117,8 +125,16 @@
               ORDER BY AUTHCODE DESC) T
                  JOIN USERINFO U
                       ON T.EMAIL = U.EMAIL
+        <![CDATA[
         WHERE T.AUTHCODE > 0
         ]]>
+        <choose>
+        <when test="searchWord==null">
+        </when>
+        <otherwise>
+         	AND U.NICKNAME like '%'||#{searchWord}||'%'
+        </otherwise>
+    	</choose>
     
     </select>
 
@@ -178,5 +194,12 @@
 
     </select>
 
+	<select id="checkAuthCode" resultType="Integer">
+	
+		SELECT AUTHCODE
+    	FROM PARTYUSER
+    	WHERE PARTYCODE = #{partyCode} AND EMAIL = #{email}
+	
+	</select>
 
 </mapper>

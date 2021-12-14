@@ -10,6 +10,7 @@
             FROM PARTYFREEBOARD PF
             JOIN USERINFO U
             ON PF.EMAIL = U.EMAIL
+            WHERE PF.PARTYCODE = #{partyCode}
             <choose>
                 <when test="searchWord==null">
                 </when>
@@ -28,23 +29,26 @@
                     WHERE PF.PFCONTENT like '%'||#{searchWord}||'%'
                 </when>
                 </choose>
+                ORDER BY PF.PFREFER DESC
                 OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
                 FETCH NEXT #{cri.amount} ROWS ONLY
 
     </select>
 
     <select id="readPFreeBoard" resultType="com.pm.myapp.domain.board.PartyFreeVO">
-        SELECT PF.PFREFER, PF.PFDATE, PF.PFCONTENT, PF.PARTYCODE, PF.PFSUBJECT, PF.EMAIL, U.NICKNAME, PF.READNUM
+        SELECT PF.PFREFER, PF.PFDATE, PF.PFCONTENT, PF.PARTYCODE, PF.PFSUBJECT, PF.EMAIL, U.NICKNAME, PF.READNUM, U.userpic 
         FROM PARTYFREEBOARD PF
-        JOIN USERINFO U ON PF.EMAIL = U.EMAIL
+        JOIN USERINFO U
+        ON PF.EMAIL = U.EMAIL
         WHERE PF.PFREFER = #{pfrefer} AND PF.PARTYCODE = #{partycode}
     </select>
 
-    <select id="getTotalCount" resultType="int">
+    <select id="getTotalCount" resultType="Integer">
         SELECT COUNT(PF.PFREFER)
         FROM PARTYFREEBOARD PF
         JOIN USERINFO U
         ON PF.EMAIL = U.EMAIL
+        WHERE PARTYCODE = #{partyCode}
         <choose>
             <when test="searchWord==null">
             </when>
@@ -66,8 +70,8 @@
     </select>
 
     <insert id="writePFreeBoard">
-        INSERT INTO PARTYFREEBOARD(PFREFER, PFDATE, PFCONTENT, PARTYCODE, PFSUBJECT, EMAIL, READNUM, nickname)
-        VALUES(SEQ_PFREEBOARD.nextval, sysdate, #{pfcontent}, #{partycode}, #{pfsubject}, #{email}, 0, #{nickname})
+        INSERT INTO PARTYFREEBOARD(PFREFER, PFDATE, PFCONTENT, PARTYCODE, PFSUBJECT, EMAIL, READNUM)
+        VALUES(SEQ_PFREEBOARD.nextval, sysdate, #{pfcontent}, #{partycode}, #{pfsubject}, #{email}, 0)
 
     </insert>
 
@@ -76,8 +80,14 @@
         SET
             PFSUBJECT = #{pfsubject},
             PFCONTENT = #{pfcontent}
-        WHERE PFREFER = #{pfrefer}
+        WHERE PFREFER = #{pfrefer} AND PARTYCODE = #{partyCode}
 
+    </update>
+
+    <update id="readIt">
+        UPDATE PARTYFREEBOARD
+        SET READNUM = READNUM + 1
+        WHERE PARTYCODE = #{partycode} AND PFREFER = #{pfrefer}
     </update>
 
     <select id="searchPartyFree" resultType="com.pm.myapp.domain.board.PartyFreeSearchVO">
@@ -102,6 +112,7 @@
                 PF.PFCONTENT LIKE CONCAT('%', #{keyword}, '%')
                 </when>
             </choose>
+            ORDER BY PF.PFREFER DESC
             OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
             FETCH NEXT #{cri.amount} ROWS ONLY
 
@@ -143,11 +154,12 @@
         <![CDATA[
             SELECT PF.pfrerefer, u.nickname, PF.pfrecontent, PF.pfredate, PF.pfrefer
             FROM PARTYFREERE PF
-            JOIN USERINFO U ON PF.email = u.email
+            JOIN USERINFO U
+            ON PF.email = u.email
             WHERE PFREFER = #{pfrefer} and PARTYCODE = #{partycode}
             ORDER BY pfrerefer desc
-            OFFSET (#{cri.currPage}-1) * #{cri.amount} ROWS
-            FETCH NEXT #{cri.amount} ROWS ONLY
+            OFFSET (#recri.currPage}-1) * #{recri.amount} ROWS
+            FETCH NEXT #{recri.reAmount} ROWS ONLY
         ]]>
 
     </select>
@@ -171,16 +183,14 @@
         UPDATE PARTYFREERE
         SET
             PFRECONTENT = #{pfrecontent}
-        WHERE partycode = #{partycode} and pfrerefer = #{pfrerefer}
+        WHERE partycode = #{partycode} and pfrerefer = #{pfrerefer} and pfrefer = #{pfrefer}
     </update>
 
 
     <delete id="deleteComment">
         DELETE
         FROM PARTYFREERE
-        WHERE PFREREFER=#{pfrerefer} and partycode = #{partycode}
+        WHERE PFREREFER=#{pfrerefer} and partycode = #{partycode} and pfrefer = #{pfrefer}
 
     </delete>
-
-
 </mapper>
