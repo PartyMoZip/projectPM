@@ -67,7 +67,7 @@ public class PartyFMapperTests {
         dto.setPfsubject("testParty");
         dto.setPfcontent("partyTest");
         dto.setEmail("test2@test.com");
-        dto.setPartycode(2);
+        dto.setPartyCode(2);
 
         int affectedLines = this.mapper.writePFreeBoard(dto);
         log.info("\t + affectedLines : {}", affectedLines);
@@ -84,7 +84,7 @@ public class PartyFMapperTests {
         board.setPfcontent("노래좋아요");
         board.setPfsubject("감성터지네요");
         board.setEmail("test8@test.com");
-        board.setPartycode(2);
+        board.setPartyCode(2);
         int affectedLines = this.mapper.editPFreeBoard(board);
         log.info("\t + affectedLines : {}", affectedLines);
     } // testEditPFreeBoard
@@ -138,7 +138,7 @@ public class PartyFMapperTests {
         dto.setEmail("test2@test.com");
         dto.setPfrecontent("김진건 텐션 미쳤다.");
         dto.setPfrefer(2);
-        dto.setPartycode(2);
+        dto.setPartyCode(2);
 
         int affectedline = this.mapper.writeComment(dto);
         log.info("\t+ affectedline : {}",affectedline);
@@ -151,7 +151,7 @@ public class PartyFMapperTests {
         reply.setPfrerefer(2);
         reply.setPfrecontent("진건텐션왜저래");
         reply.setEmail("test4@test.com");
-        reply.setPartycode(2);
+        reply.setPartyCode(2);
 
         int affectedLines = this.mapper.editComment(reply);
         log.info("\t + affectedLines : {}", affectedLines);

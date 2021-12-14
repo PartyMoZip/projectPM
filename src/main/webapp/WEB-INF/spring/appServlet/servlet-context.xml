@@ -70,7 +70,6 @@
 			<mvc:mapping path="/party/**"/>
 			<mvc:mapping path="/partyfunc/**"/>
 			<mvc:mapping path="/partyphoto/**"/>
-			<mvc:mapping path="/partyfree/**"/>
 
 			<mvc:exclude-mapping path="/party/edit-profile" />
 			<mvc:exclude-mapping path="/party/detail" />

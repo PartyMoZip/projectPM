@@ -16,5 +16,6 @@ public class PartyPhotoDTO {
 	private String nickname;
 	private Integer readnum;
 	private String userpic;
+	private String partypic;
 
 } // end class

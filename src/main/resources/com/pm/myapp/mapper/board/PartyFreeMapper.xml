@@ -40,7 +40,7 @@
         FROM PARTYFREEBOARD PF
         JOIN USERINFO U
         ON PF.EMAIL = U.EMAIL
-        WHERE PF.PFREFER = #{pfrefer} AND PF.PARTYCODE = #{partycode}
+        WHERE PF.PFREFER = #{pfrefer} AND PF.PARTYCODE = #{partyCode}
     </select>
 
     <select id="getTotalCount" resultType="Integer">
@@ -71,7 +71,7 @@
 
     <insert id="writePFreeBoard">
         INSERT INTO PARTYFREEBOARD(PFREFER, PFDATE, PFCONTENT, PARTYCODE, PFSUBJECT, EMAIL, READNUM)
-        VALUES(SEQ_PFREEBOARD.nextval, sysdate, #{pfcontent}, #{partycode}, #{pfsubject}, #{email}, 0)
+        VALUES(SEQ_PFREEBOARD.nextval, sysdate, #{pfcontent}, #{partyCode}, #{pfsubject}, #{email}, 0)
 
     </insert>
 
@@ -87,7 +87,7 @@
     <update id="readIt">
         UPDATE PARTYFREEBOARD
         SET READNUM = READNUM + 1
-        WHERE PARTYCODE = #{partycode} AND PFREFER = #{pfrefer}
+        WHERE PARTYCODE = #{partyCode} AND PFREFER = #{pfrefer}
     </update>
 
     <select id="searchPartyFree" resultType="com.pm.myapp.domain.board.PartyFreeSearchVO">
@@ -152,13 +152,13 @@
     <select id="getCommentListPaging" resultType = "com.pm.myapp.domain.board.PartyFreeReplyVO">
 
         <![CDATA[
-            SELECT PF.pfrerefer, u.nickname, PF.pfrecontent, PF.pfredate, PF.pfrefer
+            SELECT PF.pfrerefer, u.nickname, PF.pfrecontent, PF.pfredate, PF.pfrefer, u.email
             FROM PARTYFREERE PF
             JOIN USERINFO U
             ON PF.email = u.email
-            WHERE PFREFER = #{pfrefer} and PARTYCODE = #{partycode}
+            WHERE PFREFER = #{pfrefer} and PARTYCODE = #{partyCode}
             ORDER BY pfrerefer desc
-            OFFSET (#recri.currPage}-1) * #{recri.amount} ROWS
+            OFFSET (#{recri.reCurrPage}-1) * #{recri.reAmount} ROWS
             FETCH NEXT #{recri.reAmount} ROWS ONLY
         ]]>
 
@@ -167,7 +167,7 @@
     <insert id="writeComment">
 
         INSERT INTO PARTYFREERE(pfrerefer, pfrecontent, pfredate, pfrefer, partycode, email)
-        VALUES(SEQ_PFREEBOARDRE.nextval, #{pfrecontent}, sysdate,#{pfrefer}, #{partycode}, #{email})
+        VALUES(SEQ_PFREEBOARDRE.nextval, #{pfrecontent}, sysdate,#{pfrefer}, #{partyCode}, #{email})
 
     </insert>
 
@@ -183,14 +183,14 @@
         UPDATE PARTYFREERE
         SET
             PFRECONTENT = #{pfrecontent}
-        WHERE partycode = #{partycode} and pfrerefer = #{pfrerefer} and pfrefer = #{pfrefer}
+        WHERE partycode = #{partyCode} and pfrerefer = #{pfrerefer} and pfrefer = #{pfrefer}
     </update>
 
 
     <delete id="deleteComment">
         DELETE
         FROM PARTYFREERE
-        WHERE PFREREFER=#{pfrerefer} and partycode = #{partycode} and pfrefer = #{pfrefer}
+        WHERE PFREREFER=#{pfrerefer} and partycode = #{partyCode} and pfrefer = #{pfrefer}
 
     </delete>
 </mapper>

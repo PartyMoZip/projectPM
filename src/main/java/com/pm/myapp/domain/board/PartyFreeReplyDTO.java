@@ -11,7 +11,7 @@ public class PartyFreeReplyDTO {
     private String pfrecontent;
     private Date pfredate;
     private Integer pfrefer;
-    private Integer partycode;
+    private Integer partyCode;
     private String email;
 
 } // end class

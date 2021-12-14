@@ -29,8 +29,6 @@
     <%--HEADER--%>
     <jsp:include
             page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp"/>
-    <jsp:include
-            page="${pageContext.request.contextPath}/WEB-INF/views/include/partynav.jsp" />
 
 <div class="board-main">
     <main>
@@ -125,14 +123,14 @@
                                     <c:if test="${replyPageMaker.prev}">
                                         <li class="prev page-item">
                                             <a class="prev page-link"
-                                               href="/freeboard/showFreeDetail?frefer=${boardDetail.frefer}&currPage=${cri.currPage}&reCurrPage=${replyPageMaker.startPage-1}">◀</a>
+                                               href="/partyfree/getPFreeBoardList?pfrefer=${boardDetail.pfrefer}&currPage=${cri.currPage}&reCurrPage=${replyPageMaker.startPage-1}&partyCode=${boardDetail.partyCode}">◀</a>
                                         </li>
                                     </c:if>
                                     <c:forEach begin="${replyPageMaker.startPage}"
                                                end="${replyPageMaker.endPage}" var="pageNum">
                                         <li class="page-item">
                                             <a id="page-curr" class="page-link"
-                                               href="/partyphoto/detail?prefer=${__DETAIL__.prefer}&partyCode=${__DETAIL__.partycode}&currPage=${cri.currPage}&reCurrPage=${pageNum}">
+                                               href="/partyfree/getPFreeBoardList?pfrefer=${boardDetail.pfrefer}&partyCode=${boardDetail.partyCode}&currPage=${cri.currPage}&reCurrPage=${pageNum}">
                                                     ${pageNum}
                                             </a>
                                         </li>
@@ -141,7 +139,7 @@
                                     <c:if test="${replyPageMaker.next}">
                                         <li class="next page-item">
                                             <a class="next page-link"
-                                               href="/partyphoto/detail?prefer=${__DETAIL__.prefer}&partyCode=${__DETAIL__.partycode}&currPage=${cri.currPage}&reCurrPage=${replyPageMaker.endPage+1}">▶</a>
+                                               href="/partyfree/getPFreeBoardList?pfrefer=${boardDetail.pfrefer}&partyCode=${boardDetail.partyCode}&currPage=${cri.currPage}&reCurrPage=${replyPageMaker.endPage+1}">▶</a>
                                         </li>
                                     </c:if>
                                 </ul>
@@ -153,11 +151,12 @@
                 <!--reply write-->
                 <div class="comment_area">
                     <!--댓글내용-->
-                    <form action="/partyfree/writeComment" method="POST">
+                    <form action="/partyfree/writeComment" method="post">
                         <input type="hidden" name="currPage" value="${cri.currPage}">
                         <input type="hidden" name="reCurrPage" value="${recri.reCurrPage}">
                         <input type="hidden" name="pfrefer" value="${boardDetail.pfrefer}">
                         <input type="hidden" name="email" value="${sessionScope.__AUTH__.email}">
+                        <input type="hidden" name="partyCode" value="${boardDetail.partyCode}">
                         <div class="commentWrite_Wrap">
                         <textarea name="pfrecontent" id="commentContent" placeholder=" 댓글을 남겨보세요"
                                   class="comment_inbox" rows="4"
@@ -169,22 +168,23 @@
                 </div>
                 <div class="container-btnGroup d-flex justify-content-end">
                 <c:set value="${sessionScope.__AUTH__.nickname}" var="nickname"/>
-                <c:if test="${boardDetail.nickname eq nickname}">
-                    <button type="button" class="btn btn-primary btn-sm"
-                            onclick="location.href='/partyfree/editPFBoardView?pfrefer=${boardDetail.pfrefer}'">
-                        <i class="fas fa-pen"></i>
-                        <span>수정</span>
-                    </button>
-                    <form action="/partyfree/deletePFreeBoard" method="post">
-                        <button type="submit" class="btn btn-primary btn-sm">
-                            <input type="hidden" name="pfrefer" value="${boardDetail.pfrefer}">
-                            <i class="fas fa-trash-alt"></i>
-                            <span>삭제</span>
+                    <c:if test="${boardDetail.nickname eq nickname}">
+                        <button type="button" class="btn btn-primary btn-sm"
+                                onclick="location.href='/partyfree/editPFBoardView?currPage=${cri.currPage}&pfrefer=${boardDetail.pfrefer}&partyCode=${boardDetail.partyCode}'">
+                            <i class="fas fa-pen"></i>
+                            <span>수정</span>
                         </button>
-                    </form>
+                        <form action="/partyfree/deletePFreeBoard" method="post">
+                            <input type="hidden" name="partyCode" value="${boardDetail.partyCode}">
+                            <input type="hidden" name="pfrefer" value="${boardDetail.pfrefer}">
+                            <button type="submit" class="btn btn-primary btn-sm">
+                                <i class="fas fa-trash-alt"></i>
+                                <span>삭제</span>
+                            </button>
+                        </form>
                     </c:if>
                     <button type="button" class="btn btn-primary btn-sm"
-                            onclick="location.href='/partyfree/getPFreeBoardList?currPage=${cri.currPage}'">
+                            onclick="location.href='/partyfree/getPFreeBoardList?currPage=${cri.currPage}&partyCode=${boardDetail.partyCode}&searchWord=${sdto.searchWord}'">
                         <i class="fas fa-list-ul"></i>
                         <span>목록</span>
                     </button>

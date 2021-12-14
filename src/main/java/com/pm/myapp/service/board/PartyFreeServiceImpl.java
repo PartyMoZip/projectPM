@@ -45,9 +45,9 @@ public class PartyFreeServiceImpl implements PartyFreeService, InitializingBean,
 
     // 파티 자유 게시판 상세보기
     @Override
-    public PartyFreeVO getBoardDetail(Integer pfrefer, Integer partycode) {
+    public PartyFreeVO getBoardDetail(Integer pfrefer, Integer partyCode) {
         log.debug("get({}) invoked.", pfrefer);
-        PartyFreeVO PFBoardDetail = this.mapper.readPFreeBoard(pfrefer, partycode);
+        PartyFreeVO PFBoardDetail = this.mapper.readPFreeBoard(pfrefer, partyCode);
         log.info("\t + freeBoard : {}", PFBoardDetail);
 
         return PFBoardDetail;
@@ -101,8 +101,8 @@ public class PartyFreeServiceImpl implements PartyFreeService, InitializingBean,
 
     // 게시판 조회수 증가
     @Override
-    public boolean readPFreeBoard(Integer pfrefer, Integer partycode) {
-        Integer affectedLine = this.mapper.readIt(pfrefer, partycode);
+    public boolean readPFreeBoard(Integer pfrefer, Integer partyCode) {
+        Integer affectedLine = this.mapper.readIt(pfrefer, partyCode);
         log.info("\t + affectedLine : {}", affectedLine);
 
         return (affectedLine==1);
@@ -110,10 +110,10 @@ public class PartyFreeServiceImpl implements PartyFreeService, InitializingBean,
 
     // 댓글 목록
     @Override
-    public List<PartyFreeReplyVO> getReply(Integer pfrefer, Integer partycode, ReplyCriteria recri) {
+    public List<PartyFreeReplyVO> getReply(Integer pfrefer, Integer partyCode, ReplyCriteria recri) {
         log.debug("getComment() invoked.");
 
-        List<PartyFreeReplyVO> commentList= this.mapper.getCommentListPaging(pfrefer, partycode, recri);
+        List<PartyFreeReplyVO> commentList= this.mapper.getCommentListPaging(pfrefer, partyCode, recri);
         log.info("\t + allReply : {}", commentList);
 
         return commentList;
